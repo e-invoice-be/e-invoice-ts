@@ -9,8 +9,8 @@ It is generated with [Stainless](https://www.stainless.com/).
 Because it's not published yet, clone the repo and build it:
 
 ```sh
-git clone git@github.com:stainless-sdks/e-invoice-api-typescript.git
-cd e-invoice-api-typescript
+git clone git@github.com:e-invoice-be/e-invoice-api-sdk-ts.git
+cd e-invoice-api-sdk-ts
 ./scripts/bootstrap
 ./scripts/build
 ```
@@ -42,7 +42,7 @@ For clients with a configuration JSON, it might look something like this:
     "e_invoice_api_api": {
       "command": "node",
       "args": [
-        "/path/to/local/e-invoice-api-typescript/packages/mcp-server",
+        "/path/to/local/e-invoice-api-sdk-ts/packages/mcp-server",
         "--client=claude",
         "--tools=dynamic"
       ],
