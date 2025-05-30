@@ -1,6 +1,6 @@
 {
   "name": "e-invoice-api-mcp",
-  "version": "0.0.1-alpha.0",
+  "version": "0.1.0-alpha.1",
   "description": "The official MCP Server for the E Invoice API",
   "author": "E Invoice <support@e-invoice.be>",
   "types": "dist/index.d.ts",
@@ -8,10 +8,10 @@
   "type": "commonjs",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stainless-sdks/e-invoice-api-typescript.git",
+    "url": "git+https://github.com/e-invoice-be/e-invoice-api-sdk-ts.git",
     "directory": "packages/mcp-server"
   },
-  "homepage": "https://github.com/stainless-sdks/e-invoice-api-typescript/tree/main/packages/mcp-server#readme",
+  "homepage": "https://github.com/e-invoice-be/e-invoice-api-sdk-ts/tree/main/packages/mcp-server#readme",
   "license": "Apache-2.0",
   "packageManager": "yarn@1.22.22",
   "private": false,

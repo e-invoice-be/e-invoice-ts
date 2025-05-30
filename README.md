@@ -11,7 +11,7 @@ It is generated with [Stainless](https://www.stainless.com/).
 ## Installation
 
 ```sh
-npm install git+ssh://git@github.com:stainless-sdks/e-invoice-api-typescript.git
+npm install git+ssh://git@github.com:e-invoice-be/e-invoice-api-sdk-ts.git
 ```
 
 > [!NOTE]
@@ -171,6 +171,37 @@ await client.documents.create({
 On timeout, an `APIConnectionTimeoutError` is thrown.
 
 Note that requests which time out will be [retried twice by default](#retries).
+
+## Auto-pagination
+
+List methods in the EInvoice API are paginated.
+You can use the `for await … of` syntax to iterate through items across all pages:
+
+```ts
+async function fetchAllInboxes(params) {
+  const allInboxes = [];
+  // Automatically fetches more pages as needed.
+  for await (const documentResponse of client.inbox.list()) {
+    allInboxes.push(documentResponse);
+  }
+  return allInboxes;
+}
+```
+
+Alternatively, you can request a single page at a time:
+
+```ts
+let page = await client.inbox.list();
+for (const documentResponse of page.items) {
+  console.log(documentResponse);
+}
+
+// Convenience methods are provided for manually paginating:
+while (page.hasNextPage()) {
+  page = await page.getNextPage();
+  // ...
+}
+```
 
 ## Advanced Usage
 
@@ -383,7 +414,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/e-invoice-api-typescript/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/e-invoice-be/e-invoice-api-sdk-ts/issues) with questions, bugs, or suggestions.
 
 ## Requirements
 
