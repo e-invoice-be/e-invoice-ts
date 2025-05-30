@@ -4,7 +4,7 @@
 
 This library provides convenient access to the E Invoice API REST API from server-side TypeScript or JavaScript.
 
-The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [api.e-invoice.be](https://api.e-invoice.be). The full API of this library can be found in [api.md](api.md).
 
 It is generated with [Stainless](https://www.stainless.com/).
 
@@ -26,7 +26,7 @@ The full API of this library can be found in [api.md](api.md).
 import EInvoiceAPI from 'e-invoice-api';
 
 const client = new EInvoiceAPI({
-  apiKey: process.env['E_INVOICE_API_API_KEY'], // This is the default and can be omitted
+  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted
 });
 
 async function main() {
@@ -47,7 +47,7 @@ This library includes TypeScript definitions for all request params and response
 import EInvoiceAPI from 'e-invoice-api';
 
 const client = new EInvoiceAPI({
-  apiKey: process.env['E_INVOICE_API_API_KEY'], // This is the default and can be omitted
+  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted
 });
 
 async function main() {
@@ -75,17 +75,21 @@ import EInvoiceAPI, { toFile } from 'e-invoice-api';
 const client = new EInvoiceAPI();
 
 // If you have access to Node `fs` we recommend using `fs.createReadStream()`:
-await client.documents.createFromPdf({ file: fs.createReadStream('/path/to/file') });
+await client.documents.attachments.add('document_id', { file: fs.createReadStream('/path/to/file') });
 
 // Or if you have the web `File` API you can pass a `File` instance:
-await client.documents.createFromPdf({ file: new File(['my bytes'], 'file') });
+await client.documents.attachments.add('document_id', { file: new File(['my bytes'], 'file') });
 
 // You can also pass a `fetch` `Response`:
-await client.documents.createFromPdf({ file: await fetch('https://somesite/file') });
+await client.documents.attachments.add('document_id', { file: await fetch('https://somesite/file') });
 
 // Finally, if none of the above are convenient, you can use our `toFile` helper:
-await client.documents.createFromPdf({ file: await toFile(Buffer.from('my bytes'), 'file') });
-await client.documents.createFromPdf({ file: await toFile(new Uint8Array([0, 1, 2]), 'file') });
+await client.documents.attachments.add('document_id', {
+  file: await toFile(Buffer.from('my bytes'), 'file'),
+});
+await client.documents.attachments.add('document_id', {
+  file: await toFile(new Uint8Array([0, 1, 2]), 'file'),
+});
 ```
 
 ## Handling errors

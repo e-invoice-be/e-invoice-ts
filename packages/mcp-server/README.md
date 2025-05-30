@@ -19,7 +19,7 @@ cd e-invoice-api-typescript
 
 ```sh
 # set env vars as needed
-export E_INVOICE_API_API_KEY="My API Key"
+export E_INVOICE_API_KEY="My API Key"
 node ./packages/mcp-server/dist/index.js
 ```
 
@@ -46,7 +46,7 @@ For clients with a configuration JSON, it might look something like this:
         "--tools=dynamic"
       ],
       "env": {
-        "E_INVOICE_API_API_KEY": "My API Key"
+        "E_INVOICE_API_KEY": "My API Key"
       }
     }
   }
@@ -189,9 +189,6 @@ The following tools are available in this MCP server.
 - `create_documents` (`write`): Create a new invoice or credit note
 - `retrieve_documents` (`read`): Get an invoice or credit note by ID
 - `delete_documents` (`write`): Delete an invoice or credit note
-- `create_from_pdf_documents` (`write`): Create a new invoice or credit note from a PDF file. If the 'ubl_document' field is set in the response, it indicates that sufficient details were extracted from the PDF to automatically generate a valid UBL document ready for sending. If 'ubl_document' is not set, human intervention may be required to ensure compliance.
-- `get_history_documents` (`read`): Get the history of an invoice or credit note
-- `get_transmission_report_documents` (`read`): Get the transmission report for an invoice or credit note
 - `send_documents` (`write`): Send an invoice or credit note via Peppol
 
 ### Resource `documents.attachments`:
@@ -203,7 +200,6 @@ The following tools are available in this MCP server.
 
 ### Resource `documents.ubl`:
 
-- `create_from_ubl_documents_ubl` (`write`): Create a new invoice or credit note from a UBL file
 - `get_documents_ubl` (`read`): Get the UBL for an invoice or credit note
 
 ### Resource `inbox`:
@@ -227,10 +223,6 @@ The following tools are available in this MCP server.
 
 - `retrieve_lookup` (`read`): Lookup Peppol ID. The peppol_id must be in the form of `<scheme>:<id>`. The scheme is a 4-digit code representing the identifier scheme, and the id is the actual identifier value. For example, for a Belgian company it is `0208:0123456789` (where 0208 is the scheme for Belgian enterprises, followed by the 10 digits of the official BTW / KBO number).
 
-### Resource `me`:
-
-- `retrieve_me` (`read`): Retrieve information about your account.
-
 ### Resource `webhooks`:
 
 - `create_webhooks` (`write`): Create a new webhook
@@ -238,4 +230,3 @@ The following tools are available in this MCP server.
 - `update_webhooks` (`write`): Update a webhook by ID
 - `list_webhooks` (`read`): Get all webhooks for the current tenant
 - `delete_webhooks` (`write`): Delete a webhook
-- `history_webhooks` (`read`): Get the history of a webhook
