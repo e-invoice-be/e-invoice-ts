@@ -17,6 +17,7 @@ export {
 export {
   Inbox,
   type DocumentState,
+  type DocumentTypeInput,
   type PaginatedDocumentResponse,
   type InboxListParams,
   type InboxListCreditNotesParams,

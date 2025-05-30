@@ -49,6 +49,7 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/inbox.ts">DocumentState</a></code>
+- <code><a href="./src/resources/inbox.ts">DocumentTypeInput</a></code>
 - <code><a href="./src/resources/inbox.ts">PaginatedDocumentResponse</a></code>
 
 Methods:
