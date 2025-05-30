@@ -1,15 +1,17 @@
-# e-invoice.be TypeScript API Library
+# e-invoice.be Peppol API Library
 
 [![NPM version](https://img.shields.io/npm/v/e-invoice-api.svg)](https://npmjs.org/package/e-invoice-api) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/e-invoice-api)
 
-This library provides convenient access to the e-invoice.be REST API from server-side TypeScript or JavaScript.
+This library provides convenient access to the E Invoice REST API from server-side TypeScript or JavaScript.
 
 The REST API documentation can be found on [api.e-invoice.be](https://api.e-invoice.be). The full API of this library can be found in [api.md](api.md).
+
+It is generated with [Stainless](https://www.stainless.com/).
 
 ## Installation
 
 ```sh
-npm install git+ssh://git@github.com:e-invoice-be/e-invoice-api-sdk-ts.git
+npm install git+ssh://git@github.com:e-invoice-be/e-invoice-ts.git
 ```
 
 > [!NOTE]
@@ -412,7 +414,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/e-invoice-be/e-invoice-api-sdk-ts/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/e-invoice-be/e-invoice-ts/issues) with questions, bugs, or suggestions.
 
 ## Requirements
 

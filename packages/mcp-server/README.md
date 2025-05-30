@@ -1,4 +1,4 @@
-# E Invoice TypeScript MCP Server
+# e-invoice.be Peppol MCP Server
 
 It is generated with [Stainless](https://www.stainless.com/).
 
@@ -9,8 +9,8 @@ It is generated with [Stainless](https://www.stainless.com/).
 Because it's not published yet, clone the repo and build it:
 
 ```sh
-git clone git@github.com:e-invoice-be/e-invoice-api-sdk-ts.git
-cd e-invoice-api-sdk-ts
+git clone git@github.com:e-invoice-be/e-invoice-ts.git
+cd e-invoice-ts
 ./scripts/bootstrap
 ./scripts/build
 ```
@@ -41,11 +41,7 @@ For clients with a configuration JSON, it might look something like this:
   "mcpServers": {
     "e_invoice_api_api": {
       "command": "node",
-      "args": [
-        "/path/to/local/e-invoice-api-sdk-ts/packages/mcp-server",
-        "--client=claude",
-        "--tools=dynamic"
-      ],
+      "args": ["/path/to/local/e-invoice-ts/packages/mcp-server", "--client=claude", "--tools=dynamic"],
       "env": {
         "E_INVOICE_API_KEY": "My API Key",
         "E_INVOICE_ENVIRONMENT": "production"

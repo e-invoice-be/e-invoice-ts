@@ -1,12 +1,12 @@
 {
   "name": "e-invoice-api",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "description": "The official TypeScript library for the E Invoice API",
   "author": "E Invoice <support@e-invoice.be>",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "type": "commonjs",
-  "repository": "github:e-invoice-be/e-invoice-api-sdk-ts",
+  "repository": "github:e-invoice-be/e-invoice-ts",
   "license": "Apache-2.0",
   "packageManager": "yarn@1.22.22",
   "files": [
