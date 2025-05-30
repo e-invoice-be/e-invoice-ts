@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { EInvoiceAPI } from 'e-invoice-api';
+import { EInvoice } from 'e-invoice-api';
 
-const { stringifyQuery } = EInvoiceAPI.prototype as any;
+const { stringifyQuery } = EInvoice.prototype as any;
 
 describe(stringifyQuery, () => {
   for (const [input, expected] of [

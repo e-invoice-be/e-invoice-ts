@@ -16,9 +16,9 @@ before making any information public.
 ## Reporting Non-SDK Related Security Issues
 
 If you encounter security issues that are not directly related to SDKs but pertain to the services
-or products provided by E Invoice API, please follow the respective company's security reporting guidelines.
+or products provided by E Invoice, please follow the respective company's security reporting guidelines.
 
-### E Invoice API Terms and Policies
+### E Invoice Terms and Policies
 
 Please contact support@e-invoice.be for any questions or concerns regarding the security of our services.
 

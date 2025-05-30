@@ -1,12 +1,12 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { EInvoiceAPI as default } from './client';
+export { EInvoice as default } from './client';
 
 export { type Uploadable, toFile } from './core/uploads';
 export { APIPromise } from './core/api-promise';
-export { EInvoiceAPI, type ClientOptions } from './client';
+export { EInvoice, type ClientOptions } from './client';
 export {
-  EInvoiceAPIError,
+  EInvoiceError,
   APIError,
   APIConnectionError,
   APIConnectionTimeoutError,

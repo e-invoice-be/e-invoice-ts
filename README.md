@@ -1,8 +1,8 @@
-# E Invoice API TypeScript API Library
+# E Invoice TypeScript API Library
 
 [![NPM version](https://img.shields.io/npm/v/e-invoice-api.svg)](https://npmjs.org/package/e-invoice-api) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/e-invoice-api)
 
-This library provides convenient access to the E Invoice API REST API from server-side TypeScript or JavaScript.
+This library provides convenient access to the E Invoice REST API from server-side TypeScript or JavaScript.
 
 The REST API documentation can be found on [api.e-invoice.be](https://api.e-invoice.be). The full API of this library can be found in [api.md](api.md).
 
@@ -23,10 +23,11 @@ The full API of this library can be found in [api.md](api.md).
 
 <!-- prettier-ignore -->
 ```js
-import EInvoiceAPI from 'e-invoice-api';
+import EInvoice from 'e-invoice-api';
 
-const client = new EInvoiceAPI({
+const client = new EInvoice({
   apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted
+  environment: 'development', // defaults to 'production'
 });
 
 async function main() {
@@ -44,14 +45,15 @@ This library includes TypeScript definitions for all request params and response
 
 <!-- prettier-ignore -->
 ```ts
-import EInvoiceAPI from 'e-invoice-api';
+import EInvoice from 'e-invoice-api';
 
-const client = new EInvoiceAPI({
+const client = new EInvoice({
   apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted
+  environment: 'development', // defaults to 'production'
 });
 
 async function main() {
-  const documentResponse: EInvoiceAPI.DocumentResponse = await client.documents.create();
+  const documentResponse: EInvoice.DocumentResponse = await client.documents.create();
 }
 
 main();
@@ -70,9 +72,9 @@ Request parameters that correspond to file uploads can be passed in many differe
 
 ```ts
 import fs from 'fs';
-import EInvoiceAPI, { toFile } from 'e-invoice-api';
+import EInvoice, { toFile } from 'e-invoice-api';
 
-const client = new EInvoiceAPI();
+const client = new EInvoice();
 
 // If you have access to Node `fs` we recommend using `fs.createReadStream()`:
 await client.documents.attachments.add('document_id', { file: fs.createReadStream('/path/to/file') });
@@ -102,7 +104,7 @@ a subclass of `APIError` will be thrown:
 ```ts
 async function main() {
   const documentResponse = await client.documents.create().catch(async (err) => {
-    if (err instanceof EInvoiceAPI.APIError) {
+    if (err instanceof EInvoice.APIError) {
       console.log(err.status); // 400
       console.log(err.name); // BadRequestError
       console.log(err.headers); // {server: 'nginx', ...}
@@ -139,7 +141,7 @@ You can use the `maxRetries` option to configure or disable this:
 <!-- prettier-ignore -->
 ```js
 // Configure the default for all requests:
-const client = new EInvoiceAPI({
+const client = new EInvoice({
   maxRetries: 0, // default is 2
 });
 
@@ -156,7 +158,7 @@ Requests time out after 1 minute by default. You can configure this with a `time
 <!-- prettier-ignore -->
 ```ts
 // Configure the default for all requests:
-const client = new EInvoiceAPI({
+const client = new EInvoice({
   timeout: 20 * 1000, // 20 seconds (default is 1 minute)
 });
 
@@ -182,7 +184,7 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 
 <!-- prettier-ignore -->
 ```ts
-const client = new EInvoiceAPI();
+const client = new EInvoice();
 
 const response = await client.documents.create().asResponse();
 console.log(response.headers.get('X-My-Header'));
@@ -203,13 +205,13 @@ console.log(documentResponse.id);
 
 The log level can be configured in two ways:
 
-1. Via the `E_INVOICE_API_LOG` environment variable
+1. Via the `E_INVOICE_LOG` environment variable
 2. Using the `logLevel` client option (overrides the environment variable if set)
 
 ```ts
-import EInvoiceAPI from 'e-invoice-api';
+import EInvoice from 'e-invoice-api';
 
-const client = new EInvoiceAPI({
+const client = new EInvoice({
   logLevel: 'debug', // Show all log messages
 });
 ```
@@ -235,13 +237,13 @@ When providing a custom logger, the `logLevel` option still controls which messa
 below the configured level will not be sent to your logger.
 
 ```ts
-import EInvoiceAPI from 'e-invoice-api';
+import EInvoice from 'e-invoice-api';
 import pino from 'pino';
 
 const logger = pino();
 
-const client = new EInvoiceAPI({
-  logger: logger.child({ name: 'EInvoiceAPI' }),
+const client = new EInvoice({
+  logger: logger.child({ name: 'EInvoice' }),
   logLevel: 'debug', // Send all messages to pino, allowing it to filter
 });
 ```
@@ -305,10 +307,10 @@ globalThis.fetch = fetch;
 Or pass it to the client:
 
 ```ts
-import EInvoiceAPI from 'e-invoice-api';
+import EInvoice from 'e-invoice-api';
 import fetch from 'my-fetch';
 
-const client = new EInvoiceAPI({ fetch });
+const client = new EInvoice({ fetch });
 ```
 
 ### Fetch options
@@ -316,9 +318,9 @@ const client = new EInvoiceAPI({ fetch });
 If you want to set custom `fetch` options without overriding the `fetch` function, you can provide a `fetchOptions` object when instantiating the client or making a request. (Request-specific options override client options.)
 
 ```ts
-import EInvoiceAPI from 'e-invoice-api';
+import EInvoice from 'e-invoice-api';
 
-const client = new EInvoiceAPI({
+const client = new EInvoice({
   fetchOptions: {
     // `RequestInit` options
   },
@@ -333,11 +335,11 @@ options to requests:
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/node.svg" align="top" width="18" height="21"> **Node** <sup>[[docs](https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md#example---proxyagent-with-fetch)]</sup>
 
 ```ts
-import EInvoiceAPI from 'e-invoice-api';
+import EInvoice from 'e-invoice-api';
 import * as undici from 'undici';
 
 const proxyAgent = new undici.ProxyAgent('http://localhost:8888');
-const client = new EInvoiceAPI({
+const client = new EInvoice({
   fetchOptions: {
     dispatcher: proxyAgent,
   },
@@ -347,9 +349,9 @@ const client = new EInvoiceAPI({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/bun.svg" align="top" width="18" height="21"> **Bun** <sup>[[docs](https://bun.sh/guides/http/proxy)]</sup>
 
 ```ts
-import EInvoiceAPI from 'e-invoice-api';
+import EInvoice from 'e-invoice-api';
 
-const client = new EInvoiceAPI({
+const client = new EInvoice({
   fetchOptions: {
     proxy: 'http://localhost:8888',
   },
@@ -359,10 +361,10 @@ const client = new EInvoiceAPI({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/deno.svg" align="top" width="18" height="21"> **Deno** <sup>[[docs](https://docs.deno.com/api/deno/~/Deno.createHttpClient)]</sup>
 
 ```ts
-import EInvoiceAPI from 'npm:e-invoice-api';
+import EInvoice from 'npm:e-invoice-api';
 
 const httpClient = Deno.createHttpClient({ proxy: { url: 'http://localhost:8888' } });
-const client = new EInvoiceAPI({
+const client = new EInvoice({
   fetchOptions: {
     client: httpClient,
   },

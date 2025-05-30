@@ -4,7 +4,7 @@ import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { Endpoint, endpoints, HandlerFunction, query } from './tools';
 import { CallToolRequestSchema, ListToolsRequestSchema, Tool } from '@modelcontextprotocol/sdk/types.js';
-import EInvoiceAPI from 'e-invoice-api';
+import EInvoice from 'e-invoice-api';
 import {
   applyCompatibilityTransformations,
   ClientCapabilities,
@@ -34,7 +34,7 @@ export const server = new McpServer(
  */
 export function init(params: {
   server: Server | McpServer;
-  client?: EInvoiceAPI;
+  client?: EInvoice;
   endpoints?: { tool: Tool; handler: HandlerFunction }[];
   capabilities?: Partial<ClientCapabilities>;
 }) {
@@ -43,7 +43,8 @@ export function init(params: {
 
   const endpointMap = Object.fromEntries(providedEndpoints.map((endpoint) => [endpoint.tool.name, endpoint]));
 
-  const client = params.client || new EInvoiceAPI({});
+  const client =
+    params.client || new EInvoice({ environment: (readEnv('E_INVOICE_ENVIRONMENT') || undefined) as any });
 
   server.setRequestHandler(ListToolsRequestSchema, async () => {
     return {
@@ -91,7 +92,7 @@ export function selectTools(endpoints: Endpoint[], options: ParsedOptions) {
 export async function executeHandler(
   tool: Tool,
   handler: HandlerFunction,
-  client: EInvoiceAPI,
+  client: EInvoice,
   args: Record<string, unknown> | undefined,
   compatibilityOptions?: Partial<ClientCapabilities>,
 ) {

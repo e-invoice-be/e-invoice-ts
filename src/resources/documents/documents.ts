@@ -238,7 +238,7 @@ export interface DocumentResponse {
 
   direction?: DocumentDirection;
 
-  document_type?: DocumentType;
+  document_type?: 'INVOICE' | 'CREDIT_NOTE';
 
   due_date?: string | null;
 
@@ -337,8 +337,6 @@ export namespace DocumentResponse {
     rate?: string | null;
   }
 }
-
-export type DocumentType = 'INVOICE' | 'CREDIT_NOTE';
 
 export interface PaymentDetailCreate {
   bank_account_number?: string | null;
@@ -589,7 +587,6 @@ export declare namespace Documents {
     type DocumentCreate as DocumentCreate,
     type DocumentDirection as DocumentDirection,
     type DocumentResponse as DocumentResponse,
-    type DocumentType as DocumentType,
     type PaymentDetailCreate as PaymentDetailCreate,
     type UnitOfMeasureCode as UnitOfMeasureCode,
     type DocumentDeleteResponse as DocumentDeleteResponse,

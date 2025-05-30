@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import EInvoiceAPI from 'e-invoice-api';
+import EInvoice from 'e-invoice-api';
 
-const client = new EInvoiceAPI({
+const client = new EInvoice({
   apiKey: 'My API Key',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
@@ -25,7 +25,7 @@ describe('resource outbox', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.outbox.listDraftDocuments({ page: 1, page_size: 1 }, { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(EInvoiceAPI.NotFoundError);
+    ).rejects.toThrow(EInvoice.NotFoundError);
   });
 
   // skipped: tests are disabled for the time being
@@ -57,6 +57,6 @@ describe('resource outbox', () => {
         },
         { path: '/_stainless_unknown_path' },
       ),
-    ).rejects.toThrow(EInvoiceAPI.NotFoundError);
+    ).rejects.toThrow(EInvoice.NotFoundError);
   });
 });
