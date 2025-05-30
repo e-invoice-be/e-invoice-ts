@@ -1,10 +1,12 @@
-# e-invoice.be TypeScript API Library
+# E Invoice TypeScript API Library
 
 [![NPM version](https://img.shields.io/npm/v/e-invoice-api.svg)](https://npmjs.org/package/e-invoice-api) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/e-invoice-api)
 
-This library provides convenient access to the e-invoice.be REST API from server-side TypeScript or JavaScript.
+This library provides convenient access to the E Invoice REST API from server-side TypeScript or JavaScript.
 
 The REST API documentation can be found on [api.e-invoice.be](https://api.e-invoice.be). The full API of this library can be found in [api.md](api.md).
+
+It is generated with [Stainless](https://www.stainless.com/).
 
 ## Installation
 
