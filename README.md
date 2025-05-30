@@ -1,4 +1,4 @@
-# E Invoice TypeScript API Library
+# e-invoice.be Peppol API Library
 
 [![NPM version](https://img.shields.io/npm/v/e-invoice-api.svg)](https://npmjs.org/package/e-invoice-api) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/e-invoice-api)
 
