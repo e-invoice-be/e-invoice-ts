@@ -1,4 +1,4 @@
-# E Invoice API TypeScript MCP Server
+# E Invoice TypeScript MCP Server
 
 It is generated with [Stainless](https://www.stainless.com/).
 
@@ -20,6 +20,7 @@ cd e-invoice-api-typescript
 ```sh
 # set env vars as needed
 export E_INVOICE_API_KEY="My API Key"
+export E_INVOICE_ENVIRONMENT="production"
 node ./packages/mcp-server/dist/index.js
 ```
 
@@ -46,7 +47,8 @@ For clients with a configuration JSON, it might look something like this:
         "--tools=dynamic"
       ],
       "env": {
-        "E_INVOICE_API_KEY": "My API Key"
+        "E_INVOICE_API_KEY": "My API Key",
+        "E_INVOICE_ENVIRONMENT": "production"
       }
     }
   }

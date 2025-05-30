@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import EInvoiceAPI from 'e-invoice-api';
+import EInvoice from 'e-invoice-api';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 
 import create_documents from './documents/create-documents';
@@ -27,10 +27,7 @@ import update_webhooks from './webhooks/update-webhooks';
 import list_webhooks from './webhooks/list-webhooks';
 import delete_webhooks from './webhooks/delete-webhooks';
 
-export type HandlerFunction = (
-  client: EInvoiceAPI,
-  args: Record<string, unknown> | undefined,
-) => Promise<any>;
+export type HandlerFunction = (client: EInvoice, args: Record<string, unknown> | undefined) => Promise<any>;
 
 export type Metadata = {
   resource: string;

@@ -2,7 +2,7 @@
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import type { Metadata } from '../../';
-import EInvoiceAPI from 'e-invoice-api';
+import EInvoice from 'e-invoice-api';
 
 export const metadata: Metadata = {
   resource: 'documents.attachments',
@@ -27,7 +27,7 @@ export const tool: Tool = {
   },
 };
 
-export const handler = (client: EInvoiceAPI, args: Record<string, unknown> | undefined) => {
+export const handler = (client: EInvoice, args: Record<string, unknown> | undefined) => {
   const { document_id, ...body } = args as any;
   return client.documents.attachments.list(document_id);
 };

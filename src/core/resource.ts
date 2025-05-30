@@ -1,11 +1,11 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import type { EInvoiceAPI } from '../client';
+import type { EInvoice } from '../client';
 
 export class APIResource {
-  protected _client: EInvoiceAPI;
+  protected _client: EInvoice;
 
-  constructor(client: EInvoiceAPI) {
+  constructor(client: EInvoice) {
     this._client = client;
   }
 }
