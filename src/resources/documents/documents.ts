@@ -14,11 +14,9 @@ import {
   DocumentAttachment,
 } from './attachments';
 import * as UblAPI from './ubl';
-import { Ubl, UblCreateFromUblParams, UblGetResponse } from './ubl';
+import { Ubl, UblGetResponse } from './ubl';
 import { APIPromise } from '../../core/api-promise';
-import { type Uploadable } from '../../core/uploads';
 import { RequestOptions } from '../../internal/request-options';
-import { multipartFormRequestOptions } from '../../internal/uploads';
 import { path } from '../../internal/utils/path';
 
 export class Documents extends APIResource {
@@ -44,40 +42,6 @@ export class Documents extends APIResource {
    */
   delete(documentID: string, options?: RequestOptions): APIPromise<DocumentDeleteResponse> {
     return this._client.delete(path`/api/documents/${documentID}`, options);
-  }
-
-  /**
-   * Create a new invoice or credit note from a PDF file. If the 'ubl_document' field
-   * is set in the response, it indicates that sufficient details were extracted from
-   * the PDF to automatically generate a valid UBL document ready for sending. If
-   * 'ubl_document' is not set, human intervention may be required to ensure
-   * compliance.
-   */
-  createFromPdf(
-    body: DocumentCreateFromPdfParams,
-    options?: RequestOptions,
-  ): APIPromise<DocumentCreateFromPdfResponse> {
-    return this._client.post(
-      '/api/documents/pdf',
-      multipartFormRequestOptions({ body, ...options }, this._client),
-    );
-  }
-
-  /**
-   * Get the history of an invoice or credit note
-   */
-  getHistory(documentID: string, options?: RequestOptions): APIPromise<DocumentGetHistoryResponse> {
-    return this._client.get(path`/api/documents/${documentID}/history`, options);
-  }
-
-  /**
-   * Get the transmission report for an invoice or credit note
-   */
-  getTransmissionReport(
-    documentID: string,
-    options?: RequestOptions,
-  ): APIPromise<DocumentGetTransmissionReportResponse> {
-    return this._client.get(path`/api/documents/${documentID}/transmission-report`, options);
   }
 
   /**
@@ -485,169 +449,6 @@ export interface DocumentDeleteResponse {
   is_deleted: boolean;
 }
 
-export interface DocumentCreateFromPdfResponse {
-  amount_due?: string | null;
-
-  attachments?: Array<DocumentAttachmentCreate> | null;
-
-  billing_address?: string | null;
-
-  billing_address_recipient?: string | null;
-
-  /**
-   * Currency of the invoice
-   */
-  currency?: CurrencyCode;
-
-  customer_address?: string | null;
-
-  customer_address_recipient?: string | null;
-
-  customer_email?: string | null;
-
-  customer_id?: string | null;
-
-  customer_name?: string | null;
-
-  customer_tax_id?: string | null;
-
-  direction?: DocumentDirection;
-
-  document_type?: DocumentType;
-
-  due_date?: string | null;
-
-  invoice_date?: string | null;
-
-  invoice_id?: string | null;
-
-  invoice_total?: string | null;
-
-  items?: Array<DocumentCreateFromPdfResponse.Item> | null;
-
-  note?: string | null;
-
-  payment_details?: Array<PaymentDetailCreate> | null;
-
-  payment_term?: string | null;
-
-  previous_unpaid_balance?: string | null;
-
-  purchase_order?: string | null;
-
-  remittance_address?: string | null;
-
-  remittance_address_recipient?: string | null;
-
-  service_address?: string | null;
-
-  service_address_recipient?: string | null;
-
-  service_end_date?: string | null;
-
-  service_start_date?: string | null;
-
-  shipping_address?: string | null;
-
-  shipping_address_recipient?: string | null;
-
-  state?: InboxAPI.DocumentState;
-
-  subtotal?: string | null;
-
-  tax_details?: Array<DocumentCreateFromPdfResponse.TaxDetail> | null;
-
-  total_discount?: string | null;
-
-  total_tax?: string | null;
-
-  ubl_document?: string | null;
-
-  vendor_address?: string | null;
-
-  vendor_address_recipient?: string | null;
-
-  vendor_email?: string | null;
-
-  vendor_name?: string | null;
-
-  vendor_tax_id?: string | null;
-}
-
-export namespace DocumentCreateFromPdfResponse {
-  export interface Item {
-    amount?: string | null;
-
-    date?: null;
-
-    description?: string | null;
-
-    product_code?: string | null;
-
-    quantity?: string | null;
-
-    tax?: string | null;
-
-    tax_rate?: string | null;
-
-    /**
-     * Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
-     */
-    unit?: DocumentsAPI.UnitOfMeasureCode | null;
-
-    unit_price?: string | null;
-  }
-
-  export interface TaxDetail {
-    amount?: string | null;
-
-    rate?: string | null;
-  }
-}
-
-export type DocumentGetHistoryResponse = Array<DocumentGetHistoryResponse.DocumentGetHistoryResponseItem>;
-
-export namespace DocumentGetHistoryResponse {
-  export interface DocumentGetHistoryResponseItem {
-    action: string;
-
-    created_at: string;
-
-    success: boolean;
-
-    updated_at: string;
-
-    error_message?: string | null;
-  }
-}
-
-export type DocumentGetTransmissionReportResponse =
-  Array<DocumentGetTransmissionReportResponse.DocumentGetTransmissionReportResponseItem>;
-
-export namespace DocumentGetTransmissionReportResponse {
-  export interface DocumentGetTransmissionReportResponseItem {
-    id: string;
-
-    channel: string;
-
-    created_at: string;
-
-    delivery_address: string;
-
-    document_id: string;
-
-    status: 'PENDING' | 'SUCCESS' | 'FAILED';
-
-    transmission_type: 'SEND' | 'RECEIVE';
-
-    updated_at: string;
-
-    data?: Record<string, unknown> | null;
-
-    error?: string | null;
-  }
-}
-
 export interface DocumentCreateParams {
   amount_due?: number | string | null;
 
@@ -766,10 +567,6 @@ export namespace DocumentCreateParams {
   }
 }
 
-export interface DocumentCreateFromPdfParams {
-  file: Uploadable;
-}
-
 export interface DocumentSendParams {
   email?: string | null;
 
@@ -796,11 +593,7 @@ export declare namespace Documents {
     type PaymentDetailCreate as PaymentDetailCreate,
     type UnitOfMeasureCode as UnitOfMeasureCode,
     type DocumentDeleteResponse as DocumentDeleteResponse,
-    type DocumentCreateFromPdfResponse as DocumentCreateFromPdfResponse,
-    type DocumentGetHistoryResponse as DocumentGetHistoryResponse,
-    type DocumentGetTransmissionReportResponse as DocumentGetTransmissionReportResponse,
     type DocumentCreateParams as DocumentCreateParams,
-    type DocumentCreateFromPdfParams as DocumentCreateFromPdfParams,
     type DocumentSendParams as DocumentSendParams,
   };
 
@@ -814,9 +607,5 @@ export declare namespace Documents {
     type AttachmentAddParams as AttachmentAddParams,
   };
 
-  export {
-    Ubl as Ubl,
-    type UblGetResponse as UblGetResponse,
-    type UblCreateFromUblParams as UblCreateFromUblParams,
-  };
+  export { Ubl as Ubl, type UblGetResponse as UblGetResponse };
 }

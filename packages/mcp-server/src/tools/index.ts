@@ -6,15 +6,11 @@ import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import create_documents from './documents/create-documents';
 import retrieve_documents from './documents/retrieve-documents';
 import delete_documents from './documents/delete-documents';
-import create_from_pdf_documents from './documents/create-from-pdf-documents';
-import get_history_documents from './documents/get-history-documents';
-import get_transmission_report_documents from './documents/get-transmission-report-documents';
 import send_documents from './documents/send-documents';
 import retrieve_documents_attachments from './documents/attachments/retrieve-documents-attachments';
 import list_documents_attachments from './documents/attachments/list-documents-attachments';
 import delete_documents_attachments from './documents/attachments/delete-documents-attachments';
 import add_documents_attachments from './documents/attachments/add-documents-attachments';
-import create_from_ubl_documents_ubl from './documents/ubl/create-from-ubl-documents-ubl';
 import get_documents_ubl from './documents/ubl/get-documents-ubl';
 import list_inbox from './inbox/list-inbox';
 import list_credit_notes_inbox from './inbox/list-credit-notes-inbox';
@@ -25,13 +21,11 @@ import validate_json_validate from './validate/validate-json-validate';
 import validate_peppol_id_validate from './validate/validate-peppol-id-validate';
 import validate_ubl_validate from './validate/validate-ubl-validate';
 import retrieve_lookup from './lookup/retrieve-lookup';
-import retrieve_me from './me/retrieve-me';
 import create_webhooks from './webhooks/create-webhooks';
 import retrieve_webhooks from './webhooks/retrieve-webhooks';
 import update_webhooks from './webhooks/update-webhooks';
 import list_webhooks from './webhooks/list-webhooks';
 import delete_webhooks from './webhooks/delete-webhooks';
-import history_webhooks from './webhooks/history-webhooks';
 
 export type HandlerFunction = (
   client: EInvoiceAPI,
@@ -63,15 +57,11 @@ function addEndpoint(endpoint: Endpoint) {
 addEndpoint(create_documents);
 addEndpoint(retrieve_documents);
 addEndpoint(delete_documents);
-addEndpoint(create_from_pdf_documents);
-addEndpoint(get_history_documents);
-addEndpoint(get_transmission_report_documents);
 addEndpoint(send_documents);
 addEndpoint(retrieve_documents_attachments);
 addEndpoint(list_documents_attachments);
 addEndpoint(delete_documents_attachments);
 addEndpoint(add_documents_attachments);
-addEndpoint(create_from_ubl_documents_ubl);
 addEndpoint(get_documents_ubl);
 addEndpoint(list_inbox);
 addEndpoint(list_credit_notes_inbox);
@@ -82,13 +72,11 @@ addEndpoint(validate_json_validate);
 addEndpoint(validate_peppol_id_validate);
 addEndpoint(validate_ubl_validate);
 addEndpoint(retrieve_lookup);
-addEndpoint(retrieve_me);
 addEndpoint(create_webhooks);
 addEndpoint(retrieve_webhooks);
 addEndpoint(update_webhooks);
 addEndpoint(list_webhooks);
 addEndpoint(delete_webhooks);
-addEndpoint(history_webhooks);
 
 export type Filter = {
   type: 'resource' | 'operation' | 'tag' | 'tool';

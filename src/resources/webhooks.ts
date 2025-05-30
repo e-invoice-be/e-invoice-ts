@@ -44,13 +44,6 @@ export class Webhooks extends APIResource {
   delete(webhookID: string, options?: RequestOptions): APIPromise<WebhookDeleteResponse> {
     return this._client.delete(path`/api/webhooks/${webhookID}`, options);
   }
-
-  /**
-   * Get the history of a webhook
-   */
-  history(webhookID: string, options?: RequestOptions): APIPromise<WebhookHistoryResponse> {
-    return this._client.get(path`/api/webhooks/${webhookID}/history`, options);
-  }
 }
 
 /**
@@ -75,10 +68,6 @@ export interface WebhookDeleteResponse {
   is_deleted: boolean;
 }
 
-export interface WebhookHistoryResponse {
-  history: Array<Record<string, unknown>>;
-}
-
 export interface WebhookCreateParams {
   events: Array<string>;
 
@@ -100,7 +89,6 @@ export declare namespace Webhooks {
     type WebhookResponse as WebhookResponse,
     type WebhookListResponse as WebhookListResponse,
     type WebhookDeleteResponse as WebhookDeleteResponse,
-    type WebhookHistoryResponse as WebhookHistoryResponse,
     type WebhookCreateParams as WebhookCreateParams,
     type WebhookUpdateParams as WebhookUpdateParams,
   };

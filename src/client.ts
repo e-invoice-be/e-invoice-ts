@@ -30,7 +30,6 @@ import {
   PaginatedDocumentResponse,
 } from './resources/inbox';
 import { Certificate, Lookup, LookupRetrieveParams, LookupRetrieveResponse } from './resources/lookup';
-import { Me, MeRetrieveResponse } from './resources/me';
 import {
   Outbox,
   OutboxListDraftDocumentsParams,
@@ -47,7 +46,6 @@ import {
 import {
   WebhookCreateParams,
   WebhookDeleteResponse,
-  WebhookHistoryResponse,
   WebhookListResponse,
   WebhookResponse,
   WebhookUpdateParams,
@@ -60,13 +58,9 @@ import {
   CurrencyCode,
   DocumentAttachmentCreate,
   DocumentCreate,
-  DocumentCreateFromPdfParams,
-  DocumentCreateFromPdfResponse,
   DocumentCreateParams,
   DocumentDeleteResponse,
   DocumentDirection,
-  DocumentGetHistoryResponse,
-  DocumentGetTransmissionReportResponse,
   DocumentResponse,
   DocumentSendParams,
   DocumentType,
@@ -77,7 +71,7 @@ import {
 
 export interface ClientOptions {
   /**
-   * Defaults to process.env['E_INVOICE_API_API_KEY'].
+   * Defaults to process.env['E_INVOICE_API_KEY'].
    */
   apiKey?: string | undefined;
 
@@ -169,7 +163,7 @@ export class EInvoiceAPI {
   /**
    * API Client for interfacing with the E Invoice API API.
    *
-   * @param {string | undefined} [opts.apiKey=process.env['E_INVOICE_API_API_KEY'] ?? undefined]
+   * @param {string | undefined} [opts.apiKey=process.env['E_INVOICE_API_KEY'] ?? undefined]
    * @param {string} [opts.baseURL=process.env['E_INVOICE_API_BASE_URL'] ?? https://api.example.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -180,12 +174,12 @@ export class EInvoiceAPI {
    */
   constructor({
     baseURL = readEnv('E_INVOICE_API_BASE_URL'),
-    apiKey = readEnv('E_INVOICE_API_API_KEY'),
+    apiKey = readEnv('E_INVOICE_API_KEY'),
     ...opts
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
       throw new Errors.EInvoiceAPIError(
-        "The E_INVOICE_API_API_KEY environment variable is missing or empty; either provide it, or instantiate the EInvoiceAPI client with an apiKey option, like new EInvoiceAPI({ apiKey: 'My API Key' }).",
+        "The E_INVOICE_API_KEY environment variable is missing or empty; either provide it, or instantiate the EInvoiceAPI client with an apiKey option, like new EInvoiceAPI({ apiKey: 'My API Key' }).",
       );
     }
 
@@ -746,7 +740,6 @@ export class EInvoiceAPI {
   outbox: API.Outbox = new API.Outbox(this);
   validate: API.Validate = new API.Validate(this);
   lookup: API.Lookup = new API.Lookup(this);
-  me: API.Me = new API.Me(this);
   webhooks: API.Webhooks = new API.Webhooks(this);
 }
 EInvoiceAPI.Documents = Documents;
@@ -754,7 +747,6 @@ EInvoiceAPI.Inbox = Inbox;
 EInvoiceAPI.Outbox = Outbox;
 EInvoiceAPI.Validate = Validate;
 EInvoiceAPI.Lookup = Lookup;
-EInvoiceAPI.Me = Me;
 EInvoiceAPI.Webhooks = Webhooks;
 export declare namespace EInvoiceAPI {
   export type RequestOptions = Opts.RequestOptions;
@@ -770,11 +762,7 @@ export declare namespace EInvoiceAPI {
     type PaymentDetailCreate as PaymentDetailCreate,
     type UnitOfMeasureCode as UnitOfMeasureCode,
     type DocumentDeleteResponse as DocumentDeleteResponse,
-    type DocumentCreateFromPdfResponse as DocumentCreateFromPdfResponse,
-    type DocumentGetHistoryResponse as DocumentGetHistoryResponse,
-    type DocumentGetTransmissionReportResponse as DocumentGetTransmissionReportResponse,
     type DocumentCreateParams as DocumentCreateParams,
-    type DocumentCreateFromPdfParams as DocumentCreateFromPdfParams,
     type DocumentSendParams as DocumentSendParams,
   };
 
@@ -810,14 +798,11 @@ export declare namespace EInvoiceAPI {
     type LookupRetrieveParams as LookupRetrieveParams,
   };
 
-  export { Me as Me, type MeRetrieveResponse as MeRetrieveResponse };
-
   export {
     Webhooks as Webhooks,
     type WebhookResponse as WebhookResponse,
     type WebhookListResponse as WebhookListResponse,
     type WebhookDeleteResponse as WebhookDeleteResponse,
-    type WebhookHistoryResponse as WebhookHistoryResponse,
     type WebhookCreateParams as WebhookCreateParams,
     type WebhookUpdateParams as WebhookUpdateParams,
   };

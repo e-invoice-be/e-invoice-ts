@@ -11,18 +11,12 @@ Types:
 - <code><a href="./src/resources/documents/documents.ts">PaymentDetailCreate</a></code>
 - <code><a href="./src/resources/documents/documents.ts">UnitOfMeasureCode</a></code>
 - <code><a href="./src/resources/documents/documents.ts">DocumentDeleteResponse</a></code>
-- <code><a href="./src/resources/documents/documents.ts">DocumentCreateFromPdfResponse</a></code>
-- <code><a href="./src/resources/documents/documents.ts">DocumentGetHistoryResponse</a></code>
-- <code><a href="./src/resources/documents/documents.ts">DocumentGetTransmissionReportResponse</a></code>
 
 Methods:
 
 - <code title="post /api/documents/">client.documents.<a href="./src/resources/documents/documents.ts">create</a>({ ...params }) -> DocumentResponse</code>
 - <code title="get /api/documents/{document_id}">client.documents.<a href="./src/resources/documents/documents.ts">retrieve</a>(documentID) -> DocumentResponse</code>
 - <code title="delete /api/documents/{document_id}">client.documents.<a href="./src/resources/documents/documents.ts">delete</a>(documentID) -> DocumentDeleteResponse</code>
-- <code title="post /api/documents/pdf">client.documents.<a href="./src/resources/documents/documents.ts">createFromPdf</a>({ ...params }) -> DocumentCreateFromPdfResponse</code>
-- <code title="get /api/documents/{document_id}/history">client.documents.<a href="./src/resources/documents/documents.ts">getHistory</a>(documentID) -> DocumentGetHistoryResponse</code>
-- <code title="get /api/documents/{document_id}/transmission-report">client.documents.<a href="./src/resources/documents/documents.ts">getTransmissionReport</a>(documentID) -> DocumentGetTransmissionReportResponse</code>
 - <code title="post /api/documents/{document_id}/send">client.documents.<a href="./src/resources/documents/documents.ts">send</a>(documentID, { ...params }) -> DocumentResponse</code>
 
 ## Attachments
@@ -48,7 +42,6 @@ Types:
 
 Methods:
 
-- <code title="post /api/documents/ubl">client.documents.ubl.<a href="./src/resources/documents/ubl.ts">createFromUbl</a>({ ...params }) -> DocumentResponse</code>
 - <code title="get /api/documents/{document_id}/ubl">client.documents.ubl.<a href="./src/resources/documents/ubl.ts">get</a>(documentID) -> UblGetResponse</code>
 
 # Inbox
@@ -96,16 +89,6 @@ Methods:
 
 - <code title="get /api/lookup">client.lookup.<a href="./src/resources/lookup.ts">retrieve</a>({ ...params }) -> LookupRetrieveResponse</code>
 
-# Me
-
-Types:
-
-- <code><a href="./src/resources/me.ts">MeRetrieveResponse</a></code>
-
-Methods:
-
-- <code title="get /api/me/">client.me.<a href="./src/resources/me.ts">retrieve</a>() -> MeRetrieveResponse</code>
-
 # Webhooks
 
 Types:
@@ -113,7 +96,6 @@ Types:
 - <code><a href="./src/resources/webhooks.ts">WebhookResponse</a></code>
 - <code><a href="./src/resources/webhooks.ts">WebhookListResponse</a></code>
 - <code><a href="./src/resources/webhooks.ts">WebhookDeleteResponse</a></code>
-- <code><a href="./src/resources/webhooks.ts">WebhookHistoryResponse</a></code>
 
 Methods:
 
@@ -122,4 +104,3 @@ Methods:
 - <code title="put /api/webhooks/{webhook_id}">client.webhooks.<a href="./src/resources/webhooks.ts">update</a>(webhookID, { ...params }) -> WebhookResponse</code>
 - <code title="get /api/webhooks/">client.webhooks.<a href="./src/resources/webhooks.ts">list</a>() -> WebhookListResponse</code>
 - <code title="delete /api/webhooks/{webhook_id}">client.webhooks.<a href="./src/resources/webhooks.ts">delete</a>(webhookID) -> WebhookDeleteResponse</code>
-- <code title="get /api/webhooks/{webhook_id}/history">client.webhooks.<a href="./src/resources/webhooks.ts">history</a>(webhookID) -> WebhookHistoryResponse</code>

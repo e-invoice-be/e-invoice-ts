@@ -11,11 +11,7 @@ export {
   type PaymentDetailCreate,
   type UnitOfMeasureCode,
   type DocumentDeleteResponse,
-  type DocumentCreateFromPdfResponse,
-  type DocumentGetHistoryResponse,
-  type DocumentGetTransmissionReportResponse,
   type DocumentCreateParams,
-  type DocumentCreateFromPdfParams,
   type DocumentSendParams,
 } from './documents/documents';
 export {
@@ -28,7 +24,6 @@ export {
   type InboxListInvoicesParams,
 } from './inbox';
 export { Lookup, type Certificate, type LookupRetrieveResponse, type LookupRetrieveParams } from './lookup';
-export { Me, type MeRetrieveResponse } from './me';
 export {
   Outbox,
   type OutboxListDraftDocumentsParams,
@@ -47,7 +42,6 @@ export {
   type WebhookResponse,
   type WebhookListResponse,
   type WebhookDeleteResponse,
-  type WebhookHistoryResponse,
   type WebhookCreateParams,
   type WebhookUpdateParams,
 } from './webhooks';

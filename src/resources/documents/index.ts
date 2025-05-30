@@ -20,11 +20,7 @@ export {
   type PaymentDetailCreate,
   type UnitOfMeasureCode,
   type DocumentDeleteResponse,
-  type DocumentCreateFromPdfResponse,
-  type DocumentGetHistoryResponse,
-  type DocumentGetTransmissionReportResponse,
   type DocumentCreateParams,
-  type DocumentCreateFromPdfParams,
   type DocumentSendParams,
 } from './documents';
-export { Ubl, type UblGetResponse, type UblCreateFromUblParams } from './ubl';
+export { Ubl, type UblGetResponse } from './ubl';
