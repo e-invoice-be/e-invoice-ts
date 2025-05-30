@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.0-alpha.2 (2025-05-30)
+
+Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/e-invoice-be/e-invoice-ts/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
+
+### Features
+
+* **api:** manual updates ([dfc48d1](https://github.com/e-invoice-be/e-invoice-ts/commit/dfc48d101dd1e4f7e7b8305fbf2d9f7b21d695f3))
+
+
+### Chores
+
+* sync repo ([0d3ecca](https://github.com/e-invoice-be/e-invoice-ts/commit/0d3ecca883531707a90600758c48abfc81427d0a))
+* update SDK settings ([3023924](https://github.com/e-invoice-be/e-invoice-ts/commit/3023924159fe5b88f6417a32ce4bd2c6934864c1))
+
 ## 0.1.0-alpha.1 (2025-05-30)
 
 Full Changelog: [v0.0.1-alpha.0...v0.1.0-alpha.1](https://github.com/e-invoice-be/e-invoice-api-sdk-ts/compare/v0.0.1-alpha.0...v0.1.0-alpha.1)
