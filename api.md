@@ -7,6 +7,7 @@ Types:
 - <code><a href="./src/resources/documents/documents.ts">DocumentCreate</a></code>
 - <code><a href="./src/resources/documents/documents.ts">DocumentDirection</a></code>
 - <code><a href="./src/resources/documents/documents.ts">DocumentResponse</a></code>
+- <code><a href="./src/resources/documents/documents.ts">DocumentType</a></code>
 - <code><a href="./src/resources/documents/documents.ts">PaymentDetailCreate</a></code>
 - <code><a href="./src/resources/documents/documents.ts">UnitOfMeasureCode</a></code>
 - <code><a href="./src/resources/documents/documents.ts">DocumentDeleteResponse</a></code>
@@ -48,7 +49,6 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/inbox.ts">DocumentState</a></code>
-- <code><a href="./src/resources/inbox.ts">DocumentTypeInput</a></code>
 - <code><a href="./src/resources/inbox.ts">PaginatedDocumentResponse</a></code>
 
 Methods:

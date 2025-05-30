@@ -55,7 +55,7 @@ export const tool: Tool = {
         $ref: '#/$defs/document_state',
       },
       type: {
-        $ref: '#/$defs/document_type_input',
+        $ref: '#/$defs/document_type',
       },
     },
     $defs: {
@@ -64,7 +64,7 @@ export const tool: Tool = {
         title: 'DocumentState',
         enum: ['DRAFT', 'TRANSIT', 'FAILED', 'SENT', 'RECEIVED'],
       },
-      document_type_input: {
+      document_type: {
         type: 'string',
         title: 'DocumentType',
         enum: ['INVOICE', 'CREDIT_NOTE'],
