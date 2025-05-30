@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import * as InboxAPI from './inbox';
+import * as DocumentsAPI from './documents/documents';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
@@ -78,7 +79,7 @@ export interface OutboxListReceivedDocumentsParams {
   /**
    * Filter by document type
    */
-  type?: InboxAPI.DocumentTypeInput | null;
+  type?: DocumentsAPI.DocumentType | null;
 }
 
 export declare namespace Outbox {

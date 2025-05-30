@@ -22,7 +22,6 @@ import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
 import {
   DocumentState,
-  DocumentTypeInput,
   Inbox,
   InboxListCreditNotesParams,
   InboxListInvoicesParams,
@@ -63,6 +62,7 @@ import {
   DocumentDirection,
   DocumentResponse,
   DocumentSendParams,
+  DocumentType,
   Documents,
   PaymentDetailCreate,
   UnitOfMeasureCode,
@@ -781,6 +781,7 @@ export declare namespace EInvoice {
     type DocumentCreate as DocumentCreate,
     type DocumentDirection as DocumentDirection,
     type DocumentResponse as DocumentResponse,
+    type DocumentType as DocumentType,
     type PaymentDetailCreate as PaymentDetailCreate,
     type UnitOfMeasureCode as UnitOfMeasureCode,
     type DocumentDeleteResponse as DocumentDeleteResponse,
@@ -791,7 +792,6 @@ export declare namespace EInvoice {
   export {
     Inbox as Inbox,
     type DocumentState as DocumentState,
-    type DocumentTypeInput as DocumentTypeInput,
     type PaginatedDocumentResponse as PaginatedDocumentResponse,
     type InboxListParams as InboxListParams,
     type InboxListCreditNotesParams as InboxListCreditNotesParams,

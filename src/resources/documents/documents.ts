@@ -116,7 +116,7 @@ export interface DocumentCreate {
 
   direction?: DocumentDirection;
 
-  document_type?: InboxAPI.DocumentTypeInput;
+  document_type?: DocumentType;
 
   due_date?: string | null;
 
@@ -238,7 +238,7 @@ export interface DocumentResponse {
 
   direction?: DocumentDirection;
 
-  document_type?: 'INVOICE' | 'CREDIT_NOTE';
+  document_type?: DocumentType;
 
   due_date?: string | null;
 
@@ -337,6 +337,8 @@ export namespace DocumentResponse {
     rate?: string | null;
   }
 }
+
+export type DocumentType = 'INVOICE' | 'CREDIT_NOTE';
 
 export interface PaymentDetailCreate {
   bank_account_number?: string | null;
@@ -475,7 +477,7 @@ export interface DocumentCreateParams {
 
   direction?: DocumentDirection;
 
-  document_type?: InboxAPI.DocumentTypeInput;
+  document_type?: DocumentType;
 
   due_date?: string | null;
 
@@ -587,6 +589,7 @@ export declare namespace Documents {
     type DocumentCreate as DocumentCreate,
     type DocumentDirection as DocumentDirection,
     type DocumentResponse as DocumentResponse,
+    type DocumentType as DocumentType,
     type PaymentDetailCreate as PaymentDetailCreate,
     type UnitOfMeasureCode as UnitOfMeasureCode,
     type DocumentDeleteResponse as DocumentDeleteResponse,

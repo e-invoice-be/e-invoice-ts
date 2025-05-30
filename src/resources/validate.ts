@@ -48,7 +48,7 @@ export class Validate extends APIResource {
 export interface UblDocumentValidation {
   id: string;
 
-  file_name: string;
+  file_name: string | null;
 
   is_valid: boolean;
 
@@ -146,7 +146,7 @@ export interface ValidateValidateJsonParams {
 
   direction?: DocumentsAPI.DocumentDirection;
 
-  document_type?: InboxAPI.DocumentTypeInput;
+  document_type?: DocumentsAPI.DocumentType;
 
   due_date?: string | null;
 

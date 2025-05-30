@@ -7,6 +7,7 @@ export {
   type DocumentCreate,
   type DocumentDirection,
   type DocumentResponse,
+  type DocumentType,
   type PaymentDetailCreate,
   type UnitOfMeasureCode,
   type DocumentDeleteResponse,
@@ -16,7 +17,6 @@ export {
 export {
   Inbox,
   type DocumentState,
-  type DocumentTypeInput,
   type PaginatedDocumentResponse,
   type InboxListParams,
   type InboxListCreditNotesParams,

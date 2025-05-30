@@ -76,7 +76,7 @@ export const tool: Tool = {
         $ref: '#/$defs/document_direction',
       },
       document_type: {
-        $ref: '#/$defs/document_type_input',
+        $ref: '#/$defs/document_type',
       },
       due_date: {
         type: 'string',
@@ -374,7 +374,7 @@ export const tool: Tool = {
         title: 'DocumentDirection',
         enum: ['INBOUND', 'OUTBOUND'],
       },
-      document_type_input: {
+      document_type: {
         type: 'string',
         title: 'DocumentType',
         enum: ['INVOICE', 'CREDIT_NOTE'],
