@@ -3,7 +3,8 @@
 import { APIResource } from '../core/resource';
 import * as InboxAPI from './inbox';
 import * as DocumentsAPI from './documents/documents';
-import { APIPromise } from '../core/api-promise';
+import { DocumentResponsesDocumentsNumberPage } from './documents/documents';
+import { DocumentsNumberPage, type DocumentsNumberPageParams, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 
 export class Outbox extends APIResource {
@@ -13,8 +14,11 @@ export class Outbox extends APIResource {
   listDraftDocuments(
     query: OutboxListDraftDocumentsParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<InboxAPI.PaginatedDocumentResponse> {
-    return this._client.get('/api/outbox/drafts', { query, ...options });
+  ): PagePromise<DocumentResponsesDocumentsNumberPage, DocumentsAPI.DocumentResponse> {
+    return this._client.getAPIList('/api/outbox/drafts', DocumentsNumberPage<DocumentsAPI.DocumentResponse>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -23,24 +27,17 @@ export class Outbox extends APIResource {
   listReceivedDocuments(
     query: OutboxListReceivedDocumentsParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<InboxAPI.PaginatedDocumentResponse> {
-    return this._client.get('/api/outbox/', { query, ...options });
+  ): PagePromise<DocumentResponsesDocumentsNumberPage, DocumentsAPI.DocumentResponse> {
+    return this._client.getAPIList('/api/outbox/', DocumentsNumberPage<DocumentsAPI.DocumentResponse>, {
+      query,
+      ...options,
+    });
   }
 }
 
-export interface OutboxListDraftDocumentsParams {
-  /**
-   * Page number
-   */
-  page?: number;
+export interface OutboxListDraftDocumentsParams extends DocumentsNumberPageParams {}
 
-  /**
-   * Number of items per page
-   */
-  page_size?: number;
-}
-
-export interface OutboxListReceivedDocumentsParams {
+export interface OutboxListReceivedDocumentsParams extends DocumentsNumberPageParams {
   /**
    * Filter by issue date (from)
    */
@@ -50,16 +47,6 @@ export interface OutboxListReceivedDocumentsParams {
    * Filter by issue date (to)
    */
   date_to?: string | null;
-
-  /**
-   * Page number
-   */
-  page?: number;
-
-  /**
-   * Number of items per page
-   */
-  page_size?: number;
 
   /**
    * Search in invoice number, seller/buyer names
@@ -88,3 +75,5 @@ export declare namespace Outbox {
     type OutboxListReceivedDocumentsParams as OutboxListReceivedDocumentsParams,
   };
 }
+
+export { type DocumentResponsesDocumentsNumberPage };

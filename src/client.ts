@@ -14,6 +14,8 @@ import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
 import { VERSION } from './version';
 import * as Errors from './core/error';
+import * as Pagination from './core/pagination';
+import { AbstractPage, type DocumentsNumberPageParams, DocumentsNumberPageResponse } from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
@@ -22,7 +24,6 @@ import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
 import {
   DocumentState,
-  DocumentTypeInput,
   Inbox,
   InboxListCreditNotesParams,
   InboxListInvoicesParams,
@@ -527,6 +528,25 @@ export class EInvoice {
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
 
+  getAPIList<Item, PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>>(
+    path: string,
+    Page: new (...args: any[]) => PageClass,
+    opts?: RequestOptions,
+  ): Pagination.PagePromise<PageClass, Item> {
+    return this.requestAPIList(Page, { method: 'get', path, ...opts });
+  }
+
+  requestAPIList<
+    Item = unknown,
+    PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>,
+  >(
+    Page: new (...args: ConstructorParameters<typeof Pagination.AbstractPage>) => PageClass,
+    options: FinalRequestOptions,
+  ): Pagination.PagePromise<PageClass, Item> {
+    const request = this.makeRequest(options, null, undefined);
+    return new Pagination.PagePromise<PageClass, Item>(this as any as EInvoice, request, Page);
+  }
+
   async fetchWithTimeout(
     url: RequestInfo,
     init: RequestInit | undefined,
@@ -775,6 +795,12 @@ EInvoice.Webhooks = Webhooks;
 export declare namespace EInvoice {
   export type RequestOptions = Opts.RequestOptions;
 
+  export import DocumentsNumberPage = Pagination.DocumentsNumberPage;
+  export {
+    type DocumentsNumberPageParams as DocumentsNumberPageParams,
+    type DocumentsNumberPageResponse as DocumentsNumberPageResponse,
+  };
+
   export {
     Documents as Documents,
     type CurrencyCode as CurrencyCode,
@@ -793,7 +819,6 @@ export declare namespace EInvoice {
   export {
     Inbox as Inbox,
     type DocumentState as DocumentState,
-    type DocumentTypeInput as DocumentTypeInput,
     type PaginatedDocumentResponse as PaginatedDocumentResponse,
     type InboxListParams as InboxListParams,
     type InboxListCreditNotesParams as InboxListCreditNotesParams,
