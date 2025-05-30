@@ -39,6 +39,8 @@ export class Inbox extends APIResource {
 
 export type DocumentState = 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED';
 
+export type DocumentTypeInput = 'INVOICE' | 'CREDIT_NOTE';
+
 export interface PaginatedDocumentResponse {
   items: Array<DocumentsAPI.DocumentResponse>;
 
@@ -120,6 +122,7 @@ export interface InboxListInvoicesParams {
 export declare namespace Inbox {
   export {
     type DocumentState as DocumentState,
+    type DocumentTypeInput as DocumentTypeInput,
     type PaginatedDocumentResponse as PaginatedDocumentResponse,
     type InboxListParams as InboxListParams,
     type InboxListCreditNotesParams as InboxListCreditNotesParams,

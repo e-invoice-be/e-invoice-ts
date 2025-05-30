@@ -22,6 +22,7 @@ import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
 import {
   DocumentState,
+  DocumentTypeInput,
   Inbox,
   InboxListCreditNotesParams,
   InboxListInvoicesParams,
@@ -792,6 +793,7 @@ export declare namespace EInvoice {
   export {
     Inbox as Inbox,
     type DocumentState as DocumentState,
+    type DocumentTypeInput as DocumentTypeInput,
     type PaginatedDocumentResponse as PaginatedDocumentResponse,
     type InboxListParams as InboxListParams,
     type InboxListCreditNotesParams as InboxListCreditNotesParams,
