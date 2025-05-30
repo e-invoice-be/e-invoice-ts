@@ -42,15 +42,15 @@ If you’d like to use the repository from source, you can either install from g
 To install via git:
 
 ```sh
-$ npm install git+ssh://git@github.com:e-invoice-be/e-invoice-api-sdk-ts.git
+$ npm install git+ssh://git@github.com:e-invoice-be/e-invoice-ts.git
 ```
 
 Alternatively, to link a local copy of the repo:
 
 ```sh
 # Clone
-$ git clone https://www.github.com/e-invoice-be/e-invoice-api-sdk-ts
-$ cd e-invoice-api-sdk-ts
+$ git clone https://www.github.com/e-invoice-be/e-invoice-ts
+$ cd e-invoice-ts
 
 # With yarn
 $ yarn link
