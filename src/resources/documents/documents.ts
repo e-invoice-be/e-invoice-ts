@@ -16,6 +16,7 @@ import {
 import * as UblAPI from './ubl';
 import { Ubl, UblGetResponse } from './ubl';
 import { APIPromise } from '../../core/api-promise';
+import { DocumentsNumberPage } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -60,6 +61,8 @@ export class Documents extends APIResource {
     });
   }
 }
+
+export type DocumentResponsesDocumentsNumberPage = DocumentsNumberPage<DocumentResponse>;
 
 export type CurrencyCode =
   | 'EUR'

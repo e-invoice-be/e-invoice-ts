@@ -22,5 +22,6 @@ export {
   type DocumentDeleteResponse,
   type DocumentCreateParams,
   type DocumentSendParams,
+  type DocumentResponsesDocumentsNumberPage,
 } from './documents';
 export { Ubl, type UblGetResponse } from './ubl';

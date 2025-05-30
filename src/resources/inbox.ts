@@ -2,7 +2,8 @@
 
 import { APIResource } from '../core/resource';
 import * as DocumentsAPI from './documents/documents';
-import { APIPromise } from '../core/api-promise';
+import { DocumentResponsesDocumentsNumberPage } from './documents/documents';
+import { DocumentsNumberPage, type DocumentsNumberPageParams, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 
 export class Inbox extends APIResource {
@@ -12,8 +13,11 @@ export class Inbox extends APIResource {
   list(
     query: InboxListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<PaginatedDocumentResponse> {
-    return this._client.get('/api/inbox/', { query, ...options });
+  ): PagePromise<DocumentResponsesDocumentsNumberPage, DocumentsAPI.DocumentResponse> {
+    return this._client.getAPIList('/api/inbox/', DocumentsNumberPage<DocumentsAPI.DocumentResponse>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -22,8 +26,12 @@ export class Inbox extends APIResource {
   listCreditNotes(
     query: InboxListCreditNotesParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<PaginatedDocumentResponse> {
-    return this._client.get('/api/inbox/credit-notes', { query, ...options });
+  ): PagePromise<DocumentResponsesDocumentsNumberPage, DocumentsAPI.DocumentResponse> {
+    return this._client.getAPIList(
+      '/api/inbox/credit-notes',
+      DocumentsNumberPage<DocumentsAPI.DocumentResponse>,
+      { query, ...options },
+    );
   }
 
   /**
@@ -32,14 +40,16 @@ export class Inbox extends APIResource {
   listInvoices(
     query: InboxListInvoicesParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<PaginatedDocumentResponse> {
-    return this._client.get('/api/inbox/invoices', { query, ...options });
+  ): PagePromise<DocumentResponsesDocumentsNumberPage, DocumentsAPI.DocumentResponse> {
+    return this._client.getAPIList(
+      '/api/inbox/invoices',
+      DocumentsNumberPage<DocumentsAPI.DocumentResponse>,
+      { query, ...options },
+    );
   }
 }
 
 export type DocumentState = 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED';
-
-export type DocumentTypeInput = 'INVOICE' | 'CREDIT_NOTE';
 
 export interface PaginatedDocumentResponse {
   items: Array<DocumentsAPI.DocumentResponse>;
@@ -53,7 +63,7 @@ export interface PaginatedDocumentResponse {
   total: number;
 }
 
-export interface InboxListParams {
+export interface InboxListParams extends DocumentsNumberPageParams {
   /**
    * Filter by issue date (from)
    */
@@ -63,16 +73,6 @@ export interface InboxListParams {
    * Filter by issue date (to)
    */
   date_to?: string | null;
-
-  /**
-   * Page number
-   */
-  page?: number;
-
-  /**
-   * Number of items per page
-   */
-  page_size?: number;
 
   /**
    * Search in invoice number, seller/buyer names
@@ -95,37 +95,18 @@ export interface InboxListParams {
   type?: DocumentsAPI.DocumentType | null;
 }
 
-export interface InboxListCreditNotesParams {
-  /**
-   * Page number
-   */
-  page?: number;
+export interface InboxListCreditNotesParams extends DocumentsNumberPageParams {}
 
-  /**
-   * Number of items per page
-   */
-  page_size?: number;
-}
-
-export interface InboxListInvoicesParams {
-  /**
-   * Page number
-   */
-  page?: number;
-
-  /**
-   * Number of items per page
-   */
-  page_size?: number;
-}
+export interface InboxListInvoicesParams extends DocumentsNumberPageParams {}
 
 export declare namespace Inbox {
   export {
     type DocumentState as DocumentState,
-    type DocumentTypeInput as DocumentTypeInput,
     type PaginatedDocumentResponse as PaginatedDocumentResponse,
     type InboxListParams as InboxListParams,
     type InboxListCreditNotesParams as InboxListCreditNotesParams,
     type InboxListInvoicesParams as InboxListInvoicesParams,
   };
 }
+
+export { type DocumentResponsesDocumentsNumberPage };

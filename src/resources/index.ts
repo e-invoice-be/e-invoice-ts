@@ -13,11 +13,11 @@ export {
   type DocumentDeleteResponse,
   type DocumentCreateParams,
   type DocumentSendParams,
+  type DocumentResponsesDocumentsNumberPage,
 } from './documents/documents';
 export {
   Inbox,
   type DocumentState,
-  type DocumentTypeInput,
   type PaginatedDocumentResponse,
   type InboxListParams,
   type InboxListCreditNotesParams,

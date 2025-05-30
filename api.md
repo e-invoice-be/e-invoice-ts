@@ -49,21 +49,20 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/inbox.ts">DocumentState</a></code>
-- <code><a href="./src/resources/inbox.ts">DocumentTypeInput</a></code>
 - <code><a href="./src/resources/inbox.ts">PaginatedDocumentResponse</a></code>
 
 Methods:
 
-- <code title="get /api/inbox/">client.inbox.<a href="./src/resources/inbox.ts">list</a>({ ...params }) -> PaginatedDocumentResponse</code>
-- <code title="get /api/inbox/credit-notes">client.inbox.<a href="./src/resources/inbox.ts">listCreditNotes</a>({ ...params }) -> PaginatedDocumentResponse</code>
-- <code title="get /api/inbox/invoices">client.inbox.<a href="./src/resources/inbox.ts">listInvoices</a>({ ...params }) -> PaginatedDocumentResponse</code>
+- <code title="get /api/inbox/">client.inbox.<a href="./src/resources/inbox.ts">list</a>({ ...params }) -> DocumentResponsesDocumentsNumberPage</code>
+- <code title="get /api/inbox/credit-notes">client.inbox.<a href="./src/resources/inbox.ts">listCreditNotes</a>({ ...params }) -> DocumentResponsesDocumentsNumberPage</code>
+- <code title="get /api/inbox/invoices">client.inbox.<a href="./src/resources/inbox.ts">listInvoices</a>({ ...params }) -> DocumentResponsesDocumentsNumberPage</code>
 
 # Outbox
 
 Methods:
 
-- <code title="get /api/outbox/drafts">client.outbox.<a href="./src/resources/outbox.ts">listDraftDocuments</a>({ ...params }) -> PaginatedDocumentResponse</code>
-- <code title="get /api/outbox/">client.outbox.<a href="./src/resources/outbox.ts">listReceivedDocuments</a>({ ...params }) -> PaginatedDocumentResponse</code>
+- <code title="get /api/outbox/drafts">client.outbox.<a href="./src/resources/outbox.ts">listDraftDocuments</a>({ ...params }) -> DocumentResponsesDocumentsNumberPage</code>
+- <code title="get /api/outbox/">client.outbox.<a href="./src/resources/outbox.ts">listReceivedDocuments</a>({ ...params }) -> DocumentResponsesDocumentsNumberPage</code>
 
 # Validate
 
