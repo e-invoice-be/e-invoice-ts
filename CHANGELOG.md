@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.0-alpha.3 (2025-05-31)
+
+Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/e-invoice-be/e-invoice-ts/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
+
+### Chores
+
+* **deps:** bump eslint-plugin-prettier ([49fe3d8](https://github.com/e-invoice-be/e-invoice-ts/commit/49fe3d83c627a84cc34539ee87dc4a7df5d11ee6))
+* **internal:** update jest config ([b086cc7](https://github.com/e-invoice-be/e-invoice-ts/commit/b086cc7caa694010f9a1c9abbafda012bf11f522))
+
+
+### Documentation
+
+* **pagination:** improve naming ([e714129](https://github.com/e-invoice-be/e-invoice-ts/commit/e714129e44df6a74a6e3336712d6600d7e06765f))
+
 ## 0.1.0-alpha.2 (2025-05-30)
 
 Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/e-invoice-be/e-invoice-ts/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
