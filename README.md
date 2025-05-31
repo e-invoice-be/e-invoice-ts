@@ -178,13 +178,13 @@ List methods in the EInvoice API are paginated.
 You can use the `for await … of` syntax to iterate through items across all pages:
 
 ```ts
-async function fetchAllInboxes(params) {
-  const allInboxes = [];
+async function fetchAllDocumentResponses(params) {
+  const allDocumentResponses = [];
   // Automatically fetches more pages as needed.
   for await (const documentResponse of client.inbox.list()) {
-    allInboxes.push(documentResponse);
+    allDocumentResponses.push(documentResponse);
   }
-  return allInboxes;
+  return allDocumentResponses;
 }
 ```
 
