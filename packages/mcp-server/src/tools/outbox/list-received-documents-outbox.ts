@@ -1,5 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+import { asTextContentResult } from 'e-invoice-api-mcp/tools/types';
+
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import type { Metadata } from '../';
 import EInvoice from 'e-invoice-api';
@@ -73,9 +75,9 @@ export const tool: Tool = {
   },
 };
 
-export const handler = (client: EInvoice, args: Record<string, unknown> | undefined) => {
+export const handler = async (client: EInvoice, args: Record<string, unknown> | undefined) => {
   const body = args as any;
-  return client.outbox.listReceivedDocuments(body);
+  return asTextContentResult(await client.outbox.listReceivedDocuments(body));
 };
 
 export default { metadata, tool, handler };

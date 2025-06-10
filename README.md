@@ -11,11 +11,8 @@ It is generated with [Stainless](https://www.stainless.com/).
 ## Installation
 
 ```sh
-npm install git+ssh://git@github.com:e-invoice-be/e-invoice-ts.git
+npm install e-invoice-api
 ```
-
-> [!NOTE]
-> Once this package is [published to npm](https://app.stainless.com/docs/guides/publish), this will become: `npm install e-invoice-api`
 
 ## Usage
 
@@ -30,13 +27,9 @@ const client = new EInvoice({
   environment: 'development', // defaults to 'production'
 });
 
-async function main() {
-  const documentResponse = await client.documents.create();
+const documentResponse = await client.documents.create();
 
-  console.log(documentResponse.id);
-}
-
-main();
+console.log(documentResponse.id);
 ```
 
 ### Request & Response types
@@ -52,11 +45,7 @@ const client = new EInvoice({
   environment: 'development', // defaults to 'production'
 });
 
-async function main() {
-  const documentResponse: EInvoice.DocumentResponse = await client.documents.create();
-}
-
-main();
+const documentResponse: EInvoice.DocumentResponse = await client.documents.create();
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -102,19 +91,15 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-async function main() {
-  const documentResponse = await client.documents.create().catch(async (err) => {
-    if (err instanceof EInvoice.APIError) {
-      console.log(err.status); // 400
-      console.log(err.name); // BadRequestError
-      console.log(err.headers); // {server: 'nginx', ...}
-    } else {
-      throw err;
-    }
-  });
-}
-
-main();
+const documentResponse = await client.documents.create().catch(async (err) => {
+  if (err instanceof EInvoice.APIError) {
+    console.log(err.status); // 400
+    console.log(err.name); // BadRequestError
+    console.log(err.headers); // {server: 'nginx', ...}
+  } else {
+    throw err;
+  }
+});
 ```
 
 Error codes are as follows:

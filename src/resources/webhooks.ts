@@ -54,6 +54,8 @@ export interface WebhookResponse {
 
   events: Array<string>;
 
+  secret: string;
+
   url: string;
 
   enabled?: boolean;
