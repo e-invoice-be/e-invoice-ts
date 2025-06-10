@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.0.0 (2025-06-10)
+
+Full Changelog: [v0.1.0-alpha.3...v1.0.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v0.1.0-alpha.3...v1.0.0)
+
+### Features
+
+* **api:** api update ([227fd79](https://github.com/e-invoice-be/e-invoice-ts/commit/227fd79321bb4e594bfe6eadfc4b9f606cf7c820))
+* **mcp:** implement support for binary responses ([078016f](https://github.com/e-invoice-be/e-invoice-ts/commit/078016ff361fe739aaaefcf1557dd48875ac8410))
+
+
+### Chores
+
+* adjust eslint.config.mjs ignore pattern ([83eb809](https://github.com/e-invoice-be/e-invoice-ts/commit/83eb809246b4eb2396f42812730d15f5e64c10c6))
+* avoid type error in certain environments ([e67f1b8](https://github.com/e-invoice-be/e-invoice-ts/commit/e67f1b8d0a8f36be8886c1b6b79c6b43d1de9300))
+* **docs:** use top-level-await in example snippets ([5935104](https://github.com/e-invoice-be/e-invoice-ts/commit/59351047c55f5885322af500e2beda165759710d))
+* **internal:** fix readablestream types in node 20 ([9b9b860](https://github.com/e-invoice-be/e-invoice-ts/commit/9b9b86042006ca06685ab26913fc6c4c21179c4a))
+* update SDK settings ([8e1463b](https://github.com/e-invoice-be/e-invoice-ts/commit/8e1463b2d6276493bb9b986789cdc4458337bca1))
+
 ## 0.1.0-alpha.3 (2025-05-31)
 
 Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/e-invoice-be/e-invoice-ts/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
