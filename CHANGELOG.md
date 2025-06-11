@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.1 (2025-06-11)
+
+Full Changelog: [v1.0.0...v1.0.1](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.0.0...v1.0.1)
+
+### Chores
+
+* **mcp:** provides high-level initMcpServer function and exports known clients ([3e4a2ce](https://github.com/e-invoice-be/e-invoice-ts/commit/3e4a2ce0e6999339e5d67843e52263a26abf3317))
+
 ## 1.0.0 (2025-06-10)
 
 Full Changelog: [v0.1.0-alpha.3...v1.0.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v0.1.0-alpha.3...v1.0.0)
