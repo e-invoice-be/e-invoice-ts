@@ -1,8 +1,8 @@
 {
   "name": "e-invoice-api-mcp",
-  "version": "1.0.1",
-  "description": "The official MCP Server for the E Invoice API",
-  "author": "E Invoice <support@e-invoice.be>",
+  "version": "1.1.0",
+  "description": "The official MCP Server for the e-invoice API",
+  "author": "e-nvoice <support@e-invoice.be>",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "type": "commonjs",
