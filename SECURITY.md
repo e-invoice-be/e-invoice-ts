@@ -20,7 +20,7 @@ or products provided by E Invoice, please follow the respective company's securi
 
 ### E Invoice Terms and Policies
 
-Please contact support@e-invoice.be for any questions or concerns regarding the security of our services.
+Please contact security@e-invoice.be for any questions or concerns regarding the security of our services.
 
 ---
 
