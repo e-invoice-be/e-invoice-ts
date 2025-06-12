@@ -24,7 +24,6 @@ import EInvoice from 'e-invoice-api';
 
 const client = new EInvoice({
   apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted
-  environment: 'development', // defaults to 'production'
 });
 
 const documentResponse = await client.documents.create();
@@ -42,7 +41,6 @@ import EInvoice from 'e-invoice-api';
 
 const client = new EInvoice({
   apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted
-  environment: 'development', // defaults to 'production'
 });
 
 const documentResponse: EInvoice.DocumentResponse = await client.documents.create();

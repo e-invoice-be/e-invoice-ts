@@ -65,8 +65,7 @@ export function init(params: {
 
   const endpointMap = Object.fromEntries(providedEndpoints.map((endpoint) => [endpoint.tool.name, endpoint]));
 
-  const client =
-    params.client || new EInvoice({ environment: (readEnv('E_INVOICE_ENVIRONMENT') || undefined) as any });
+  const client = params.client || new EInvoice({});
 
   server.setRequestHandler(ListToolsRequestSchema, async () => {
     return {
