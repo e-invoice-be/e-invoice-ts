@@ -26,7 +26,7 @@ export { endpoints } from './tools';
 export const server = new McpServer(
   {
     name: 'e_invoice_api_api',
-    version: '1.0.1',
+    version: '1.1.0',
   },
   {
     capabilities: {
@@ -65,8 +65,7 @@ export function init(params: {
 
   const endpointMap = Object.fromEntries(providedEndpoints.map((endpoint) => [endpoint.tool.name, endpoint]));
 
-  const client =
-    params.client || new EInvoice({ environment: (readEnv('E_INVOICE_ENVIRONMENT') || undefined) as any });
+  const client = params.client || new EInvoice({});
 
   server.setRequestHandler(ListToolsRequestSchema, async () => {
     return {
