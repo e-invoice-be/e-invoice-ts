@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.2.0 (2025-06-14)
+
+Full Changelog: [v1.1.0...v1.2.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.1.0...v1.2.0)
+
+### Features
+
+* **api:** manual updates ([6db97ca](https://github.com/e-invoice-be/e-invoice-ts/commit/6db97cadc85d86eb3d7a78ae6d89ce91d565114d))
+* **mcp:** set X-Stainless-MCP header ([d40a758](https://github.com/e-invoice-be/e-invoice-ts/commit/d40a7584b0eb95bbaed74e386c087d46bd5f3288))
+
+
+### Bug Fixes
+
+* publish script — handle NPM errors correctly ([a3ee32c](https://github.com/e-invoice-be/e-invoice-ts/commit/a3ee32c48249addf06b0cabef429e8197c75c3da))
+
+
+### Chores
+
+* **internal:** add pure annotations, make base APIResource abstract ([c35240e](https://github.com/e-invoice-be/e-invoice-ts/commit/c35240e122cd191d8bacf457286792c158cbb099))
+
 ## 1.1.0 (2025-06-12)
 
 Full Changelog: [v1.0.1...v1.1.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.0.1...v1.1.0)
