@@ -314,19 +314,6 @@ describe('instantiate client', () => {
       const client = new EInvoice({ apiKey: 'My API Key' });
       expect(client.baseURL).toEqual('https://api.e-invoice.be');
     });
-
-    test('env variable with environment', () => {
-      process.env['E_INVOICE_BASE_URL'] = 'https://example.com/from_env';
-
-      expect(
-        () => new EInvoice({ apiKey: 'My API Key', environment: 'production' }),
-      ).toThrowErrorMatchingInlineSnapshot(
-        `"Ambiguous URL; The \`baseURL\` option (or E_INVOICE_BASE_URL env var) and the \`environment\` option are given. If you want to use the environment you must pass baseURL: null"`,
-      );
-
-      const client = new EInvoice({ apiKey: 'My API Key', baseURL: null, environment: 'production' });
-      expect(client.baseURL).toEqual('https://api.e-invoice.be');
-    });
   });
 
   test('maxRetries option is correctly set', () => {

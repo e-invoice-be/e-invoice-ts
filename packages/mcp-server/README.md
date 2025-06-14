@@ -10,7 +10,6 @@ You can run the MCP Server directly via `npx`:
 
 ```sh
 export E_INVOICE_API_KEY="My API Key"
-export E_INVOICE_ENVIRONMENT="production"
 npx -y e-invoice-api-mcp@latest
 ```
 
@@ -28,8 +27,7 @@ For clients with a configuration JSON, it might look something like this:
       "command": "npx",
       "args": ["-y", "e-invoice-api-mcp", "--client=claude", "--tools=dynamic"],
       "env": {
-        "E_INVOICE_API_KEY": "My API Key",
-        "E_INVOICE_ENVIRONMENT": "production"
+        "E_INVOICE_API_KEY": "My API Key"
       }
     }
   }

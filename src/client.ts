@@ -70,26 +70,11 @@ import {
   UnitOfMeasureCode,
 } from './resources/documents/documents';
 
-const environments = {
-  production: 'https://api.e-invoice.be',
-  development: 'https://api-dev.e-invoice.be',
-};
-type Environment = keyof typeof environments;
-
 export interface ClientOptions {
   /**
    * Defaults to process.env['E_INVOICE_API_KEY'].
    */
   apiKey?: string | undefined;
-
-  /**
-   * Specifies the environment to use for the API.
-   *
-   * Each environment maps to a different base URL:
-   * - `production` corresponds to `https://api.e-invoice.be`
-   * - `development` corresponds to `https://api-dev.e-invoice.be`
-   */
-  environment?: Environment | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -180,7 +165,6 @@ export class EInvoice {
    * API Client for interfacing with the E Invoice API.
    *
    * @param {string | undefined} [opts.apiKey=process.env['E_INVOICE_API_KEY'] ?? undefined]
-   * @param {Environment} [opts.environment=production] - Specifies the environment URL to use for the API.
    * @param {string} [opts.baseURL=process.env['E_INVOICE_BASE_URL'] ?? https://api.e-invoice.be] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -203,17 +187,10 @@ export class EInvoice {
     const options: ClientOptions = {
       apiKey,
       ...opts,
-      baseURL,
-      environment: opts.environment ?? 'production',
+      baseURL: baseURL || `https://api.e-invoice.be`,
     };
 
-    if (baseURL && opts.environment) {
-      throw new Errors.EInvoiceError(
-        'Ambiguous URL; The `baseURL` option (or E_INVOICE_BASE_URL env var) and the `environment` option are given. If you want to use the environment you must pass baseURL: null',
-      );
-    }
-
-    this.baseURL = options.baseURL || environments[options.environment || 'production'];
+    this.baseURL = options.baseURL!;
     this.timeout = options.timeout ?? EInvoice.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
@@ -239,8 +216,7 @@ export class EInvoice {
   withOptions(options: Partial<ClientOptions>): this {
     return new (this.constructor as any as new (props: ClientOptions) => typeof this)({
       ...this._options,
-      environment: options.environment ? options.environment : undefined,
-      baseURL: options.environment ? undefined : this.baseURL,
+      baseURL: this.baseURL,
       maxRetries: this.maxRetries,
       timeout: this.timeout,
       logger: this.logger,
