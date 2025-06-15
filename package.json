@@ -12,6 +12,18 @@
   "files": [
     "**/*"
   ],
+  "keywords": [
+    "peppol",
+    "ubl",
+    "peppol bis billing",
+    "e-invoice",
+    "e-invoicing",
+    "en16931",
+    "ap automation",
+    "ar automation",
+    "ap automation",
+    "api",
+  ],
   "private": false,
   "scripts": {
     "test": "./scripts/test",
