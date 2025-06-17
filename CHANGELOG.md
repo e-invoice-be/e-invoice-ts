@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.3.2 (2025-06-17)
+
+Full Changelog: [v1.3.1...v1.3.2](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.3.1...v1.3.2)
+
+### Bug Fixes
+
+* Update package.json ([4bd67ab](https://github.com/e-invoice-be/e-invoice-ts/commit/4bd67ab3b881fdf4cd10eb05a8c5a01c232b590a))
+
 ## 1.3.1 (2025-06-17)
 
 Full Changelog: [v1.3.0...v1.3.1](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.3.0...v1.3.1)
