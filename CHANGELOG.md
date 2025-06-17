@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.3.0 (2025-06-17)
+
+Full Changelog: [v1.2.2...v1.3.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.2.2...v1.3.0)
+
+### Features
+
+* **client:** add support for endpoint-specific base URLs ([bf7e21e](https://github.com/e-invoice-be/e-invoice-ts/commit/bf7e21e5f51a6f0767c9dd3c88c302823855b4c1))
+
+
+### Chores
+
+* **ci:** enable for pull requests ([35d6c30](https://github.com/e-invoice-be/e-invoice-ts/commit/35d6c30a6fca18289199bec227a9dc10f3b8903d))
+* **client:** refactor imports ([778320e](https://github.com/e-invoice-be/e-invoice-ts/commit/778320ec3f1aff188a5449935c6b86f067592ad7))
+
 ## 1.2.2 (2025-06-15)
 
 Full Changelog: [v1.2.1...v1.2.2](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.2.1...v1.2.2)
