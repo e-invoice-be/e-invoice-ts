@@ -1,6 +1,6 @@
 # e-invoice.be Peppol API SDK
 
-[![NPM version](https://img.shields.io/npm/v/e-invoice-api.svg)](https://npmjs.org/package/e-invoice-api) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/e-invoice-api)
+[![NPM version](<https://img.shields.io/npm/v/e-invoice-api.svg?label=npm%20(stable)>)](https://npmjs.org/package/e-invoice-api) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/e-invoice-api)
 
 This library provides convenient access to the e-invoice REST API from server-side TypeScript or JavaScript.
 
