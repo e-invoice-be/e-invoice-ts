@@ -286,9 +286,8 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.foo.create({
-  foo: 'my_param',
-  bar: 12,
+client.documents.create({
+  // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
 });
