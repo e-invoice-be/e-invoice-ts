@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.3.3 (2025-06-21)
+
+Full Changelog: [v1.3.2...v1.3.3](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.3.2...v1.3.3)
+
+### Bug Fixes
+
+* **client:** explicitly copy fetch in withOptions ([9dd8472](https://github.com/e-invoice-be/e-invoice-ts/commit/9dd8472d0200242310c4374ecff6c1a6e38eddd9))
+
+
+### Chores
+
+* **readme:** update badges ([027192f](https://github.com/e-invoice-be/e-invoice-ts/commit/027192f01e4688cdf789233e1a712c54da4fd96b))
+* **readme:** use better example snippet for undocumented params ([0f4b526](https://github.com/e-invoice-be/e-invoice-ts/commit/0f4b5267bb94a5252eefc165243bcb63678c0ce1))
+
 ## 1.3.2 (2025-06-17)
 
 Full Changelog: [v1.3.1...v1.3.2](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.3.1...v1.3.2)
