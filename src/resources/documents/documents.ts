@@ -341,7 +341,7 @@ export namespace DocumentResponse {
   }
 }
 
-export type DocumentType = 'INVOICE' | 'CREDIT_NOTE';
+export type DocumentType = 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE';
 
 export interface PaymentDetailCreate {
   bank_account_number?: string | null;
