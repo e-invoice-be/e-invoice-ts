@@ -1,4 +1,4 @@
 configured_endpoints: 23
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/e-invoice-be%2Fe-invoice-api-e4cf5b41ca41031dd9e0a770bb45a61a3d2dcf007b23b205a5d1b380555d715b.yml
-openapi_spec_hash: 419be3d5caa418427b2d7e9968b2a54e
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/e-invoice-be%2Fe-invoice-api-3a66832968d6fbfd407e5f2e1a2fe07d765cd17fc3c9ab6d31ed76d1149230a3.yml
+openapi_spec_hash: bdb3c7214aacf8d16b6afb77a459a938
 config_hash: 6942984ecea4e53ab06e2aecc0cc4bbc
