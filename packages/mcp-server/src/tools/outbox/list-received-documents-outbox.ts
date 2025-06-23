@@ -69,7 +69,7 @@ export const tool: Tool = {
       document_type: {
         type: 'string',
         title: 'DocumentType',
-        enum: ['INVOICE', 'CREDIT_NOTE'],
+        enum: ['INVOICE', 'CREDIT_NOTE', 'DEBIT_NOTE'],
       },
     },
   },
