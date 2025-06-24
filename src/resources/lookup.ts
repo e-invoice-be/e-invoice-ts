@@ -30,7 +30,7 @@ export interface Certificate {
   /**
    * Details about the certificate including subject, issuer, validity dates, etc.
    */
-  details?: Record<string, unknown> | null;
+  details?: { [key: string]: unknown } | null;
 
   /**
    * Error message if certificate validation failed
