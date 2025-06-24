@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.1 (2025-06-24)
+
+Full Changelog: [v1.4.0...v1.4.1](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.4.0...v1.4.1)
+
+### Refactors
+
+* **types:** replace Record with mapped types ([ff6196a](https://github.com/e-invoice-be/e-invoice-ts/commit/ff6196a7d87b1841fb9a701fbe55abcb09043462))
+
 ## 1.4.0 (2025-06-23)
 
 Full Changelog: [v1.3.3...v1.4.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.3.3...v1.4.0)
