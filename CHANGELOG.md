@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.4.2 (2025-06-27)
+
+Full Changelog: [v1.4.1...v1.4.2](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.4.1...v1.4.2)
+
+### Bug Fixes
+
+* **ci:** release-doctor — report correct token name ([5d82c2b](https://github.com/e-invoice-be/e-invoice-ts/commit/5d82c2b09bb7356c019ef923a29d8b9d655fdd89))
+* **client:** get fetchOptions type more reliably ([9d28c7d](https://github.com/e-invoice-be/e-invoice-ts/commit/9d28c7d25ea3e9cd4ef8b89a13b56b681f388d48))
+
 ## 1.4.1 (2025-06-24)
 
 Full Changelog: [v1.4.0...v1.4.1](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.4.0...v1.4.1)
