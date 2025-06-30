@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.3 (2025-06-30)
+
+Full Changelog: [v1.4.2...v1.4.3](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.4.2...v1.4.3)
+
+### Chores
+
+* **ci:** only run for pushes and fork pull requests ([effb1d9](https://github.com/e-invoice-be/e-invoice-ts/commit/effb1d9a5c56b3996b1e11c0940a5f9e4e824901))
+
 ## 1.4.2 (2025-06-27)
 
 Full Changelog: [v1.4.1...v1.4.2](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.4.1...v1.4.2)
