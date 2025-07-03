@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.4.4 (2025-07-03)
+
+Full Changelog: [v1.4.3...v1.4.4](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.4.3...v1.4.4)
+
+### Chores
+
+* add docs to RequestOptions type ([27e016e](https://github.com/e-invoice-be/e-invoice-ts/commit/27e016ee96ef42a784962b0c9d4a031a5160819e))
+* **client:** improve path param validation ([a73df9b](https://github.com/e-invoice-be/e-invoice-ts/commit/a73df9b0a5409212e9018f6af46667ce611b397f))
+
 ## 1.4.3 (2025-06-30)
 
 Full Changelog: [v1.4.2...v1.4.3](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.4.2...v1.4.3)
