@@ -17,7 +17,8 @@ export const metadata: Metadata = {
 
 export const tool: Tool = {
   name: 'list_draft_documents_outbox',
-  description: 'Retrieve a paginated list of draft documents with filtering options.',
+  description:
+    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nRetrieve a paginated list of draft documents with filtering options.",
   inputSchema: {
     type: 'object',
     properties: {
@@ -37,7 +38,8 @@ export const tool: Tool = {
 
 export const handler = async (client: EInvoice, args: Record<string, unknown> | undefined) => {
   const body = args as any;
-  return asTextContentResult(await client.outbox.listDraftDocuments(body));
+  const response = await client.outbox.listDraftDocuments(body).asResponse();
+  return asTextContentResult(await response.json());
 };
 
 export default { metadata, tool, handler };
