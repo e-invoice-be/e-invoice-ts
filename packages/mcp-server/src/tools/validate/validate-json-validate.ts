@@ -17,7 +17,8 @@ export const metadata: Metadata = {
 
 export const tool: Tool = {
   name: 'validate_json_validate',
-  description: 'Validate if the JSON document can be converted to a valid UBL document',
+  description:
+    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nValidate if the JSON document can be converted to a valid UBL document",
   inputSchema: {
     type: 'object',
     properties: {
