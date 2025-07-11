@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.5.0 (2025-07-11)
+
+Full Changelog: [v1.4.4...v1.5.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.4.4...v1.5.0)
+
+### Features
+
+* **mcp:** support filtering tool results by a jq expression ([6c9d40f](https://github.com/e-invoice-be/e-invoice-ts/commit/6c9d40f0deebebc2913c2c0237637ea44717b890))
+
+
+### Bug Fixes
+
+* **mcp:** relax input type for asTextContextResult ([534ccba](https://github.com/e-invoice-be/e-invoice-ts/commit/534ccba10752d2aa1ec6f990dfc3f72ba2826706))
+
+
+### Chores
+
+* make some internal functions async ([ef09128](https://github.com/e-invoice-be/e-invoice-ts/commit/ef0912825537bfee2295a355be9405ca7a381d6c))
+
 ## 1.4.4 (2025-07-03)
 
 Full Changelog: [v1.4.3...v1.4.4](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.4.3...v1.4.4)
