@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.5.1 (2025-07-11)
+
+Full Changelog: [v1.5.0...v1.5.1](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.5.0...v1.5.1)
+
+### Chores
+
+* **internal:** codegen related update ([d60a40a](https://github.com/e-invoice-be/e-invoice-ts/commit/d60a40af3808620d35dc7aba3f23ce9bba6f2481))
+
 ## 1.5.0 (2025-07-11)
 
 Full Changelog: [v1.4.4...v1.5.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.4.4...v1.5.0)
