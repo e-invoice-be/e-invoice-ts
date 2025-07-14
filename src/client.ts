@@ -26,7 +26,14 @@ import {
   InboxListParams,
   PaginatedDocumentResponse,
 } from './resources/inbox';
-import { Certificate, Lookup, LookupRetrieveParams, LookupRetrieveResponse } from './resources/lookup';
+import {
+  Certificate,
+  Lookup,
+  LookupRetrieveParams,
+  LookupRetrieveParticipantsParams,
+  LookupRetrieveParticipantsResponse,
+  LookupRetrieveResponse,
+} from './resources/lookup';
 import {
   Outbox,
   OutboxListDraftDocumentsParams,
@@ -843,7 +850,9 @@ export declare namespace EInvoice {
     Lookup as Lookup,
     type Certificate as Certificate,
     type LookupRetrieveResponse as LookupRetrieveResponse,
+    type LookupRetrieveParticipantsResponse as LookupRetrieveParticipantsResponse,
     type LookupRetrieveParams as LookupRetrieveParams,
+    type LookupRetrieveParticipantsParams as LookupRetrieveParticipantsParams,
   };
 
   export {

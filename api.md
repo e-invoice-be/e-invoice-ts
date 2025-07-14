@@ -83,10 +83,12 @@ Types:
 
 - <code><a href="./src/resources/lookup.ts">Certificate</a></code>
 - <code><a href="./src/resources/lookup.ts">LookupRetrieveResponse</a></code>
+- <code><a href="./src/resources/lookup.ts">LookupRetrieveParticipantsResponse</a></code>
 
 Methods:
 
 - <code title="get /api/lookup">client.lookup.<a href="./src/resources/lookup.ts">retrieve</a>({ ...params }) -> LookupRetrieveResponse</code>
+- <code title="get /api/lookup/participants">client.lookup.<a href="./src/resources/lookup.ts">retrieveParticipants</a>({ ...params }) -> LookupRetrieveParticipantsResponse</code>
 
 # Webhooks
 
