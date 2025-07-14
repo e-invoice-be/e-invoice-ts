@@ -23,7 +23,14 @@ export {
   type InboxListCreditNotesParams,
   type InboxListInvoicesParams,
 } from './inbox';
-export { Lookup, type Certificate, type LookupRetrieveResponse, type LookupRetrieveParams } from './lookup';
+export {
+  Lookup,
+  type Certificate,
+  type LookupRetrieveResponse,
+  type LookupRetrieveParticipantsResponse,
+  type LookupRetrieveParams,
+  type LookupRetrieveParticipantsParams,
+} from './lookup';
 export {
   Outbox,
   type OutboxListDraftDocumentsParams,
