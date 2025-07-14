@@ -16,6 +16,17 @@ export class Lookup extends APIResource {
   retrieve(query: LookupRetrieveParams, options?: RequestOptions): APIPromise<LookupRetrieveResponse> {
     return this._client.get('/api/lookup', { query, ...options });
   }
+
+  /**
+   * Lookup Peppol participants by name or other identifiers. You can limit the
+   * search to a specific country by providing the country code.
+   */
+  retrieveParticipants(
+    query: LookupRetrieveParticipantsParams,
+    options?: RequestOptions,
+  ): APIPromise<LookupRetrieveParticipantsResponse> {
+    return this._client.get('/api/lookup/participants', { query, ...options });
+  }
 }
 
 /**
@@ -363,6 +374,137 @@ export namespace LookupRetrieveResponse {
   }
 }
 
+/**
+ * Represents the result of a Peppol directory search
+ */
+export interface LookupRetrieveParticipantsResponse {
+  /**
+   * Query terms used for search
+   */
+  query_terms: string;
+
+  /**
+   * Search date of the result
+   */
+  search_date: string;
+
+  /**
+   * Total number of results
+   */
+  total_count: number;
+
+  /**
+   * Number of results returned by the API
+   */
+  used_count: number;
+
+  /**
+   * List of participants
+   */
+  participants?: Array<LookupRetrieveParticipantsResponse.Participant>;
+}
+
+export namespace LookupRetrieveParticipantsResponse {
+  /**
+   * Represents a Peppol participant with their details
+   */
+  export interface Participant {
+    /**
+     * Peppol ID of the participant
+     */
+    peppol_id: string;
+
+    /**
+     * Peppol scheme of the participant
+     */
+    peppol_scheme: string;
+
+    /**
+     * List of supported document types
+     */
+    document_types?: Array<Participant.DocumentType>;
+
+    /**
+     * List of business entities
+     */
+    entities?: Array<Participant.Entity>;
+  }
+
+  export namespace Participant {
+    /**
+     * Represents a supported document type
+     */
+    export interface DocumentType {
+      /**
+       * Document type scheme
+       */
+      scheme: string;
+
+      /**
+       * Document type value
+       */
+      value: string;
+    }
+
+    /**
+     * Represents a business entity
+     */
+    export interface Entity {
+      /**
+       * Additional information
+       */
+      additional_info?: string | null;
+
+      /**
+       * Country code
+       */
+      country_code?: string | null;
+
+      /**
+       * Geographic information
+       */
+      geo_info?: string | null;
+
+      /**
+       * List of business identifiers
+       */
+      identifiers?: Array<Entity.Identifier>;
+
+      /**
+       * Business entity name
+       */
+      name?: string | null;
+
+      /**
+       * Registration date
+       */
+      registration_date?: string | null;
+
+      /**
+       * Website URL
+       */
+      website?: string | null;
+    }
+
+    export namespace Entity {
+      /**
+       * Represents a business identifier
+       */
+      export interface Identifier {
+        /**
+         * Identifier scheme
+         */
+        scheme: string;
+
+        /**
+         * Identifier value
+         */
+        value: string;
+      }
+    }
+  }
+}
+
 export interface LookupRetrieveParams {
   /**
    * Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a
@@ -371,10 +513,25 @@ export interface LookupRetrieveParams {
   peppol_id: string;
 }
 
+export interface LookupRetrieveParticipantsParams {
+  /**
+   * Query to lookup
+   */
+  query: string;
+
+  /**
+   * Country code of the company to lookup. If not provided, the search will be
+   * global.
+   */
+  country_code?: string | null;
+}
+
 export declare namespace Lookup {
   export {
     type Certificate as Certificate,
     type LookupRetrieveResponse as LookupRetrieveResponse,
+    type LookupRetrieveParticipantsResponse as LookupRetrieveParticipantsResponse,
     type LookupRetrieveParams as LookupRetrieveParams,
+    type LookupRetrieveParticipantsParams as LookupRetrieveParticipantsParams,
   };
 }

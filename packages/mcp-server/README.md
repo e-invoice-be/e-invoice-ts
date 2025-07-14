@@ -203,6 +203,7 @@ The following tools are available in this MCP server.
 ### Resource `lookup`:
 
 - `retrieve_lookup` (`read`): Lookup Peppol ID. The peppol_id must be in the form of `<scheme>:<id>`. The scheme is a 4-digit code representing the identifier scheme, and the id is the actual identifier value. For example, for a Belgian company it is `0208:0123456789` (where 0208 is the scheme for Belgian enterprises, followed by the 10 digits of the official BTW / KBO number).
+- `retrieve_participants_lookup` (`read`): Lookup Peppol participants by name or other identifiers. You can limit the search to a specific country by providing the country code.
 
 ### Resource `webhooks`:
 
