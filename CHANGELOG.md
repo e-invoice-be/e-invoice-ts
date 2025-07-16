@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.6.1 (2025-07-16)
+
+Full Changelog: [v1.6.0...v1.6.1](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.6.0...v1.6.1)
+
+### Bug Fixes
+
+* **mcp:** support jq filtering on cloudflare workers ([9578df9](https://github.com/e-invoice-be/e-invoice-ts/commit/9578df9a8b679e22006637d60de5b651bf544a93))
+
+
+### Chores
+
+* **internal:** version bump ([84f71ce](https://github.com/e-invoice-be/e-invoice-ts/commit/84f71ce3de8321b9d4dcc6516e8701df52d822db))
+
 ## 1.6.0 (2025-07-14)
 
 Full Changelog: [v1.5.1...v1.6.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.5.1...v1.6.0)
