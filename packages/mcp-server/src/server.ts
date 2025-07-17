@@ -28,11 +28,7 @@ export const server = new McpServer(
     name: 'e_invoice_api_api',
     version: '1.6.1',
   },
-  {
-    capabilities: {
-      tools: {},
-    },
-  },
+  { capabilities: { tools: {} } },
 );
 
 /**
