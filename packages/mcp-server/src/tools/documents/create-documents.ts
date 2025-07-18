@@ -176,7 +176,6 @@ export const tool: Tool = {
               title: 'Unit Price',
             },
           },
-          required: [],
         },
       },
       note: {
@@ -280,7 +279,6 @@ export const tool: Tool = {
               title: 'Rate',
             },
           },
-          required: [],
         },
       },
       total_discount: {
@@ -326,6 +324,7 @@ export const tool: Tool = {
         title: 'Vendor Tax Id',
       },
     },
+    required: [],
     $defs: {
       document_attachment_create: {
         type: 'object',
@@ -499,7 +498,6 @@ export const tool: Tool = {
             title: 'Swift',
           },
         },
-        required: [],
       },
       document_state: {
         type: 'string',
