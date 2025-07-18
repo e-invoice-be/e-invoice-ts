@@ -60,6 +60,7 @@ export const tool: Tool = {
         $ref: '#/$defs/document_type',
       },
     },
+    required: [],
     $defs: {
       document_state: {
         type: 'string',

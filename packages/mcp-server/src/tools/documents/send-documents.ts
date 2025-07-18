@@ -46,6 +46,7 @@ export const tool: Tool = {
         title: 'Sender Peppol Scheme',
       },
     },
+    required: ['document_id'],
   },
 };
 

@@ -32,6 +32,7 @@ export const tool: Tool = {
         description: 'Number of items per page',
       },
     },
+    required: [],
   },
 };
 
