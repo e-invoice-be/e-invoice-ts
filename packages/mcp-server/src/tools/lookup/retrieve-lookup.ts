@@ -28,6 +28,7 @@ export const tool: Tool = {
           'Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgian company.',
       },
     },
+    required: ['peppol_id'],
   },
 };
 
