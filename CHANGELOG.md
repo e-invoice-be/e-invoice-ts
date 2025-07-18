@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.6.2 (2025-07-18)
+
+Full Changelog: [v1.6.1...v1.6.2](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.6.1...v1.6.2)
+
+### Bug Fixes
+
+* **mcp:** include required section for top-level properties and support naming transformations ([281dd54](https://github.com/e-invoice-be/e-invoice-ts/commit/281dd541e9051c23b102525f51349a1b88ef7671))
+
+
+### Chores
+
+* **internal:** version bump ([8c2b667](https://github.com/e-invoice-be/e-invoice-ts/commit/8c2b6679495ee040a577ab0fbfa830efa96788b0))
+* **mcp:** formatting ([f95ba72](https://github.com/e-invoice-be/e-invoice-ts/commit/f95ba72d7b9539a3e6419907fb9ceb40d6d14ed3))
+* **mcp:** rework imports in tools ([2638a44](https://github.com/e-invoice-be/e-invoice-ts/commit/2638a44f5e576c9c27582ac736b680a8d9256fd5))
+* **ts:** reorder package.json imports ([245035e](https://github.com/e-invoice-be/e-invoice-ts/commit/245035e0604d5e4a902ca62a5bd7769926b1ef0d))
+
 ## 1.6.1 (2025-07-16)
 
 Full Changelog: [v1.6.0...v1.6.1](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.6.0...v1.6.1)
