@@ -26,7 +26,7 @@ export { endpoints } from './tools';
 export const server = new McpServer(
   {
     name: 'e_invoice_api_api',
-    version: '1.6.2',
+    version: '1.6.3',
   },
   { capabilities: { tools: {} } },
 );
