@@ -46,6 +46,7 @@ export const tool: Tool = {
     },
     required: ['events', 'url'],
   },
+  annotations: {},
 };
 
 export const handler = async (client: EInvoice, args: Record<string, unknown> | undefined) => {

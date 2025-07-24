@@ -37,6 +37,9 @@ export const tool: Tool = {
     },
     required: ['peppol_id'],
   },
+  annotations: {
+    readOnlyHint: true,
+  },
 };
 
 export const handler = async (client: EInvoice, args: Record<string, unknown> | undefined) => {
