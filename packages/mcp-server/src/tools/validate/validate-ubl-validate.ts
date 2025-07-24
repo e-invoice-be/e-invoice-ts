@@ -35,6 +35,7 @@ export const tool: Tool = {
     },
     required: ['file'],
   },
+  annotations: {},
 };
 
 export const handler = async (client: EInvoice, args: Record<string, unknown> | undefined) => {
