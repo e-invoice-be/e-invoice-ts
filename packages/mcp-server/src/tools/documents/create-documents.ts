@@ -506,6 +506,7 @@ export const tool: Tool = {
       },
     },
   },
+  annotations: {},
 };
 
 export const handler = async (client: EInvoice, args: Record<string, unknown> | undefined) => {
