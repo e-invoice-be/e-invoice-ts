@@ -41,6 +41,9 @@ export const tool: Tool = {
     },
     required: ['query'],
   },
+  annotations: {
+    readOnlyHint: true,
+  },
 };
 
 export const handler = async (client: EInvoice, args: Record<string, unknown> | undefined) => {
