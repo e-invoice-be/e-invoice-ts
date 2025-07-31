@@ -16,8 +16,7 @@ export const metadata: Metadata = {
 
 export const tool: Tool = {
   name: 'list_invoices_inbox',
-  description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nRetrieve a paginated list of received invoices with filtering options.",
+  description: 'Retrieve a paginated list of received invoices with filtering options.',
   inputSchema: {
     type: 'object',
     properties: {

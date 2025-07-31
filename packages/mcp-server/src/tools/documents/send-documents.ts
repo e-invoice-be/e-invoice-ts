@@ -16,8 +16,7 @@ export const metadata: Metadata = {
 
 export const tool: Tool = {
   name: 'send_documents',
-  description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nSend an invoice or credit note via Peppol",
+  description: 'Send an invoice or credit note via Peppol',
   inputSchema: {
     type: 'object',
     properties: {

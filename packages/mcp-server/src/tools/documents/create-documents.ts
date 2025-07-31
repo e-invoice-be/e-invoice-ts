@@ -16,8 +16,7 @@ export const metadata: Metadata = {
 
 export const tool: Tool = {
   name: 'create_documents',
-  description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nCreate a new invoice or credit note",
+  description: 'Create a new invoice or credit note',
   inputSchema: {
     type: 'object',
     properties: {
