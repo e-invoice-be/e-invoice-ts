@@ -45,9 +45,9 @@ export const tool: Tool = {
 };
 
 export const handler = async (client: EInvoice, args: Record<string, unknown> | undefined) => {
-  const { attachment_id, ...body } = args as any;
+  const { attachment_id, jq_filter, ...body } = args as any;
   return asTextContentResult(
-    await maybeFilter(args, await client.documents.attachments.delete(attachment_id, body)),
+    await maybeFilter(jq_filter, await client.documents.attachments.delete(attachment_id, body)),
   );
 };
 

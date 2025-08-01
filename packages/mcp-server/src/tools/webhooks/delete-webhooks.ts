@@ -41,8 +41,8 @@ export const tool: Tool = {
 };
 
 export const handler = async (client: EInvoice, args: Record<string, unknown> | undefined) => {
-  const { webhook_id, ...body } = args as any;
-  return asTextContentResult(await maybeFilter(args, await client.webhooks.delete(webhook_id)));
+  const { webhook_id, jq_filter, ...body } = args as any;
+  return asTextContentResult(await maybeFilter(jq_filter, await client.webhooks.delete(webhook_id)));
 };
 
 export default { metadata, tool, handler };
