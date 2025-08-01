@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.6.4 (2025-08-01)
+
+Full Changelog: [v1.6.3...v1.6.4](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.6.3...v1.6.4)
+
+### Bug Fixes
+
+* **mcp:** fix tool description of jq_filter ([fdc6c78](https://github.com/e-invoice-be/e-invoice-ts/commit/fdc6c787a8da241f873f70285c8acae17f2dbc71))
+
+
+### Chores
+
+* **internal:** codegen related update ([ea0555c](https://github.com/e-invoice-be/e-invoice-ts/commit/ea0555c37bad374b628430df6ef1e1072af0aa90))
+* **internal:** remove redundant imports config ([7b32652](https://github.com/e-invoice-be/e-invoice-ts/commit/7b32652dd08077303d03276bc4ff5029d0326074))
+* **internal:** version bump ([382bc96](https://github.com/e-invoice-be/e-invoice-ts/commit/382bc96f8ad42a17bd67b1948cd0955e02464c78))
+
 ## 1.6.3 (2025-07-18)
 
 Full Changelog: [v1.6.2...v1.6.3](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.6.2...v1.6.3)
