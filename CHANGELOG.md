@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.6.5 (2025-08-01)
+
+Full Changelog: [v1.6.4...v1.6.5](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.6.4...v1.6.5)
+
+### Bug Fixes
+
+* **mcp:** avoid sending `jq_filter` to base API ([af0471f](https://github.com/e-invoice-be/e-invoice-ts/commit/af0471fc59405d7864693206fba9ece3c4a86e3f))
+
 ## 1.6.4 (2025-08-01)
 
 Full Changelog: [v1.6.3...v1.6.4](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.6.3...v1.6.4)
