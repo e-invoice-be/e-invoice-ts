@@ -1,6 +1,6 @@
 {
   "name": "e-invoice-api-mcp",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "description": "The official MCP Server for the E Invoice API",
   "author": "E Invoice <support@e-invoice.be>",
   "types": "dist/index.d.ts",
