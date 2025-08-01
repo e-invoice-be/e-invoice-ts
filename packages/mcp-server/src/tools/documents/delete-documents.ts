@@ -41,8 +41,8 @@ export const tool: Tool = {
 };
 
 export const handler = async (client: EInvoice, args: Record<string, unknown> | undefined) => {
-  const { document_id, ...body } = args as any;
-  return asTextContentResult(await maybeFilter(args, await client.documents.delete(document_id)));
+  const { document_id, jq_filter, ...body } = args as any;
+  return asTextContentResult(await maybeFilter(jq_filter, await client.documents.delete(document_id)));
 };
 
 export default { metadata, tool, handler };
