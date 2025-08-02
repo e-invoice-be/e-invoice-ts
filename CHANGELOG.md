@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.7.0 (2025-08-02)
+
+Full Changelog: [v1.6.5...v1.7.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.6.5...v1.7.0)
+
+### Features
+
+* **mcp:** add logging when environment variable is set ([e7efcd7](https://github.com/e-invoice-be/e-invoice-ts/commit/e7efcd77f386564d3f89d1baf42fda0a509f0114))
+
 ## 1.6.5 (2025-08-01)
 
 Full Changelog: [v1.6.4...v1.6.5](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.6.4...v1.6.5)
