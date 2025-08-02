@@ -28,7 +28,7 @@ export const server = new McpServer(
     name: 'e_invoice_api_api',
     version: '1.6.5',
   },
-  { capabilities: { tools: {} } },
+  { capabilities: { tools: {}, logging: {} } },
 );
 
 /**
@@ -61,7 +61,24 @@ export function init(params: {
 
   const endpointMap = Object.fromEntries(providedEndpoints.map((endpoint) => [endpoint.tool.name, endpoint]));
 
-  const client = params.client || new EInvoice({ defaultHeaders: { 'X-Stainless-MCP': 'true' } });
+  const logAtLevel =
+    (level: 'debug' | 'info' | 'warning' | 'error') =>
+    (message: string, ...rest: unknown[]) => {
+      console.error(message, ...rest);
+      void server.sendLoggingMessage({
+        level,
+        data: { message, rest },
+      });
+    };
+  const logger = {
+    debug: logAtLevel('debug'),
+    info: logAtLevel('info'),
+    warn: logAtLevel('warning'),
+    error: logAtLevel('error'),
+  };
+
+  const client =
+    params.client || new EInvoice({ defaultHeaders: { 'X-Stainless-MCP': 'true' }, logger: logger });
 
   server.setRequestHandler(ListToolsRequestSchema, async () => {
     return {
