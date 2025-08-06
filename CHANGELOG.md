@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.7.0 (2025-08-06)
+
+Full Changelog: [v1.6.5...v1.7.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.6.5...v1.7.0)
+
+### Features
+
+* **mcp:** add logging when environment variable is set ([e7efcd7](https://github.com/e-invoice-be/e-invoice-ts/commit/e7efcd77f386564d3f89d1baf42fda0a509f0114))
+* **mcp:** remote server with passthru auth ([49a4494](https://github.com/e-invoice-be/e-invoice-ts/commit/49a4494906b526aad6c0d2ce2c5903b9657ee26d))
+
+
+### Bug Fixes
+
+* **mcp:** fix bug in header handling ([f0c5486](https://github.com/e-invoice-be/e-invoice-ts/commit/f0c548683643ccaa092c2ff480126724a17d9be5))
+
 ## 1.6.5 (2025-08-01)
 
 Full Changelog: [v1.6.4...v1.6.5](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.6.4...v1.6.5)
