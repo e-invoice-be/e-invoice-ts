@@ -474,6 +474,7 @@ export const tool: Tool = {
           'ZZ',
           'NAR',
           'C62',
+          'LTR',
         ],
       },
       payment_detail_create: {
