@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.7.1 (2025-08-08)
+
+Full Changelog: [v1.7.0...v1.7.1](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.7.0...v1.7.1)
+
+### Features
+
+* **api:** api update ([aeb06d9](https://github.com/e-invoice-be/e-invoice-ts/commit/aeb06d99f43d6b48092675da7a0450f4ed6e0d49))
+* **mcp:** add unix socket option for remote MCP ([c626d02](https://github.com/e-invoice-be/e-invoice-ts/commit/c626d02b76d2dfcdb6b02466450e984e4c42a0aa))
+
+
+### Chores
+
+* **internal:** move publish config ([7d68587](https://github.com/e-invoice-be/e-invoice-ts/commit/7d685873aa9cb9e16658397d111ce48a1d8e733f))
+* **mcp:** refactor streamable http transport ([994996d](https://github.com/e-invoice-be/e-invoice-ts/commit/994996d8a02ca829cfe8c31ce1bd0df57089b258))
+
 ## 1.7.0 (2025-08-06)
 
 Full Changelog: [v1.6.5...v1.7.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.6.5...v1.7.0)
