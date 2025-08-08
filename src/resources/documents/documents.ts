@@ -446,7 +446,8 @@ export type UnitOfMeasureCode =
   | '2C'
   | 'ZZ'
   | 'NAR'
-  | 'C62';
+  | 'C62'
+  | 'LTR';
 
 export interface DocumentDeleteResponse {
   is_deleted: boolean;
