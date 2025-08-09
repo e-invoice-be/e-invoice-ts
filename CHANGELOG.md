@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.7.2 (2025-08-09)
+
+Full Changelog: [v1.7.1...v1.7.2](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.7.1...v1.7.2)
+
+### Chores
+
+* update @stainless-api/prism-cli to v5.15.0 ([7f6706a](https://github.com/e-invoice-be/e-invoice-ts/commit/7f6706a4bcf152919649348f4bd930435cdf5288))
+
 ## 1.7.1 (2025-08-08)
 
 Full Changelog: [v1.7.0...v1.7.1](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.7.0...v1.7.1)
