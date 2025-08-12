@@ -8,7 +8,7 @@ const client = new EInvoice({
 });
 
 describe('resource outbox', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('listDraftDocuments', async () => {
     const responsePromise = client.outbox.listDraftDocuments();
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource outbox', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('listDraftDocuments: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -28,7 +28,7 @@ describe('resource outbox', () => {
     ).rejects.toThrow(EInvoice.NotFoundError);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('listReceivedDocuments', async () => {
     const responsePromise = client.outbox.listReceivedDocuments();
     const rawResponse = await responsePromise.asResponse();
@@ -40,7 +40,7 @@ describe('resource outbox', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('listReceivedDocuments: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(

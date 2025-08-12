@@ -8,7 +8,7 @@ const client = new EInvoice({
 });
 
 describe('resource attachments', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve: only required params', async () => {
     const responsePromise = client.documents.attachments.retrieve('attachment_id', {
       document_id: 'document_id',
@@ -22,14 +22,14 @@ describe('resource attachments', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve: required and optional params', async () => {
     const response = await client.documents.attachments.retrieve('attachment_id', {
       document_id: 'document_id',
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.documents.attachments.list('document_id');
     const rawResponse = await responsePromise.asResponse();
@@ -41,7 +41,7 @@ describe('resource attachments', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.documents.attachments.delete('attachment_id', {
       document_id: 'document_id',
@@ -55,14 +55,14 @@ describe('resource attachments', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.documents.attachments.delete('attachment_id', {
       document_id: 'document_id',
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('add: only required params', async () => {
     const responsePromise = client.documents.attachments.add('document_id', {
       file: await toFile(Buffer.from('# my file contents'), 'README.md'),
@@ -76,7 +76,7 @@ describe('resource attachments', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('add: required and optional params', async () => {
     const response = await client.documents.attachments.add('document_id', {
       file: await toFile(Buffer.from('# my file contents'), 'README.md'),
