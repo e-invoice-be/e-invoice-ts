@@ -8,7 +8,7 @@ const client = new EInvoice({
 });
 
 describe('resource lookup', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve: only required params', async () => {
     const responsePromise = client.lookup.retrieve({ peppol_id: 'peppol_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,12 +20,12 @@ describe('resource lookup', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve: required and optional params', async () => {
     const response = await client.lookup.retrieve({ peppol_id: 'peppol_id' });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieveParticipants: only required params', async () => {
     const responsePromise = client.lookup.retrieveParticipants({ query: 'query' });
     const rawResponse = await responsePromise.asResponse();
@@ -37,7 +37,7 @@ describe('resource lookup', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieveParticipants: required and optional params', async () => {
     const response = await client.lookup.retrieveParticipants({
       query: 'query',

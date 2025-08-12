@@ -8,7 +8,7 @@ const client = new EInvoice({
 });
 
 describe('resource webhooks', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.webhooks.create({ events: ['string'], url: 'https://example.com' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource webhooks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.webhooks.create({
       events: ['string'],
@@ -29,7 +29,7 @@ describe('resource webhooks', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.webhooks.retrieve('webhook_id');
     const rawResponse = await responsePromise.asResponse();
@@ -41,7 +41,7 @@ describe('resource webhooks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.webhooks.update('webhook_id', {});
     const rawResponse = await responsePromise.asResponse();
@@ -53,7 +53,7 @@ describe('resource webhooks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.webhooks.list();
     const rawResponse = await responsePromise.asResponse();
@@ -65,7 +65,7 @@ describe('resource webhooks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.webhooks.delete('webhook_id');
     const rawResponse = await responsePromise.asResponse();
