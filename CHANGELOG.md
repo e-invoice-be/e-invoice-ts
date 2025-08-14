@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.7.2 (2025-08-14)
+
+Full Changelog: [v1.7.1...v1.7.2](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.7.1...v1.7.2)
+
+### Chores
+
+* **internal:** codegen related update ([7f93bcf](https://github.com/e-invoice-be/e-invoice-ts/commit/7f93bcfe9952ee40cec1d100fbcce251c8b7057b))
+* **internal:** update comment in script ([5dafb5e](https://github.com/e-invoice-be/e-invoice-ts/commit/5dafb5ed5fc0476b996e7a2fb6adcafbeba7dfdb))
+* **mcp:** minor cleanup of types and package.json ([3f75544](https://github.com/e-invoice-be/e-invoice-ts/commit/3f75544a65ca50685e60e5cd452769989ba45ea1))
+* update @stainless-api/prism-cli to v5.15.0 ([7f6706a](https://github.com/e-invoice-be/e-invoice-ts/commit/7f6706a4bcf152919649348f4bd930435cdf5288))
+
 ## 1.7.1 (2025-08-08)
 
 Full Changelog: [v1.7.0...v1.7.1](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.7.0...v1.7.1)

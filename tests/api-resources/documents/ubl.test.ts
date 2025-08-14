@@ -8,7 +8,7 @@ const client = new EInvoice({
 });
 
 describe('resource ubl', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('get', async () => {
     const responsePromise = client.documents.ubl.get('document_id');
     const rawResponse = await responsePromise.asResponse();
