@@ -792,12 +792,14 @@ export class EInvoice {
   lookup: API.Lookup = new API.Lookup(this);
   webhooks: API.Webhooks = new API.Webhooks(this);
 }
+
 EInvoice.Documents = Documents;
 EInvoice.Inbox = Inbox;
 EInvoice.Outbox = Outbox;
 EInvoice.Validate = Validate;
 EInvoice.Lookup = Lookup;
 EInvoice.Webhooks = Webhooks;
+
 export declare namespace EInvoice {
   export type RequestOptions = Opts.RequestOptions;
 
