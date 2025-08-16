@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.7.3 (2025-08-16)
+
+Full Changelog: [v1.7.2...v1.7.3](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.7.2...v1.7.3)
+
+### Chores
+
+* **deps:** update dependency @types/node to v20.17.58 ([bcab852](https://github.com/e-invoice-be/e-invoice-ts/commit/bcab85293a7b67a4d318901f7608a64f6c225411))
+* **internal:** formatting change ([5839fb7](https://github.com/e-invoice-be/e-invoice-ts/commit/5839fb7224bfee17c53b4d77366a821a7dd38080))
+* **mcp:** document remote server in README.md ([d0da026](https://github.com/e-invoice-be/e-invoice-ts/commit/d0da0264257658c6dfd2189b13670228ce9aa296))
+* **mcp:** update README ([bc688d7](https://github.com/e-invoice-be/e-invoice-ts/commit/bc688d7388dc27bc88a8a6fea428ecb13b6f678d))
+
 ## 1.7.2 (2025-08-14)
 
 Full Changelog: [v1.7.1...v1.7.2](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.7.1...v1.7.2)
