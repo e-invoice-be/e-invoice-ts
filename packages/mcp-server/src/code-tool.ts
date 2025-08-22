@@ -1,10 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { type ClientOptions } from 'e-invoice-api/client';
-
 import { dirname } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import EInvoice from 'e-invoice-api';
+import EInvoice, { ClientOptions } from 'e-invoice-api';
 import { Endpoint, ContentBlock, Metadata } from './tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
