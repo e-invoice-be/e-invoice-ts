@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { type ClientOptions } from 'e-invoice-api/client';
+import { ClientOptions } from 'e-invoice-api';
 
 export type WorkerInput = {
   opts: ClientOptions;
