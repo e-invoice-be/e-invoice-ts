@@ -746,7 +746,7 @@ export class EInvoice {
         // Preserve legacy string encoding behavior for now
         headers.values.has('content-type')) ||
       // `Blob` is superset of `File`
-      body instanceof Blob ||
+      ((globalThis as any).Blob && body instanceof (globalThis as any).Blob) ||
       // `FormData` -> `multipart/form-data`
       body instanceof FormData ||
       // `URLSearchParams` -> `application/x-www-form-urlencoded`
@@ -792,12 +792,14 @@ export class EInvoice {
   lookup: API.Lookup = new API.Lookup(this);
   webhooks: API.Webhooks = new API.Webhooks(this);
 }
+
 EInvoice.Documents = Documents;
 EInvoice.Inbox = Inbox;
 EInvoice.Outbox = Outbox;
 EInvoice.Validate = Validate;
 EInvoice.Lookup = Lookup;
 EInvoice.Webhooks = Webhooks;
+
 export declare namespace EInvoice {
   export type RequestOptions = Opts.RequestOptions;
 

@@ -1,5 +1,33 @@
 # Changelog
 
+## 1.8.0 (2025-08-24)
+
+Full Changelog: [v1.7.2...v1.8.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.7.2...v1.8.0)
+
+### Features
+
+* **mcp:** add code execution tool ([aef52f1](https://github.com/e-invoice-be/e-invoice-ts/commit/aef52f12ee11b193981ebef249fab09b2e61dcae))
+* **mcp:** add option to infer mcp client ([204b28d](https://github.com/e-invoice-be/e-invoice-ts/commit/204b28d7c8e1971398cf59739c2ee720fdef3780))
+* **mcp:** parse query string as mcp client options in mcp server ([a5dc0ea](https://github.com/e-invoice-be/e-invoice-ts/commit/a5dc0ea055231586adfebe799c36f083a3d98e93))
+
+
+### Chores
+
+* add package to package.json ([da9920e](https://github.com/e-invoice-be/e-invoice-ts/commit/da9920e19fbaa085fb0b2e1fe410f55b73689f76))
+* **client:** qualify global Blob ([f4c9d18](https://github.com/e-invoice-be/e-invoice-ts/commit/f4c9d18256ebab72728c5a2278257140ef90440b))
+* **deps:** update dependency @types/node to v20.17.58 ([bcab852](https://github.com/e-invoice-be/e-invoice-ts/commit/bcab85293a7b67a4d318901f7608a64f6c225411))
+* **internal:** codegen related update ([8e38b25](https://github.com/e-invoice-be/e-invoice-ts/commit/8e38b25d677ed46d131ace617c5ff751ea58802c))
+* **internal:** codegen related update ([0de2cc1](https://github.com/e-invoice-be/e-invoice-ts/commit/0de2cc1eb377f7a129d78c5aab259975cd1413c0))
+* **internal:** formatting change ([5839fb7](https://github.com/e-invoice-be/e-invoice-ts/commit/5839fb7224bfee17c53b4d77366a821a7dd38080))
+* **internal:** make mcp-server publishing public by defaut ([9693e5b](https://github.com/e-invoice-be/e-invoice-ts/commit/9693e5b1fc936f005f4697df23b7a06b32f196ef))
+* **internal:** refactor array check ([7597d5f](https://github.com/e-invoice-be/e-invoice-ts/commit/7597d5f530fd3b44e55396baebaf776da33950e4))
+* **mcp:** add cors to oauth metadata route ([21ae217](https://github.com/e-invoice-be/e-invoice-ts/commit/21ae217e618ff6cf8a589e2fce2aeeee6160552e))
+* **mcp:** document remote server in README.md ([d0da026](https://github.com/e-invoice-be/e-invoice-ts/commit/d0da0264257658c6dfd2189b13670228ce9aa296))
+* **mcp:** update package.json ([7504ed6](https://github.com/e-invoice-be/e-invoice-ts/commit/7504ed63e8e9fb0e860f830728bcbffc598d2e45))
+* **mcp:** update README ([bc688d7](https://github.com/e-invoice-be/e-invoice-ts/commit/bc688d7388dc27bc88a8a6fea428ecb13b6f678d))
+* **mcp:** update types ([0f714e7](https://github.com/e-invoice-be/e-invoice-ts/commit/0f714e788de591e6008475354154b571cefa7976))
+* update CI script ([7de9a05](https://github.com/e-invoice-be/e-invoice-ts/commit/7de9a057c8f5bf510c54df67387bef3af2c63253))
+
 ## 1.7.2 (2025-08-14)
 
 Full Changelog: [v1.7.1...v1.7.2](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.7.1...v1.7.2)
