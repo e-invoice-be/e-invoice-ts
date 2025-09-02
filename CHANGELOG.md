@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.9.0 (2025-09-02)
+
+Full Changelog: [v1.8.0...v1.9.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.8.0...v1.9.0)
+
+### Features
+
+* **api:** api update ([8e256ea](https://github.com/e-invoice-be/e-invoice-ts/commit/8e256eab938256a1ff474859860f32528a163bf8))
+
+
+### Chores
+
+* **internal:** update global Error reference ([0ad4351](https://github.com/e-invoice-be/e-invoice-ts/commit/0ad435190779f00786789cf95ee8d92b8adb88aa))
+
 ## 1.8.0 (2025-08-24)
 
 Full Changelog: [v1.7.2...v1.8.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.7.2...v1.8.0)
