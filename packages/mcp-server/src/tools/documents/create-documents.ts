@@ -336,6 +336,7 @@ export const tool: Tool = {
           file_data: {
             type: 'string',
             title: 'File Data',
+            description: 'Base64 encoded file data',
           },
           file_size: {
             type: 'integer',
