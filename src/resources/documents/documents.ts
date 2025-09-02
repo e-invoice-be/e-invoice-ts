@@ -84,6 +84,9 @@ export type CurrencyCode =
 export interface DocumentAttachmentCreate {
   file_name: string;
 
+  /**
+   * Base64 encoded file data
+   */
   file_data?: string | null;
 
   file_size?: number;
