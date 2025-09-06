@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.10.0 (2025-09-06)
+
+Full Changelog: [v1.9.0...v1.10.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.9.0...v1.10.0)
+
+### Features
+
+* **mcp:** allow setting logging level ([5a1c13c](https://github.com/e-invoice-be/e-invoice-ts/commit/5a1c13cd5254e2e9b4c567a87c3db6d5e828a69f))
+* **mcp:** expose client options in `streamableHTTPApp` ([5b8eddf](https://github.com/e-invoice-be/e-invoice-ts/commit/5b8eddf4748f277e8bd5a30b0eee97055ba1890e))
+
+
+### Bug Fixes
+
+* **mcp:** fix query options parsing ([a9ada2c](https://github.com/e-invoice-be/e-invoice-ts/commit/a9ada2c3d8bea180f0739f2409815edbbb460452))
+
+
+### Chores
+
+* ci build action ([d5fe12a](https://github.com/e-invoice-be/e-invoice-ts/commit/d5fe12aefff64ae51bfde3fe38a9a057775bd760))
+* **internal:** codegen related update ([ba8a085](https://github.com/e-invoice-be/e-invoice-ts/commit/ba8a085e0c068000a6300b31ab4da02c2e9a3f7b))
+* **internal:** codegen related update ([bfe5f2a](https://github.com/e-invoice-be/e-invoice-ts/commit/bfe5f2a920d6303f514ed3b4fae1b3f70da58d15))
+
 ## 1.9.0 (2025-09-02)
 
 Full Changelog: [v1.8.0...v1.9.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.8.0...v1.9.0)
