@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.10.1 (2025-09-12)
+
+Full Changelog: [v1.10.0...v1.10.1](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.10.0...v1.10.1)
+
+### Bug Fixes
+
+* **mcp:** fix uploading dxt release assets ([223ea0d](https://github.com/e-invoice-be/e-invoice-ts/commit/223ea0d3b3a53125d31045f150c57fab48eba04c))
+
+
+### Chores
+
+* **internal:** codegen related update ([eb92c9c](https://github.com/e-invoice-be/e-invoice-ts/commit/eb92c9cddb050f9288b4759846a0d728fc2108fe))
+* **internal:** codegen related update ([040086b](https://github.com/e-invoice-be/e-invoice-ts/commit/040086b83feeaf0211993e7534ddcad1c3481f4f))
+
 ## 1.10.0 (2025-09-06)
 
 Full Changelog: [v1.9.0...v1.10.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.9.0...v1.10.0)
