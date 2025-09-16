@@ -33,7 +33,7 @@ export const newMcpServer = () =>
   new McpServer(
     {
       name: 'e_invoice_api_api',
-      version: '1.10.1',
+      version: '1.11.0',
     },
     { capabilities: { tools: {}, logging: {} } },
   );
