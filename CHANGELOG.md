@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.11.1 (2025-09-17)
+
+Full Changelog: [v1.11.0...v1.11.1](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.11.0...v1.11.1)
+
+### Bug Fixes
+
+* **ci:** set permissions for DXT publish action ([8501c57](https://github.com/e-invoice-be/e-invoice-ts/commit/8501c57395099a49b8b49b078735489b08d39a06))
+
 ## 1.11.0 (2025-09-16)
 
 Full Changelog: [v1.10.1...v1.11.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.10.1...v1.11.0)
