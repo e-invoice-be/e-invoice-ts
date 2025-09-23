@@ -224,14 +224,14 @@ The following tools are available in this MCP server.
 
 ### Resource `inbox`:
 
-- `list_inbox` (`read`): Retrieve a paginated list of received documents with filtering options.
+- `list_inbox` (`read`): Retrieve a paginated list of received documents with filtering options including state, type, sender, date range, and text search.
 - `list_credit_notes_inbox` (`read`): Retrieve a paginated list of received credit notes with filtering options.
 - `list_invoices_inbox` (`read`): Retrieve a paginated list of received invoices with filtering options.
 
 ### Resource `outbox`:
 
 - `list_draft_documents_outbox` (`read`): Retrieve a paginated list of draft documents with filtering options.
-- `list_received_documents_outbox` (`read`): Retrieve a paginated list of received documents with filtering options.
+- `list_received_documents_outbox` (`read`): Retrieve a paginated list of sent documents with filtering options including state, type, sender, date range, and text search.
 
 ### Resource `validate`:
 
