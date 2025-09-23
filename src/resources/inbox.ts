@@ -8,7 +8,8 @@ import { RequestOptions } from '../internal/request-options';
 
 export class Inbox extends APIResource {
   /**
-   * Retrieve a paginated list of received documents with filtering options.
+   * Retrieve a paginated list of received documents with filtering options including
+   * state, type, sender, date range, and text search.
    */
   list(
     query: InboxListParams | null | undefined = {},
