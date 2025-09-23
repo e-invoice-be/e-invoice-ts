@@ -16,7 +16,8 @@ export const metadata: Metadata = {
 
 export const tool: Tool = {
   name: 'list_inbox',
-  description: 'Retrieve a paginated list of received documents with filtering options.',
+  description:
+    'Retrieve a paginated list of received documents with filtering options including state, type, sender, date range, and text search.',
   inputSchema: {
     type: 'object',
     properties: {

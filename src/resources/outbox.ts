@@ -22,7 +22,8 @@ export class Outbox extends APIResource {
   }
 
   /**
-   * Retrieve a paginated list of received documents with filtering options.
+   * Retrieve a paginated list of sent documents with filtering options including
+   * state, type, sender, date range, and text search.
    */
   listReceivedDocuments(
     query: OutboxListReceivedDocumentsParams | null | undefined = {},
