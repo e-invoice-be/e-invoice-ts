@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.12.0 (2025-09-24)
+
+Full Changelog: [v1.11.1...v1.12.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.11.1...v1.12.0)
+
+### Features
+
+* **api:** api update ([5abc8d5](https://github.com/e-invoice-be/e-invoice-ts/commit/5abc8d58050879bd3bb2a187be15605ec01f6b6b))
+* **mcp:** add docs search tool ([0caa855](https://github.com/e-invoice-be/e-invoice-ts/commit/0caa855168dd834bf2d92dd8c1bedfaacfff5f42))
+* **mcp:** add option for including docs tools ([403d6ef](https://github.com/e-invoice-be/e-invoice-ts/commit/403d6ef4f74766f6ba4a121c8b4df6d4433cb741))
+* **mcp:** enable experimental docs search tool ([047d898](https://github.com/e-invoice-be/e-invoice-ts/commit/047d898441a82a11af9659030d74856bfc908de5))
+
+
+### Chores
+
+* **codegen:** internal codegen update ([fab2d80](https://github.com/e-invoice-be/e-invoice-ts/commit/fab2d8090532868995476d4f4455734ac5d2f675))
+* do not install brew dependencies in ./scripts/bootstrap by default ([ca49c18](https://github.com/e-invoice-be/e-invoice-ts/commit/ca49c1895b1eda54e75c80317fe41268f54a24bf))
+* **internal:** gitignore .mcpb files ([ccf21a2](https://github.com/e-invoice-be/e-invoice-ts/commit/ccf21a2da5f9137cce7a84c2b916fe2f7c5e7f27))
+* **mcp:** rename dxt to mcpb ([a5c5bb5](https://github.com/e-invoice-be/e-invoice-ts/commit/a5c5bb566c0b626e10ef098a330f32cafc6f0e03))
+
 ## 1.11.1 (2025-09-17)
 
 Full Changelog: [v1.11.0...v1.11.1](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.11.0...v1.11.1)
