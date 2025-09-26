@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "e-invoice-api/*": ["dist/src/*"],
-      "e-invoice-api": ["dist/src/index.ts"]
+      "e-invoice-api/*": ["./dist/src/*"],
+      "e-invoice-api": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,
