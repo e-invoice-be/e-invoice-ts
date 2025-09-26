@@ -7,10 +7,9 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "baseUrl": "./",
     "paths": {
-      "e-invoice-api/*": ["src/*"],
-      "e-invoice-api": ["src/index.ts"]
+      "e-invoice-api/*": ["./src/*"],
+      "e-invoice-api": ["./src/index.ts"]
     },
     "noEmit": true,
 
