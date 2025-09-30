@@ -1,5 +1,29 @@
 # Changelog
 
+## 1.12.1 (2025-09-30)
+
+Full Changelog: [v1.12.0...v1.12.1](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.12.0...v1.12.1)
+
+### Bug Fixes
+
+* **mcp:** fix cli argument parsing logic ([943a677](https://github.com/e-invoice-be/e-invoice-ts/commit/943a6777c4805891c5c2c8493d8238da673b3869))
+* **mcp:** resolve a linting issue in server code ([a54a247](https://github.com/e-invoice-be/e-invoice-ts/commit/a54a247bb0056fc1bdf2e463744538b7961803a2))
+
+
+### Performance Improvements
+
+* faster formatting ([8e75d8d](https://github.com/e-invoice-be/e-invoice-ts/commit/8e75d8d8c09be7de8d6d36c081f52a33ae4b5be3))
+
+
+### Chores
+
+* **internal:** codegen related update ([da6b51f](https://github.com/e-invoice-be/e-invoice-ts/commit/da6b51f6e3aacba86bb3a3c3afde6da5dfefac17))
+* **internal:** fix incremental formatting in some cases ([c533269](https://github.com/e-invoice-be/e-invoice-ts/commit/c533269f0438e39e9ee587797f1c8f9376cc61db))
+* **internal:** ignore .eslintcache ([1b5b9fb](https://github.com/e-invoice-be/e-invoice-ts/commit/1b5b9fb9839b0826216f1ed6fbbed80410f252ac))
+* **internal:** remove deprecated `compilerOptions.baseUrl` from tsconfig.json ([e3fac3c](https://github.com/e-invoice-be/e-invoice-ts/commit/e3fac3cdd8cc3e15c21a8716f565dd6be5025d41))
+* **mcp:** allow pointing `docs_search` tool at other URLs ([ee2f6fb](https://github.com/e-invoice-be/e-invoice-ts/commit/ee2f6fbdb2a3eca7e830ab90a1e4ac28f47df469))
+* update lockfile ([27f48e1](https://github.com/e-invoice-be/e-invoice-ts/commit/27f48e1568753461ca55f7a0934f9dc82a86fde1))
+
 ## 1.12.0 (2025-09-24)
 
 Full Changelog: [v1.11.1...v1.12.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.11.1...v1.12.0)
