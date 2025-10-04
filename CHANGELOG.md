@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.12.2 (2025-10-04)
+
+Full Changelog: [v1.12.1...v1.12.2](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.12.1...v1.12.2)
+
+### Chores
+
+* **internal:** remove .eslintcache ([55d122c](https://github.com/e-invoice-be/e-invoice-ts/commit/55d122c3d960a8af43860b0e18e36c85729938ce))
+* **jsdoc:** fix [@link](https://github.com/link) annotations to refer only to parts of the package‘s public interface ([b3f482b](https://github.com/e-invoice-be/e-invoice-ts/commit/b3f482b7a72077a704ff0976eb599e32545aa4c7))
+
 ## 1.12.1 (2025-09-30)
 
 Full Changelog: [v1.12.0...v1.12.1](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.12.0...v1.12.1)
