@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   tags: [],
   httpMethod: 'get',
   httpPath: '/api/inbox/',
-  operationId: 'get_inbox_api_inbox__get',
+  operationId: 'get_inbox',
 };
 
 export const tool: Tool = {

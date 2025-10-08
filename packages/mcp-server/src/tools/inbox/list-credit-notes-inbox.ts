@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   tags: [],
   httpMethod: 'get',
   httpPath: '/api/inbox/credit-notes',
-  operationId: 'get_inbox_credit_notes_api_inbox_credit_notes_get',
+  operationId: 'get_inbox_credit_notes',
 };
 
 export const tool: Tool = {
