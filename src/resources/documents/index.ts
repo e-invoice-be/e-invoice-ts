@@ -11,6 +11,8 @@ export {
 } from './attachments';
 export {
   Documents,
+  type Allowance,
+  type Charge,
   type CurrencyCode,
   type DocumentAttachmentCreate,
   type DocumentCreate,
@@ -20,8 +22,10 @@ export {
   type PaymentDetailCreate,
   type UnitOfMeasureCode,
   type DocumentDeleteResponse,
+  type DocumentCreateFromPdfResponse,
   type DocumentCreateParams,
+  type DocumentCreateFromPdfParams,
   type DocumentSendParams,
   type DocumentResponsesDocumentsNumberPage,
 } from './documents';
-export { Ubl, type UblGetResponse } from './ubl';
+export { Ubl, type UblGetResponse, type UblCreateFromUblParams } from './ubl';

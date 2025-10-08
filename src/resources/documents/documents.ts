@@ -3,6 +3,7 @@
 import { APIResource } from '../../core/resource';
 import * as DocumentsAPI from './documents';
 import * as InboxAPI from '../inbox';
+import * as ValidateAPI from '../validate';
 import * as AttachmentsAPI from './attachments';
 import {
   AttachmentAddParams,
@@ -14,10 +15,12 @@ import {
   DocumentAttachment,
 } from './attachments';
 import * as UblAPI from './ubl';
-import { Ubl, UblGetResponse } from './ubl';
+import { Ubl, UblCreateFromUblParams, UblGetResponse } from './ubl';
 import { APIPromise } from '../../core/api-promise';
 import { DocumentsNumberPage } from '../../core/pagination';
+import { type Uploadable } from '../../core/uploads';
 import { RequestOptions } from '../../internal/request-options';
+import { multipartFormRequestOptions } from '../../internal/uploads';
 import { path } from '../../internal/utils/path';
 
 export class Documents extends APIResource {
@@ -46,6 +49,27 @@ export class Documents extends APIResource {
   }
 
   /**
+   * Create a new invoice or credit note from a PDF file. If the 'ubl_document' field
+   * is set in the response, it indicates that sufficient details were extracted from
+   * the PDF to automatically generate a valid UBL document ready for sending. If
+   * 'ubl_document' is not set, human intervention may be required to ensure
+   * compliance.
+   */
+  createFromPdf(
+    params: DocumentCreateFromPdfParams,
+    options?: RequestOptions,
+  ): APIPromise<DocumentCreateFromPdfResponse> {
+    const { customer_tax_id, vendor_tax_id, ...body } = params;
+    return this._client.post(
+      '/api/documents/pdf',
+      multipartFormRequestOptions(
+        { query: { customer_tax_id, vendor_tax_id }, body, ...options },
+        this._client,
+      ),
+    );
+  }
+
+  /**
    * Send an invoice or credit note via Peppol
    */
   send(
@@ -60,9 +84,104 @@ export class Documents extends APIResource {
       ...options,
     });
   }
+
+  /**
+   * Validate a UBL document according to Peppol BIS Billing 3.0
+   */
+  validate(documentID: string, options?: RequestOptions): APIPromise<ValidateAPI.UblDocumentValidation> {
+    return this._client.post(path`/api/documents/${documentID}/validate`, options);
+  }
 }
 
 export type DocumentResponsesDocumentsNumberPage = DocumentsNumberPage<DocumentResponse>;
+
+/**
+ * An allowance is a discount for example for early payment, volume discount, etc.
+ */
+export interface Allowance {
+  /**
+   * The allowance amount, without VAT. Must be rounded to maximum 2 decimals
+   */
+  amount?: string | null;
+
+  /**
+   * The base amount that may be used, in conjunction with the allowance percentage,
+   * to calculate the allowance amount. Must be rounded to maximum 2 decimals
+   */
+  base_amount?: string | null;
+
+  /**
+   * The percentage that may be used, in conjunction with the allowance base amount,
+   * to calculate the allowance amount. To state 20%, use value 20
+   */
+  multiplier_factor?: string | null;
+
+  /**
+   * The reason for the allowance
+   */
+  reason?: string | null;
+
+  /**
+   * The code for the allowance reason
+   */
+  reason_code?: string | null;
+
+  /**
+   * Duty or tax or fee category codes (Subset of UNCL5305)
+   *
+   * Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+   */
+  tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B' | null;
+
+  /**
+   * The VAT rate, represented as percentage that applies to the allowance
+   */
+  tax_rate?: string | null;
+}
+
+/**
+ * A charge is an additional fee for example for late payment, late delivery, etc.
+ */
+export interface Charge {
+  /**
+   * The charge amount, without VAT. Must be rounded to maximum 2 decimals
+   */
+  amount?: string | null;
+
+  /**
+   * The base amount that may be used, in conjunction with the charge percentage, to
+   * calculate the charge amount. Must be rounded to maximum 2 decimals
+   */
+  base_amount?: string | null;
+
+  /**
+   * The percentage that may be used, in conjunction with the charge base amount, to
+   * calculate the charge amount. To state 20%, use value 20
+   */
+  multiplier_factor?: string | null;
+
+  /**
+   * The reason for the charge
+   */
+  reason?: string | null;
+
+  /**
+   * The code for the charge reason
+   */
+  reason_code?: string | null;
+
+  /**
+   * Duty or tax or fee category codes (Subset of UNCL5305)
+   *
+   * Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+   */
+  tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B' | null;
+
+  /**
+   * The VAT rate, represented as percentage that applies to the charge
+   */
+  tax_rate?: string | null;
+}
 
 export type CurrencyCode =
   | 'EUR'
@@ -821,7 +940,7 @@ export namespace DocumentResponse {
     /**
      * The allowances of the line item.
      */
-    allowances?: Array<Item.Allowance> | null;
+    allowances?: Array<DocumentsAPI.Allowance> | null;
 
     /**
      * The total amount of the line item, exclusive of VAT, after subtracting line
@@ -833,7 +952,7 @@ export namespace DocumentResponse {
     /**
      * The charges of the line item.
      */
-    charges?: Array<Item.Charge> | null;
+    charges?: Array<DocumentsAPI.Charge> | null;
 
     date?: null;
 
@@ -872,96 +991,6 @@ export namespace DocumentResponse {
      * The unit price of the line item. Must be rounded to maximum 2 decimals
      */
     unit_price?: string | null;
-  }
-
-  export namespace Item {
-    /**
-     * An allowance is a discount for example for early payment, volume discount, etc.
-     */
-    export interface Allowance {
-      /**
-       * The allowance amount, without VAT. Must be rounded to maximum 2 decimals
-       */
-      amount?: string | null;
-
-      /**
-       * The base amount that may be used, in conjunction with the allowance percentage,
-       * to calculate the allowance amount. Must be rounded to maximum 2 decimals
-       */
-      base_amount?: string | null;
-
-      /**
-       * The percentage that may be used, in conjunction with the allowance base amount,
-       * to calculate the allowance amount. To state 20%, use value 20
-       */
-      multiplier_factor?: string | null;
-
-      /**
-       * The reason for the allowance
-       */
-      reason?: string | null;
-
-      /**
-       * The code for the allowance reason
-       */
-      reason_code?: string | null;
-
-      /**
-       * Duty or tax or fee category codes (Subset of UNCL5305)
-       *
-       * Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
-       */
-      tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B' | null;
-
-      /**
-       * The VAT rate, represented as percentage that applies to the allowance
-       */
-      tax_rate?: string | null;
-    }
-
-    /**
-     * A charge is an additional fee for example for late payment, late delivery, etc.
-     */
-    export interface Charge {
-      /**
-       * The charge amount, without VAT. Must be rounded to maximum 2 decimals
-       */
-      amount?: string | null;
-
-      /**
-       * The base amount that may be used, in conjunction with the charge percentage, to
-       * calculate the charge amount. Must be rounded to maximum 2 decimals
-       */
-      base_amount?: string | null;
-
-      /**
-       * The percentage that may be used, in conjunction with the charge base amount, to
-       * calculate the charge amount. To state 20%, use value 20
-       */
-      multiplier_factor?: string | null;
-
-      /**
-       * The reason for the charge
-       */
-      reason?: string | null;
-
-      /**
-       * The code for the charge reason
-       */
-      reason_code?: string | null;
-
-      /**
-       * Duty or tax or fee category codes (Subset of UNCL5305)
-       *
-       * Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
-       */
-      tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B' | null;
-
-      /**
-       * The VAT rate, represented as percentage that applies to the charge
-       */
-      tax_rate?: string | null;
-    }
   }
 
   export interface PaymentDetail {
@@ -2033,6 +2062,279 @@ export interface DocumentDeleteResponse {
   is_deleted: boolean;
 }
 
+export interface DocumentCreateFromPdfResponse {
+  allowances?: Array<Allowance> | null;
+
+  /**
+   * The amount due of the invoice. Must be positive and rounded to maximum 2
+   * decimals
+   */
+  amount_due?: string | null;
+
+  attachments?: Array<DocumentAttachmentCreate> | null;
+
+  billing_address?: string | null;
+
+  billing_address_recipient?: string | null;
+
+  charges?: Array<Charge> | null;
+
+  /**
+   * Currency of the invoice
+   */
+  currency?: CurrencyCode;
+
+  customer_address?: string | null;
+
+  customer_address_recipient?: string | null;
+
+  customer_email?: string | null;
+
+  customer_id?: string | null;
+
+  customer_name?: string | null;
+
+  customer_tax_id?: string | null;
+
+  direction?: DocumentDirection;
+
+  document_type?: DocumentType;
+
+  due_date?: string | null;
+
+  invoice_date?: string | null;
+
+  invoice_id?: string | null;
+
+  /**
+   * The total amount of the invoice (so invoice_total = subtotal + total_tax +
+   * total_discount). Must be positive and rounded to maximum 2 decimals
+   */
+  invoice_total?: string | null;
+
+  /**
+   * At least one line item is required
+   */
+  items?: Array<DocumentCreateFromPdfResponse.Item>;
+
+  note?: string | null;
+
+  payment_details?: Array<PaymentDetailCreate> | null;
+
+  payment_term?: string | null;
+
+  /**
+   * The previous unpaid balance of the invoice, if any. Must be positive and rounded
+   * to maximum 2 decimals
+   */
+  previous_unpaid_balance?: string | null;
+
+  purchase_order?: string | null;
+
+  remittance_address?: string | null;
+
+  remittance_address_recipient?: string | null;
+
+  service_address?: string | null;
+
+  service_address_recipient?: string | null;
+
+  service_end_date?: string | null;
+
+  service_start_date?: string | null;
+
+  shipping_address?: string | null;
+
+  shipping_address_recipient?: string | null;
+
+  state?: InboxAPI.DocumentState;
+
+  /**
+   * The taxable base of the invoice. Should be the sum of all line items -
+   * allowances (for example commercial discounts) + charges with impact on VAT. Must
+   * be positive and rounded to maximum 2 decimals
+   */
+  subtotal?: string | null;
+
+  /**
+   * Whether the PDF was successfully converted into a compliant e-invoice
+   */
+  success?: boolean;
+
+  /**
+   * Tax category code of the invoice
+   */
+  tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B';
+
+  tax_details?: Array<DocumentCreateFromPdfResponse.TaxDetail> | null;
+
+  /**
+   * The total financial discount of the invoice (so discounts not subject to VAT).
+   * Must be positive and rounded to maximum 2 decimals
+   */
+  total_discount?: string | null;
+
+  /**
+   * The total tax of the invoice. Must be positive and rounded to maximum 2 decimals
+   */
+  total_tax?: string | null;
+
+  /**
+   * The UBL document as an XML string
+   */
+  ubl_document?: string | null;
+
+  /**
+   * VATEX code list for VAT exemption reasons
+   *
+   * Agency: CEF Identifier: vatex
+   */
+  vatex?:
+    | 'VATEX-EU-79-C'
+    | 'VATEX-EU-132'
+    | 'VATEX-EU-132-1A'
+    | 'VATEX-EU-132-1B'
+    | 'VATEX-EU-132-1C'
+    | 'VATEX-EU-132-1D'
+    | 'VATEX-EU-132-1E'
+    | 'VATEX-EU-132-1F'
+    | 'VATEX-EU-132-1G'
+    | 'VATEX-EU-132-1H'
+    | 'VATEX-EU-132-1I'
+    | 'VATEX-EU-132-1J'
+    | 'VATEX-EU-132-1K'
+    | 'VATEX-EU-132-1L'
+    | 'VATEX-EU-132-1M'
+    | 'VATEX-EU-132-1N'
+    | 'VATEX-EU-132-1O'
+    | 'VATEX-EU-132-1P'
+    | 'VATEX-EU-132-1Q'
+    | 'VATEX-EU-143'
+    | 'VATEX-EU-143-1A'
+    | 'VATEX-EU-143-1B'
+    | 'VATEX-EU-143-1C'
+    | 'VATEX-EU-143-1D'
+    | 'VATEX-EU-143-1E'
+    | 'VATEX-EU-143-1F'
+    | 'VATEX-EU-143-1FA'
+    | 'VATEX-EU-143-1G'
+    | 'VATEX-EU-143-1H'
+    | 'VATEX-EU-143-1I'
+    | 'VATEX-EU-143-1J'
+    | 'VATEX-EU-143-1K'
+    | 'VATEX-EU-143-1L'
+    | 'VATEX-EU-144'
+    | 'VATEX-EU-146-1E'
+    | 'VATEX-EU-148'
+    | 'VATEX-EU-148-A'
+    | 'VATEX-EU-148-B'
+    | 'VATEX-EU-148-C'
+    | 'VATEX-EU-148-D'
+    | 'VATEX-EU-148-E'
+    | 'VATEX-EU-148-F'
+    | 'VATEX-EU-148-G'
+    | 'VATEX-EU-151'
+    | 'VATEX-EU-151-1A'
+    | 'VATEX-EU-151-1AA'
+    | 'VATEX-EU-151-1B'
+    | 'VATEX-EU-151-1C'
+    | 'VATEX-EU-151-1D'
+    | 'VATEX-EU-151-1E'
+    | 'VATEX-EU-159'
+    | 'VATEX-EU-309'
+    | 'VATEX-EU-AE'
+    | 'VATEX-EU-D'
+    | 'VATEX-EU-F'
+    | 'VATEX-EU-G'
+    | 'VATEX-EU-I'
+    | 'VATEX-EU-IC'
+    | 'VATEX-EU-O'
+    | 'VATEX-EU-J'
+    | 'VATEX-FR-FRANCHISE'
+    | 'VATEX-FR-CNWVAT'
+    | null;
+
+  /**
+   * VAT exemption note of the invoice
+   */
+  vatex_note?: string | null;
+
+  vendor_address?: string | null;
+
+  vendor_address_recipient?: string | null;
+
+  vendor_email?: string | null;
+
+  vendor_name?: string | null;
+
+  vendor_tax_id?: string | null;
+}
+
+export namespace DocumentCreateFromPdfResponse {
+  export interface Item {
+    /**
+     * The allowances of the line item.
+     */
+    allowances?: Array<DocumentsAPI.Allowance> | null;
+
+    /**
+     * The total amount of the line item, exclusive of VAT, after subtracting line
+     * level allowances and adding line level charges. Must be rounded to maximum 2
+     * decimals
+     */
+    amount?: string | null;
+
+    /**
+     * The charges of the line item.
+     */
+    charges?: Array<DocumentsAPI.Charge> | null;
+
+    date?: null;
+
+    /**
+     * The description of the line item.
+     */
+    description?: string | null;
+
+    /**
+     * The product code of the line item.
+     */
+    product_code?: string | null;
+
+    /**
+     * The quantity of items (goods or services) that is the subject of the line item.
+     * Must be rounded to maximum 4 decimals
+     */
+    quantity?: string | null;
+
+    /**
+     * The total VAT amount for the line item. Must be rounded to maximum 2 decimals
+     */
+    tax?: string | null;
+
+    /**
+     * The VAT rate of the line item expressed as percentage with 2 decimals
+     */
+    tax_rate?: string | null;
+
+    /**
+     * Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
+     */
+    unit?: DocumentsAPI.UnitOfMeasureCode | null;
+
+    /**
+     * The unit price of the line item. Must be rounded to maximum 2 decimals
+     */
+    unit_price?: string | null;
+  }
+
+  export interface TaxDetail {
+    amount?: string | null;
+
+    rate?: string | null;
+  }
+}
+
 export interface DocumentCreateParams {
   allowances?: Array<DocumentCreateParams.Allowance> | null;
 
@@ -2474,6 +2776,23 @@ export namespace DocumentCreateParams {
   }
 }
 
+export interface DocumentCreateFromPdfParams {
+  /**
+   * Body param:
+   */
+  file: Uploadable;
+
+  /**
+   * Query param:
+   */
+  customer_tax_id?: string | null;
+
+  /**
+   * Query param:
+   */
+  vendor_tax_id?: string | null;
+}
+
 export interface DocumentSendParams {
   email?: string | null;
 
@@ -2491,6 +2810,8 @@ Documents.Ubl = Ubl;
 
 export declare namespace Documents {
   export {
+    type Allowance as Allowance,
+    type Charge as Charge,
     type CurrencyCode as CurrencyCode,
     type DocumentAttachmentCreate as DocumentAttachmentCreate,
     type DocumentCreate as DocumentCreate,
@@ -2500,7 +2821,9 @@ export declare namespace Documents {
     type PaymentDetailCreate as PaymentDetailCreate,
     type UnitOfMeasureCode as UnitOfMeasureCode,
     type DocumentDeleteResponse as DocumentDeleteResponse,
+    type DocumentCreateFromPdfResponse as DocumentCreateFromPdfResponse,
     type DocumentCreateParams as DocumentCreateParams,
+    type DocumentCreateFromPdfParams as DocumentCreateFromPdfParams,
     type DocumentSendParams as DocumentSendParams,
   };
 
@@ -2514,5 +2837,9 @@ export declare namespace Documents {
     type AttachmentAddParams as AttachmentAddParams,
   };
 
-  export { Ubl as Ubl, type UblGetResponse as UblGetResponse };
+  export {
+    Ubl as Ubl,
+    type UblGetResponse as UblGetResponse,
+    type UblCreateFromUblParams as UblCreateFromUblParams,
+  };
 }

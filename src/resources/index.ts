@@ -2,6 +2,8 @@
 
 export {
   Documents,
+  type Allowance,
+  type Charge,
   type CurrencyCode,
   type DocumentAttachmentCreate,
   type DocumentCreate,
@@ -11,7 +13,9 @@ export {
   type PaymentDetailCreate,
   type UnitOfMeasureCode,
   type DocumentDeleteResponse,
+  type DocumentCreateFromPdfResponse,
   type DocumentCreateParams,
+  type DocumentCreateFromPdfParams,
   type DocumentSendParams,
   type DocumentResponsesDocumentsNumberPage,
 } from './documents/documents';
@@ -31,6 +35,7 @@ export {
   type LookupRetrieveParams,
   type LookupRetrieveParticipantsParams,
 } from './lookup';
+export { Me, type MeRetrieveResponse } from './me';
 export {
   Outbox,
   type OutboxListDraftDocumentsParams,
