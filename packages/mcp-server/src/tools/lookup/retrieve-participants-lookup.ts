@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   tags: [],
   httpMethod: 'get',
   httpPath: '/api/lookup/participants',
-  operationId: 'get_lookup_participants_api_lookup_participants_get',
+  operationId: 'get_lookup_participants',
 };
 
 export const tool: Tool = {

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   tags: [],
   httpMethod: 'get',
   httpPath: '/api/outbox/',
-  operationId: 'get_outbox_api_outbox__get',
+  operationId: 'get_outbox',
 };
 
 export const tool: Tool = {
