@@ -20,6 +20,77 @@ export const tool: Tool = {
   inputSchema: {
     type: 'object',
     properties: {
+      allowances: {
+        type: 'array',
+        title: 'Allowances',
+        items: {
+          type: 'object',
+          title: 'Allowance',
+          description: 'An allowance is a discount for example for early payment, volume discount, etc.',
+          properties: {
+            amount: {
+              anyOf: [
+                {
+                  type: 'number',
+                },
+                {
+                  type: 'string',
+                },
+              ],
+              title: 'Amount',
+              description: 'The allowance amount, without VAT. Must be rounded to maximum 2 decimals',
+            },
+            base_amount: {
+              anyOf: [
+                {
+                  type: 'number',
+                },
+                {
+                  type: 'string',
+                },
+              ],
+              title: 'Base Amount',
+              description:
+                'The base amount that may be used, in conjunction with the allowance percentage, to calculate the allowance amount. Must be rounded to maximum 2 decimals',
+            },
+            multiplier_factor: {
+              anyOf: [
+                {
+                  type: 'number',
+                },
+                {
+                  type: 'string',
+                },
+              ],
+              title: 'Multiplier Factor',
+              description:
+                'The percentage that may be used, in conjunction with the allowance base amount, to calculate the allowance amount. To state 20%, use value 20',
+            },
+            reason: {
+              type: 'string',
+              title: 'Reason',
+              description: 'The reason for the allowance',
+            },
+            reason_code: {
+              type: 'string',
+              title: 'Reason Code',
+              description: 'The code for the allowance reason',
+            },
+            tax_code: {
+              type: 'string',
+              title: 'TaxCategoryCode',
+              description:
+                'Duty or tax or fee category codes (Subset of UNCL5305)\n\nAgency: UN/CEFACT\nVersion: D.16B\nSubset: OpenPEPPOL',
+              enum: ['AE', 'E', 'S', 'Z', 'G', 'O', 'K', 'L', 'M', 'B'],
+            },
+            tax_rate: {
+              type: 'string',
+              title: 'Tax Rate',
+              description: 'The VAT rate, represented as percentage that applies to the allowance',
+            },
+          },
+        },
+      },
       amount_due: {
         anyOf: [
           {
@@ -30,6 +101,7 @@ export const tool: Tool = {
           },
         ],
         title: 'Amount Due',
+        description: 'The amount due of the invoice. Must be positive and rounded to maximum 2 decimals',
       },
       attachments: {
         type: 'array',
@@ -45,6 +117,77 @@ export const tool: Tool = {
       billing_address_recipient: {
         type: 'string',
         title: 'Billing Address Recipient',
+      },
+      charges: {
+        type: 'array',
+        title: 'Charges',
+        items: {
+          type: 'object',
+          title: 'Charge',
+          description: 'A charge is an additional fee for example for late payment, late delivery, etc.',
+          properties: {
+            amount: {
+              anyOf: [
+                {
+                  type: 'number',
+                },
+                {
+                  type: 'string',
+                },
+              ],
+              title: 'Amount',
+              description: 'The charge amount, without VAT. Must be rounded to maximum 2 decimals',
+            },
+            base_amount: {
+              anyOf: [
+                {
+                  type: 'number',
+                },
+                {
+                  type: 'string',
+                },
+              ],
+              title: 'Base Amount',
+              description:
+                'The base amount that may be used, in conjunction with the charge percentage, to calculate the charge amount. Must be rounded to maximum 2 decimals',
+            },
+            multiplier_factor: {
+              anyOf: [
+                {
+                  type: 'number',
+                },
+                {
+                  type: 'string',
+                },
+              ],
+              title: 'Multiplier Factor',
+              description:
+                'The percentage that may be used, in conjunction with the charge base amount, to calculate the charge amount. To state 20%, use value 20',
+            },
+            reason: {
+              type: 'string',
+              title: 'Reason',
+              description: 'The reason for the charge',
+            },
+            reason_code: {
+              type: 'string',
+              title: 'Reason Code',
+              description: 'The code for the charge reason',
+            },
+            tax_code: {
+              type: 'string',
+              title: 'TaxCategoryCode',
+              description:
+                'Duty or tax or fee category codes (Subset of UNCL5305)\n\nAgency: UN/CEFACT\nVersion: D.16B\nSubset: OpenPEPPOL',
+              enum: ['AE', 'E', 'S', 'Z', 'G', 'O', 'K', 'L', 'M', 'B'],
+            },
+            tax_rate: {
+              type: 'string',
+              title: 'Tax Rate',
+              description: 'The VAT rate, represented as percentage that applies to the charge',
+            },
+          },
+        },
       },
       currency: {
         $ref: '#/$defs/currency_code',
@@ -103,14 +246,90 @@ export const tool: Tool = {
           },
         ],
         title: 'Invoice Total',
+        description:
+          'The total amount of the invoice (so invoice_total = subtotal + total_tax + total_discount). Must be positive and rounded to maximum 2 decimals',
       },
       items: {
         type: 'array',
         title: 'Items',
+        description: 'At least one line item is required',
         items: {
           type: 'object',
           title: 'LineItemCreate',
           properties: {
+            allowances: {
+              type: 'array',
+              title: 'Allowances',
+              description: 'The allowances of the line item.',
+              items: {
+                type: 'object',
+                title: 'Allowance',
+                description:
+                  'An allowance is a discount for example for early payment, volume discount, etc.',
+                properties: {
+                  amount: {
+                    anyOf: [
+                      {
+                        type: 'number',
+                      },
+                      {
+                        type: 'string',
+                      },
+                    ],
+                    title: 'Amount',
+                    description: 'The allowance amount, without VAT. Must be rounded to maximum 2 decimals',
+                  },
+                  base_amount: {
+                    anyOf: [
+                      {
+                        type: 'number',
+                      },
+                      {
+                        type: 'string',
+                      },
+                    ],
+                    title: 'Base Amount',
+                    description:
+                      'The base amount that may be used, in conjunction with the allowance percentage, to calculate the allowance amount. Must be rounded to maximum 2 decimals',
+                  },
+                  multiplier_factor: {
+                    anyOf: [
+                      {
+                        type: 'number',
+                      },
+                      {
+                        type: 'string',
+                      },
+                    ],
+                    title: 'Multiplier Factor',
+                    description:
+                      'The percentage that may be used, in conjunction with the allowance base amount, to calculate the allowance amount. To state 20%, use value 20',
+                  },
+                  reason: {
+                    type: 'string',
+                    title: 'Reason',
+                    description: 'The reason for the allowance',
+                  },
+                  reason_code: {
+                    type: 'string',
+                    title: 'Reason Code',
+                    description: 'The code for the allowance reason',
+                  },
+                  tax_code: {
+                    type: 'string',
+                    title: 'TaxCategoryCode',
+                    description:
+                      'Duty or tax or fee category codes (Subset of UNCL5305)\n\nAgency: UN/CEFACT\nVersion: D.16B\nSubset: OpenPEPPOL',
+                    enum: ['AE', 'E', 'S', 'Z', 'G', 'O', 'K', 'L', 'M', 'B'],
+                  },
+                  tax_rate: {
+                    type: 'string',
+                    title: 'Tax Rate',
+                    description: 'The VAT rate, represented as percentage that applies to the allowance',
+                  },
+                },
+              },
+            },
             amount: {
               anyOf: [
                 {
@@ -121,6 +340,81 @@ export const tool: Tool = {
                 },
               ],
               title: 'Amount',
+              description:
+                'The total amount of the line item, exclusive of VAT, after subtracting line level allowances and adding line level charges. Must be rounded to maximum 2 decimals',
+            },
+            charges: {
+              type: 'array',
+              title: 'Charges',
+              description: 'The charges of the line item.',
+              items: {
+                type: 'object',
+                title: 'Charge',
+                description:
+                  'A charge is an additional fee for example for late payment, late delivery, etc.',
+                properties: {
+                  amount: {
+                    anyOf: [
+                      {
+                        type: 'number',
+                      },
+                      {
+                        type: 'string',
+                      },
+                    ],
+                    title: 'Amount',
+                    description: 'The charge amount, without VAT. Must be rounded to maximum 2 decimals',
+                  },
+                  base_amount: {
+                    anyOf: [
+                      {
+                        type: 'number',
+                      },
+                      {
+                        type: 'string',
+                      },
+                    ],
+                    title: 'Base Amount',
+                    description:
+                      'The base amount that may be used, in conjunction with the charge percentage, to calculate the charge amount. Must be rounded to maximum 2 decimals',
+                  },
+                  multiplier_factor: {
+                    anyOf: [
+                      {
+                        type: 'number',
+                      },
+                      {
+                        type: 'string',
+                      },
+                    ],
+                    title: 'Multiplier Factor',
+                    description:
+                      'The percentage that may be used, in conjunction with the charge base amount, to calculate the charge amount. To state 20%, use value 20',
+                  },
+                  reason: {
+                    type: 'string',
+                    title: 'Reason',
+                    description: 'The reason for the charge',
+                  },
+                  reason_code: {
+                    type: 'string',
+                    title: 'Reason Code',
+                    description: 'The code for the charge reason',
+                  },
+                  tax_code: {
+                    type: 'string',
+                    title: 'TaxCategoryCode',
+                    description:
+                      'Duty or tax or fee category codes (Subset of UNCL5305)\n\nAgency: UN/CEFACT\nVersion: D.16B\nSubset: OpenPEPPOL',
+                    enum: ['AE', 'E', 'S', 'Z', 'G', 'O', 'K', 'L', 'M', 'B'],
+                  },
+                  tax_rate: {
+                    type: 'string',
+                    title: 'Tax Rate',
+                    description: 'The VAT rate, represented as percentage that applies to the charge',
+                  },
+                },
+              },
             },
             date: {
               type: 'null',
@@ -129,10 +423,12 @@ export const tool: Tool = {
             description: {
               type: 'string',
               title: 'Description',
+              description: 'The description of the line item.',
             },
             product_code: {
               type: 'string',
               title: 'Product Code',
+              description: 'The product code of the line item.',
             },
             quantity: {
               anyOf: [
@@ -144,6 +440,8 @@ export const tool: Tool = {
                 },
               ],
               title: 'Quantity',
+              description:
+                'The quantity of items (goods or services) that is the subject of the line item. Must be rounded to maximum 4 decimals',
             },
             tax: {
               anyOf: [
@@ -155,10 +453,12 @@ export const tool: Tool = {
                 },
               ],
               title: 'Tax',
+              description: 'The total VAT amount for the line item. Must be rounded to maximum 2 decimals',
             },
             tax_rate: {
               type: 'string',
               title: 'Tax Rate',
+              description: 'The VAT rate of the line item expressed as percentage with 2 decimals',
             },
             unit: {
               $ref: '#/$defs/unit_of_measure_code',
@@ -173,6 +473,7 @@ export const tool: Tool = {
                 },
               ],
               title: 'Unit Price',
+              description: 'The unit price of the line item. Must be rounded to maximum 2 decimals',
             },
           },
         },
@@ -202,6 +503,8 @@ export const tool: Tool = {
           },
         ],
         title: 'Previous Unpaid Balance',
+        description:
+          'The previous unpaid balance of the invoice, if any. Must be positive and rounded to maximum 2 decimals',
       },
       purchase_order: {
         type: 'string',
@@ -254,6 +557,8 @@ export const tool: Tool = {
           },
         ],
         title: 'Subtotal',
+        description:
+          'The taxable base of the invoice. Should be the sum of all line items - allowances (for example commercial discounts) + charges with impact on VAT. Must be positive and rounded to maximum 2 decimals',
       },
       tax_code: {
         type: 'string',
@@ -296,6 +601,8 @@ export const tool: Tool = {
           },
         ],
         title: 'Total Discount',
+        description:
+          'The total financial discount of the invoice (so discounts not subject to VAT). Must be positive and rounded to maximum 2 decimals',
       },
       total_tax: {
         anyOf: [
@@ -307,6 +614,7 @@ export const tool: Tool = {
           },
         ],
         title: 'Total Tax',
+        description: 'The total tax of the invoice. Must be positive and rounded to maximum 2 decimals',
       },
       vatex: {
         type: 'string',
