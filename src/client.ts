@@ -34,6 +34,7 @@ import {
   LookupRetrieveParticipantsResponse,
   LookupRetrieveResponse,
 } from './resources/lookup';
+import { Me, MeRetrieveResponse } from './resources/me';
 import {
   Outbox,
   OutboxListDraftDocumentsParams,
@@ -56,9 +57,13 @@ import {
   Webhooks,
 } from './resources/webhooks';
 import {
+  Allowance,
+  Charge,
   CurrencyCode,
   DocumentAttachmentCreate,
   DocumentCreate,
+  DocumentCreateFromPdfParams,
+  DocumentCreateFromPdfResponse,
   DocumentCreateParams,
   DocumentDeleteResponse,
   DocumentDirection,
@@ -790,6 +795,7 @@ export class EInvoice {
   outbox: API.Outbox = new API.Outbox(this);
   validate: API.Validate = new API.Validate(this);
   lookup: API.Lookup = new API.Lookup(this);
+  me: API.Me = new API.Me(this);
   webhooks: API.Webhooks = new API.Webhooks(this);
 }
 
@@ -798,6 +804,7 @@ EInvoice.Inbox = Inbox;
 EInvoice.Outbox = Outbox;
 EInvoice.Validate = Validate;
 EInvoice.Lookup = Lookup;
+EInvoice.Me = Me;
 EInvoice.Webhooks = Webhooks;
 
 export declare namespace EInvoice {
@@ -811,6 +818,8 @@ export declare namespace EInvoice {
 
   export {
     Documents as Documents,
+    type Allowance as Allowance,
+    type Charge as Charge,
     type CurrencyCode as CurrencyCode,
     type DocumentAttachmentCreate as DocumentAttachmentCreate,
     type DocumentCreate as DocumentCreate,
@@ -820,7 +829,9 @@ export declare namespace EInvoice {
     type PaymentDetailCreate as PaymentDetailCreate,
     type UnitOfMeasureCode as UnitOfMeasureCode,
     type DocumentDeleteResponse as DocumentDeleteResponse,
+    type DocumentCreateFromPdfResponse as DocumentCreateFromPdfResponse,
     type DocumentCreateParams as DocumentCreateParams,
+    type DocumentCreateFromPdfParams as DocumentCreateFromPdfParams,
     type DocumentSendParams as DocumentSendParams,
   };
 
@@ -856,6 +867,8 @@ export declare namespace EInvoice {
     type LookupRetrieveParams as LookupRetrieveParams,
     type LookupRetrieveParticipantsParams as LookupRetrieveParticipantsParams,
   };
+
+  export { Me as Me, type MeRetrieveResponse as MeRetrieveResponse };
 
   export {
     Webhooks as Webhooks,

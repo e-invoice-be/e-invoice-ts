@@ -209,7 +209,9 @@ The following tools are available in this MCP server.
 - `create_documents` (`write`): Create a new invoice or credit note
 - `retrieve_documents` (`read`): Get an invoice or credit note by ID
 - `delete_documents` (`write`): Delete an invoice or credit note
+- `create_from_pdf_documents` (`write`): Create a new invoice or credit note from a PDF file. If the 'ubl_document' field is set in the response, it indicates that sufficient details were extracted from the PDF to automatically generate a valid UBL document ready for sending. If 'ubl_document' is not set, human intervention may be required to ensure compliance.
 - `send_documents` (`write`): Send an invoice or credit note via Peppol
+- `validate_documents` (`write`): Validate a UBL document according to Peppol BIS Billing 3.0
 
 ### Resource `documents.attachments`:
 
@@ -220,6 +222,7 @@ The following tools are available in this MCP server.
 
 ### Resource `documents.ubl`:
 
+- `create_from_ubl_documents_ubl` (`write`): Create a new invoice or credit note from a UBL file
 - `get_documents_ubl` (`read`): Get the UBL for an invoice or credit note
 
 ### Resource `inbox`:
@@ -243,6 +246,10 @@ The following tools are available in this MCP server.
 
 - `retrieve_lookup` (`read`): Lookup Peppol ID. The peppol_id must be in the form of `<scheme>:<id>`. The scheme is a 4-digit code representing the identifier scheme, and the id is the actual identifier value. For example, for a Belgian company it is `0208:0123456789` (where 0208 is the scheme for Belgian enterprises, followed by the 10 digits of the official BTW / KBO number).
 - `retrieve_participants_lookup` (`read`): Lookup Peppol participants by name or other identifiers. You can limit the search to a specific country by providing the country code.
+
+### Resource `me`:
+
+- `retrieve_me` (`read`): Retrieve information about your account.
 
 ### Resource `webhooks`:
 
