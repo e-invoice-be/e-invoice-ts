@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   tags: [],
   httpMethod: 'get',
   httpPath: '/api/documents/{document_id}/ubl',
-  operationId: 'get_document_ubl_api_documents__document_id__ubl_get',
+  operationId: 'get_document_ubl',
 };
 
 export const tool: Tool = {

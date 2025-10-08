@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   tags: [],
   httpMethod: 'delete',
   httpPath: '/api/documents/{document_id}',
-  operationId: 'delete_document_api_documents__document_id__delete',
+  operationId: 'delete_document',
 };
 
 export const tool: Tool = {

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   tags: [],
   httpMethod: 'get',
   httpPath: '/api/documents/{document_id}',
-  operationId: 'get_document_api_documents__document_id__get',
+  operationId: 'get_document',
 };
 
 export const tool: Tool = {

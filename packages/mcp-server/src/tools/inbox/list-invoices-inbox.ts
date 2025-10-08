@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   tags: [],
   httpMethod: 'get',
   httpPath: '/api/inbox/invoices',
-  operationId: 'get_inbox_invoices_api_inbox_invoices_get',
+  operationId: 'get_inbox_invoices',
 };
 
 export const tool: Tool = {

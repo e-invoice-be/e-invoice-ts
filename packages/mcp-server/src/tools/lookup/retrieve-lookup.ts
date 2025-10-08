@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   tags: [],
   httpMethod: 'get',
   httpPath: '/api/lookup',
-  operationId: 'get_lookup_peppol_id_api_lookup_get',
+  operationId: 'get_lookup_peppol_id',
 };
 
 export const tool: Tool = {

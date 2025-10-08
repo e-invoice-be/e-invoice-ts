@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   tags: [],
   httpMethod: 'delete',
   httpPath: '/api/documents/{document_id}/attachments/{attachment_id}',
-  operationId: 'delete_document_attachment_api_documents__document_id__attachments__attachment_id__delete',
+  operationId: 'delete_document_attachment',
 };
 
 export const tool: Tool = {

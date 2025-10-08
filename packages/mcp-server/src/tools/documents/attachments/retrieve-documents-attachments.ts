@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   tags: [],
   httpMethod: 'get',
   httpPath: '/api/documents/{document_id}/attachments/{attachment_id}',
-  operationId: 'get_document_attachment_api_documents__document_id__attachments__attachment_id__get',
+  operationId: 'get_document_attachment',
 };
 
 export const tool: Tool = {
