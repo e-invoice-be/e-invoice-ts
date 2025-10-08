@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import EInvoice from 'e-invoice-api';
+import EInvoice, { toFile } from 'e-invoice-api';
 
 const client = new EInvoice({
   apiKey: 'My API Key',
@@ -45,6 +45,29 @@ describe('resource documents', () => {
   });
 
   // Prism tests are disabled
+  test.skip('createFromPdf: only required params', async () => {
+    const responsePromise = client.documents.createFromPdf({
+      file: await toFile(Buffer.from('# my file contents'), 'README.md'),
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('createFromPdf: required and optional params', async () => {
+    const response = await client.documents.createFromPdf({
+      file: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      customer_tax_id: 'customer_tax_id',
+      vendor_tax_id: 'vendor_tax_id',
+    });
+  });
+
+  // Prism tests are disabled
   test.skip('send', async () => {
     const responsePromise = client.documents.send('document_id');
     const rawResponse = await responsePromise.asResponse();
@@ -72,5 +95,17 @@ describe('resource documents', () => {
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(EInvoice.NotFoundError);
+  });
+
+  // Prism tests are disabled
+  test.skip('validate', async () => {
+    const responsePromise = client.documents.validate('document_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
   });
 });

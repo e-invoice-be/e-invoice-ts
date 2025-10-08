@@ -2,6 +2,8 @@
 
 Types:
 
+- <code><a href="./src/resources/documents/documents.ts">Allowance</a></code>
+- <code><a href="./src/resources/documents/documents.ts">Charge</a></code>
 - <code><a href="./src/resources/documents/documents.ts">CurrencyCode</a></code>
 - <code><a href="./src/resources/documents/documents.ts">DocumentAttachmentCreate</a></code>
 - <code><a href="./src/resources/documents/documents.ts">DocumentCreate</a></code>
@@ -11,13 +13,16 @@ Types:
 - <code><a href="./src/resources/documents/documents.ts">PaymentDetailCreate</a></code>
 - <code><a href="./src/resources/documents/documents.ts">UnitOfMeasureCode</a></code>
 - <code><a href="./src/resources/documents/documents.ts">DocumentDeleteResponse</a></code>
+- <code><a href="./src/resources/documents/documents.ts">DocumentCreateFromPdfResponse</a></code>
 
 Methods:
 
 - <code title="post /api/documents/">client.documents.<a href="./src/resources/documents/documents.ts">create</a>({ ...params }) -> DocumentResponse</code>
 - <code title="get /api/documents/{document_id}">client.documents.<a href="./src/resources/documents/documents.ts">retrieve</a>(documentID) -> DocumentResponse</code>
 - <code title="delete /api/documents/{document_id}">client.documents.<a href="./src/resources/documents/documents.ts">delete</a>(documentID) -> DocumentDeleteResponse</code>
+- <code title="post /api/documents/pdf">client.documents.<a href="./src/resources/documents/documents.ts">createFromPdf</a>({ ...params }) -> DocumentCreateFromPdfResponse</code>
 - <code title="post /api/documents/{document_id}/send">client.documents.<a href="./src/resources/documents/documents.ts">send</a>(documentID, { ...params }) -> DocumentResponse</code>
+- <code title="post /api/documents/{document_id}/validate">client.documents.<a href="./src/resources/documents/documents.ts">validate</a>(documentID) -> UblDocumentValidation</code>
 
 ## Attachments
 
@@ -42,6 +47,7 @@ Types:
 
 Methods:
 
+- <code title="post /api/documents/ubl">client.documents.ubl.<a href="./src/resources/documents/ubl.ts">createFromUbl</a>({ ...params }) -> DocumentResponse</code>
 - <code title="get /api/documents/{document_id}/ubl">client.documents.ubl.<a href="./src/resources/documents/ubl.ts">get</a>(documentID) -> UblGetResponse</code>
 
 # Inbox
@@ -89,6 +95,16 @@ Methods:
 
 - <code title="get /api/lookup">client.lookup.<a href="./src/resources/lookup.ts">retrieve</a>({ ...params }) -> LookupRetrieveResponse</code>
 - <code title="get /api/lookup/participants">client.lookup.<a href="./src/resources/lookup.ts">retrieveParticipants</a>({ ...params }) -> LookupRetrieveParticipantsResponse</code>
+
+# Me
+
+Types:
+
+- <code><a href="./src/resources/me.ts">MeRetrieveResponse</a></code>
+
+Methods:
+
+- <code title="get /api/me/">client.me.<a href="./src/resources/me.ts">retrieve</a>() -> MeRetrieveResponse</code>
 
 # Webhooks
 
