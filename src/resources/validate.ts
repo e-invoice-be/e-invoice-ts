@@ -119,6 +119,12 @@ export namespace ValidateValidatePeppolIDResponse {
 }
 
 export interface ValidateValidateJsonParams {
+  allowances?: Array<ValidateValidateJsonParams.Allowance> | null;
+
+  /**
+   * The amount due of the invoice. Must be positive and rounded to maximum 2
+   * decimals
+   */
   amount_due?: number | string | null;
 
   attachments?: Array<DocumentsAPI.DocumentAttachmentCreate> | null;
@@ -126,6 +132,8 @@ export interface ValidateValidateJsonParams {
   billing_address?: string | null;
 
   billing_address_recipient?: string | null;
+
+  charges?: Array<ValidateValidateJsonParams.Charge> | null;
 
   /**
    * Currency of the invoice
@@ -154,9 +162,16 @@ export interface ValidateValidateJsonParams {
 
   invoice_id?: string | null;
 
+  /**
+   * The total amount of the invoice (so invoice_total = subtotal + total_tax +
+   * total_discount). Must be positive and rounded to maximum 2 decimals
+   */
   invoice_total?: number | string | null;
 
-  items?: Array<ValidateValidateJsonParams.Item> | null;
+  /**
+   * At least one line item is required
+   */
+  items?: Array<ValidateValidateJsonParams.Item>;
 
   note?: string | null;
 
@@ -164,6 +179,10 @@ export interface ValidateValidateJsonParams {
 
   payment_term?: string | null;
 
+  /**
+   * The previous unpaid balance of the invoice, if any. Must be positive and rounded
+   * to maximum 2 decimals
+   */
   previous_unpaid_balance?: number | string | null;
 
   purchase_order?: string | null;
@@ -186,6 +205,11 @@ export interface ValidateValidateJsonParams {
 
   state?: InboxAPI.DocumentState;
 
+  /**
+   * The taxable base of the invoice. Should be the sum of all line items -
+   * allowances (for example commercial discounts) + charges with impact on VAT. Must
+   * be positive and rounded to maximum 2 decimals
+   */
   subtotal?: number | string | null;
 
   /**
@@ -195,8 +219,15 @@ export interface ValidateValidateJsonParams {
 
   tax_details?: Array<ValidateValidateJsonParams.TaxDetail> | null;
 
+  /**
+   * The total financial discount of the invoice (so discounts not subject to VAT).
+   * Must be positive and rounded to maximum 2 decimals
+   */
   total_discount?: number | string | null;
 
+  /**
+   * The total tax of the invoice. Must be positive and rounded to maximum 2 decimals
+   */
   total_tax?: number | string | null;
 
   /**
@@ -286,19 +317,138 @@ export interface ValidateValidateJsonParams {
 }
 
 export namespace ValidateValidateJsonParams {
-  export interface Item {
+  /**
+   * An allowance is a discount for example for early payment, volume discount, etc.
+   */
+  export interface Allowance {
+    /**
+     * The allowance amount, without VAT. Must be rounded to maximum 2 decimals
+     */
     amount?: number | string | null;
+
+    /**
+     * The base amount that may be used, in conjunction with the allowance percentage,
+     * to calculate the allowance amount. Must be rounded to maximum 2 decimals
+     */
+    base_amount?: number | string | null;
+
+    /**
+     * The percentage that may be used, in conjunction with the allowance base amount,
+     * to calculate the allowance amount. To state 20%, use value 20
+     */
+    multiplier_factor?: number | string | null;
+
+    /**
+     * The reason for the allowance
+     */
+    reason?: string | null;
+
+    /**
+     * The code for the allowance reason
+     */
+    reason_code?: string | null;
+
+    /**
+     * Duty or tax or fee category codes (Subset of UNCL5305)
+     *
+     * Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+     */
+    tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B' | null;
+
+    /**
+     * The VAT rate, represented as percentage that applies to the allowance
+     */
+    tax_rate?: string | null;
+  }
+
+  /**
+   * A charge is an additional fee for example for late payment, late delivery, etc.
+   */
+  export interface Charge {
+    /**
+     * The charge amount, without VAT. Must be rounded to maximum 2 decimals
+     */
+    amount?: number | string | null;
+
+    /**
+     * The base amount that may be used, in conjunction with the charge percentage, to
+     * calculate the charge amount. Must be rounded to maximum 2 decimals
+     */
+    base_amount?: number | string | null;
+
+    /**
+     * The percentage that may be used, in conjunction with the charge base amount, to
+     * calculate the charge amount. To state 20%, use value 20
+     */
+    multiplier_factor?: number | string | null;
+
+    /**
+     * The reason for the charge
+     */
+    reason?: string | null;
+
+    /**
+     * The code for the charge reason
+     */
+    reason_code?: string | null;
+
+    /**
+     * Duty or tax or fee category codes (Subset of UNCL5305)
+     *
+     * Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+     */
+    tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B' | null;
+
+    /**
+     * The VAT rate, represented as percentage that applies to the charge
+     */
+    tax_rate?: string | null;
+  }
+
+  export interface Item {
+    /**
+     * The allowances of the line item.
+     */
+    allowances?: Array<Item.Allowance> | null;
+
+    /**
+     * The total amount of the line item, exclusive of VAT, after subtracting line
+     * level allowances and adding line level charges. Must be rounded to maximum 2
+     * decimals
+     */
+    amount?: number | string | null;
+
+    /**
+     * The charges of the line item.
+     */
+    charges?: Array<Item.Charge> | null;
 
     date?: null;
 
+    /**
+     * The description of the line item.
+     */
     description?: string | null;
 
+    /**
+     * The product code of the line item.
+     */
     product_code?: string | null;
 
+    /**
+     * The quantity of items (goods or services) that is the subject of the line item.
+     * Must be rounded to maximum 4 decimals
+     */
     quantity?: number | string | null;
 
+    /**
+     * The total VAT amount for the line item. Must be rounded to maximum 2 decimals
+     */
     tax?: number | string | null;
 
+    /**
+     * The VAT rate of the line item expressed as percentage with 2 decimals
+     */
     tax_rate?: string | null;
 
     /**
@@ -306,7 +456,100 @@ export namespace ValidateValidateJsonParams {
      */
     unit?: DocumentsAPI.UnitOfMeasureCode | null;
 
+    /**
+     * The unit price of the line item. Must be rounded to maximum 2 decimals
+     */
     unit_price?: number | string | null;
+  }
+
+  export namespace Item {
+    /**
+     * An allowance is a discount for example for early payment, volume discount, etc.
+     */
+    export interface Allowance {
+      /**
+       * The allowance amount, without VAT. Must be rounded to maximum 2 decimals
+       */
+      amount?: number | string | null;
+
+      /**
+       * The base amount that may be used, in conjunction with the allowance percentage,
+       * to calculate the allowance amount. Must be rounded to maximum 2 decimals
+       */
+      base_amount?: number | string | null;
+
+      /**
+       * The percentage that may be used, in conjunction with the allowance base amount,
+       * to calculate the allowance amount. To state 20%, use value 20
+       */
+      multiplier_factor?: number | string | null;
+
+      /**
+       * The reason for the allowance
+       */
+      reason?: string | null;
+
+      /**
+       * The code for the allowance reason
+       */
+      reason_code?: string | null;
+
+      /**
+       * Duty or tax or fee category codes (Subset of UNCL5305)
+       *
+       * Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+       */
+      tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B' | null;
+
+      /**
+       * The VAT rate, represented as percentage that applies to the allowance
+       */
+      tax_rate?: string | null;
+    }
+
+    /**
+     * A charge is an additional fee for example for late payment, late delivery, etc.
+     */
+    export interface Charge {
+      /**
+       * The charge amount, without VAT. Must be rounded to maximum 2 decimals
+       */
+      amount?: number | string | null;
+
+      /**
+       * The base amount that may be used, in conjunction with the charge percentage, to
+       * calculate the charge amount. Must be rounded to maximum 2 decimals
+       */
+      base_amount?: number | string | null;
+
+      /**
+       * The percentage that may be used, in conjunction with the charge base amount, to
+       * calculate the charge amount. To state 20%, use value 20
+       */
+      multiplier_factor?: number | string | null;
+
+      /**
+       * The reason for the charge
+       */
+      reason?: string | null;
+
+      /**
+       * The code for the charge reason
+       */
+      reason_code?: string | null;
+
+      /**
+       * Duty or tax or fee category codes (Subset of UNCL5305)
+       *
+       * Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+       */
+      tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B' | null;
+
+      /**
+       * The VAT rate, represented as percentage that applies to the charge
+       */
+      tax_rate?: string | null;
+    }
   }
 
   export interface TaxDetail {
