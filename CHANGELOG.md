@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.14.0 (2025-10-08)
+
+Full Changelog: [v1.13.0...v1.14.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.13.0...v1.14.0)
+
+### Features
+
+* **api:** api update ([586824a](https://github.com/e-invoice-be/e-invoice-ts/commit/586824ac23cb07b96b0401f117d327ce73f452a1))
+
 ## 1.13.0 (2025-10-08)
 
 Full Changelog: [v1.12.1...v1.13.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.12.1...v1.13.0)
