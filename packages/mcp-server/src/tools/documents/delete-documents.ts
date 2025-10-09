@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export const tool: Tool = {
   name: 'delete_documents',
   description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nDelete an invoice or credit note\n\n# Response Schema\n```json\n{\n  type: 'object',\n  title: 'DocumentDelete',\n  properties: {\n    is_deleted: {\n      type: 'boolean',\n      title: 'Is Deleted'\n    }\n  },\n  required: [    'is_deleted'\n  ]\n}\n```",
+    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nDelete an invoice or credit note\n\n# Response Schema\n```json\n{\n  $ref: '#/$defs/document_delete_response',\n  $defs: {\n    document_delete_response: {\n      type: 'object',\n      title: 'DocumentDelete',\n      properties: {\n        is_deleted: {\n          type: 'boolean',\n          title: 'Is Deleted'\n        }\n      },\n      required: [        'is_deleted'\n      ]\n    }\n  }\n}\n```",
   inputSchema: {
     type: 'object',
     properties: {
