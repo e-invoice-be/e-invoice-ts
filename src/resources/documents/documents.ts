@@ -1411,7 +1411,6 @@ export type UnitOfMeasureCode =
   | 'C59'
   | 'C60'
   | 'C61'
-  | 'C62'
   | 'C63'
   | 'C64'
   | 'C65'
@@ -2056,6 +2055,7 @@ export type UnitOfMeasureCode =
   | 'XZZ'
   | 'ZZ'
   | 'NAR'
+  | 'C62'
   | 'LTR';
 
 export interface DocumentDeleteResponse {
