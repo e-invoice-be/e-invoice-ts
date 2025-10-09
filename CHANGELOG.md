@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.16.0 (2025-10-09)
+
+Full Changelog: [v1.15.0...v1.16.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.15.0...v1.16.0)
+
+### Features
+
+* **api:** api update ([2a9a71a](https://github.com/e-invoice-be/e-invoice-ts/commit/2a9a71aeeb28253f768acec59cc44fac7afd6081))
+
+
+### Chores
+
+* extract some types in mcp docs ([c0fb9bb](https://github.com/e-invoice-be/e-invoice-ts/commit/c0fb9bbdddba6203ac12652e9fdd37806d88e08a))
+
 ## 1.15.0 (2025-10-08)
 
 Full Changelog: [v1.14.0...v1.15.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.14.0...v1.15.0)
