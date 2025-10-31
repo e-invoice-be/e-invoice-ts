@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.16.1 (2025-10-31)
+
+Full Changelog: [v1.16.0...v1.16.1](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.16.0...v1.16.1)
+
+### Bug Fixes
+
+* **mcpb:** pin @anthropic-ai/mcpb version ([f3546c0](https://github.com/e-invoice-be/e-invoice-ts/commit/f3546c0fde2d6a7d42a0eb0698af8b7d7ed23001))
+
 ## 1.16.0 (2025-10-09)
 
 Full Changelog: [v1.15.0...v1.16.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.15.0...v1.16.0)
