@@ -1,5 +1,29 @@
 # Changelog
 
+## 1.17.0 (2025-11-06)
+
+Full Changelog: [v1.16.1...v1.17.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.16.1...v1.17.0)
+
+### Features
+
+* **api:** api update ([a3fa416](https://github.com/e-invoice-be/e-invoice-ts/commit/a3fa416f88e4bbc88bbb8ff88b9455bb6a6d1c52))
+* **mcp:** enable optional code execution tool on http mcp servers ([05f22de](https://github.com/e-invoice-be/e-invoice-ts/commit/05f22de4c8ac1e57a74774390a32265ff1ce9665))
+
+
+### Chores
+
+* **internal:** codegen related update ([73b1ffd](https://github.com/e-invoice-be/e-invoice-ts/commit/73b1ffdda5d257a8a4c7047c22c43e60b69d8dfb))
+* **internal:** grammar fix (it's -&gt; its) ([f0fda39](https://github.com/e-invoice-be/e-invoice-ts/commit/f0fda39aeccefe68521330ed5ce117d2dc57d930))
+* mcp code tool explicit error message when missing a run function ([c82464c](https://github.com/e-invoice-be/e-invoice-ts/commit/c82464cf41817eb26d79610c16b63b8c339c6b36))
+* **mcp:** add friendlier MCP code tool errors on incorrect method invocations ([dc4785a](https://github.com/e-invoice-be/e-invoice-ts/commit/dc4785aabe8d38124aff8010115da93eeadc7486))
+* **mcp:** add line numbers to code tool errors ([0702c8a](https://github.com/e-invoice-be/e-invoice-ts/commit/0702c8a2236032c46fc0f2691ed91a38684a21d5))
+* use structured error when code execution tool errors ([0539766](https://github.com/e-invoice-be/e-invoice-ts/commit/0539766f785240edac610df8a6f232f9ad340ace))
+
+
+### Documentation
+
+* **mcp:** add a README button for one-click add to Cursor ([94152b3](https://github.com/e-invoice-be/e-invoice-ts/commit/94152b34b5368bde29b8ac6eb9c57bc52d23f849))
+
 ## 1.16.1 (2025-10-31)
 
 Full Changelog: [v1.16.0...v1.16.1](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.16.0...v1.16.1)
