@@ -315,8 +315,9 @@ export interface DocumentCreate {
   tax_details?: Array<DocumentCreate.TaxDetail> | null;
 
   /**
-   * The total financial discount of the invoice (so discounts not subject to VAT).
-   * Must be positive and rounded to maximum 2 decimals
+   * The net financial discount/charge of the invoice (non-VAT charges minus non-VAT
+   * allowances). Can be positive (net charge), negative (net discount), or zero.
+   * Must be rounded to maximum 2 decimals
    */
   total_discount?: number | string | null;
 
@@ -757,8 +758,9 @@ export interface DocumentResponse {
   tax_details?: Array<DocumentResponse.TaxDetail> | null;
 
   /**
-   * The total financial discount of the invoice (so discounts not subject to VAT).
-   * Must be positive and rounded to maximum 2 decimals
+   * The net financial discount/charge of the invoice (non-VAT charges minus non-VAT
+   * allowances). Can be positive (net charge), negative (net discount), or zero.
+   * Must be rounded to maximum 2 decimals
    */
   total_discount?: string | null;
 
@@ -2169,8 +2171,9 @@ export interface DocumentCreateFromPdfResponse {
   tax_details?: Array<DocumentCreateFromPdfResponse.TaxDetail> | null;
 
   /**
-   * The total financial discount of the invoice (so discounts not subject to VAT).
-   * Must be positive and rounded to maximum 2 decimals
+   * The net financial discount/charge of the invoice (non-VAT charges minus non-VAT
+   * allowances). Can be positive (net charge), negative (net discount), or zero.
+   * Must be rounded to maximum 2 decimals
    */
   total_discount?: string | null;
 
@@ -2437,8 +2440,9 @@ export interface DocumentCreateParams {
   tax_details?: Array<DocumentCreateParams.TaxDetail> | null;
 
   /**
-   * The total financial discount of the invoice (so discounts not subject to VAT).
-   * Must be positive and rounded to maximum 2 decimals
+   * The net financial discount/charge of the invoice (non-VAT charges minus non-VAT
+   * allowances). Can be positive (net charge), negative (net discount), or zero.
+   * Must be rounded to maximum 2 decimals
    */
   total_discount?: number | string | null;
 
