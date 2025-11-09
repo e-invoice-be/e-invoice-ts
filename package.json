@@ -1,6 +1,6 @@
 {
   "name": "e-invoice-api",
-  "version": "1.17.0",
+  "version": "1.18.0",
   "description": "The official TypeScript library for the e-invoice API",
   "author": "e-invoice <support@e-invoice.be>",
   "types": "dist/index.d.ts",
