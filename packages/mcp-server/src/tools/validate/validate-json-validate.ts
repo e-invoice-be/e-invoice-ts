@@ -101,7 +101,7 @@ export const tool: Tool = {
           },
         ],
         title: 'Amount Due',
-        description: 'The amount due of the invoice. Must be positive and rounded to maximum 2 decimals',
+        description: 'The amount due for payment. Must be positive and rounded to maximum 2 decimals',
       },
       attachments: {
         type: 'array',
@@ -113,10 +113,12 @@ export const tool: Tool = {
       billing_address: {
         type: 'string',
         title: 'Billing Address',
+        description: 'The billing address (if different from customer address)',
       },
       billing_address_recipient: {
         type: 'string',
         title: 'Billing Address Recipient',
+        description: 'The recipient name at the billing address',
       },
       charges: {
         type: 'array',
@@ -195,26 +197,38 @@ export const tool: Tool = {
       customer_address: {
         type: 'string',
         title: 'Customer Address',
+        description: 'The address of the customer/buyer',
       },
       customer_address_recipient: {
         type: 'string',
         title: 'Customer Address Recipient',
+        description: 'The recipient name at the customer address',
+      },
+      customer_company_id: {
+        type: 'string',
+        title: 'Customer Company Id',
+        description:
+          'Customer company ID. For Belgium this is the CBE number or their EUID (European Unique Identifier) number. In the Netherlands this is the KVK number.',
       },
       customer_email: {
         type: 'string',
         title: 'Customer Email',
+        description: 'The email address of the customer',
       },
       customer_id: {
         type: 'string',
         title: 'Customer Id',
+        description: 'The unique identifier for the customer in your system',
       },
       customer_name: {
         type: 'string',
         title: 'Customer Name',
+        description: 'The company name of the customer/buyer',
       },
       customer_tax_id: {
         type: 'string',
         title: 'Customer Tax Id',
+        description: 'Customer tax ID. For Belgium this is the VAT number. Must include the country prefix',
       },
       direction: {
         $ref: '#/$defs/document_direction',
@@ -225,16 +239,19 @@ export const tool: Tool = {
       due_date: {
         type: 'string',
         title: 'Due Date',
+        description: 'The date when payment is due',
         format: 'date',
       },
       invoice_date: {
         type: 'string',
         title: 'Invoice Date',
+        description: 'The date when the invoice was issued',
         format: 'date',
       },
       invoice_id: {
         type: 'string',
         title: 'Invoice Id',
+        description: 'The unique invoice identifier/number',
       },
       invoice_total: {
         anyOf: [
@@ -247,7 +264,7 @@ export const tool: Tool = {
         ],
         title: 'Invoice Total',
         description:
-          'The total amount of the invoice (so invoice_total = subtotal + total_tax + total_discount). Must be positive and rounded to maximum 2 decimals',
+          'The total amount of the invoice including tax (invoice_total = subtotal + total_tax + total_discount). Must be positive and rounded to maximum 2 decimals',
       },
       items: {
         type: 'array',
@@ -481,6 +498,7 @@ export const tool: Tool = {
       note: {
         type: 'string',
         title: 'Note',
+        description: 'Additional notes or comments for the invoice',
       },
       payment_details: {
         type: 'array',
@@ -492,6 +510,7 @@ export const tool: Tool = {
       payment_term: {
         type: 'string',
         title: 'Payment Term',
+        description: "The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30')",
       },
       previous_unpaid_balance: {
         anyOf: [
@@ -504,45 +523,54 @@ export const tool: Tool = {
         ],
         title: 'Previous Unpaid Balance',
         description:
-          'The previous unpaid balance of the invoice, if any. Must be positive and rounded to maximum 2 decimals',
+          'The previous unpaid balance from prior invoices, if any. Must be positive and rounded to maximum 2 decimals',
       },
       purchase_order: {
         type: 'string',
         title: 'Purchase Order',
+        description: 'The purchase order reference number',
       },
       remittance_address: {
         type: 'string',
         title: 'Remittance Address',
+        description: 'The address where payment should be sent or remitted to',
       },
       remittance_address_recipient: {
         type: 'string',
         title: 'Remittance Address Recipient',
+        description: 'The recipient name at the remittance address',
       },
       service_address: {
         type: 'string',
         title: 'Service Address',
+        description: 'The address where services were performed or goods were delivered',
       },
       service_address_recipient: {
         type: 'string',
         title: 'Service Address Recipient',
+        description: 'The recipient name at the service address',
       },
       service_end_date: {
         type: 'string',
         title: 'Service End Date',
+        description: 'The end date of the service period or delivery period',
         format: 'date',
       },
       service_start_date: {
         type: 'string',
         title: 'Service Start Date',
+        description: 'The start date of the service period or delivery period',
         format: 'date',
       },
       shipping_address: {
         type: 'string',
         title: 'Shipping Address',
+        description: 'The shipping/delivery address',
       },
       shipping_address_recipient: {
         type: 'string',
         title: 'Shipping Address Recipient',
+        description: 'The recipient name at the shipping address',
       },
       state: {
         $ref: '#/$defs/document_state',
@@ -563,7 +591,8 @@ export const tool: Tool = {
       tax_code: {
         type: 'string',
         title: 'TaxCategoryCode',
-        description: 'Tax category code of the invoice',
+        description:
+          'Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E for exempt)',
         enum: ['AE', 'E', 'S', 'Z', 'G', 'O', 'K', 'L', 'M', 'B'],
       },
       tax_details: {
@@ -583,10 +612,12 @@ export const tool: Tool = {
                 },
               ],
               title: 'Amount',
+              description: 'The tax amount for this tax category. Must be rounded to maximum 2 decimals',
             },
             rate: {
               type: 'string',
               title: 'Rate',
+              description: "The tax rate as a percentage (e.g., '21.00', '6.00', '0.00')",
             },
           },
         },
@@ -614,7 +645,8 @@ export const tool: Tool = {
           },
         ],
         title: 'Total Tax',
-        description: 'The total tax of the invoice. Must be positive and rounded to maximum 2 decimals',
+        description:
+          'The total tax amount of the invoice. Must be positive and rounded to maximum 2 decimals',
       },
       vatex: {
         type: 'string',
@@ -688,27 +720,38 @@ export const tool: Tool = {
       vatex_note: {
         type: 'string',
         title: 'Vatex Note',
-        description: 'VAT exemption note of the invoice',
+        description: 'Textual explanation for VAT exemption',
       },
       vendor_address: {
         type: 'string',
         title: 'Vendor Address',
+        description: 'The address of the vendor/seller',
       },
       vendor_address_recipient: {
         type: 'string',
         title: 'Vendor Address Recipient',
+        description: 'The recipient name at the vendor address',
+      },
+      vendor_company_id: {
+        type: 'string',
+        title: 'Vendor Company Id',
+        description:
+          'Vendor company ID. For Belgium this is the CBE number or their EUID (European Unique Identifier) number. In the Netherlands this is the KVK number.',
       },
       vendor_email: {
         type: 'string',
         title: 'Vendor Email',
+        description: 'The email address of the vendor',
       },
       vendor_name: {
         type: 'string',
         title: 'Vendor Name',
+        description: 'The name of the vendor/seller/supplier',
       },
       vendor_tax_id: {
         type: 'string',
         title: 'Vendor Tax Id',
+        description: 'Vendor tax ID. For Belgium this is the VAT number. Must include the country prefix',
       },
     },
     required: [],
@@ -1813,18 +1856,23 @@ export const tool: Tool = {
           bank_account_number: {
             type: 'string',
             title: 'Bank Account Number',
+            description: 'Bank account number (for non-IBAN accounts)',
           },
           iban: {
             type: 'string',
             title: 'Iban',
+            description: 'International Bank Account Number for payment transfers',
           },
           payment_reference: {
             type: 'string',
             title: 'Payment Reference',
+            description:
+              'Structured payment reference or communication (e.g., structured communication for Belgian bank transfers)',
           },
           swift: {
             type: 'string',
             title: 'Swift',
+            description: 'SWIFT/BIC code of the bank',
           },
         },
       },
