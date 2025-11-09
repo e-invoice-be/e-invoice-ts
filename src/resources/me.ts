@@ -32,7 +32,7 @@ export interface MeRetrieveResponse {
   bcc_recipient_email?: string | null;
 
   /**
-   * Address of the company
+   * Address of the company. Must be in the form of `Street Name Street Number`
    */
   company_address?: string | null;
 
@@ -52,14 +52,22 @@ export interface MeRetrieveResponse {
   company_email?: string | null;
 
   /**
-   * Name of the company
+   * Name of the company. Must include the company type. For example: `BV`, `NV`,
+   * `CVBA`, `VOF`
    */
   company_name?: string | null;
 
   /**
-   * Company number
+   * Company number. For Belgium this is the CBE number or their EUID (European
+   * Unique Identifier) number
    */
   company_number?: string | null;
+
+  /**
+   * Company tax ID. For Belgium this is the VAT number. Must include the country
+   * prefix
+   */
+  company_tax_id?: string | null;
 
   /**
    * Zip code of the company
