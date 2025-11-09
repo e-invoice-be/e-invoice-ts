@@ -122,49 +122,94 @@ export interface ValidateValidateJsonParams {
   allowances?: Array<ValidateValidateJsonParams.Allowance> | null;
 
   /**
-   * The amount due of the invoice. Must be positive and rounded to maximum 2
-   * decimals
+   * The amount due for payment. Must be positive and rounded to maximum 2 decimals
    */
   amount_due?: number | string | null;
 
   attachments?: Array<DocumentsAPI.DocumentAttachmentCreate> | null;
 
+  /**
+   * The billing address (if different from customer address)
+   */
   billing_address?: string | null;
 
+  /**
+   * The recipient name at the billing address
+   */
   billing_address_recipient?: string | null;
 
   charges?: Array<ValidateValidateJsonParams.Charge> | null;
 
   /**
-   * Currency of the invoice
+   * Currency of the invoice (ISO 4217 currency code)
    */
   currency?: DocumentsAPI.CurrencyCode;
 
+  /**
+   * The address of the customer/buyer
+   */
   customer_address?: string | null;
 
+  /**
+   * The recipient name at the customer address
+   */
   customer_address_recipient?: string | null;
 
+  /**
+   * Customer company ID. For Belgium this is the CBE number or their EUID (European
+   * Unique Identifier) number. In the Netherlands this is the KVK number.
+   */
+  customer_company_id?: string | null;
+
+  /**
+   * The email address of the customer
+   */
   customer_email?: string | null;
 
+  /**
+   * The unique identifier for the customer in your system
+   */
   customer_id?: string | null;
 
+  /**
+   * The company name of the customer/buyer
+   */
   customer_name?: string | null;
 
+  /**
+   * Customer tax ID. For Belgium this is the VAT number. Must include the country
+   * prefix
+   */
   customer_tax_id?: string | null;
 
+  /**
+   * The direction of the document: INBOUND (purchases) or OUTBOUND (sales)
+   */
   direction?: DocumentsAPI.DocumentDirection;
 
+  /**
+   * The type of document: INVOICE, CREDIT_NOTE, or DEBIT_NOTE
+   */
   document_type?: DocumentsAPI.DocumentType;
 
+  /**
+   * The date when payment is due
+   */
   due_date?: string | null;
 
+  /**
+   * The date when the invoice was issued
+   */
   invoice_date?: string | null;
 
+  /**
+   * The unique invoice identifier/number
+   */
   invoice_id?: string | null;
 
   /**
-   * The total amount of the invoice (so invoice_total = subtotal + total_tax +
-   * total_discount). Must be positive and rounded to maximum 2 decimals
+   * The total amount of the invoice including tax (invoice_total = subtotal +
+   * total_tax + total_discount). Must be positive and rounded to maximum 2 decimals
    */
   invoice_total?: number | string | null;
 
@@ -173,36 +218,72 @@ export interface ValidateValidateJsonParams {
    */
   items?: Array<ValidateValidateJsonParams.Item>;
 
+  /**
+   * Additional notes or comments for the invoice
+   */
   note?: string | null;
 
   payment_details?: Array<DocumentsAPI.PaymentDetailCreate> | null;
 
+  /**
+   * The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30')
+   */
   payment_term?: string | null;
 
   /**
-   * The previous unpaid balance of the invoice, if any. Must be positive and rounded
-   * to maximum 2 decimals
+   * The previous unpaid balance from prior invoices, if any. Must be positive and
+   * rounded to maximum 2 decimals
    */
   previous_unpaid_balance?: number | string | null;
 
+  /**
+   * The purchase order reference number
+   */
   purchase_order?: string | null;
 
+  /**
+   * The address where payment should be sent or remitted to
+   */
   remittance_address?: string | null;
 
+  /**
+   * The recipient name at the remittance address
+   */
   remittance_address_recipient?: string | null;
 
+  /**
+   * The address where services were performed or goods were delivered
+   */
   service_address?: string | null;
 
+  /**
+   * The recipient name at the service address
+   */
   service_address_recipient?: string | null;
 
+  /**
+   * The end date of the service period or delivery period
+   */
   service_end_date?: string | null;
 
+  /**
+   * The start date of the service period or delivery period
+   */
   service_start_date?: string | null;
 
+  /**
+   * The shipping/delivery address
+   */
   shipping_address?: string | null;
 
+  /**
+   * The recipient name at the shipping address
+   */
   shipping_address_recipient?: string | null;
 
+  /**
+   * The current state of the document: DRAFT, TRANSIT, FAILED, SENT, or RECEIVED
+   */
   state?: InboxAPI.DocumentState;
 
   /**
@@ -213,7 +294,8 @@ export interface ValidateValidateJsonParams {
   subtotal?: number | string | null;
 
   /**
-   * Tax category code of the invoice
+   * Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E
+   * for exempt)
    */
   tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B';
 
@@ -227,7 +309,8 @@ export interface ValidateValidateJsonParams {
   total_discount?: number | string | null;
 
   /**
-   * The total tax of the invoice. Must be positive and rounded to maximum 2 decimals
+   * The total tax amount of the invoice. Must be positive and rounded to maximum 2
+   * decimals
    */
   total_tax?: number | string | null;
 
@@ -302,18 +385,40 @@ export interface ValidateValidateJsonParams {
     | null;
 
   /**
-   * VAT exemption note of the invoice
+   * Textual explanation for VAT exemption
    */
   vatex_note?: string | null;
 
+  /**
+   * The address of the vendor/seller
+   */
   vendor_address?: string | null;
 
+  /**
+   * The recipient name at the vendor address
+   */
   vendor_address_recipient?: string | null;
 
+  /**
+   * Vendor company ID. For Belgium this is the CBE number or their EUID (European
+   * Unique Identifier) number. In the Netherlands this is the KVK number.
+   */
+  vendor_company_id?: string | null;
+
+  /**
+   * The email address of the vendor
+   */
   vendor_email?: string | null;
 
+  /**
+   * The name of the vendor/seller/supplier
+   */
   vendor_name?: string | null;
 
+  /**
+   * Vendor tax ID. For Belgium this is the VAT number. Must include the country
+   * prefix
+   */
   vendor_tax_id?: string | null;
 }
 
@@ -554,8 +659,14 @@ export namespace ValidateValidateJsonParams {
   }
 
   export interface TaxDetail {
+    /**
+     * The tax amount for this tax category. Must be rounded to maximum 2 decimals
+     */
     amount?: number | string | null;
 
+    /**
+     * The tax rate as a percentage (e.g., '21.00', '6.00', '0.00')
+     */
     rate?: string | null;
   }
 }

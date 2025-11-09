@@ -217,49 +217,94 @@ export interface DocumentCreate {
   allowances?: Array<DocumentCreate.Allowance> | null;
 
   /**
-   * The amount due of the invoice. Must be positive and rounded to maximum 2
-   * decimals
+   * The amount due for payment. Must be positive and rounded to maximum 2 decimals
    */
   amount_due?: number | string | null;
 
   attachments?: Array<DocumentAttachmentCreate> | null;
 
+  /**
+   * The billing address (if different from customer address)
+   */
   billing_address?: string | null;
 
+  /**
+   * The recipient name at the billing address
+   */
   billing_address_recipient?: string | null;
 
   charges?: Array<DocumentCreate.Charge> | null;
 
   /**
-   * Currency of the invoice
+   * Currency of the invoice (ISO 4217 currency code)
    */
   currency?: CurrencyCode;
 
+  /**
+   * The address of the customer/buyer
+   */
   customer_address?: string | null;
 
+  /**
+   * The recipient name at the customer address
+   */
   customer_address_recipient?: string | null;
 
+  /**
+   * Customer company ID. For Belgium this is the CBE number or their EUID (European
+   * Unique Identifier) number. In the Netherlands this is the KVK number.
+   */
+  customer_company_id?: string | null;
+
+  /**
+   * The email address of the customer
+   */
   customer_email?: string | null;
 
+  /**
+   * The unique identifier for the customer in your system
+   */
   customer_id?: string | null;
 
+  /**
+   * The company name of the customer/buyer
+   */
   customer_name?: string | null;
 
+  /**
+   * Customer tax ID. For Belgium this is the VAT number. Must include the country
+   * prefix
+   */
   customer_tax_id?: string | null;
 
+  /**
+   * The direction of the document: INBOUND (purchases) or OUTBOUND (sales)
+   */
   direction?: DocumentDirection;
 
+  /**
+   * The type of document: INVOICE, CREDIT_NOTE, or DEBIT_NOTE
+   */
   document_type?: DocumentType;
 
+  /**
+   * The date when payment is due
+   */
   due_date?: string | null;
 
+  /**
+   * The date when the invoice was issued
+   */
   invoice_date?: string | null;
 
+  /**
+   * The unique invoice identifier/number
+   */
   invoice_id?: string | null;
 
   /**
-   * The total amount of the invoice (so invoice_total = subtotal + total_tax +
-   * total_discount). Must be positive and rounded to maximum 2 decimals
+   * The total amount of the invoice including tax (invoice_total = subtotal +
+   * total_tax + total_discount). Must be positive and rounded to maximum 2 decimals
    */
   invoice_total?: number | string | null;
 
@@ -268,36 +313,72 @@ export interface DocumentCreate {
    */
   items?: Array<DocumentCreate.Item>;
 
+  /**
+   * Additional notes or comments for the invoice
+   */
   note?: string | null;
 
   payment_details?: Array<PaymentDetailCreate> | null;
 
+  /**
+   * The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30')
+   */
   payment_term?: string | null;
 
   /**
-   * The previous unpaid balance of the invoice, if any. Must be positive and rounded
-   * to maximum 2 decimals
+   * The previous unpaid balance from prior invoices, if any. Must be positive and
+   * rounded to maximum 2 decimals
    */
   previous_unpaid_balance?: number | string | null;
 
+  /**
+   * The purchase order reference number
+   */
   purchase_order?: string | null;
 
+  /**
+   * The address where payment should be sent or remitted to
+   */
   remittance_address?: string | null;
 
+  /**
+   * The recipient name at the remittance address
+   */
   remittance_address_recipient?: string | null;
 
+  /**
+   * The address where services were performed or goods were delivered
+   */
   service_address?: string | null;
 
+  /**
+   * The recipient name at the service address
+   */
   service_address_recipient?: string | null;
 
+  /**
+   * The end date of the service period or delivery period
+   */
   service_end_date?: string | null;
 
+  /**
+   * The start date of the service period or delivery period
+   */
   service_start_date?: string | null;
 
+  /**
+   * The shipping/delivery address
+   */
   shipping_address?: string | null;
 
+  /**
+   * The recipient name at the shipping address
+   */
   shipping_address_recipient?: string | null;
 
+  /**
+   * The current state of the document: DRAFT, TRANSIT, FAILED, SENT, or RECEIVED
+   */
   state?: InboxAPI.DocumentState;
 
   /**
@@ -308,7 +389,8 @@ export interface DocumentCreate {
   subtotal?: number | string | null;
 
   /**
-   * Tax category code of the invoice
+   * Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E
+   * for exempt)
    */
   tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B';
 
@@ -322,7 +404,8 @@ export interface DocumentCreate {
   total_discount?: number | string | null;
 
   /**
-   * The total tax of the invoice. Must be positive and rounded to maximum 2 decimals
+   * The total tax amount of the invoice. Must be positive and rounded to maximum 2
+   * decimals
    */
   total_tax?: number | string | null;
 
@@ -397,18 +480,40 @@ export interface DocumentCreate {
     | null;
 
   /**
-   * VAT exemption note of the invoice
+   * Textual explanation for VAT exemption
    */
   vatex_note?: string | null;
 
+  /**
+   * The address of the vendor/seller
+   */
   vendor_address?: string | null;
 
+  /**
+   * The recipient name at the vendor address
+   */
   vendor_address_recipient?: string | null;
 
+  /**
+   * Vendor company ID. For Belgium this is the CBE number or their EUID (European
+   * Unique Identifier) number. In the Netherlands this is the KVK number.
+   */
+  vendor_company_id?: string | null;
+
+  /**
+   * The email address of the vendor
+   */
   vendor_email?: string | null;
 
+  /**
+   * The name of the vendor/seller/supplier
+   */
   vendor_name?: string | null;
 
+  /**
+   * Vendor tax ID. For Belgium this is the VAT number. Must include the country
+   * prefix
+   */
   vendor_tax_id?: string | null;
 }
 
@@ -649,8 +754,14 @@ export namespace DocumentCreate {
   }
 
   export interface TaxDetail {
+    /**
+     * The tax amount for this tax category. Must be rounded to maximum 2 decimals
+     */
     amount?: number | string | null;
 
+    /**
+     * The tax rate as a percentage (e.g., '21.00', '6.00', '0.00')
+     */
     rate?: string | null;
   }
 }
@@ -663,84 +774,165 @@ export interface DocumentResponse {
   allowances?: Array<DocumentResponse.Allowance> | null;
 
   /**
-   * The amount due of the invoice. Must be positive and rounded to maximum 2
-   * decimals
+   * The amount due for payment. Must be positive and rounded to maximum 2 decimals
    */
   amount_due?: string | null;
 
   attachments?: Array<AttachmentsAPI.DocumentAttachment> | null;
 
+  /**
+   * The billing address (if different from customer address)
+   */
   billing_address?: string | null;
 
+  /**
+   * The recipient name at the billing address
+   */
   billing_address_recipient?: string | null;
 
   charges?: Array<DocumentResponse.Charge> | null;
 
   /**
-   * Currency of the invoice
+   * Currency of the invoice (ISO 4217 currency code)
    */
   currency?: CurrencyCode;
 
+  /**
+   * The address of the customer/buyer
+   */
   customer_address?: string | null;
 
+  /**
+   * The recipient name at the customer address
+   */
   customer_address_recipient?: string | null;
 
+  /**
+   * Customer company ID. For Belgium this is the CBE number or their EUID (European
+   * Unique Identifier) number. In the Netherlands this is the KVK number.
+   */
+  customer_company_id?: string | null;
+
+  /**
+   * The email address of the customer
+   */
   customer_email?: string | null;
 
+  /**
+   * The unique identifier for the customer in your system
+   */
   customer_id?: string | null;
 
+  /**
+   * The company name of the customer/buyer
+   */
   customer_name?: string | null;
 
+  /**
+   * Customer tax ID. For Belgium this is the VAT number. Must include the country
+   * prefix
+   */
   customer_tax_id?: string | null;
 
+  /**
+   * The direction of the document: INBOUND (purchases) or OUTBOUND (sales)
+   */
   direction?: DocumentDirection;
 
+  /**
+   * The type of document: INVOICE, CREDIT_NOTE, or DEBIT_NOTE
+   */
   document_type?: DocumentType;
 
+  /**
+   * The date when payment is due
+   */
   due_date?: string | null;
 
+  /**
+   * The date when the invoice was issued
+   */
   invoice_date?: string | null;
 
+  /**
+   * The unique invoice identifier/number
+   */
   invoice_id?: string | null;
 
   /**
-   * The total amount of the invoice (so invoice_total = subtotal + total_tax +
-   * total_discount). Must be positive and rounded to maximum 2 decimals
+   * The total amount of the invoice including tax (invoice_total = subtotal +
+   * total_tax + total_discount). Must be positive and rounded to maximum 2 decimals
    */
   invoice_total?: string | null;
 
   items?: Array<DocumentResponse.Item> | null;
 
+  /**
+   * Additional notes or comments for the invoice
+   */
   note?: string | null;
 
   payment_details?: Array<DocumentResponse.PaymentDetail> | null;
 
+  /**
+   * The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30')
+   */
   payment_term?: string | null;
 
   /**
-   * The previous unpaid balance of the invoice, if any. Must be positive and rounded
-   * to maximum 2 decimals
+   * The previous unpaid balance from prior invoices, if any. Must be positive and
+   * rounded to maximum 2 decimals
    */
   previous_unpaid_balance?: string | null;
 
+  /**
+   * The purchase order reference number
+   */
   purchase_order?: string | null;
 
+  /**
+   * The address where payment should be sent or remitted to
+   */
   remittance_address?: string | null;
 
+  /**
+   * The recipient name at the remittance address
+   */
   remittance_address_recipient?: string | null;
 
+  /**
+   * The address where services were performed or goods were delivered
+   */
   service_address?: string | null;
 
+  /**
+   * The recipient name at the service address
+   */
   service_address_recipient?: string | null;
 
+  /**
+   * The end date of the service period or delivery period
+   */
   service_end_date?: string | null;
 
+  /**
+   * The start date of the service period or delivery period
+   */
   service_start_date?: string | null;
 
+  /**
+   * The shipping/delivery address
+   */
   shipping_address?: string | null;
 
+  /**
+   * The recipient name at the shipping address
+   */
   shipping_address_recipient?: string | null;
 
+  /**
+   * The current state of the document: DRAFT, TRANSIT, FAILED, SENT, or RECEIVED
+   */
   state?: InboxAPI.DocumentState;
 
   /**
@@ -751,7 +943,8 @@ export interface DocumentResponse {
   subtotal?: string | null;
 
   /**
-   * Tax category code of the invoice
+   * Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E
+   * for exempt)
    */
   tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B';
 
@@ -765,7 +958,8 @@ export interface DocumentResponse {
   total_discount?: string | null;
 
   /**
-   * The total tax of the invoice. Must be positive and rounded to maximum 2 decimals
+   * The total tax amount of the invoice. Must be positive and rounded to maximum 2
+   * decimals
    */
   total_tax?: string | null;
 
@@ -840,18 +1034,40 @@ export interface DocumentResponse {
     | null;
 
   /**
-   * VAT exemption note of the invoice
+   * Textual explanation for VAT exemption
    */
   vatex_note?: string | null;
 
+  /**
+   * The address of the vendor/seller
+   */
   vendor_address?: string | null;
 
+  /**
+   * The recipient name at the vendor address
+   */
   vendor_address_recipient?: string | null;
 
+  /**
+   * Vendor company ID. For Belgium this is the CBE number or their EUID (European
+   * Unique Identifier) number. In the Netherlands this is the KVK number.
+   */
+  vendor_company_id?: string | null;
+
+  /**
+   * The email address of the vendor
+   */
   vendor_email?: string | null;
 
+  /**
+   * The name of the vendor/seller/supplier
+   */
   vendor_name?: string | null;
 
+  /**
+   * Vendor tax ID. For Belgium this is the VAT number. Must include the country
+   * prefix
+   */
   vendor_tax_id?: string | null;
 }
 
@@ -996,18 +1212,37 @@ export namespace DocumentResponse {
   }
 
   export interface PaymentDetail {
+    /**
+     * Bank account number (for non-IBAN accounts)
+     */
     bank_account_number?: string | null;
 
+    /**
+     * International Bank Account Number for payment transfers
+     */
     iban?: string | null;
 
+    /**
+     * Structured payment reference or communication (e.g., structured communication
+     * for Belgian bank transfers)
+     */
     payment_reference?: string | null;
 
+    /**
+     * SWIFT/BIC code of the bank
+     */
     swift?: string | null;
   }
 
   export interface TaxDetail {
+    /**
+     * The tax amount for this tax category. Must be rounded to maximum 2 decimals
+     */
     amount?: string | null;
 
+    /**
+     * The tax rate as a percentage (e.g., '21.00', '6.00', '0.00')
+     */
     rate?: string | null;
   }
 }
@@ -1015,12 +1250,25 @@ export namespace DocumentResponse {
 export type DocumentType = 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE';
 
 export interface PaymentDetailCreate {
+  /**
+   * Bank account number (for non-IBAN accounts)
+   */
   bank_account_number?: string | null;
 
+  /**
+   * International Bank Account Number for payment transfers
+   */
   iban?: string | null;
 
+  /**
+   * Structured payment reference or communication (e.g., structured communication
+   * for Belgian bank transfers)
+   */
   payment_reference?: string | null;
 
+  /**
+   * SWIFT/BIC code of the bank
+   */
   swift?: string | null;
 }
 
@@ -2068,49 +2316,94 @@ export interface DocumentCreateFromPdfResponse {
   allowances?: Array<Allowance> | null;
 
   /**
-   * The amount due of the invoice. Must be positive and rounded to maximum 2
-   * decimals
+   * The amount due for payment. Must be positive and rounded to maximum 2 decimals
    */
   amount_due?: string | null;
 
   attachments?: Array<DocumentAttachmentCreate> | null;
 
+  /**
+   * The billing address (if different from customer address)
+   */
   billing_address?: string | null;
 
+  /**
+   * The recipient name at the billing address
+   */
   billing_address_recipient?: string | null;
 
   charges?: Array<Charge> | null;
 
   /**
-   * Currency of the invoice
+   * Currency of the invoice (ISO 4217 currency code)
    */
   currency?: CurrencyCode;
 
+  /**
+   * The address of the customer/buyer
+   */
   customer_address?: string | null;
 
+  /**
+   * The recipient name at the customer address
+   */
   customer_address_recipient?: string | null;
 
+  /**
+   * Customer company ID. For Belgium this is the CBE number or their EUID (European
+   * Unique Identifier) number. In the Netherlands this is the KVK number.
+   */
+  customer_company_id?: string | null;
+
+  /**
+   * The email address of the customer
+   */
   customer_email?: string | null;
 
+  /**
+   * The unique identifier for the customer in your system
+   */
   customer_id?: string | null;
 
+  /**
+   * The company name of the customer/buyer
+   */
   customer_name?: string | null;
 
+  /**
+   * Customer tax ID. For Belgium this is the VAT number. Must include the country
+   * prefix
+   */
   customer_tax_id?: string | null;
 
+  /**
+   * The direction of the document: INBOUND (purchases) or OUTBOUND (sales)
+   */
   direction?: DocumentDirection;
 
+  /**
+   * The type of document: INVOICE, CREDIT_NOTE, or DEBIT_NOTE
+   */
   document_type?: DocumentType;
 
+  /**
+   * The date when payment is due
+   */
   due_date?: string | null;
 
+  /**
+   * The date when the invoice was issued
+   */
   invoice_date?: string | null;
 
+  /**
+   * The unique invoice identifier/number
+   */
   invoice_id?: string | null;
 
   /**
-   * The total amount of the invoice (so invoice_total = subtotal + total_tax +
-   * total_discount). Must be positive and rounded to maximum 2 decimals
+   * The total amount of the invoice including tax (invoice_total = subtotal +
+   * total_tax + total_discount). Must be positive and rounded to maximum 2 decimals
    */
   invoice_total?: string | null;
 
@@ -2119,36 +2412,72 @@ export interface DocumentCreateFromPdfResponse {
    */
   items?: Array<DocumentCreateFromPdfResponse.Item>;
 
+  /**
+   * Additional notes or comments for the invoice
+   */
   note?: string | null;
 
   payment_details?: Array<PaymentDetailCreate> | null;
 
+  /**
+   * The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30')
+   */
   payment_term?: string | null;
 
   /**
-   * The previous unpaid balance of the invoice, if any. Must be positive and rounded
-   * to maximum 2 decimals
+   * The previous unpaid balance from prior invoices, if any. Must be positive and
+   * rounded to maximum 2 decimals
    */
   previous_unpaid_balance?: string | null;
 
+  /**
+   * The purchase order reference number
+   */
   purchase_order?: string | null;
 
+  /**
+   * The address where payment should be sent or remitted to
+   */
   remittance_address?: string | null;
 
+  /**
+   * The recipient name at the remittance address
+   */
   remittance_address_recipient?: string | null;
 
+  /**
+   * The address where services were performed or goods were delivered
+   */
   service_address?: string | null;
 
+  /**
+   * The recipient name at the service address
+   */
   service_address_recipient?: string | null;
 
+  /**
+   * The end date of the service period or delivery period
+   */
   service_end_date?: string | null;
 
+  /**
+   * The start date of the service period or delivery period
+   */
   service_start_date?: string | null;
 
+  /**
+   * The shipping/delivery address
+   */
   shipping_address?: string | null;
 
+  /**
+   * The recipient name at the shipping address
+   */
   shipping_address_recipient?: string | null;
 
+  /**
+   * The current state of the document: DRAFT, TRANSIT, FAILED, SENT, or RECEIVED
+   */
   state?: InboxAPI.DocumentState;
 
   /**
@@ -2164,7 +2493,8 @@ export interface DocumentCreateFromPdfResponse {
   success?: boolean;
 
   /**
-   * Tax category code of the invoice
+   * Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E
+   * for exempt)
    */
   tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B';
 
@@ -2178,7 +2508,8 @@ export interface DocumentCreateFromPdfResponse {
   total_discount?: string | null;
 
   /**
-   * The total tax of the invoice. Must be positive and rounded to maximum 2 decimals
+   * The total tax amount of the invoice. Must be positive and rounded to maximum 2
+   * decimals
    */
   total_tax?: string | null;
 
@@ -2258,18 +2589,40 @@ export interface DocumentCreateFromPdfResponse {
     | null;
 
   /**
-   * VAT exemption note of the invoice
+   * Textual explanation for VAT exemption
    */
   vatex_note?: string | null;
 
+  /**
+   * The address of the vendor/seller
+   */
   vendor_address?: string | null;
 
+  /**
+   * The recipient name at the vendor address
+   */
   vendor_address_recipient?: string | null;
 
+  /**
+   * Vendor company ID. For Belgium this is the CBE number or their EUID (European
+   * Unique Identifier) number. In the Netherlands this is the KVK number.
+   */
+  vendor_company_id?: string | null;
+
+  /**
+   * The email address of the vendor
+   */
   vendor_email?: string | null;
 
+  /**
+   * The name of the vendor/seller/supplier
+   */
   vendor_name?: string | null;
 
+  /**
+   * Vendor tax ID. For Belgium this is the VAT number. Must include the country
+   * prefix
+   */
   vendor_tax_id?: string | null;
 }
 
@@ -2332,8 +2685,14 @@ export namespace DocumentCreateFromPdfResponse {
   }
 
   export interface TaxDetail {
+    /**
+     * The tax amount for this tax category. Must be rounded to maximum 2 decimals
+     */
     amount?: string | null;
 
+    /**
+     * The tax rate as a percentage (e.g., '21.00', '6.00', '0.00')
+     */
     rate?: string | null;
   }
 }
@@ -2342,49 +2701,94 @@ export interface DocumentCreateParams {
   allowances?: Array<DocumentCreateParams.Allowance> | null;
 
   /**
-   * The amount due of the invoice. Must be positive and rounded to maximum 2
-   * decimals
+   * The amount due for payment. Must be positive and rounded to maximum 2 decimals
    */
   amount_due?: number | string | null;
 
   attachments?: Array<DocumentAttachmentCreate> | null;
 
+  /**
+   * The billing address (if different from customer address)
+   */
   billing_address?: string | null;
 
+  /**
+   * The recipient name at the billing address
+   */
   billing_address_recipient?: string | null;
 
   charges?: Array<DocumentCreateParams.Charge> | null;
 
   /**
-   * Currency of the invoice
+   * Currency of the invoice (ISO 4217 currency code)
    */
   currency?: CurrencyCode;
 
+  /**
+   * The address of the customer/buyer
+   */
   customer_address?: string | null;
 
+  /**
+   * The recipient name at the customer address
+   */
   customer_address_recipient?: string | null;
 
+  /**
+   * Customer company ID. For Belgium this is the CBE number or their EUID (European
+   * Unique Identifier) number. In the Netherlands this is the KVK number.
+   */
+  customer_company_id?: string | null;
+
+  /**
+   * The email address of the customer
+   */
   customer_email?: string | null;
 
+  /**
+   * The unique identifier for the customer in your system
+   */
   customer_id?: string | null;
 
+  /**
+   * The company name of the customer/buyer
+   */
   customer_name?: string | null;
 
+  /**
+   * Customer tax ID. For Belgium this is the VAT number. Must include the country
+   * prefix
+   */
   customer_tax_id?: string | null;
 
+  /**
+   * The direction of the document: INBOUND (purchases) or OUTBOUND (sales)
+   */
   direction?: DocumentDirection;
 
+  /**
+   * The type of document: INVOICE, CREDIT_NOTE, or DEBIT_NOTE
+   */
   document_type?: DocumentType;
 
+  /**
+   * The date when payment is due
+   */
   due_date?: string | null;
 
+  /**
+   * The date when the invoice was issued
+   */
   invoice_date?: string | null;
 
+  /**
+   * The unique invoice identifier/number
+   */
   invoice_id?: string | null;
 
   /**
-   * The total amount of the invoice (so invoice_total = subtotal + total_tax +
-   * total_discount). Must be positive and rounded to maximum 2 decimals
+   * The total amount of the invoice including tax (invoice_total = subtotal +
+   * total_tax + total_discount). Must be positive and rounded to maximum 2 decimals
    */
   invoice_total?: number | string | null;
 
@@ -2393,36 +2797,72 @@ export interface DocumentCreateParams {
    */
   items?: Array<DocumentCreateParams.Item>;
 
+  /**
+   * Additional notes or comments for the invoice
+   */
   note?: string | null;
 
   payment_details?: Array<PaymentDetailCreate> | null;
 
+  /**
+   * The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30')
+   */
   payment_term?: string | null;
 
   /**
-   * The previous unpaid balance of the invoice, if any. Must be positive and rounded
-   * to maximum 2 decimals
+   * The previous unpaid balance from prior invoices, if any. Must be positive and
+   * rounded to maximum 2 decimals
    */
   previous_unpaid_balance?: number | string | null;
 
+  /**
+   * The purchase order reference number
+   */
   purchase_order?: string | null;
 
+  /**
+   * The address where payment should be sent or remitted to
+   */
   remittance_address?: string | null;
 
+  /**
+   * The recipient name at the remittance address
+   */
   remittance_address_recipient?: string | null;
 
+  /**
+   * The address where services were performed or goods were delivered
+   */
   service_address?: string | null;
 
+  /**
+   * The recipient name at the service address
+   */
   service_address_recipient?: string | null;
 
+  /**
+   * The end date of the service period or delivery period
+   */
   service_end_date?: string | null;
 
+  /**
+   * The start date of the service period or delivery period
+   */
   service_start_date?: string | null;
 
+  /**
+   * The shipping/delivery address
+   */
   shipping_address?: string | null;
 
+  /**
+   * The recipient name at the shipping address
+   */
   shipping_address_recipient?: string | null;
 
+  /**
+   * The current state of the document: DRAFT, TRANSIT, FAILED, SENT, or RECEIVED
+   */
   state?: InboxAPI.DocumentState;
 
   /**
@@ -2433,7 +2873,8 @@ export interface DocumentCreateParams {
   subtotal?: number | string | null;
 
   /**
-   * Tax category code of the invoice
+   * Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E
+   * for exempt)
    */
   tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B';
 
@@ -2447,7 +2888,8 @@ export interface DocumentCreateParams {
   total_discount?: number | string | null;
 
   /**
-   * The total tax of the invoice. Must be positive and rounded to maximum 2 decimals
+   * The total tax amount of the invoice. Must be positive and rounded to maximum 2
+   * decimals
    */
   total_tax?: number | string | null;
 
@@ -2522,18 +2964,40 @@ export interface DocumentCreateParams {
     | null;
 
   /**
-   * VAT exemption note of the invoice
+   * Textual explanation for VAT exemption
    */
   vatex_note?: string | null;
 
+  /**
+   * The address of the vendor/seller
+   */
   vendor_address?: string | null;
 
+  /**
+   * The recipient name at the vendor address
+   */
   vendor_address_recipient?: string | null;
 
+  /**
+   * Vendor company ID. For Belgium this is the CBE number or their EUID (European
+   * Unique Identifier) number. In the Netherlands this is the KVK number.
+   */
+  vendor_company_id?: string | null;
+
+  /**
+   * The email address of the vendor
+   */
   vendor_email?: string | null;
 
+  /**
+   * The name of the vendor/seller/supplier
+   */
   vendor_name?: string | null;
 
+  /**
+   * Vendor tax ID. For Belgium this is the VAT number. Must include the country
+   * prefix
+   */
   vendor_tax_id?: string | null;
 }
 
@@ -2774,8 +3238,14 @@ export namespace DocumentCreateParams {
   }
 
   export interface TaxDetail {
+    /**
+     * The tax amount for this tax category. Must be rounded to maximum 2 decimals
+     */
     amount?: number | string | null;
 
+    /**
+     * The tax rate as a percentage (e.g., '21.00', '6.00', '0.00')
+     */
     rate?: string | null;
   }
 }
