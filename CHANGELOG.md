@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.18.0 (2025-11-09)
+
+Full Changelog: [v1.17.0...v1.18.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.17.0...v1.18.0)
+
+### Features
+
+* **api:** api update ([3988bb9](https://github.com/e-invoice-be/e-invoice-ts/commit/3988bb98b67e397f3437d2e6ec2b5f5f67a356a1))
+
+
+### Chores
+
+* **internal:** codegen related update ([ab5c026](https://github.com/e-invoice-be/e-invoice-ts/commit/ab5c026eca6ed052a59f3baabe1479faccfc8b8e))
+
+
+### Documentation
+
+* **mcp:** add a README link to add server to VS Code or Claude Code ([580777f](https://github.com/e-invoice-be/e-invoice-ts/commit/580777f060603012d30ad95addceeae3cd1a8d23))
+
 ## 1.17.0 (2025-11-06)
 
 Full Changelog: [v1.16.1...v1.17.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.16.1...v1.17.0)
