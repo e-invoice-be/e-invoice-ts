@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.18.1 (2025-11-13)
+
+Full Changelog: [v1.18.0...v1.18.1](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.18.0...v1.18.1)
+
+### Bug Fixes
+
+* **mcp:** return tool execution error on jq failure ([4a57db4](https://github.com/e-invoice-be/e-invoice-ts/commit/4a57db438443721a57c12d6e10b9939a8efb30ed))
+
+
+### Chores
+
+* **mcp:** clarify http auth error ([603e740](https://github.com/e-invoice-be/e-invoice-ts/commit/603e740f98925d91f1cb59076996f4e51471d0a0))
+
 ## 1.18.0 (2025-11-09)
 
 Full Changelog: [v1.17.0...v1.18.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.17.0...v1.18.0)
