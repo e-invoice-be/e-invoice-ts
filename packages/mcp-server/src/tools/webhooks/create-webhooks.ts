@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { maybeFilter } from 'e-invoice-api-mcp/filtering';
-import { Metadata, asTextContentResult } from 'e-invoice-api-mcp/tools/types';
+import { isJqError, maybeFilter } from 'e-invoice-api-mcp/filtering';
+import { Metadata, asErrorResult, asTextContentResult } from 'e-invoice-api-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import EInvoice from 'e-invoice-api';
@@ -51,7 +51,14 @@ export const tool: Tool = {
 
 export const handler = async (client: EInvoice, args: Record<string, unknown> | undefined) => {
   const { jq_filter, ...body } = args as any;
-  return asTextContentResult(await maybeFilter(jq_filter, await client.webhooks.create(body)));
+  try {
+    return asTextContentResult(await maybeFilter(jq_filter, await client.webhooks.create(body)));
+  } catch (error) {
+    if (isJqError(error)) {
+      return asErrorResult(error.message);
+    }
+    throw error;
+  }
 };
 
 export default { metadata, tool, handler };
