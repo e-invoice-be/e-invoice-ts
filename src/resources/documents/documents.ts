@@ -112,8 +112,7 @@ export interface Allowance {
 
   /**
    * The percentage that may be used, in conjunction with the allowance base amount,
-   * to calculate the allowance amount. To state 20%, use value 20. Must be rounded
-   * to maximum 2 decimals
+   * to calculate the allowance amount. To state 20%, use value 20
    */
   multiplier_factor?: string | null;
 
@@ -123,38 +122,19 @@ export interface Allowance {
   reason?: string | null;
 
   /**
-   * Allowance reason codes for invoice discounts and charges
+   * The code for the allowance reason
    */
-  reason_code?:
-    | '41'
-    | '42'
-    | '60'
-    | '62'
-    | '63'
-    | '64'
-    | '65'
-    | '66'
-    | '67'
-    | '68'
-    | '70'
-    | '71'
-    | '88'
-    | '95'
-    | '100'
-    | '102'
-    | '103'
-    | '104'
-    | '105'
-    | null;
+  reason_code?: string | null;
 
   /**
-   * The VAT category code that applies to the allowance
+   * Duty or tax or fee category codes (Subset of UNCL5305)
+   *
+   * Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
    */
-  tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B';
+  tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B' | null;
 
   /**
-   * The VAT rate, represented as percentage that applies to the allowance. Must be
-   * rounded to maximum 2 decimals
+   * The VAT rate, represented as percentage that applies to the allowance
    */
   tax_rate?: string | null;
 }
@@ -186,188 +166,9 @@ export interface Charge {
   reason?: string | null;
 
   /**
-   * Charge reason codes for invoice charges and fees
+   * The code for the charge reason
    */
-  reason_code?:
-    | 'AA'
-    | 'AAA'
-    | 'AAC'
-    | 'AAD'
-    | 'AAE'
-    | 'AAF'
-    | 'AAH'
-    | 'AAI'
-    | 'AAS'
-    | 'AAT'
-    | 'AAV'
-    | 'AAY'
-    | 'AAZ'
-    | 'ABA'
-    | 'ABB'
-    | 'ABC'
-    | 'ABD'
-    | 'ABF'
-    | 'ABK'
-    | 'ABL'
-    | 'ABN'
-    | 'ABR'
-    | 'ABS'
-    | 'ABT'
-    | 'ABU'
-    | 'ACF'
-    | 'ACG'
-    | 'ACH'
-    | 'ACI'
-    | 'ACJ'
-    | 'ACK'
-    | 'ACL'
-    | 'ACM'
-    | 'ACS'
-    | 'ADC'
-    | 'ADE'
-    | 'ADJ'
-    | 'ADK'
-    | 'ADL'
-    | 'ADM'
-    | 'ADN'
-    | 'ADO'
-    | 'ADP'
-    | 'ADQ'
-    | 'ADR'
-    | 'ADT'
-    | 'ADW'
-    | 'ADY'
-    | 'ADZ'
-    | 'AEA'
-    | 'AEB'
-    | 'AEC'
-    | 'AED'
-    | 'AEF'
-    | 'AEH'
-    | 'AEI'
-    | 'AEJ'
-    | 'AEK'
-    | 'AEL'
-    | 'AEM'
-    | 'AEN'
-    | 'AEO'
-    | 'AEP'
-    | 'AES'
-    | 'AET'
-    | 'AEU'
-    | 'AEV'
-    | 'AEW'
-    | 'AEX'
-    | 'AEY'
-    | 'AEZ'
-    | 'AJ'
-    | 'AU'
-    | 'CA'
-    | 'CAB'
-    | 'CAD'
-    | 'CAE'
-    | 'CAF'
-    | 'CAI'
-    | 'CAJ'
-    | 'CAK'
-    | 'CAL'
-    | 'CAM'
-    | 'CAN'
-    | 'CAO'
-    | 'CAP'
-    | 'CAQ'
-    | 'CAR'
-    | 'CAS'
-    | 'CAT'
-    | 'CAU'
-    | 'CAV'
-    | 'CAW'
-    | 'CAX'
-    | 'CAY'
-    | 'CAZ'
-    | 'CD'
-    | 'CG'
-    | 'CS'
-    | 'CT'
-    | 'DAB'
-    | 'DAC'
-    | 'DAD'
-    | 'DAF'
-    | 'DAG'
-    | 'DAH'
-    | 'DAI'
-    | 'DAJ'
-    | 'DAK'
-    | 'DAL'
-    | 'DAM'
-    | 'DAN'
-    | 'DAO'
-    | 'DAP'
-    | 'DAQ'
-    | 'DL'
-    | 'EG'
-    | 'EP'
-    | 'ER'
-    | 'FAA'
-    | 'FAB'
-    | 'FAC'
-    | 'FC'
-    | 'FH'
-    | 'FI'
-    | 'GAA'
-    | 'HAA'
-    | 'HD'
-    | 'HH'
-    | 'IAA'
-    | 'IAB'
-    | 'ID'
-    | 'IF'
-    | 'IR'
-    | 'IS'
-    | 'KO'
-    | 'L1'
-    | 'LA'
-    | 'LAA'
-    | 'LAB'
-    | 'LF'
-    | 'MAE'
-    | 'MI'
-    | 'ML'
-    | 'NAA'
-    | 'OA'
-    | 'PA'
-    | 'PAA'
-    | 'PC'
-    | 'PL'
-    | 'PRV'
-    | 'RAB'
-    | 'RAC'
-    | 'RAD'
-    | 'RAF'
-    | 'RE'
-    | 'RF'
-    | 'RH'
-    | 'RV'
-    | 'SA'
-    | 'SAA'
-    | 'SAD'
-    | 'SAE'
-    | 'SAI'
-    | 'SG'
-    | 'SH'
-    | 'SM'
-    | 'SU'
-    | 'TAB'
-    | 'TAC'
-    | 'TT'
-    | 'TV'
-    | 'V1'
-    | 'V2'
-    | 'WH'
-    | 'XAA'
-    | 'YY'
-    | 'ZZZ'
-    | null;
+  reason_code?: string | null;
 
   /**
    * Duty or tax or fee category codes (Subset of UNCL5305)
@@ -734,8 +535,7 @@ export namespace DocumentCreate {
 
     /**
      * The percentage that may be used, in conjunction with the allowance base amount,
-     * to calculate the allowance amount. To state 20%, use value 20. Must be rounded
-     * to maximum 2 decimals
+     * to calculate the allowance amount. To state 20%, use value 20
      */
     multiplier_factor?: number | string | null;
 
@@ -745,40 +545,21 @@ export namespace DocumentCreate {
     reason?: string | null;
 
     /**
-     * Allowance reason codes for invoice discounts and charges
+     * The code for the allowance reason
      */
-    reason_code?:
-      | '41'
-      | '42'
-      | '60'
-      | '62'
-      | '63'
-      | '64'
-      | '65'
-      | '66'
-      | '67'
-      | '68'
-      | '70'
-      | '71'
-      | '88'
-      | '95'
-      | '100'
-      | '102'
-      | '103'
-      | '104'
-      | '105'
-      | null;
+    reason_code?: string | null;
 
     /**
-     * The VAT category code that applies to the allowance
+     * Duty or tax or fee category codes (Subset of UNCL5305)
+     *
+     * Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
      */
-    tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B';
+    tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B' | null;
 
     /**
-     * The VAT rate, represented as percentage that applies to the allowance. Must be
-     * rounded to maximum 2 decimals
+     * The VAT rate, represented as percentage that applies to the allowance
      */
-    tax_rate?: number | string | null;
+    tax_rate?: string | null;
   }
 
   /**
@@ -808,188 +589,9 @@ export namespace DocumentCreate {
     reason?: string | null;
 
     /**
-     * Charge reason codes for invoice charges and fees
+     * The code for the charge reason
      */
-    reason_code?:
-      | 'AA'
-      | 'AAA'
-      | 'AAC'
-      | 'AAD'
-      | 'AAE'
-      | 'AAF'
-      | 'AAH'
-      | 'AAI'
-      | 'AAS'
-      | 'AAT'
-      | 'AAV'
-      | 'AAY'
-      | 'AAZ'
-      | 'ABA'
-      | 'ABB'
-      | 'ABC'
-      | 'ABD'
-      | 'ABF'
-      | 'ABK'
-      | 'ABL'
-      | 'ABN'
-      | 'ABR'
-      | 'ABS'
-      | 'ABT'
-      | 'ABU'
-      | 'ACF'
-      | 'ACG'
-      | 'ACH'
-      | 'ACI'
-      | 'ACJ'
-      | 'ACK'
-      | 'ACL'
-      | 'ACM'
-      | 'ACS'
-      | 'ADC'
-      | 'ADE'
-      | 'ADJ'
-      | 'ADK'
-      | 'ADL'
-      | 'ADM'
-      | 'ADN'
-      | 'ADO'
-      | 'ADP'
-      | 'ADQ'
-      | 'ADR'
-      | 'ADT'
-      | 'ADW'
-      | 'ADY'
-      | 'ADZ'
-      | 'AEA'
-      | 'AEB'
-      | 'AEC'
-      | 'AED'
-      | 'AEF'
-      | 'AEH'
-      | 'AEI'
-      | 'AEJ'
-      | 'AEK'
-      | 'AEL'
-      | 'AEM'
-      | 'AEN'
-      | 'AEO'
-      | 'AEP'
-      | 'AES'
-      | 'AET'
-      | 'AEU'
-      | 'AEV'
-      | 'AEW'
-      | 'AEX'
-      | 'AEY'
-      | 'AEZ'
-      | 'AJ'
-      | 'AU'
-      | 'CA'
-      | 'CAB'
-      | 'CAD'
-      | 'CAE'
-      | 'CAF'
-      | 'CAI'
-      | 'CAJ'
-      | 'CAK'
-      | 'CAL'
-      | 'CAM'
-      | 'CAN'
-      | 'CAO'
-      | 'CAP'
-      | 'CAQ'
-      | 'CAR'
-      | 'CAS'
-      | 'CAT'
-      | 'CAU'
-      | 'CAV'
-      | 'CAW'
-      | 'CAX'
-      | 'CAY'
-      | 'CAZ'
-      | 'CD'
-      | 'CG'
-      | 'CS'
-      | 'CT'
-      | 'DAB'
-      | 'DAC'
-      | 'DAD'
-      | 'DAF'
-      | 'DAG'
-      | 'DAH'
-      | 'DAI'
-      | 'DAJ'
-      | 'DAK'
-      | 'DAL'
-      | 'DAM'
-      | 'DAN'
-      | 'DAO'
-      | 'DAP'
-      | 'DAQ'
-      | 'DL'
-      | 'EG'
-      | 'EP'
-      | 'ER'
-      | 'FAA'
-      | 'FAB'
-      | 'FAC'
-      | 'FC'
-      | 'FH'
-      | 'FI'
-      | 'GAA'
-      | 'HAA'
-      | 'HD'
-      | 'HH'
-      | 'IAA'
-      | 'IAB'
-      | 'ID'
-      | 'IF'
-      | 'IR'
-      | 'IS'
-      | 'KO'
-      | 'L1'
-      | 'LA'
-      | 'LAA'
-      | 'LAB'
-      | 'LF'
-      | 'MAE'
-      | 'MI'
-      | 'ML'
-      | 'NAA'
-      | 'OA'
-      | 'PA'
-      | 'PAA'
-      | 'PC'
-      | 'PL'
-      | 'PRV'
-      | 'RAB'
-      | 'RAC'
-      | 'RAD'
-      | 'RAF'
-      | 'RE'
-      | 'RF'
-      | 'RH'
-      | 'RV'
-      | 'SA'
-      | 'SAA'
-      | 'SAD'
-      | 'SAE'
-      | 'SAI'
-      | 'SG'
-      | 'SH'
-      | 'SM'
-      | 'SU'
-      | 'TAB'
-      | 'TAC'
-      | 'TT'
-      | 'TV'
-      | 'V1'
-      | 'V2'
-      | 'WH'
-      | 'XAA'
-      | 'YY'
-      | 'ZZZ'
-      | null;
+    reason_code?: string | null;
 
     /**
      * Duty or tax or fee category codes (Subset of UNCL5305)
@@ -1001,7 +603,7 @@ export namespace DocumentCreate {
     /**
      * The VAT rate, represented as percentage that applies to the charge
      */
-    tax_rate?: number | string | null;
+    tax_rate?: string | null;
   }
 
   export interface Item {
@@ -1011,9 +613,9 @@ export namespace DocumentCreate {
     allowances?: Array<Item.Allowance> | null;
 
     /**
-     * The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level
-     * allowances and charges. Calculated as: ((unit_price / price_base_quantity) \*
-     * quantity) - allowances + charges. Must be rounded to maximum 2 decimals
+     * The total amount of the line item, exclusive of VAT, after subtracting line
+     * level allowances and adding line level charges. Must be rounded to maximum 2
+     * decimals
      */
     amount?: number | string | null;
 
@@ -1028,12 +630,6 @@ export namespace DocumentCreate {
      * The description of the line item.
      */
     description?: string | null;
-
-    /**
-     * The item price base quantity (BT-149). The number of item units to which the
-     * price applies. Defaults to 1. Must be rounded to maximum 4 decimals
-     */
-    price_base_quantity?: number | string | null;
 
     /**
      * The product code of the line item.
@@ -1054,7 +650,7 @@ export namespace DocumentCreate {
     /**
      * The VAT rate of the line item expressed as percentage with 2 decimals
      */
-    tax_rate?: number | string | null;
+    tax_rate?: string | null;
 
     /**
      * Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
@@ -1062,8 +658,7 @@ export namespace DocumentCreate {
     unit?: DocumentsAPI.UnitOfMeasureCode | null;
 
     /**
-     * The item net price (BT-146). The price of an item, exclusive of VAT, after
-     * subtracting item price discount. Must be rounded to maximum 4 decimals
+     * The unit price of the line item. Must be rounded to maximum 2 decimals
      */
     unit_price?: number | string | null;
   }
@@ -1086,8 +681,7 @@ export namespace DocumentCreate {
 
       /**
        * The percentage that may be used, in conjunction with the allowance base amount,
-       * to calculate the allowance amount. To state 20%, use value 20. Must be rounded
-       * to maximum 2 decimals
+       * to calculate the allowance amount. To state 20%, use value 20
        */
       multiplier_factor?: number | string | null;
 
@@ -1097,40 +691,21 @@ export namespace DocumentCreate {
       reason?: string | null;
 
       /**
-       * Allowance reason codes for invoice discounts and charges
+       * The code for the allowance reason
        */
-      reason_code?:
-        | '41'
-        | '42'
-        | '60'
-        | '62'
-        | '63'
-        | '64'
-        | '65'
-        | '66'
-        | '67'
-        | '68'
-        | '70'
-        | '71'
-        | '88'
-        | '95'
-        | '100'
-        | '102'
-        | '103'
-        | '104'
-        | '105'
-        | null;
+      reason_code?: string | null;
 
       /**
-       * The VAT category code that applies to the allowance
+       * Duty or tax or fee category codes (Subset of UNCL5305)
+       *
+       * Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
        */
-      tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B';
+      tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B' | null;
 
       /**
-       * The VAT rate, represented as percentage that applies to the allowance. Must be
-       * rounded to maximum 2 decimals
+       * The VAT rate, represented as percentage that applies to the allowance
        */
-      tax_rate?: number | string | null;
+      tax_rate?: string | null;
     }
 
     /**
@@ -1160,188 +735,9 @@ export namespace DocumentCreate {
       reason?: string | null;
 
       /**
-       * Charge reason codes for invoice charges and fees
+       * The code for the charge reason
        */
-      reason_code?:
-        | 'AA'
-        | 'AAA'
-        | 'AAC'
-        | 'AAD'
-        | 'AAE'
-        | 'AAF'
-        | 'AAH'
-        | 'AAI'
-        | 'AAS'
-        | 'AAT'
-        | 'AAV'
-        | 'AAY'
-        | 'AAZ'
-        | 'ABA'
-        | 'ABB'
-        | 'ABC'
-        | 'ABD'
-        | 'ABF'
-        | 'ABK'
-        | 'ABL'
-        | 'ABN'
-        | 'ABR'
-        | 'ABS'
-        | 'ABT'
-        | 'ABU'
-        | 'ACF'
-        | 'ACG'
-        | 'ACH'
-        | 'ACI'
-        | 'ACJ'
-        | 'ACK'
-        | 'ACL'
-        | 'ACM'
-        | 'ACS'
-        | 'ADC'
-        | 'ADE'
-        | 'ADJ'
-        | 'ADK'
-        | 'ADL'
-        | 'ADM'
-        | 'ADN'
-        | 'ADO'
-        | 'ADP'
-        | 'ADQ'
-        | 'ADR'
-        | 'ADT'
-        | 'ADW'
-        | 'ADY'
-        | 'ADZ'
-        | 'AEA'
-        | 'AEB'
-        | 'AEC'
-        | 'AED'
-        | 'AEF'
-        | 'AEH'
-        | 'AEI'
-        | 'AEJ'
-        | 'AEK'
-        | 'AEL'
-        | 'AEM'
-        | 'AEN'
-        | 'AEO'
-        | 'AEP'
-        | 'AES'
-        | 'AET'
-        | 'AEU'
-        | 'AEV'
-        | 'AEW'
-        | 'AEX'
-        | 'AEY'
-        | 'AEZ'
-        | 'AJ'
-        | 'AU'
-        | 'CA'
-        | 'CAB'
-        | 'CAD'
-        | 'CAE'
-        | 'CAF'
-        | 'CAI'
-        | 'CAJ'
-        | 'CAK'
-        | 'CAL'
-        | 'CAM'
-        | 'CAN'
-        | 'CAO'
-        | 'CAP'
-        | 'CAQ'
-        | 'CAR'
-        | 'CAS'
-        | 'CAT'
-        | 'CAU'
-        | 'CAV'
-        | 'CAW'
-        | 'CAX'
-        | 'CAY'
-        | 'CAZ'
-        | 'CD'
-        | 'CG'
-        | 'CS'
-        | 'CT'
-        | 'DAB'
-        | 'DAC'
-        | 'DAD'
-        | 'DAF'
-        | 'DAG'
-        | 'DAH'
-        | 'DAI'
-        | 'DAJ'
-        | 'DAK'
-        | 'DAL'
-        | 'DAM'
-        | 'DAN'
-        | 'DAO'
-        | 'DAP'
-        | 'DAQ'
-        | 'DL'
-        | 'EG'
-        | 'EP'
-        | 'ER'
-        | 'FAA'
-        | 'FAB'
-        | 'FAC'
-        | 'FC'
-        | 'FH'
-        | 'FI'
-        | 'GAA'
-        | 'HAA'
-        | 'HD'
-        | 'HH'
-        | 'IAA'
-        | 'IAB'
-        | 'ID'
-        | 'IF'
-        | 'IR'
-        | 'IS'
-        | 'KO'
-        | 'L1'
-        | 'LA'
-        | 'LAA'
-        | 'LAB'
-        | 'LF'
-        | 'MAE'
-        | 'MI'
-        | 'ML'
-        | 'NAA'
-        | 'OA'
-        | 'PA'
-        | 'PAA'
-        | 'PC'
-        | 'PL'
-        | 'PRV'
-        | 'RAB'
-        | 'RAC'
-        | 'RAD'
-        | 'RAF'
-        | 'RE'
-        | 'RF'
-        | 'RH'
-        | 'RV'
-        | 'SA'
-        | 'SAA'
-        | 'SAD'
-        | 'SAE'
-        | 'SAI'
-        | 'SG'
-        | 'SH'
-        | 'SM'
-        | 'SU'
-        | 'TAB'
-        | 'TAC'
-        | 'TT'
-        | 'TV'
-        | 'V1'
-        | 'V2'
-        | 'WH'
-        | 'XAA'
-        | 'YY'
-        | 'ZZZ'
-        | null;
+      reason_code?: string | null;
 
       /**
        * Duty or tax or fee category codes (Subset of UNCL5305)
@@ -1353,7 +749,7 @@ export namespace DocumentCreate {
       /**
        * The VAT rate, represented as percentage that applies to the charge
        */
-      tax_rate?: number | string | null;
+      tax_rate?: string | null;
     }
   }
 
@@ -1690,8 +1086,7 @@ export namespace DocumentResponse {
 
     /**
      * The percentage that may be used, in conjunction with the allowance base amount,
-     * to calculate the allowance amount. To state 20%, use value 20. Must be rounded
-     * to maximum 2 decimals
+     * to calculate the allowance amount. To state 20%, use value 20
      */
     multiplier_factor?: string | null;
 
@@ -1701,38 +1096,19 @@ export namespace DocumentResponse {
     reason?: string | null;
 
     /**
-     * Allowance reason codes for invoice discounts and charges
+     * The code for the allowance reason
      */
-    reason_code?:
-      | '41'
-      | '42'
-      | '60'
-      | '62'
-      | '63'
-      | '64'
-      | '65'
-      | '66'
-      | '67'
-      | '68'
-      | '70'
-      | '71'
-      | '88'
-      | '95'
-      | '100'
-      | '102'
-      | '103'
-      | '104'
-      | '105'
-      | null;
+    reason_code?: string | null;
 
     /**
-     * The VAT category code that applies to the allowance
+     * Duty or tax or fee category codes (Subset of UNCL5305)
+     *
+     * Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
      */
-    tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B';
+    tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B' | null;
 
     /**
-     * The VAT rate, represented as percentage that applies to the allowance. Must be
-     * rounded to maximum 2 decimals
+     * The VAT rate, represented as percentage that applies to the allowance
      */
     tax_rate?: string | null;
   }
@@ -1761,188 +1137,9 @@ export namespace DocumentResponse {
     reason?: string | null;
 
     /**
-     * Charge reason codes for invoice charges and fees
+     * The code for the charge reason
      */
-    reason_code?:
-      | 'AA'
-      | 'AAA'
-      | 'AAC'
-      | 'AAD'
-      | 'AAE'
-      | 'AAF'
-      | 'AAH'
-      | 'AAI'
-      | 'AAS'
-      | 'AAT'
-      | 'AAV'
-      | 'AAY'
-      | 'AAZ'
-      | 'ABA'
-      | 'ABB'
-      | 'ABC'
-      | 'ABD'
-      | 'ABF'
-      | 'ABK'
-      | 'ABL'
-      | 'ABN'
-      | 'ABR'
-      | 'ABS'
-      | 'ABT'
-      | 'ABU'
-      | 'ACF'
-      | 'ACG'
-      | 'ACH'
-      | 'ACI'
-      | 'ACJ'
-      | 'ACK'
-      | 'ACL'
-      | 'ACM'
-      | 'ACS'
-      | 'ADC'
-      | 'ADE'
-      | 'ADJ'
-      | 'ADK'
-      | 'ADL'
-      | 'ADM'
-      | 'ADN'
-      | 'ADO'
-      | 'ADP'
-      | 'ADQ'
-      | 'ADR'
-      | 'ADT'
-      | 'ADW'
-      | 'ADY'
-      | 'ADZ'
-      | 'AEA'
-      | 'AEB'
-      | 'AEC'
-      | 'AED'
-      | 'AEF'
-      | 'AEH'
-      | 'AEI'
-      | 'AEJ'
-      | 'AEK'
-      | 'AEL'
-      | 'AEM'
-      | 'AEN'
-      | 'AEO'
-      | 'AEP'
-      | 'AES'
-      | 'AET'
-      | 'AEU'
-      | 'AEV'
-      | 'AEW'
-      | 'AEX'
-      | 'AEY'
-      | 'AEZ'
-      | 'AJ'
-      | 'AU'
-      | 'CA'
-      | 'CAB'
-      | 'CAD'
-      | 'CAE'
-      | 'CAF'
-      | 'CAI'
-      | 'CAJ'
-      | 'CAK'
-      | 'CAL'
-      | 'CAM'
-      | 'CAN'
-      | 'CAO'
-      | 'CAP'
-      | 'CAQ'
-      | 'CAR'
-      | 'CAS'
-      | 'CAT'
-      | 'CAU'
-      | 'CAV'
-      | 'CAW'
-      | 'CAX'
-      | 'CAY'
-      | 'CAZ'
-      | 'CD'
-      | 'CG'
-      | 'CS'
-      | 'CT'
-      | 'DAB'
-      | 'DAC'
-      | 'DAD'
-      | 'DAF'
-      | 'DAG'
-      | 'DAH'
-      | 'DAI'
-      | 'DAJ'
-      | 'DAK'
-      | 'DAL'
-      | 'DAM'
-      | 'DAN'
-      | 'DAO'
-      | 'DAP'
-      | 'DAQ'
-      | 'DL'
-      | 'EG'
-      | 'EP'
-      | 'ER'
-      | 'FAA'
-      | 'FAB'
-      | 'FAC'
-      | 'FC'
-      | 'FH'
-      | 'FI'
-      | 'GAA'
-      | 'HAA'
-      | 'HD'
-      | 'HH'
-      | 'IAA'
-      | 'IAB'
-      | 'ID'
-      | 'IF'
-      | 'IR'
-      | 'IS'
-      | 'KO'
-      | 'L1'
-      | 'LA'
-      | 'LAA'
-      | 'LAB'
-      | 'LF'
-      | 'MAE'
-      | 'MI'
-      | 'ML'
-      | 'NAA'
-      | 'OA'
-      | 'PA'
-      | 'PAA'
-      | 'PC'
-      | 'PL'
-      | 'PRV'
-      | 'RAB'
-      | 'RAC'
-      | 'RAD'
-      | 'RAF'
-      | 'RE'
-      | 'RF'
-      | 'RH'
-      | 'RV'
-      | 'SA'
-      | 'SAA'
-      | 'SAD'
-      | 'SAE'
-      | 'SAI'
-      | 'SG'
-      | 'SH'
-      | 'SM'
-      | 'SU'
-      | 'TAB'
-      | 'TAC'
-      | 'TT'
-      | 'TV'
-      | 'V1'
-      | 'V2'
-      | 'WH'
-      | 'XAA'
-      | 'YY'
-      | 'ZZZ'
-      | null;
+    reason_code?: string | null;
 
     /**
      * Duty or tax or fee category codes (Subset of UNCL5305)
@@ -1964,9 +1161,9 @@ export namespace DocumentResponse {
     allowances?: Array<DocumentsAPI.Allowance> | null;
 
     /**
-     * The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level
-     * allowances and charges. Calculated as: ((unit_price / price_base_quantity) \*
-     * quantity) - allowances + charges. Must be rounded to maximum 2 decimals
+     * The total amount of the line item, exclusive of VAT, after subtracting line
+     * level allowances and adding line level charges. Must be rounded to maximum 2
+     * decimals
      */
     amount?: string | null;
 
@@ -1981,12 +1178,6 @@ export namespace DocumentResponse {
      * The description of the line item.
      */
     description?: string | null;
-
-    /**
-     * The item price base quantity (BT-149). The number of item units to which the
-     * price applies. Defaults to 1. Must be rounded to maximum 4 decimals
-     */
-    price_base_quantity?: string | null;
 
     /**
      * The product code of the line item.
@@ -2015,8 +1206,7 @@ export namespace DocumentResponse {
     unit?: DocumentsAPI.UnitOfMeasureCode | null;
 
     /**
-     * The item net price (BT-146). The price of an item, exclusive of VAT, after
-     * subtracting item price discount. Must be rounded to maximum 4 decimals
+     * The unit price of the line item. Must be rounded to maximum 2 decimals
      */
     unit_price?: string | null;
   }
@@ -3444,9 +2634,9 @@ export namespace DocumentCreateFromPdfResponse {
     allowances?: Array<DocumentsAPI.Allowance> | null;
 
     /**
-     * The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level
-     * allowances and charges. Calculated as: ((unit_price / price_base_quantity) \*
-     * quantity) - allowances + charges. Must be rounded to maximum 2 decimals
+     * The total amount of the line item, exclusive of VAT, after subtracting line
+     * level allowances and adding line level charges. Must be rounded to maximum 2
+     * decimals
      */
     amount?: string | null;
 
@@ -3461,12 +2651,6 @@ export namespace DocumentCreateFromPdfResponse {
      * The description of the line item.
      */
     description?: string | null;
-
-    /**
-     * The item price base quantity (BT-149). The number of item units to which the
-     * price applies. Defaults to 1. Must be rounded to maximum 4 decimals
-     */
-    price_base_quantity?: string | null;
 
     /**
      * The product code of the line item.
@@ -3495,8 +2679,7 @@ export namespace DocumentCreateFromPdfResponse {
     unit?: DocumentsAPI.UnitOfMeasureCode | null;
 
     /**
-     * The item net price (BT-146). The price of an item, exclusive of VAT, after
-     * subtracting item price discount. Must be rounded to maximum 4 decimals
+     * The unit price of the line item. Must be rounded to maximum 2 decimals
      */
     unit_price?: string | null;
   }
@@ -3836,8 +3019,7 @@ export namespace DocumentCreateParams {
 
     /**
      * The percentage that may be used, in conjunction with the allowance base amount,
-     * to calculate the allowance amount. To state 20%, use value 20. Must be rounded
-     * to maximum 2 decimals
+     * to calculate the allowance amount. To state 20%, use value 20
      */
     multiplier_factor?: number | string | null;
 
@@ -3847,40 +3029,21 @@ export namespace DocumentCreateParams {
     reason?: string | null;
 
     /**
-     * Allowance reason codes for invoice discounts and charges
+     * The code for the allowance reason
      */
-    reason_code?:
-      | '41'
-      | '42'
-      | '60'
-      | '62'
-      | '63'
-      | '64'
-      | '65'
-      | '66'
-      | '67'
-      | '68'
-      | '70'
-      | '71'
-      | '88'
-      | '95'
-      | '100'
-      | '102'
-      | '103'
-      | '104'
-      | '105'
-      | null;
+    reason_code?: string | null;
 
     /**
-     * The VAT category code that applies to the allowance
+     * Duty or tax or fee category codes (Subset of UNCL5305)
+     *
+     * Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
      */
-    tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B';
+    tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B' | null;
 
     /**
-     * The VAT rate, represented as percentage that applies to the allowance. Must be
-     * rounded to maximum 2 decimals
+     * The VAT rate, represented as percentage that applies to the allowance
      */
-    tax_rate?: number | string | null;
+    tax_rate?: string | null;
   }
 
   /**
@@ -3910,188 +3073,9 @@ export namespace DocumentCreateParams {
     reason?: string | null;
 
     /**
-     * Charge reason codes for invoice charges and fees
+     * The code for the charge reason
      */
-    reason_code?:
-      | 'AA'
-      | 'AAA'
-      | 'AAC'
-      | 'AAD'
-      | 'AAE'
-      | 'AAF'
-      | 'AAH'
-      | 'AAI'
-      | 'AAS'
-      | 'AAT'
-      | 'AAV'
-      | 'AAY'
-      | 'AAZ'
-      | 'ABA'
-      | 'ABB'
-      | 'ABC'
-      | 'ABD'
-      | 'ABF'
-      | 'ABK'
-      | 'ABL'
-      | 'ABN'
-      | 'ABR'
-      | 'ABS'
-      | 'ABT'
-      | 'ABU'
-      | 'ACF'
-      | 'ACG'
-      | 'ACH'
-      | 'ACI'
-      | 'ACJ'
-      | 'ACK'
-      | 'ACL'
-      | 'ACM'
-      | 'ACS'
-      | 'ADC'
-      | 'ADE'
-      | 'ADJ'
-      | 'ADK'
-      | 'ADL'
-      | 'ADM'
-      | 'ADN'
-      | 'ADO'
-      | 'ADP'
-      | 'ADQ'
-      | 'ADR'
-      | 'ADT'
-      | 'ADW'
-      | 'ADY'
-      | 'ADZ'
-      | 'AEA'
-      | 'AEB'
-      | 'AEC'
-      | 'AED'
-      | 'AEF'
-      | 'AEH'
-      | 'AEI'
-      | 'AEJ'
-      | 'AEK'
-      | 'AEL'
-      | 'AEM'
-      | 'AEN'
-      | 'AEO'
-      | 'AEP'
-      | 'AES'
-      | 'AET'
-      | 'AEU'
-      | 'AEV'
-      | 'AEW'
-      | 'AEX'
-      | 'AEY'
-      | 'AEZ'
-      | 'AJ'
-      | 'AU'
-      | 'CA'
-      | 'CAB'
-      | 'CAD'
-      | 'CAE'
-      | 'CAF'
-      | 'CAI'
-      | 'CAJ'
-      | 'CAK'
-      | 'CAL'
-      | 'CAM'
-      | 'CAN'
-      | 'CAO'
-      | 'CAP'
-      | 'CAQ'
-      | 'CAR'
-      | 'CAS'
-      | 'CAT'
-      | 'CAU'
-      | 'CAV'
-      | 'CAW'
-      | 'CAX'
-      | 'CAY'
-      | 'CAZ'
-      | 'CD'
-      | 'CG'
-      | 'CS'
-      | 'CT'
-      | 'DAB'
-      | 'DAC'
-      | 'DAD'
-      | 'DAF'
-      | 'DAG'
-      | 'DAH'
-      | 'DAI'
-      | 'DAJ'
-      | 'DAK'
-      | 'DAL'
-      | 'DAM'
-      | 'DAN'
-      | 'DAO'
-      | 'DAP'
-      | 'DAQ'
-      | 'DL'
-      | 'EG'
-      | 'EP'
-      | 'ER'
-      | 'FAA'
-      | 'FAB'
-      | 'FAC'
-      | 'FC'
-      | 'FH'
-      | 'FI'
-      | 'GAA'
-      | 'HAA'
-      | 'HD'
-      | 'HH'
-      | 'IAA'
-      | 'IAB'
-      | 'ID'
-      | 'IF'
-      | 'IR'
-      | 'IS'
-      | 'KO'
-      | 'L1'
-      | 'LA'
-      | 'LAA'
-      | 'LAB'
-      | 'LF'
-      | 'MAE'
-      | 'MI'
-      | 'ML'
-      | 'NAA'
-      | 'OA'
-      | 'PA'
-      | 'PAA'
-      | 'PC'
-      | 'PL'
-      | 'PRV'
-      | 'RAB'
-      | 'RAC'
-      | 'RAD'
-      | 'RAF'
-      | 'RE'
-      | 'RF'
-      | 'RH'
-      | 'RV'
-      | 'SA'
-      | 'SAA'
-      | 'SAD'
-      | 'SAE'
-      | 'SAI'
-      | 'SG'
-      | 'SH'
-      | 'SM'
-      | 'SU'
-      | 'TAB'
-      | 'TAC'
-      | 'TT'
-      | 'TV'
-      | 'V1'
-      | 'V2'
-      | 'WH'
-      | 'XAA'
-      | 'YY'
-      | 'ZZZ'
-      | null;
+    reason_code?: string | null;
 
     /**
      * Duty or tax or fee category codes (Subset of UNCL5305)
@@ -4103,7 +3087,7 @@ export namespace DocumentCreateParams {
     /**
      * The VAT rate, represented as percentage that applies to the charge
      */
-    tax_rate?: number | string | null;
+    tax_rate?: string | null;
   }
 
   export interface Item {
@@ -4113,9 +3097,9 @@ export namespace DocumentCreateParams {
     allowances?: Array<Item.Allowance> | null;
 
     /**
-     * The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level
-     * allowances and charges. Calculated as: ((unit_price / price_base_quantity) \*
-     * quantity) - allowances + charges. Must be rounded to maximum 2 decimals
+     * The total amount of the line item, exclusive of VAT, after subtracting line
+     * level allowances and adding line level charges. Must be rounded to maximum 2
+     * decimals
      */
     amount?: number | string | null;
 
@@ -4130,12 +3114,6 @@ export namespace DocumentCreateParams {
      * The description of the line item.
      */
     description?: string | null;
-
-    /**
-     * The item price base quantity (BT-149). The number of item units to which the
-     * price applies. Defaults to 1. Must be rounded to maximum 4 decimals
-     */
-    price_base_quantity?: number | string | null;
 
     /**
      * The product code of the line item.
@@ -4156,7 +3134,7 @@ export namespace DocumentCreateParams {
     /**
      * The VAT rate of the line item expressed as percentage with 2 decimals
      */
-    tax_rate?: number | string | null;
+    tax_rate?: string | null;
 
     /**
      * Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
@@ -4164,8 +3142,7 @@ export namespace DocumentCreateParams {
     unit?: DocumentsAPI.UnitOfMeasureCode | null;
 
     /**
-     * The item net price (BT-146). The price of an item, exclusive of VAT, after
-     * subtracting item price discount. Must be rounded to maximum 4 decimals
+     * The unit price of the line item. Must be rounded to maximum 2 decimals
      */
     unit_price?: number | string | null;
   }
@@ -4188,8 +3165,7 @@ export namespace DocumentCreateParams {
 
       /**
        * The percentage that may be used, in conjunction with the allowance base amount,
-       * to calculate the allowance amount. To state 20%, use value 20. Must be rounded
-       * to maximum 2 decimals
+       * to calculate the allowance amount. To state 20%, use value 20
        */
       multiplier_factor?: number | string | null;
 
@@ -4199,40 +3175,21 @@ export namespace DocumentCreateParams {
       reason?: string | null;
 
       /**
-       * Allowance reason codes for invoice discounts and charges
+       * The code for the allowance reason
        */
-      reason_code?:
-        | '41'
-        | '42'
-        | '60'
-        | '62'
-        | '63'
-        | '64'
-        | '65'
-        | '66'
-        | '67'
-        | '68'
-        | '70'
-        | '71'
-        | '88'
-        | '95'
-        | '100'
-        | '102'
-        | '103'
-        | '104'
-        | '105'
-        | null;
+      reason_code?: string | null;
 
       /**
-       * The VAT category code that applies to the allowance
+       * Duty or tax or fee category codes (Subset of UNCL5305)
+       *
+       * Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
        */
-      tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B';
+      tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B' | null;
 
       /**
-       * The VAT rate, represented as percentage that applies to the allowance. Must be
-       * rounded to maximum 2 decimals
+       * The VAT rate, represented as percentage that applies to the allowance
        */
-      tax_rate?: number | string | null;
+      tax_rate?: string | null;
     }
 
     /**
@@ -4262,188 +3219,9 @@ export namespace DocumentCreateParams {
       reason?: string | null;
 
       /**
-       * Charge reason codes for invoice charges and fees
+       * The code for the charge reason
        */
-      reason_code?:
-        | 'AA'
-        | 'AAA'
-        | 'AAC'
-        | 'AAD'
-        | 'AAE'
-        | 'AAF'
-        | 'AAH'
-        | 'AAI'
-        | 'AAS'
-        | 'AAT'
-        | 'AAV'
-        | 'AAY'
-        | 'AAZ'
-        | 'ABA'
-        | 'ABB'
-        | 'ABC'
-        | 'ABD'
-        | 'ABF'
-        | 'ABK'
-        | 'ABL'
-        | 'ABN'
-        | 'ABR'
-        | 'ABS'
-        | 'ABT'
-        | 'ABU'
-        | 'ACF'
-        | 'ACG'
-        | 'ACH'
-        | 'ACI'
-        | 'ACJ'
-        | 'ACK'
-        | 'ACL'
-        | 'ACM'
-        | 'ACS'
-        | 'ADC'
-        | 'ADE'
-        | 'ADJ'
-        | 'ADK'
-        | 'ADL'
-        | 'ADM'
-        | 'ADN'
-        | 'ADO'
-        | 'ADP'
-        | 'ADQ'
-        | 'ADR'
-        | 'ADT'
-        | 'ADW'
-        | 'ADY'
-        | 'ADZ'
-        | 'AEA'
-        | 'AEB'
-        | 'AEC'
-        | 'AED'
-        | 'AEF'
-        | 'AEH'
-        | 'AEI'
-        | 'AEJ'
-        | 'AEK'
-        | 'AEL'
-        | 'AEM'
-        | 'AEN'
-        | 'AEO'
-        | 'AEP'
-        | 'AES'
-        | 'AET'
-        | 'AEU'
-        | 'AEV'
-        | 'AEW'
-        | 'AEX'
-        | 'AEY'
-        | 'AEZ'
-        | 'AJ'
-        | 'AU'
-        | 'CA'
-        | 'CAB'
-        | 'CAD'
-        | 'CAE'
-        | 'CAF'
-        | 'CAI'
-        | 'CAJ'
-        | 'CAK'
-        | 'CAL'
-        | 'CAM'
-        | 'CAN'
-        | 'CAO'
-        | 'CAP'
-        | 'CAQ'
-        | 'CAR'
-        | 'CAS'
-        | 'CAT'
-        | 'CAU'
-        | 'CAV'
-        | 'CAW'
-        | 'CAX'
-        | 'CAY'
-        | 'CAZ'
-        | 'CD'
-        | 'CG'
-        | 'CS'
-        | 'CT'
-        | 'DAB'
-        | 'DAC'
-        | 'DAD'
-        | 'DAF'
-        | 'DAG'
-        | 'DAH'
-        | 'DAI'
-        | 'DAJ'
-        | 'DAK'
-        | 'DAL'
-        | 'DAM'
-        | 'DAN'
-        | 'DAO'
-        | 'DAP'
-        | 'DAQ'
-        | 'DL'
-        | 'EG'
-        | 'EP'
-        | 'ER'
-        | 'FAA'
-        | 'FAB'
-        | 'FAC'
-        | 'FC'
-        | 'FH'
-        | 'FI'
-        | 'GAA'
-        | 'HAA'
-        | 'HD'
-        | 'HH'
-        | 'IAA'
-        | 'IAB'
-        | 'ID'
-        | 'IF'
-        | 'IR'
-        | 'IS'
-        | 'KO'
-        | 'L1'
-        | 'LA'
-        | 'LAA'
-        | 'LAB'
-        | 'LF'
-        | 'MAE'
-        | 'MI'
-        | 'ML'
-        | 'NAA'
-        | 'OA'
-        | 'PA'
-        | 'PAA'
-        | 'PC'
-        | 'PL'
-        | 'PRV'
-        | 'RAB'
-        | 'RAC'
-        | 'RAD'
-        | 'RAF'
-        | 'RE'
-        | 'RF'
-        | 'RH'
-        | 'RV'
-        | 'SA'
-        | 'SAA'
-        | 'SAD'
-        | 'SAE'
-        | 'SAI'
-        | 'SG'
-        | 'SH'
-        | 'SM'
-        | 'SU'
-        | 'TAB'
-        | 'TAC'
-        | 'TT'
-        | 'TV'
-        | 'V1'
-        | 'V2'
-        | 'WH'
-        | 'XAA'
-        | 'YY'
-        | 'ZZZ'
-        | null;
+      reason_code?: string | null;
 
       /**
        * Duty or tax or fee category codes (Subset of UNCL5305)
@@ -4455,7 +3233,7 @@ export namespace DocumentCreateParams {
       /**
        * The VAT rate, represented as percentage that applies to the charge
        */
-      tax_rate?: number | string | null;
+      tax_rate?: string | null;
     }
   }
 
