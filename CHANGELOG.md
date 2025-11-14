@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.19.0 (2025-11-14)
+
+Full Changelog: [v1.18.1...v1.19.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.18.1...v1.19.0)
+
+### Features
+
+* **api:** api update ([b79c4ef](https://github.com/e-invoice-be/e-invoice-ts/commit/b79c4efdf07c3f47bcdf53ca2449f1d989d22c9c))
+
+
+### Chores
+
+* **mcp:** upgrade jq-web ([8a6c089](https://github.com/e-invoice-be/e-invoice-ts/commit/8a6c08948d7e96d31c428eda7a599fad7666a329))
+
 ## 1.18.1 (2025-11-13)
 
 Full Changelog: [v1.18.0...v1.18.1](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.18.0...v1.18.1)
