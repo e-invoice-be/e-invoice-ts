@@ -1723,7 +1723,6 @@ export const tool: Tool = {
           'MIN',
           'MON',
           'ONZ',
-          'PCE',
           'LBR',
           'QT',
           'SEC',
