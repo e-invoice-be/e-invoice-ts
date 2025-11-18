@@ -2542,7 +2542,6 @@ export type UnitOfMeasureCode =
   | 'MIN'
   | 'MON'
   | 'ONZ'
-  | 'PCE'
   | 'LBR'
   | 'QT'
   | 'SEC'
