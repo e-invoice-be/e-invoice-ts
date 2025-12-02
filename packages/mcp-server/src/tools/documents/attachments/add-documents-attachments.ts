@@ -49,7 +49,7 @@ export const handler = async (client: EInvoice, args: Record<string, unknown> | 
       await maybeFilter(jq_filter, await client.documents.attachments.add(document_id, body)),
     );
   } catch (error) {
-    if (isJqError(error)) {
+    if (error instanceof EInvoice.APIError || isJqError(error)) {
       return asErrorResult(error.message);
     }
     throw error;
