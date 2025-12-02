@@ -41,7 +41,7 @@ export const handler = async (client: EInvoice, args: Record<string, unknown> | 
   try {
     return asTextContentResult(await maybeFilter(jq_filter, await client.webhooks.list()));
   } catch (error) {
-    if (isJqError(error)) {
+    if (error instanceof EInvoice.APIError || isJqError(error)) {
       return asErrorResult(error.message);
     }
     throw error;
