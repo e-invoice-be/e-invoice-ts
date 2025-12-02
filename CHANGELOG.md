@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.23.0 (2025-12-02)
+
+Full Changelog: [v1.22.0...v1.23.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.22.0...v1.23.0)
+
+### Features
+
+* **mcp:** add detail field to docs search tool ([eef2599](https://github.com/e-invoice-be/e-invoice-ts/commit/eef2599a43845f871d02d4db01c002fefb51a8f8))
+
+
+### Bug Fixes
+
+* **mcp:** return tool execution error on api error ([571ac6d](https://github.com/e-invoice-be/e-invoice-ts/commit/571ac6d619e3a1e84045b9eaf495c3061f907ee9))
+
+
+### Chores
+
+* **client:** fix logger property type ([83ffeb2](https://github.com/e-invoice-be/e-invoice-ts/commit/83ffeb2c98645d6bb176fba2e603710ded2bbc48))
+
 ## 1.22.0 (2025-11-18)
 
 Full Changelog: [v1.21.0...v1.22.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.21.0...v1.22.0)
