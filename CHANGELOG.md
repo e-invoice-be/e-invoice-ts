@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.24.0 (2025-12-06)
+
+Full Changelog: [v1.23.0...v1.24.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.23.0...v1.24.0)
+
+### Features
+
+* **mcp:** add typescript check to code execution tool ([0c104fd](https://github.com/e-invoice-be/e-invoice-ts/commit/0c104fd2c6260f79ef315ff9cd91215195f7707a))
+* **mcp:** handle code mode calls in the Stainless API ([11a2c17](https://github.com/e-invoice-be/e-invoice-ts/commit/11a2c1733c1c6e2cfda8bcdf0f2c26728a74d7ad))
+* **mcp:** return logs on code tool errors ([3b8850e](https://github.com/e-invoice-be/e-invoice-ts/commit/3b8850ee77a67eb8fe1c093eaf13239fd7c50b3f))
+
+
+### Bug Fixes
+
+* **mcp:** return correct lines on typescript errors ([c8ee0e7](https://github.com/e-invoice-be/e-invoice-ts/commit/c8ee0e73e0524087b1657d62ce17162d35ffa020))
+
+
+### Chores
+
+* **internal:** upgrade eslint ([885f3dd](https://github.com/e-invoice-be/e-invoice-ts/commit/885f3dd609fcd7be271216623ced30343ae0b019))
+* use latest @modelcontextprotocol/sdk ([33bc1ad](https://github.com/e-invoice-be/e-invoice-ts/commit/33bc1adde3d8f443354f1d3265ba30199e773fce))
+
 ## 1.23.0 (2025-12-02)
 
 Full Changelog: [v1.22.0...v1.23.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.22.0...v1.23.0)
