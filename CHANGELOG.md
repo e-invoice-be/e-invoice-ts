@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.24.1 (2025-12-06)
+
+Full Changelog: [v1.24.0...v1.24.1](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.24.0...v1.24.1)
+
+### Bug Fixes
+
+* **mcp:** correct code tool API endpoint ([e0bf0e2](https://github.com/e-invoice-be/e-invoice-ts/commit/e0bf0e2744e284b6cc97a111cf650efe4d8dce04))
+
+
+### Chores
+
+* **internal:** codegen related update ([959ab4b](https://github.com/e-invoice-be/e-invoice-ts/commit/959ab4b6e8df268d4744884449aeb33f1b92d3c0))
+
 ## 1.24.0 (2025-12-06)
 
 Full Changelog: [v1.23.0...v1.24.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.23.0...v1.24.0)
