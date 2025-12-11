@@ -254,7 +254,7 @@ The following tools are available in this MCP server.
 - `retrieve_documents_attachments` (`read`): Get attachment details with for an invoice or credit note with link to download file (signed URL, valid for 1 hour)
 - `list_documents_attachments` (`read`): Get all attachments for an invoice or credit note
 - `delete_documents_attachments` (`write`): Delete an attachment from an invoice or credit note
-- `add_documents_attachments` (`write`): Add a new attachment to an invoice or credit note
+- `add_documents_attachments` (`write`): Add one or more attachments when creating a new invoice or credit note via POST /api/documents/
 
 ### Resource `documents.ubl`:
 
