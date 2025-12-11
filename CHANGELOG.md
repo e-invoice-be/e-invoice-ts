@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.24.2 (2025-12-11)
+
+Full Changelog: [v1.24.1...v1.24.2](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.24.1...v1.24.2)
+
+### Bug Fixes
+
+* **mcp:** add client instantiation options to code tool ([e42efc9](https://github.com/e-invoice-be/e-invoice-ts/commit/e42efc972f746d45ef4a9099add7baac40ccddd0))
+
+
+### Chores
+
+* **internal:** codegen related update ([598ae1b](https://github.com/e-invoice-be/e-invoice-ts/commit/598ae1b25720d247b083ec573e7c1fd34b5301b8))
+* **mcp:** update lockfile ([f686b0c](https://github.com/e-invoice-be/e-invoice-ts/commit/f686b0c2295b470dbe4389be734daa275f27512b))
+
 ## 1.24.1 (2025-12-06)
 
 Full Changelog: [v1.24.0...v1.24.1](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.24.0...v1.24.1)
