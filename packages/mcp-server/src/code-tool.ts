@@ -39,6 +39,7 @@ export async function codeTool() {
       },
       body: JSON.stringify({
         project_name: 'e-invoice-api',
+        client_opts: {},
         code,
       }),
     });
