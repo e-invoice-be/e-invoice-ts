@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.0.0 (2025-12-19)
+
+Full Changelog: [v1.25.0...v2.0.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.25.0...v2.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* **mcp:** remove deprecated tool schemes
+* **mcp:** **Migration:** To migrate, simply modify the command used to invoke the MCP server. Currently, the only supported tool scheme is code mode. Now, starting the server with just `node /path/to/mcp/server` or `npx package-name` will invoke code tools: changing your command to one of these is likely all you will need to do.
+
+### Chores
+
+* **mcp:** remove deprecated tool schemes ([dced858](https://github.com/e-invoice-be/e-invoice-ts/commit/dced858482108eeb03df11e874d1180547b811be))
+
 ## 1.25.0 (2025-12-18)
 
 Full Changelog: [v1.24.2...v1.25.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.24.2...v1.25.0)
