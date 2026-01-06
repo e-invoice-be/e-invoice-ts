@@ -54,7 +54,7 @@ If you use Claude Code, you can install the MCP server by running the command be
 environment variables in Claude Code's `.claude.json`, which can be found in your home directory.
 
 ```
-claude mcp add --transport stdio e_invoice_api_api --env E_INVOICE_API_KEY="Your E_INVOICE_API_KEY here." -- npx -y e-invoice-api-mcp
+claude mcp add e_invoice_api_mcp_api --env E_INVOICE_API_KEY="Your E_INVOICE_API_KEY here." -- npx -y e-invoice-api-mcp
 ```
 
 ## Code Mode
