@@ -4450,17 +4450,17 @@ export namespace DocumentCreateParams {
 
 export interface DocumentCreateFromPdfParams {
   /**
-   * Body param:
+   * Body param
    */
   file: Uploadable;
 
   /**
-   * Query param:
+   * Query param
    */
   customer_tax_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   vendor_tax_id?: string | null;
 }
