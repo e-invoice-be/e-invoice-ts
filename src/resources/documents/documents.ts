@@ -2045,7 +2045,12 @@ export namespace DocumentResponse {
   }
 }
 
-export type DocumentType = 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE';
+export type DocumentType =
+  | 'INVOICE'
+  | 'CREDIT_NOTE'
+  | 'DEBIT_NOTE'
+  | 'SELFBILLING_INVOICE'
+  | 'SELFBILLING_CREDIT_NOTE';
 
 export interface PaymentDetailCreate {
   /**

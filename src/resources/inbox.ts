@@ -53,6 +53,8 @@ export class Inbox extends APIResource {
 export type DocumentState = 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED';
 
 export interface PaginatedDocumentResponse {
+  has_next_page: boolean;
+
   items: Array<DocumentsAPI.DocumentResponse>;
 
   page: number;
@@ -81,9 +83,26 @@ export interface InboxListParams extends DocumentsNumberPageParams {
   search?: string | null;
 
   /**
-   * Filter by sender ID
+   * Filter by sender (vendor_name, vendor_email, vendor_tax_id, vendor_company_id)
    */
   sender?: string | null;
+
+  /**
+   * Field to sort by
+   */
+  sort_by?:
+    | 'created_at'
+    | 'invoice_date'
+    | 'due_date'
+    | 'invoice_total'
+    | 'customer_name'
+    | 'vendor_name'
+    | 'invoice_id';
+
+  /**
+   * Sort direction (asc/desc)
+   */
+  sort_order?: 'asc' | 'desc';
 
   /**
    * Filter by document state
@@ -96,9 +115,43 @@ export interface InboxListParams extends DocumentsNumberPageParams {
   type?: DocumentsAPI.DocumentType | null;
 }
 
-export interface InboxListCreditNotesParams extends DocumentsNumberPageParams {}
+export interface InboxListCreditNotesParams extends DocumentsNumberPageParams {
+  /**
+   * Field to sort by
+   */
+  sort_by?:
+    | 'created_at'
+    | 'invoice_date'
+    | 'due_date'
+    | 'invoice_total'
+    | 'customer_name'
+    | 'vendor_name'
+    | 'invoice_id';
 
-export interface InboxListInvoicesParams extends DocumentsNumberPageParams {}
+  /**
+   * Sort direction (asc/desc)
+   */
+  sort_order?: 'asc' | 'desc';
+}
+
+export interface InboxListInvoicesParams extends DocumentsNumberPageParams {
+  /**
+   * Field to sort by
+   */
+  sort_by?:
+    | 'created_at'
+    | 'invoice_date'
+    | 'due_date'
+    | 'invoice_total'
+    | 'customer_name'
+    | 'vendor_name'
+    | 'invoice_id';
+
+  /**
+   * Sort direction (asc/desc)
+   */
+  sort_order?: 'asc' | 'desc';
+}
 
 export declare namespace Inbox {
   export {
