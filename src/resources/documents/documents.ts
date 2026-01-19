@@ -1372,6 +1372,8 @@ export type DocumentDirection = 'INBOUND' | 'OUTBOUND';
 export interface DocumentResponse {
   id: string;
 
+  created_at: string;
+
   allowances?: Array<DocumentResponse.Allowance> | null;
 
   /**
