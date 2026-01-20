@@ -116,11 +116,6 @@ export interface OutboxListReceivedDocumentsParams extends DocumentsNumberPagePa
   sort_order?: 'asc' | 'desc';
 
   /**
-   * Filter by document state. If not provided, returns all states.
-   */
-  state?: InboxAPI.DocumentState | null;
-
-  /**
    * Filter by document type. If not provided, returns all types.
    */
   type?: DocumentsAPI.DocumentType | null;

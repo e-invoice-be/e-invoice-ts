@@ -34,7 +34,6 @@ describe('resource inbox', () => {
           sender: 'sender',
           sort_by: 'created_at',
           sort_order: 'asc',
-          state: 'DRAFT',
           type: 'INVOICE',
         },
         { path: '/_stainless_unknown_path' },
