@@ -11,6 +11,8 @@ export class Outbox extends APIResource {
   /**
    * Retrieve a paginated list of draft documents with filtering options including
    * state and text search.
+   *
+   * @deprecated
    */
   listDraftDocuments(
     query: OutboxListDraftDocumentsParams | null | undefined = {},
@@ -94,7 +96,7 @@ export interface OutboxListReceivedDocumentsParams extends DocumentsNumberPagePa
   search?: string | null;
 
   /**
-   * @deprecated (Deprecated) Filter by sender ID
+   * (Deprecated) Filter by sender ID
    */
   sender?: string | null;
 
