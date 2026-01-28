@@ -2,7 +2,7 @@
 
 import { McpTool, Metadata, ToolCallResult, asErrorResult, asTextContentResult } from './types';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
-import { readEnv, readEnvOrError } from './server';
+import { readEnv, requireValue } from './server';
 import { WorkerInput, WorkerOutput } from './code-tool-types';
 import { EInvoice } from 'e-invoice-api';
 
@@ -71,7 +71,10 @@ export function codeTool(): McpTool {
         ...(stainlessAPIKey && { Authorization: stainlessAPIKey }),
         'Content-Type': 'application/json',
         client_envs: JSON.stringify({
-          E_INVOICE_API_KEY: readEnvOrError('E_INVOICE_API_KEY') ?? client.apiKey ?? undefined,
+          E_INVOICE_API_KEY: requireValue(
+            readEnv('E_INVOICE_API_KEY') ?? client.apiKey,
+            'set E_INVOICE_API_KEY environment variable or provide apiKey client option',
+          ),
           E_INVOICE_BASE_URL: readEnv('E_INVOICE_BASE_URL') ?? client.baseURL ?? undefined,
         }),
       },
