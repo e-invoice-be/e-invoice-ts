@@ -477,11 +477,6 @@ export interface DocumentCreate {
   customer_name?: string | null;
 
   /**
-   * Customer Peppol ID
-   */
-  customer_peppol_id?: string | null;
-
-  /**
    * Customer tax ID. For Belgium this is the VAT number. Must include the country
    * prefix
    */
@@ -1441,11 +1436,6 @@ export interface DocumentResponse {
    * The company name of the customer/buyer
    */
   customer_name?: string | null;
-
-  /**
-   * Customer Peppol ID
-   */
-  customer_peppol_id?: string | null;
 
   /**
    * Customer tax ID. For Belgium this is the VAT number. Must include the country
@@ -3192,11 +3182,6 @@ export interface DocumentCreateFromPdfResponse {
   customer_name?: string | null;
 
   /**
-   * Customer Peppol ID
-   */
-  customer_peppol_id?: string | null;
-
-  /**
    * Customer tax ID. For Belgium this is the VAT number. Must include the country
    * prefix
    */
@@ -3595,11 +3580,6 @@ export interface DocumentCreateParams {
    * Body param: The company name of the customer/buyer
    */
   customer_name?: string | null;
-
-  /**
-   * Body param: Customer Peppol ID
-   */
-  customer_peppol_id?: string | null;
 
   /**
    * Body param: Customer tax ID. For Belgium this is the VAT number. Must include
