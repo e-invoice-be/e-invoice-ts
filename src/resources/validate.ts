@@ -177,6 +177,11 @@ export interface ValidateValidateJsonParams {
   customer_name?: string | null;
 
   /**
+   * Customer Peppol ID
+   */
+  customer_peppol_id?: string | null;
+
+  /**
    * Customer tax ID. For Belgium this is the VAT number. Must include the country
    * prefix
    */
