@@ -8,7 +8,7 @@ const client = new EInvoice({
 });
 
 describe('resource documents', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create', async () => {
     const responsePromise = client.documents.create({});
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource documents', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.documents.retrieve('document_id');
     const rawResponse = await responsePromise.asResponse();
@@ -32,7 +32,7 @@ describe('resource documents', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.documents.delete('document_id');
     const rawResponse = await responsePromise.asResponse();
@@ -44,7 +44,7 @@ describe('resource documents', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('createFromPdf: only required params', async () => {
     const responsePromise = client.documents.createFromPdf({
       file: await toFile(Buffer.from('# my file contents'), 'README.md'),
@@ -58,7 +58,7 @@ describe('resource documents', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('createFromPdf: required and optional params', async () => {
     const response = await client.documents.createFromPdf({
       file: await toFile(Buffer.from('# my file contents'), 'README.md'),
@@ -67,7 +67,7 @@ describe('resource documents', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('send', async () => {
     const responsePromise = client.documents.send('document_id');
     const rawResponse = await responsePromise.asResponse();
@@ -79,7 +79,7 @@ describe('resource documents', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('send: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -97,7 +97,7 @@ describe('resource documents', () => {
     ).rejects.toThrow(EInvoice.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('validate', async () => {
     const responsePromise = client.documents.validate('document_id');
     const rawResponse = await responsePromise.asResponse();

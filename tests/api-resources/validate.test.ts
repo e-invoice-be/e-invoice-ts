@@ -8,7 +8,7 @@ const client = new EInvoice({
 });
 
 describe('resource validate', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('validateJson', async () => {
     const responsePromise = client.validate.validateJson({});
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource validate', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('validatePeppolID: only required params', async () => {
     const responsePromise = client.validate.validatePeppolID({ peppol_id: 'peppol_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -32,12 +32,12 @@ describe('resource validate', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('validatePeppolID: required and optional params', async () => {
     const response = await client.validate.validatePeppolID({ peppol_id: 'peppol_id' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('validateUbl: only required params', async () => {
     const responsePromise = client.validate.validateUbl({
       file: await toFile(Buffer.from('# my file contents'), 'README.md'),
@@ -51,7 +51,7 @@ describe('resource validate', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('validateUbl: required and optional params', async () => {
     const response = await client.validate.validateUbl({
       file: await toFile(Buffer.from('# my file contents'), 'README.md'),
