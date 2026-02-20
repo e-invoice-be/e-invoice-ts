@@ -8,7 +8,7 @@ const client = new EInvoice({
 });
 
 describe('resource ubl', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('createFromUbl: only required params', async () => {
     const responsePromise = client.documents.ubl.createFromUbl({
       file: await toFile(Buffer.from('# my file contents'), 'README.md'),
@@ -22,14 +22,14 @@ describe('resource ubl', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('createFromUbl: required and optional params', async () => {
     const response = await client.documents.ubl.createFromUbl({
       file: await toFile(Buffer.from('# my file contents'), 'README.md'),
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get', async () => {
     const responsePromise = client.documents.ubl.get('document_id');
     const rawResponse = await responsePromise.asResponse();
