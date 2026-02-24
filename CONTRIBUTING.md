@@ -60,7 +60,7 @@ $ yarn link e-invoice-api
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global e-invoice-api
+$ pnpm link --global e-invoice-api
 ```
 
 ## Running tests
