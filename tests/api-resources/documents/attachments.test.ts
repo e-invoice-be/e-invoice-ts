@@ -65,7 +65,7 @@ describe('resource attachments', () => {
   // Mock server tests are disabled
   test.skip('add: only required params', async () => {
     const responsePromise = client.documents.attachments.add('document_id', {
-      file: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      file: await toFile(Buffer.from('Example data'), 'README.md'),
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -79,7 +79,7 @@ describe('resource attachments', () => {
   // Mock server tests are disabled
   test.skip('add: required and optional params', async () => {
     const response = await client.documents.attachments.add('document_id', {
-      file: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      file: await toFile(Buffer.from('Example data'), 'README.md'),
     });
   });
 });

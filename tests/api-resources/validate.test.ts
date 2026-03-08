@@ -40,7 +40,7 @@ describe('resource validate', () => {
   // Mock server tests are disabled
   test.skip('validateUbl: only required params', async () => {
     const responsePromise = client.validate.validateUbl({
-      file: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      file: await toFile(Buffer.from('Example data'), 'README.md'),
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -54,7 +54,7 @@ describe('resource validate', () => {
   // Mock server tests are disabled
   test.skip('validateUbl: required and optional params', async () => {
     const response = await client.validate.validateUbl({
-      file: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      file: await toFile(Buffer.from('Example data'), 'README.md'),
     });
   });
 });
