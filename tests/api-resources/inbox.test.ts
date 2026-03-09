@@ -32,8 +32,7 @@ describe('resource inbox', () => {
           page_size: 1,
           search: 'search',
           sender: 'sender',
-          sort_by: 'created_at',
-          sort_order: 'asc',
+          state: 'DRAFT',
           type: 'INVOICE',
         },
         { path: '/_stainless_unknown_path' },
@@ -57,15 +56,7 @@ describe('resource inbox', () => {
   test.skip('listCreditNotes: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.inbox.listCreditNotes(
-        {
-          page: 1,
-          page_size: 1,
-          sort_by: 'created_at',
-          sort_order: 'asc',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
+      client.inbox.listCreditNotes({ page: 1, page_size: 1 }, { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(EInvoice.NotFoundError);
   });
 
@@ -85,15 +76,7 @@ describe('resource inbox', () => {
   test.skip('listInvoices: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.inbox.listInvoices(
-        {
-          page: 1,
-          page_size: 1,
-          sort_by: 'created_at',
-          sort_order: 'asc',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
+      client.inbox.listInvoices({ page: 1, page_size: 1 }, { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(EInvoice.NotFoundError);
   });
 });

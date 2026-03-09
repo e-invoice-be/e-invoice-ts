@@ -24,18 +24,7 @@ describe('resource outbox', () => {
   test.skip('listDraftDocuments: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.outbox.listDraftDocuments(
-        {
-          page: 1,
-          page_size: 1,
-          search: 'search',
-          sort_by: 'created_at',
-          sort_order: 'asc',
-          state: 'DRAFT',
-          type: 'INVOICE',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
+      client.outbox.listDraftDocuments({ page: 1, page_size: 1 }, { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(EInvoice.NotFoundError);
   });
 
@@ -61,11 +50,9 @@ describe('resource outbox', () => {
           date_to: '2019-12-27T18:11:19.117Z',
           page: 1,
           page_size: 1,
-          receiver: 'receiver',
           search: 'search',
           sender: 'sender',
-          sort_by: 'created_at',
-          sort_order: 'asc',
+          state: 'DRAFT',
           type: 'INVOICE',
         },
         { path: '/_stainless_unknown_path' },
