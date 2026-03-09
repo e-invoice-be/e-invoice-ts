@@ -9,7 +9,10 @@ import { RequestOptions } from '../internal/request-options';
 
 export class Outbox extends APIResource {
   /**
-   * Retrieve a paginated list of draft documents with filtering options.
+   * Retrieve a paginated list of draft documents with filtering options including
+   * state and text search.
+   *
+   * @deprecated
    */
   listDraftDocuments(
     query: OutboxListDraftDocumentsParams | null | undefined = {},
@@ -36,7 +39,39 @@ export class Outbox extends APIResource {
   }
 }
 
-export interface OutboxListDraftDocumentsParams extends DocumentsNumberPageParams {}
+export interface OutboxListDraftDocumentsParams extends DocumentsNumberPageParams {
+  /**
+   * Search in invoice number, seller/buyer names
+   */
+  search?: string | null;
+
+  /**
+   * Field to sort by
+   */
+  sort_by?:
+    | 'created_at'
+    | 'invoice_date'
+    | 'due_date'
+    | 'invoice_total'
+    | 'customer_name'
+    | 'vendor_name'
+    | 'invoice_id';
+
+  /**
+   * Sort direction (asc/desc)
+   */
+  sort_order?: 'asc' | 'desc';
+
+  /**
+   * Filter by document state
+   */
+  state?: InboxAPI.DocumentState | null;
+
+  /**
+   * Filter by document type
+   */
+  type?: DocumentsAPI.DocumentType | null;
+}
 
 export interface OutboxListReceivedDocumentsParams extends DocumentsNumberPageParams {
   /**
@@ -50,22 +85,40 @@ export interface OutboxListReceivedDocumentsParams extends DocumentsNumberPagePa
   date_to?: string | null;
 
   /**
+   * Filter by receiver (customer_name, customer_email, customer_tax_id,
+   * customer_company_id, customer_id)
+   */
+  receiver?: string | null;
+
+  /**
    * Search in invoice number, seller/buyer names
    */
   search?: string | null;
 
   /**
-   * Filter by sender ID
+   * (Deprecated) Filter by sender ID
    */
   sender?: string | null;
 
   /**
-   * Filter by document state
+   * Field to sort by
    */
-  state?: InboxAPI.DocumentState | null;
+  sort_by?:
+    | 'created_at'
+    | 'invoice_date'
+    | 'due_date'
+    | 'invoice_total'
+    | 'customer_name'
+    | 'vendor_name'
+    | 'invoice_id';
 
   /**
-   * Filter by document type
+   * Sort direction (asc/desc)
+   */
+  sort_order?: 'asc' | 'desc';
+
+  /**
+   * Filter by document type. If not provided, returns all types.
    */
   type?: DocumentsAPI.DocumentType | null;
 }
