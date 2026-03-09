@@ -14,7 +14,17 @@ export class Me extends APIResource {
 }
 
 export interface MeRetrieveResponse {
+  /**
+   * Credit balance of the tenant
+   */
+  credit_balance: number;
+
   name: string;
+
+  /**
+   * Plan of the tenant
+   */
+  plan: 'starter' | 'pro' | 'enterprise';
 
   /**
    * BCC recipient email to deliver documents
@@ -64,11 +74,6 @@ export interface MeRetrieveResponse {
    */
   company_zip?: string | null;
 
-  /**
-   * Credit balance of the tenant
-   */
-  credit_balance?: number;
-
   description?: string | null;
 
   /**
@@ -80,11 +85,6 @@ export interface MeRetrieveResponse {
    * Peppol IDs of the tenant
    */
   peppol_ids?: Array<string> | null;
-
-  /**
-   * Plan of the tenant
-   */
-  plan?: 'starter' | 'pro' | 'enterprise';
 
   /**
    * Whether the tenant is registered on our SMP
