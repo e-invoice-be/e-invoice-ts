@@ -83,11 +83,6 @@ export namespace UblDocumentValidation {
  */
 export interface ValidateValidatePeppolIDResponse {
   /**
-   * Business card information for the Peppol ID
-   */
-  business_card: ValidateValidatePeppolIDResponse.BusinessCard | null;
-
-  /**
    * Whether a business card is set at the SMP
    */
   business_card_valid: boolean;
@@ -101,6 +96,11 @@ export interface ValidateValidatePeppolIDResponse {
    * Whether the Peppol ID is valid and registered in the Peppol network
    */
   is_valid: boolean;
+
+  /**
+   * Business card information for the Peppol ID
+   */
+  business_card?: ValidateValidatePeppolIDResponse.BusinessCard | null;
 
   supported_document_types?: Array<string>;
 }
