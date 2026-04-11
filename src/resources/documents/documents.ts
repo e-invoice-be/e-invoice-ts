@@ -29,6 +29,11 @@ export class Documents extends APIResource {
 
   /**
    * Create a new invoice or credit note
+   *
+   * @example
+   * ```ts
+   * const documentResponse = await client.documents.create();
+   * ```
    */
   create(params: DocumentCreateParams, options?: RequestOptions): APIPromise<DocumentResponse> {
     const { construct_pdf, ...body } = params;
@@ -37,6 +42,13 @@ export class Documents extends APIResource {
 
   /**
    * Get an invoice or credit note by ID
+   *
+   * @example
+   * ```ts
+   * const documentResponse = await client.documents.retrieve(
+   *   'document_id',
+   * );
+   * ```
    */
   retrieve(documentID: string, options?: RequestOptions): APIPromise<DocumentResponse> {
     return this._client.get(path`/api/documents/${documentID}`, options);
@@ -44,6 +56,13 @@ export class Documents extends APIResource {
 
   /**
    * Delete an invoice or credit note
+   *
+   * @example
+   * ```ts
+   * const document = await client.documents.delete(
+   *   'document_id',
+   * );
+   * ```
    */
   delete(documentID: string, options?: RequestOptions): APIPromise<DocumentDeleteResponse> {
     return this._client.delete(path`/api/documents/${documentID}`, options);
@@ -55,6 +74,13 @@ export class Documents extends APIResource {
    * the PDF to automatically generate a valid UBL document ready for sending. If
    * 'ubl_document' is not set, human intervention may be required to ensure
    * compliance.
+   *
+   * @example
+   * ```ts
+   * const response = await client.documents.createFromPdf({
+   *   file: fs.createReadStream('path/to/file'),
+   * });
+   * ```
    */
   createFromPdf(
     params: DocumentCreateFromPdfParams,
@@ -77,6 +103,13 @@ export class Documents extends APIResource {
    * explicitly set the sender or receiver Peppol ID, provide them via the query
    * parameters (sender_peppol_scheme, sender_peppol_id, receiver_peppol_scheme,
    * receiver_peppol_id).
+   *
+   * @example
+   * ```ts
+   * const documentResponse = await client.documents.send(
+   *   'document_id',
+   * );
+   * ```
    */
   send(
     documentID: string,
@@ -93,6 +126,12 @@ export class Documents extends APIResource {
 
   /**
    * Validate a UBL document according to Peppol BIS Billing 3.0
+   *
+   * @example
+   * ```ts
+   * const ublDocumentValidation =
+   *   await client.documents.validate('document_id');
+   * ```
    */
   validate(documentID: string, options?: RequestOptions): APIPromise<ValidateAPI.UblDocumentValidation> {
     return this._client.post(path`/api/documents/${documentID}/validate`, options);

@@ -11,6 +11,12 @@ import { multipartFormRequestOptions } from '../internal/uploads';
 export class Validate extends APIResource {
   /**
    * Validate if the JSON document can be converted to a valid UBL document
+   *
+   * @example
+   * ```ts
+   * const ublDocumentValidation =
+   *   await client.validate.validateJson();
+   * ```
    */
   validateJson(
     body: ValidateValidateJsonParams,
@@ -26,6 +32,13 @@ export class Validate extends APIResource {
    * identifier value. For example, for a Belgian company it is `0208:0123456789`
    * (where 0208 is the scheme for Belgian enterprises, followed by the 10 digits of
    * the official BTW / KBO number).
+   *
+   * @example
+   * ```ts
+   * const response = await client.validate.validatePeppolID({
+   *   peppol_id: 'peppol_id',
+   * });
+   * ```
    */
   validatePeppolID(
     query: ValidateValidatePeppolIDParams,
@@ -36,6 +49,14 @@ export class Validate extends APIResource {
 
   /**
    * Validate the correctness of a UBL document
+   *
+   * @example
+   * ```ts
+   * const ublDocumentValidation =
+   *   await client.validate.validateUbl({
+   *     file: fs.createReadStream('path/to/file'),
+   *   });
+   * ```
    */
   validateUbl(body: ValidateValidateUblParams, options?: RequestOptions): APIPromise<UblDocumentValidation> {
     return this._client.post(
