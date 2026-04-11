@@ -311,7 +311,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       php: {
         method: 'documents->createFromPdf',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$response = $client->documents->createFromPdf(\n  file: 'file', customerTaxID: 'customer_tax_id', vendorTaxID: 'vendor_tax_id'\n);\n\nvar_dump($response);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$response = $client->documents->createFromPdf(\n  file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),\n  customerTaxID: 'customer_tax_id',\n  vendorTaxID: 'vendor_tax_id',\n);\n\nvar_dump($response);",
       },
       python: {
         method: 'documents.create_from_pdf',
@@ -401,7 +401,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       php: {
         method: 'documents->attachments->add',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$documentAttachment = $client->documents->attachments->add(\n  'document_id', file: 'file'\n);\n\nvar_dump($documentAttachment);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$documentAttachment = $client->documents->attachments->add(\n  'document_id',\n  file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),\n);\n\nvar_dump($documentAttachment);",
       },
       python: {
         method: 'documents.attachments.add',
@@ -624,7 +624,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       php: {
         method: 'documents->ubl->createFromUbl',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$documentResponse = $client->documents->ubl->createFromUbl(file: 'file');\n\nvar_dump($documentResponse);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$documentResponse = $client->documents->ubl->createFromUbl(\n  file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),\n);\n\nvar_dump($documentResponse);",
       },
       python: {
         method: 'documents.ubl.create_from_ubl',
@@ -921,7 +921,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       php: {
         method: 'validate->validateUbl',
         example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$ublDocumentValidation = $client->validate->validateUbl(file: 'file');\n\nvar_dump($ublDocumentValidation);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$ublDocumentValidation = $client->validate->validateUbl(\n  file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),\n);\n\nvar_dump($ublDocumentValidation);",
       },
       python: {
         method: 'validate.validate_ubl',

@@ -11,6 +11,15 @@ export class Attachments extends APIResource {
   /**
    * Get attachment details with for an invoice or credit note with link to download
    * file (signed URL, valid for 1 hour)
+   *
+   * @example
+   * ```ts
+   * const documentAttachment =
+   *   await client.documents.attachments.retrieve(
+   *     'attachment_id',
+   *     { document_id: 'document_id' },
+   *   );
+   * ```
    */
   retrieve(
     attachmentID: string,
@@ -23,6 +32,12 @@ export class Attachments extends APIResource {
 
   /**
    * Get all attachments for an invoice or credit note
+   *
+   * @example
+   * ```ts
+   * const documentAttachments =
+   *   await client.documents.attachments.list('document_id');
+   * ```
    */
   list(documentID: string, options?: RequestOptions): APIPromise<AttachmentListResponse> {
     return this._client.get(path`/api/documents/${documentID}/attachments`, options);
@@ -30,6 +45,15 @@ export class Attachments extends APIResource {
 
   /**
    * Delete an attachment from an invoice or credit note
+   *
+   * @example
+   * ```ts
+   * const attachment =
+   *   await client.documents.attachments.delete(
+   *     'attachment_id',
+   *     { document_id: 'document_id' },
+   *   );
+   * ```
    */
   delete(
     attachmentID: string,
