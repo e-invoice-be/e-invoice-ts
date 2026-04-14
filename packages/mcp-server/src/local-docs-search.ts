@@ -326,7 +326,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       typescript: {
         method: 'client.documents.createFromPdf',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.documents.createFromPdf({\n  file: fs.createReadStream('path/to/file'),\n});\n\nconsole.log(response.customer_company_id);",
+          "import fs from 'fs';\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.documents.createFromPdf({\n  file: fs.createReadStream('path/to/file'),\n});\n\nconsole.log(response.customer_company_id);",
       },
     },
   },
@@ -416,7 +416,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       typescript: {
         method: 'client.documents.attachments.add',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst documentAttachment = await client.documents.attachments.add('document_id', {\n  file: fs.createReadStream('path/to/file'),\n});\n\nconsole.log(documentAttachment.id);",
+          "import fs from 'fs';\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst documentAttachment = await client.documents.attachments.add('document_id', {\n  file: fs.createReadStream('path/to/file'),\n});\n\nconsole.log(documentAttachment.id);",
       },
     },
   },
@@ -639,7 +639,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       typescript: {
         method: 'client.documents.ubl.createFromUbl',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst documentResponse = await client.documents.ubl.createFromUbl({\n  file: fs.createReadStream('path/to/file'),\n});\n\nconsole.log(documentResponse.id);",
+          "import fs from 'fs';\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst documentResponse = await client.documents.ubl.createFromUbl({\n  file: fs.createReadStream('path/to/file'),\n});\n\nconsole.log(documentResponse.id);",
       },
     },
   },
@@ -936,7 +936,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       typescript: {
         method: 'client.validate.validateUbl',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst ublDocumentValidation = await client.validate.validateUbl({\n  file: fs.createReadStream('path/to/file'),\n});\n\nconsole.log(ublDocumentValidation.id);",
+          "import fs from 'fs';\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst ublDocumentValidation = await client.validate.validateUbl({\n  file: fs.createReadStream('path/to/file'),\n});\n\nconsole.log(ublDocumentValidation.id);",
       },
     },
   },
