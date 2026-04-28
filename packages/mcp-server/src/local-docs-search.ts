@@ -114,34 +114,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## create\n\n`client.documents.create(construct_pdf?: boolean, allowances?: { amount?: number | string; base_amount?: number | string; multiplier_factor?: number | string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: number | string; }[], amount_due?: number | string, attachments?: { file_name: string; file_data?: string; file_size?: number; file_type?: string; }[], billing_address?: string, billing_address_recipient?: string, charges?: { amount?: number | string; base_amount?: number | string; multiplier_factor?: number | string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: number | string; }[], currency?: string, customer_address?: string, customer_address_recipient?: string, customer_company_id?: string, customer_email?: string, customer_id?: string, customer_name?: string, customer_peppol_id?: string, customer_tax_id?: string, direction?: 'INBOUND' | 'OUTBOUND', document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE', due_date?: string, invoice_date?: string, invoice_id?: string, invoice_total?: number | string, items?: { allowances?: { amount?: number | string; base_amount?: number | string; multiplier_factor?: number | string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: number | string; }[]; amount?: number | string; charges?: { amount?: number | string; base_amount?: number | string; multiplier_factor?: number | string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: number | string; }[]; date?: null; description?: string; product_code?: string; quantity?: number | string; tax?: number | string; tax_rate?: number | string; unit?: string; unit_price?: number | string; }[], note?: string, payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[], payment_term?: string, previous_unpaid_balance?: number | string, purchase_order?: string, remittance_address?: string, remittance_address_recipient?: string, service_address?: string, service_address_recipient?: string, service_end_date?: string, service_start_date?: string, shipping_address?: string, shipping_address_recipient?: string, state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED', subtotal?: number | string, tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B', tax_details?: { amount?: number | string; rate?: string; }[], total_discount?: number | string, total_tax?: number | string, vatex?: string, vatex_note?: string, vendor_address?: string, vendor_address_recipient?: string, vendor_company_id?: string, vendor_email?: string, vendor_name?: string, vendor_tax_id?: string): { id: string; created_at: string; allowances?: object[]; amount_due?: string; attachments?: document_attachment[]; billing_address?: string; billing_address_recipient?: string; charges?: object[]; currency?: currency_code; customer_address?: string; customer_address_recipient?: string; customer_company_id?: string; customer_email?: string; customer_id?: string; customer_name?: string; customer_peppol_id?: string; customer_tax_id?: string; direction?: document_direction; document_type?: document_type; due_date?: string; invoice_date?: string; invoice_id?: string; invoice_total?: string; items?: object[]; note?: string; payment_details?: object[]; payment_term?: string; purchase_order?: string; remittance_address?: string; remittance_address_recipient?: string; service_address?: string; service_address_recipient?: string; service_end_date?: string; service_start_date?: string; shipping_address?: string; shipping_address_recipient?: string; state?: document_state; subtotal?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_details?: object[]; total_discount?: string; total_tax?: string; vatex?: string; vatex_note?: string; vendor_address?: string; vendor_address_recipient?: string; vendor_company_id?: string; vendor_email?: string; vendor_name?: string; vendor_tax_id?: string; }`\n\n**post** `/api/documents/`\n\nCreate a new invoice or credit note\n\n### Parameters\n\n- `construct_pdf?: boolean`\n  If true, generate a constructed PDF from the document and include it both as document attachment and embedded in the UBL.\n\n- `allowances?: { amount?: number | string; base_amount?: number | string; multiplier_factor?: number | string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: number | string; }[]`\n\n- `amount_due?: number | string`\n  The amount due for payment. Must be positive and rounded to maximum 2 decimals\n\n- `attachments?: { file_name: string; file_data?: string; file_size?: number; file_type?: string; }[]`\n\n- `billing_address?: string`\n  The billing address (if different from customer address)\n\n- `billing_address_recipient?: string`\n  The recipient name at the billing address\n\n- `charges?: { amount?: number | string; base_amount?: number | string; multiplier_factor?: number | string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: number | string; }[]`\n\n- `currency?: string`\n  Currency of the invoice (ISO 4217 currency code)\n\n- `customer_address?: string`\n  The address of the customer/buyer\n\n- `customer_address_recipient?: string`\n  The recipient name at the customer address\n\n- `customer_company_id?: string`\n  Customer company ID. For Belgium this is the CBE number or their EUID (European Unique Identifier) number. In the Netherlands this is the KVK number.\n\n- `customer_email?: string`\n  The email address of the customer\n\n- `customer_id?: string`\n  The unique identifier for the customer in your system\n\n- `customer_name?: string`\n  The company name of the customer/buyer\n\n- `customer_peppol_id?: string`\n  Customer Peppol ID\n\n- `customer_tax_id?: string`\n  Customer tax ID. For Belgium this is the VAT number. Must include the country prefix\n\n- `direction?: 'INBOUND' | 'OUTBOUND'`\n  The direction of the document: INBOUND (purchases) or OUTBOUND (sales)\n\n- `document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'`\n  The type of document: INVOICE, CREDIT_NOTE, or DEBIT_NOTE\n\n- `due_date?: string`\n  The date when payment is due\n\n- `invoice_date?: string`\n  The date when the invoice was issued\n\n- `invoice_id?: string`\n  The unique invoice identifier/number\n\n- `invoice_total?: number | string`\n  The total amount of the invoice including tax (invoice_total = subtotal + total_tax + total_discount). Must be positive and rounded to maximum 2 decimals\n\n- `items?: { allowances?: { amount?: number | string; base_amount?: number | string; multiplier_factor?: number | string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: number | string; }[]; amount?: number | string; charges?: { amount?: number | string; base_amount?: number | string; multiplier_factor?: number | string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: number | string; }[]; date?: null; description?: string; product_code?: string; quantity?: number | string; tax?: number | string; tax_rate?: number | string; unit?: string; unit_price?: number | string; }[]`\n  At least one line item is required\n\n- `note?: string`\n  Additional notes or comments for the invoice\n\n- `payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]`\n\n- `payment_term?: string`\n  The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30')\n\n- `previous_unpaid_balance?: number | string`\n  The previous unpaid balance from prior invoices, if any. Must be positive and rounded to maximum 2 decimals\n\n- `purchase_order?: string`\n  The purchase order reference number\n\n- `remittance_address?: string`\n  The address where payment should be sent or remitted to\n\n- `remittance_address_recipient?: string`\n  The recipient name at the remittance address\n\n- `service_address?: string`\n  The address where services were performed or goods were delivered\n\n- `service_address_recipient?: string`\n  The recipient name at the service address\n\n- `service_end_date?: string`\n  The end date of the service period or delivery period\n\n- `service_start_date?: string`\n  The start date of the service period or delivery period\n\n- `shipping_address?: string`\n  The shipping/delivery address\n\n- `shipping_address_recipient?: string`\n  The recipient name at the shipping address\n\n- `state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'`\n  The current state of the document: DRAFT, TRANSIT, FAILED, SENT, or RECEIVED\n\n- `subtotal?: number | string`\n  The taxable base of the invoice. Should be the sum of all line items - allowances (for example commercial discounts) + charges with impact on VAT. Must be positive and rounded to maximum 2 decimals\n\n- `tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'`\n  Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E for exempt)\n\n- `tax_details?: { amount?: number | string; rate?: string; }[]`\n\n- `total_discount?: number | string`\n  The net financial discount/charge of the invoice (non-VAT charges minus non-VAT allowances). Can be positive (net charge), negative (net discount), or zero. Must be rounded to maximum 2 decimals\n\n- `total_tax?: number | string`\n  The total tax amount of the invoice. Must be positive and rounded to maximum 2 decimals\n\n- `vatex?: string`\n  VATEX code list for VAT exemption reasons\n\nAgency: CEF\nIdentifier: vatex\n\n- `vatex_note?: string`\n  Textual explanation for VAT exemption\n\n- `vendor_address?: string`\n  The address of the vendor/seller\n\n- `vendor_address_recipient?: string`\n  The recipient name at the vendor address\n\n- `vendor_company_id?: string`\n  Vendor company ID. For Belgium this is the CBE number or their EUID (European Unique Identifier) number. In the Netherlands this is the KVK number.\n\n- `vendor_email?: string`\n  The email address of the vendor\n\n- `vendor_name?: string`\n  The name of the vendor/seller/supplier\n\n- `vendor_tax_id?: string`\n  Vendor tax ID. For Belgium this is the VAT number. Must include the country prefix\n\n### Returns\n\n- `{ id: string; created_at: string; allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; amount_due?: string; attachments?: { id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }[]; billing_address?: string; billing_address_recipient?: string; charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; currency?: string; customer_address?: string; customer_address_recipient?: string; customer_company_id?: string; customer_email?: string; customer_id?: string; customer_name?: string; customer_peppol_id?: string; customer_tax_id?: string; direction?: 'INBOUND' | 'OUTBOUND'; document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'; due_date?: string; invoice_date?: string; invoice_id?: string; invoice_total?: string; items?: { allowances?: object[]; amount?: string; charges?: object[]; date?: null; description?: string; product_code?: string; quantity?: string; tax?: string; tax_rate?: string; unit?: string; unit_price?: string; }[]; note?: string; payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]; payment_term?: string; purchase_order?: string; remittance_address?: string; remittance_address_recipient?: string; service_address?: string; service_address_recipient?: string; service_end_date?: string; service_start_date?: string; shipping_address?: string; shipping_address_recipient?: string; state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'; subtotal?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_details?: { amount?: string; rate?: string; }[]; total_discount?: string; total_tax?: string; vatex?: string; vatex_note?: string; vendor_address?: string; vendor_address_recipient?: string; vendor_company_id?: string; vendor_email?: string; vendor_name?: string; vendor_tax_id?: string; }`\n\n  - `id: string`\n  - `created_at: string`\n  - `allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]`\n  - `amount_due?: string`\n  - `attachments?: { id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }[]`\n  - `billing_address?: string`\n  - `billing_address_recipient?: string`\n  - `charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]`\n  - `currency?: string`\n  - `customer_address?: string`\n  - `customer_address_recipient?: string`\n  - `customer_company_id?: string`\n  - `customer_email?: string`\n  - `customer_id?: string`\n  - `customer_name?: string`\n  - `customer_peppol_id?: string`\n  - `customer_tax_id?: string`\n  - `direction?: 'INBOUND' | 'OUTBOUND'`\n  - `document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'`\n  - `due_date?: string`\n  - `invoice_date?: string`\n  - `invoice_id?: string`\n  - `invoice_total?: string`\n  - `items?: { allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; amount?: string; charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; date?: null; description?: string; product_code?: string; quantity?: string; tax?: string; tax_rate?: string; unit?: string; unit_price?: string; }[]`\n  - `note?: string`\n  - `payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]`\n  - `payment_term?: string`\n  - `purchase_order?: string`\n  - `remittance_address?: string`\n  - `remittance_address_recipient?: string`\n  - `service_address?: string`\n  - `service_address_recipient?: string`\n  - `service_end_date?: string`\n  - `service_start_date?: string`\n  - `shipping_address?: string`\n  - `shipping_address_recipient?: string`\n  - `state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'`\n  - `subtotal?: string`\n  - `tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'`\n  - `tax_details?: { amount?: string; rate?: string; }[]`\n  - `total_discount?: string`\n  - `total_tax?: string`\n  - `vatex?: string`\n  - `vatex_note?: string`\n  - `vendor_address?: string`\n  - `vendor_address_recipient?: string`\n  - `vendor_company_id?: string`\n  - `vendor_email?: string`\n  - `vendor_name?: string`\n  - `vendor_tax_id?: string`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst documentResponse = await client.documents.create();\n\nconsole.log(documentResponse);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.documents.create',
         example:
-          "curl https://api.e-invoice.be/api/documents/ \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $E_INVOICE_API_KEY\" \\\n    -d '{}'",
-      },
-      java: {
-        method: 'documents().create',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.DocumentCreate;\nimport com.e_invoice.api.models.documents.DocumentCreateParams;\nimport com.e_invoice.api.models.documents.DocumentResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        DocumentCreate params = DocumentCreate.builder().build();\n        DocumentResponse documentResponse = client.documents().create(params);\n    }\n}',
-      },
-      php: {
-        method: 'documents->create',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$documentResponse = $client->documents->create(\n  constructPdf: true,\n  allowances: [\n    [\n      'amount' => 0,\n      'baseAmount' => 0,\n      'multiplierFactor' => 0,\n      'reason' => 'reason',\n      'reasonCode' => '41',\n      'taxCode' => 'AE',\n      'taxRate' => 0,\n    ],\n  ],\n  amountDue: 0,\n  attachments: [\n    [\n      'fileName' => 'file_name',\n      'fileData' => 'file_data',\n      'fileSize' => 0,\n      'fileType' => 'file_type',\n    ],\n  ],\n  billingAddress: 'billing_address',\n  billingAddressRecipient: 'billing_address_recipient',\n  charges: [\n    [\n      'amount' => 0,\n      'baseAmount' => 0,\n      'multiplierFactor' => 0,\n      'reason' => 'reason',\n      'reasonCode' => 'AA',\n      'taxCode' => 'AE',\n      'taxRate' => '21.00',\n    ],\n  ],\n  currency: CurrencyCode::EUR,\n  customerAddress: 'customer_address',\n  customerAddressRecipient: 'customer_address_recipient',\n  customerCompanyID: '1018265814',\n  customerEmail: 'customer_email',\n  customerID: 'customer_id',\n  customerName: 'customer_name',\n  customerPeppolID: '0208:0123456789',\n  customerTaxID: 'BE1018265814',\n  direction: DocumentDirection::INBOUND,\n  documentType: DocumentType::INVOICE,\n  dueDate: '2019-12-27',\n  invoiceDate: '2019-12-27',\n  invoiceID: 'invoice_id',\n  invoiceTotal: 0,\n  items: [\n    [\n      'allowances' => [\n        [\n          'amount' => 0,\n          'baseAmount' => 0,\n          'multiplierFactor' => 0,\n          'reason' => 'reason',\n          'reasonCode' => '41',\n          'taxCode' => 'AE',\n          'taxRate' => 0,\n        ],\n      ],\n      'amount' => 0,\n      'charges' => [\n        [\n          'amount' => 0,\n          'baseAmount' => 0,\n          'multiplierFactor' => 0,\n          'reason' => 'reason',\n          'reasonCode' => 'AA',\n          'taxCode' => 'AE',\n          'taxRate' => '21.00',\n        ],\n      ],\n      'date' => null,\n      'description' => 'description',\n      'productCode' => 'product_code',\n      'quantity' => 0,\n      'tax' => 0,\n      'taxRate' => '21.00',\n      'unit' => UnitOfMeasureCode::_10,\n      'unitPrice' => 0,\n    ],\n  ],\n  note: 'note',\n  paymentDetails: [\n    [\n      'bankAccountNumber' => 'bank_account_number',\n      'iban' => 'iban',\n      'paymentReference' => 'payment_reference',\n      'swift' => 'swift',\n    ],\n  ],\n  paymentTerm: 'payment_term',\n  previousUnpaidBalance: 0,\n  purchaseOrder: 'purchase_order',\n  remittanceAddress: 'remittance_address',\n  remittanceAddressRecipient: 'remittance_address_recipient',\n  serviceAddress: 'service_address',\n  serviceAddressRecipient: 'service_address_recipient',\n  serviceEndDate: '2019-12-27',\n  serviceStartDate: '2019-12-27',\n  shippingAddress: 'shipping_address',\n  shippingAddressRecipient: 'shipping_address_recipient',\n  state: DocumentState::DRAFT,\n  subtotal: 0,\n  taxCode: 'AE',\n  taxDetails: [['amount' => 0, 'rate' => 'rate']],\n  totalDiscount: 0,\n  totalTax: 0,\n  vatex: 'VATEX-EU-79-C',\n  vatexNote: 'vatex_note',\n  vendorAddress: 'vendor_address',\n  vendorAddressRecipient: 'vendor_address_recipient',\n  vendorCompanyID: '1018265814',\n  vendorEmail: 'vendor_email',\n  vendorName: 'vendor_name',\n  vendorTaxID: 'BE1018265814',\n);\n\nvar_dump($documentResponse);",
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst documentResponse = await client.documents.create();\n\nconsole.log(documentResponse.id);",
       },
       python: {
         method: 'documents.create',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\ndocument_response = client.documents.create()\nprint(document_response.id)',
       },
+      java: {
+        method: 'documents().create',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.DocumentCreate;\nimport com.e_invoice.api.models.documents.DocumentCreateParams;\nimport com.e_invoice.api.models.documents.DocumentResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        DocumentCreate params = DocumentCreate.builder().build();\n        DocumentResponse documentResponse = client.documents().create(params);\n    }\n}',
+      },
       ruby: {
         method: 'documents.create',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\ndocument_response = e_invoice.documents.create\n\nputs(document_response)',
       },
-      typescript: {
-        method: 'client.documents.create',
+      php: {
+        method: 'documents->create',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst documentResponse = await client.documents.create();\n\nconsole.log(documentResponse.id);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$documentResponse = $client->documents->create(\n  constructPdf: true,\n  allowances: [\n    [\n      'amount' => 0,\n      'baseAmount' => 0,\n      'multiplierFactor' => 0,\n      'reason' => 'reason',\n      'reasonCode' => '41',\n      'taxCode' => 'AE',\n      'taxRate' => 0,\n    ],\n  ],\n  amountDue: 0,\n  attachments: [\n    [\n      'fileName' => 'file_name',\n      'fileData' => 'file_data',\n      'fileSize' => 0,\n      'fileType' => 'file_type',\n    ],\n  ],\n  billingAddress: 'billing_address',\n  billingAddressRecipient: 'billing_address_recipient',\n  charges: [\n    [\n      'amount' => 0,\n      'baseAmount' => 0,\n      'multiplierFactor' => 0,\n      'reason' => 'reason',\n      'reasonCode' => 'AA',\n      'taxCode' => 'AE',\n      'taxRate' => '21.00',\n    ],\n  ],\n  currency: CurrencyCode::EUR,\n  customerAddress: 'customer_address',\n  customerAddressRecipient: 'customer_address_recipient',\n  customerCompanyID: '1018265814',\n  customerEmail: 'customer_email',\n  customerID: 'customer_id',\n  customerName: 'customer_name',\n  customerPeppolID: '0208:0123456789',\n  customerTaxID: 'BE1018265814',\n  direction: DocumentDirection::INBOUND,\n  documentType: DocumentType::INVOICE,\n  dueDate: '2019-12-27',\n  invoiceDate: '2019-12-27',\n  invoiceID: 'invoice_id',\n  invoiceTotal: 0,\n  items: [\n    [\n      'allowances' => [\n        [\n          'amount' => 0,\n          'baseAmount' => 0,\n          'multiplierFactor' => 0,\n          'reason' => 'reason',\n          'reasonCode' => '41',\n          'taxCode' => 'AE',\n          'taxRate' => 0,\n        ],\n      ],\n      'amount' => 0,\n      'charges' => [\n        [\n          'amount' => 0,\n          'baseAmount' => 0,\n          'multiplierFactor' => 0,\n          'reason' => 'reason',\n          'reasonCode' => 'AA',\n          'taxCode' => 'AE',\n          'taxRate' => '21.00',\n        ],\n      ],\n      'date' => null,\n      'description' => 'description',\n      'productCode' => 'product_code',\n      'quantity' => 0,\n      'tax' => 0,\n      'taxRate' => '21.00',\n      'unit' => UnitOfMeasureCode::_10,\n      'unitPrice' => 0,\n    ],\n  ],\n  note: 'note',\n  paymentDetails: [\n    [\n      'bankAccountNumber' => 'bank_account_number',\n      'iban' => 'iban',\n      'paymentReference' => 'payment_reference',\n      'swift' => 'swift',\n    ],\n  ],\n  paymentTerm: 'payment_term',\n  previousUnpaidBalance: 0,\n  purchaseOrder: 'purchase_order',\n  remittanceAddress: 'remittance_address',\n  remittanceAddressRecipient: 'remittance_address_recipient',\n  serviceAddress: 'service_address',\n  serviceAddressRecipient: 'service_address_recipient',\n  serviceEndDate: '2019-12-27',\n  serviceStartDate: '2019-12-27',\n  shippingAddress: 'shipping_address',\n  shippingAddressRecipient: 'shipping_address_recipient',\n  state: DocumentState::DRAFT,\n  subtotal: 0,\n  taxCode: 'AE',\n  taxDetails: [['amount' => 0, 'rate' => 'rate']],\n  totalDiscount: 0,\n  totalTax: 0,\n  vatex: 'VATEX-EU-79-C',\n  vatexNote: 'vatex_note',\n  vendorAddress: 'vendor_address',\n  vendorAddressRecipient: 'vendor_address_recipient',\n  vendorCompanyID: '1018265814',\n  vendorEmail: 'vendor_email',\n  vendorName: 'vendor_name',\n  vendorTaxID: 'BE1018265814',\n);\n\nvar_dump($documentResponse);",
+      },
+      http: {
+        example:
+          "curl https://api.e-invoice.be/api/documents/ \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $E_INVOICE_API_KEY\" \\\n    -d '{}'",
       },
     },
   },
@@ -166,34 +166,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## send\n\n`client.documents.send(document_id: string, email?: string, receiver_peppol_id?: string, receiver_peppol_scheme?: string, sender_peppol_id?: string, sender_peppol_scheme?: string): { id: string; created_at: string; allowances?: object[]; amount_due?: string; attachments?: document_attachment[]; billing_address?: string; billing_address_recipient?: string; charges?: object[]; currency?: currency_code; customer_address?: string; customer_address_recipient?: string; customer_company_id?: string; customer_email?: string; customer_id?: string; customer_name?: string; customer_peppol_id?: string; customer_tax_id?: string; direction?: document_direction; document_type?: document_type; due_date?: string; invoice_date?: string; invoice_id?: string; invoice_total?: string; items?: object[]; note?: string; payment_details?: object[]; payment_term?: string; purchase_order?: string; remittance_address?: string; remittance_address_recipient?: string; service_address?: string; service_address_recipient?: string; service_end_date?: string; service_start_date?: string; shipping_address?: string; shipping_address_recipient?: string; state?: document_state; subtotal?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_details?: object[]; total_discount?: string; total_tax?: string; vatex?: string; vatex_note?: string; vendor_address?: string; vendor_address_recipient?: string; vendor_company_id?: string; vendor_email?: string; vendor_name?: string; vendor_tax_id?: string; }`\n\n**post** `/api/documents/{document_id}/send`\n\nSend an invoice or credit note via Peppol. By default, the sender and receiver Peppol IDs are derived from the company (tax) IDs in the document, regardless of whether the document was created from a UBL with a different endpoint ID. To explicitly set the sender or receiver Peppol ID, provide them via the query parameters (sender_peppol_scheme, sender_peppol_id, receiver_peppol_scheme, receiver_peppol_id).\n\n### Parameters\n\n- `document_id: string`\n\n- `email?: string`\n\n- `receiver_peppol_id?: string`\n\n- `receiver_peppol_scheme?: string`\n\n- `sender_peppol_id?: string`\n\n- `sender_peppol_scheme?: string`\n\n### Returns\n\n- `{ id: string; created_at: string; allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; amount_due?: string; attachments?: { id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }[]; billing_address?: string; billing_address_recipient?: string; charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; currency?: string; customer_address?: string; customer_address_recipient?: string; customer_company_id?: string; customer_email?: string; customer_id?: string; customer_name?: string; customer_peppol_id?: string; customer_tax_id?: string; direction?: 'INBOUND' | 'OUTBOUND'; document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'; due_date?: string; invoice_date?: string; invoice_id?: string; invoice_total?: string; items?: { allowances?: object[]; amount?: string; charges?: object[]; date?: null; description?: string; product_code?: string; quantity?: string; tax?: string; tax_rate?: string; unit?: string; unit_price?: string; }[]; note?: string; payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]; payment_term?: string; purchase_order?: string; remittance_address?: string; remittance_address_recipient?: string; service_address?: string; service_address_recipient?: string; service_end_date?: string; service_start_date?: string; shipping_address?: string; shipping_address_recipient?: string; state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'; subtotal?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_details?: { amount?: string; rate?: string; }[]; total_discount?: string; total_tax?: string; vatex?: string; vatex_note?: string; vendor_address?: string; vendor_address_recipient?: string; vendor_company_id?: string; vendor_email?: string; vendor_name?: string; vendor_tax_id?: string; }`\n\n  - `id: string`\n  - `created_at: string`\n  - `allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]`\n  - `amount_due?: string`\n  - `attachments?: { id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }[]`\n  - `billing_address?: string`\n  - `billing_address_recipient?: string`\n  - `charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]`\n  - `currency?: string`\n  - `customer_address?: string`\n  - `customer_address_recipient?: string`\n  - `customer_company_id?: string`\n  - `customer_email?: string`\n  - `customer_id?: string`\n  - `customer_name?: string`\n  - `customer_peppol_id?: string`\n  - `customer_tax_id?: string`\n  - `direction?: 'INBOUND' | 'OUTBOUND'`\n  - `document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'`\n  - `due_date?: string`\n  - `invoice_date?: string`\n  - `invoice_id?: string`\n  - `invoice_total?: string`\n  - `items?: { allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; amount?: string; charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; date?: null; description?: string; product_code?: string; quantity?: string; tax?: string; tax_rate?: string; unit?: string; unit_price?: string; }[]`\n  - `note?: string`\n  - `payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]`\n  - `payment_term?: string`\n  - `purchase_order?: string`\n  - `remittance_address?: string`\n  - `remittance_address_recipient?: string`\n  - `service_address?: string`\n  - `service_address_recipient?: string`\n  - `service_end_date?: string`\n  - `service_start_date?: string`\n  - `shipping_address?: string`\n  - `shipping_address_recipient?: string`\n  - `state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'`\n  - `subtotal?: string`\n  - `tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'`\n  - `tax_details?: { amount?: string; rate?: string; }[]`\n  - `total_discount?: string`\n  - `total_tax?: string`\n  - `vatex?: string`\n  - `vatex_note?: string`\n  - `vendor_address?: string`\n  - `vendor_address_recipient?: string`\n  - `vendor_company_id?: string`\n  - `vendor_email?: string`\n  - `vendor_name?: string`\n  - `vendor_tax_id?: string`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst documentResponse = await client.documents.send('document_id');\n\nconsole.log(documentResponse);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.documents.send',
         example:
-          'curl https://api.e-invoice.be/api/documents/$DOCUMENT_ID/send \\\n    -X POST \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
-      },
-      java: {
-        method: 'documents().send',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.DocumentResponse;\nimport com.e_invoice.api.models.documents.DocumentSendParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        DocumentResponse documentResponse = client.documents().send("document_id");\n    }\n}',
-      },
-      php: {
-        method: 'documents->send',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$documentResponse = $client->documents->send(\n  'document_id',\n  email: 'email',\n  receiverPeppolID: 'receiver_peppol_id',\n  receiverPeppolScheme: 'receiver_peppol_scheme',\n  senderPeppolID: 'sender_peppol_id',\n  senderPeppolScheme: 'sender_peppol_scheme',\n);\n\nvar_dump($documentResponse);",
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst documentResponse = await client.documents.send('document_id');\n\nconsole.log(documentResponse.id);",
       },
       python: {
         method: 'documents.send',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\ndocument_response = client.documents.send(\n    document_id="document_id",\n)\nprint(document_response.id)',
       },
+      java: {
+        method: 'documents().send',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.DocumentResponse;\nimport com.e_invoice.api.models.documents.DocumentSendParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        DocumentResponse documentResponse = client.documents().send("document_id");\n    }\n}',
+      },
       ruby: {
         method: 'documents.send_',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\ndocument_response = e_invoice.documents.send_("document_id")\n\nputs(document_response)',
       },
-      typescript: {
-        method: 'client.documents.send',
+      php: {
+        method: 'documents->send',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst documentResponse = await client.documents.send('document_id');\n\nconsole.log(documentResponse.id);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$documentResponse = $client->documents->send(\n  'document_id',\n  email: 'email',\n  receiverPeppolID: 'receiver_peppol_id',\n  receiverPeppolScheme: 'receiver_peppol_scheme',\n  senderPeppolID: 'sender_peppol_id',\n  senderPeppolScheme: 'sender_peppol_scheme',\n);\n\nvar_dump($documentResponse);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/documents/$DOCUMENT_ID/send \\\n    -X POST \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
       },
     },
   },
@@ -210,34 +210,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## retrieve\n\n`client.documents.retrieve(document_id: string): { id: string; created_at: string; allowances?: object[]; amount_due?: string; attachments?: document_attachment[]; billing_address?: string; billing_address_recipient?: string; charges?: object[]; currency?: currency_code; customer_address?: string; customer_address_recipient?: string; customer_company_id?: string; customer_email?: string; customer_id?: string; customer_name?: string; customer_peppol_id?: string; customer_tax_id?: string; direction?: document_direction; document_type?: document_type; due_date?: string; invoice_date?: string; invoice_id?: string; invoice_total?: string; items?: object[]; note?: string; payment_details?: object[]; payment_term?: string; purchase_order?: string; remittance_address?: string; remittance_address_recipient?: string; service_address?: string; service_address_recipient?: string; service_end_date?: string; service_start_date?: string; shipping_address?: string; shipping_address_recipient?: string; state?: document_state; subtotal?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_details?: object[]; total_discount?: string; total_tax?: string; vatex?: string; vatex_note?: string; vendor_address?: string; vendor_address_recipient?: string; vendor_company_id?: string; vendor_email?: string; vendor_name?: string; vendor_tax_id?: string; }`\n\n**get** `/api/documents/{document_id}`\n\nGet an invoice or credit note by ID\n\n### Parameters\n\n- `document_id: string`\n\n### Returns\n\n- `{ id: string; created_at: string; allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; amount_due?: string; attachments?: { id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }[]; billing_address?: string; billing_address_recipient?: string; charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; currency?: string; customer_address?: string; customer_address_recipient?: string; customer_company_id?: string; customer_email?: string; customer_id?: string; customer_name?: string; customer_peppol_id?: string; customer_tax_id?: string; direction?: 'INBOUND' | 'OUTBOUND'; document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'; due_date?: string; invoice_date?: string; invoice_id?: string; invoice_total?: string; items?: { allowances?: object[]; amount?: string; charges?: object[]; date?: null; description?: string; product_code?: string; quantity?: string; tax?: string; tax_rate?: string; unit?: string; unit_price?: string; }[]; note?: string; payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]; payment_term?: string; purchase_order?: string; remittance_address?: string; remittance_address_recipient?: string; service_address?: string; service_address_recipient?: string; service_end_date?: string; service_start_date?: string; shipping_address?: string; shipping_address_recipient?: string; state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'; subtotal?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_details?: { amount?: string; rate?: string; }[]; total_discount?: string; total_tax?: string; vatex?: string; vatex_note?: string; vendor_address?: string; vendor_address_recipient?: string; vendor_company_id?: string; vendor_email?: string; vendor_name?: string; vendor_tax_id?: string; }`\n\n  - `id: string`\n  - `created_at: string`\n  - `allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]`\n  - `amount_due?: string`\n  - `attachments?: { id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }[]`\n  - `billing_address?: string`\n  - `billing_address_recipient?: string`\n  - `charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]`\n  - `currency?: string`\n  - `customer_address?: string`\n  - `customer_address_recipient?: string`\n  - `customer_company_id?: string`\n  - `customer_email?: string`\n  - `customer_id?: string`\n  - `customer_name?: string`\n  - `customer_peppol_id?: string`\n  - `customer_tax_id?: string`\n  - `direction?: 'INBOUND' | 'OUTBOUND'`\n  - `document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'`\n  - `due_date?: string`\n  - `invoice_date?: string`\n  - `invoice_id?: string`\n  - `invoice_total?: string`\n  - `items?: { allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; amount?: string; charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; date?: null; description?: string; product_code?: string; quantity?: string; tax?: string; tax_rate?: string; unit?: string; unit_price?: string; }[]`\n  - `note?: string`\n  - `payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]`\n  - `payment_term?: string`\n  - `purchase_order?: string`\n  - `remittance_address?: string`\n  - `remittance_address_recipient?: string`\n  - `service_address?: string`\n  - `service_address_recipient?: string`\n  - `service_end_date?: string`\n  - `service_start_date?: string`\n  - `shipping_address?: string`\n  - `shipping_address_recipient?: string`\n  - `state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'`\n  - `subtotal?: string`\n  - `tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'`\n  - `tax_details?: { amount?: string; rate?: string; }[]`\n  - `total_discount?: string`\n  - `total_tax?: string`\n  - `vatex?: string`\n  - `vatex_note?: string`\n  - `vendor_address?: string`\n  - `vendor_address_recipient?: string`\n  - `vendor_company_id?: string`\n  - `vendor_email?: string`\n  - `vendor_name?: string`\n  - `vendor_tax_id?: string`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst documentResponse = await client.documents.retrieve('document_id');\n\nconsole.log(documentResponse);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.documents.retrieve',
         example:
-          'curl https://api.e-invoice.be/api/documents/$DOCUMENT_ID \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
-      },
-      java: {
-        method: 'documents().retrieve',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.DocumentResponse;\nimport com.e_invoice.api.models.documents.DocumentRetrieveParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        DocumentResponse documentResponse = client.documents().retrieve("document_id");\n    }\n}',
-      },
-      php: {
-        method: 'documents->retrieve',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$documentResponse = $client->documents->retrieve('document_id');\n\nvar_dump($documentResponse);",
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst documentResponse = await client.documents.retrieve('document_id');\n\nconsole.log(documentResponse.id);",
       },
       python: {
         method: 'documents.retrieve',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\ndocument_response = client.documents.retrieve(\n    "document_id",\n)\nprint(document_response.id)',
       },
+      java: {
+        method: 'documents().retrieve',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.DocumentResponse;\nimport com.e_invoice.api.models.documents.DocumentRetrieveParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        DocumentResponse documentResponse = client.documents().retrieve("document_id");\n    }\n}',
+      },
       ruby: {
         method: 'documents.retrieve',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\ndocument_response = e_invoice.documents.retrieve("document_id")\n\nputs(document_response)',
       },
-      typescript: {
-        method: 'client.documents.retrieve',
+      php: {
+        method: 'documents->retrieve',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst documentResponse = await client.documents.retrieve('document_id');\n\nconsole.log(documentResponse.id);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$documentResponse = $client->documents->retrieve('document_id');\n\nvar_dump($documentResponse);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/documents/$DOCUMENT_ID \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
       },
     },
   },
@@ -254,34 +254,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## delete\n\n`client.documents.delete(document_id: string): { is_deleted: boolean; }`\n\n**delete** `/api/documents/{document_id}`\n\nDelete an invoice or credit note\n\n### Parameters\n\n- `document_id: string`\n\n### Returns\n\n- `{ is_deleted: boolean; }`\n\n  - `is_deleted: boolean`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst document = await client.documents.delete('document_id');\n\nconsole.log(document);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.documents.delete',
         example:
-          'curl https://api.e-invoice.be/api/documents/$DOCUMENT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
-      },
-      java: {
-        method: 'documents().delete',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.DocumentDeleteParams;\nimport com.e_invoice.api.models.documents.DocumentDeleteResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        DocumentDeleteResponse document = client.documents().delete("document_id");\n    }\n}',
-      },
-      php: {
-        method: 'documents->delete',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$document = $client->documents->delete('document_id');\n\nvar_dump($document);",
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst document = await client.documents.delete('document_id');\n\nconsole.log(document.is_deleted);",
       },
       python: {
         method: 'documents.delete',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\ndocument = client.documents.delete(\n    "document_id",\n)\nprint(document.is_deleted)',
       },
+      java: {
+        method: 'documents().delete',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.DocumentDeleteParams;\nimport com.e_invoice.api.models.documents.DocumentDeleteResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        DocumentDeleteResponse document = client.documents().delete("document_id");\n    }\n}',
+      },
       ruby: {
         method: 'documents.delete',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\ndocument = e_invoice.documents.delete("document_id")\n\nputs(document)',
       },
-      typescript: {
-        method: 'client.documents.delete',
+      php: {
+        method: 'documents->delete',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst document = await client.documents.delete('document_id');\n\nconsole.log(document.is_deleted);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$document = $client->documents->delete('document_id');\n\nvar_dump($document);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/documents/$DOCUMENT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
       },
     },
   },
@@ -299,34 +299,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## create_from_pdf\n\n`client.documents.createFromPdf(file: string, customer_tax_id?: string, vendor_tax_id?: string): { allowances?: allowance[]; amount_due?: string; attachments?: document_attachment_create[]; billing_address?: string; billing_address_recipient?: string; charges?: charge[]; currency?: currency_code; customer_address?: string; customer_address_recipient?: string; customer_company_id?: string; customer_email?: string; customer_id?: string; customer_name?: string; customer_peppol_id?: string; customer_tax_id?: string; direction?: document_direction; document_type?: document_type; due_date?: string; invoice_date?: string; invoice_id?: string; invoice_total?: string; items?: object[]; note?: string; payment_details?: payment_detail_create[]; payment_term?: string; purchase_order?: string; remittance_address?: string; remittance_address_recipient?: string; service_address?: string; service_address_recipient?: string; service_end_date?: string; service_start_date?: string; shipping_address?: string; shipping_address_recipient?: string; state?: document_state; subtotal?: string; success?: boolean; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_details?: object[]; total_discount?: string; total_tax?: string; ubl_document?: string; vatex?: string; vatex_note?: string; vendor_address?: string; vendor_address_recipient?: string; vendor_company_id?: string; vendor_email?: string; vendor_name?: string; vendor_tax_id?: string; }`\n\n**post** `/api/documents/pdf`\n\nCreate a new invoice or credit note from a PDF file. If the 'ubl_document' field is set in the response, it indicates that sufficient details were extracted from the PDF to automatically generate a valid UBL document ready for sending. If 'ubl_document' is not set, human intervention may be required to ensure compliance.\n\n### Parameters\n\n- `file: string`\n\n- `customer_tax_id?: string`\n\n- `vendor_tax_id?: string`\n\n### Returns\n\n- `{ allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; amount_due?: string; attachments?: { file_name: string; file_data?: string; file_size?: number; file_type?: string; }[]; billing_address?: string; billing_address_recipient?: string; charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; currency?: string; customer_address?: string; customer_address_recipient?: string; customer_company_id?: string; customer_email?: string; customer_id?: string; customer_name?: string; customer_peppol_id?: string; customer_tax_id?: string; direction?: 'INBOUND' | 'OUTBOUND'; document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'; due_date?: string; invoice_date?: string; invoice_id?: string; invoice_total?: string; items?: { allowances?: object[]; amount?: string; charges?: object[]; date?: null; description?: string; product_code?: string; quantity?: string; tax?: string; tax_rate?: string; unit?: string; unit_price?: string; }[]; note?: string; payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]; payment_term?: string; purchase_order?: string; remittance_address?: string; remittance_address_recipient?: string; service_address?: string; service_address_recipient?: string; service_end_date?: string; service_start_date?: string; shipping_address?: string; shipping_address_recipient?: string; state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'; subtotal?: string; success?: boolean; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_details?: { amount?: string; rate?: string; }[]; total_discount?: string; total_tax?: string; ubl_document?: string; vatex?: string; vatex_note?: string; vendor_address?: string; vendor_address_recipient?: string; vendor_company_id?: string; vendor_email?: string; vendor_name?: string; vendor_tax_id?: string; }`\n\n  - `allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]`\n  - `amount_due?: string`\n  - `attachments?: { file_name: string; file_data?: string; file_size?: number; file_type?: string; }[]`\n  - `billing_address?: string`\n  - `billing_address_recipient?: string`\n  - `charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]`\n  - `currency?: string`\n  - `customer_address?: string`\n  - `customer_address_recipient?: string`\n  - `customer_company_id?: string`\n  - `customer_email?: string`\n  - `customer_id?: string`\n  - `customer_name?: string`\n  - `customer_peppol_id?: string`\n  - `customer_tax_id?: string`\n  - `direction?: 'INBOUND' | 'OUTBOUND'`\n  - `document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'`\n  - `due_date?: string`\n  - `invoice_date?: string`\n  - `invoice_id?: string`\n  - `invoice_total?: string`\n  - `items?: { allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; amount?: string; charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; date?: null; description?: string; product_code?: string; quantity?: string; tax?: string; tax_rate?: string; unit?: string; unit_price?: string; }[]`\n  - `note?: string`\n  - `payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]`\n  - `payment_term?: string`\n  - `purchase_order?: string`\n  - `remittance_address?: string`\n  - `remittance_address_recipient?: string`\n  - `service_address?: string`\n  - `service_address_recipient?: string`\n  - `service_end_date?: string`\n  - `service_start_date?: string`\n  - `shipping_address?: string`\n  - `shipping_address_recipient?: string`\n  - `state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'`\n  - `subtotal?: string`\n  - `success?: boolean`\n  - `tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'`\n  - `tax_details?: { amount?: string; rate?: string; }[]`\n  - `total_discount?: string`\n  - `total_tax?: string`\n  - `ubl_document?: string`\n  - `vatex?: string`\n  - `vatex_note?: string`\n  - `vendor_address?: string`\n  - `vendor_address_recipient?: string`\n  - `vendor_company_id?: string`\n  - `vendor_email?: string`\n  - `vendor_name?: string`\n  - `vendor_tax_id?: string`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst response = await client.documents.createFromPdf({ file: fs.createReadStream('path/to/file') });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.documents.createFromPdf',
         example:
-          "curl https://api.e-invoice.be/api/documents/pdf \\\n    -H 'Content-Type: multipart/form-data' \\\n    -H \"Authorization: Bearer $E_INVOICE_API_KEY\" \\\n    -F 'file=@/path/to/file'",
-      },
-      java: {
-        method: 'documents().createFromPdf',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.DocumentCreateFromPdfParams;\nimport com.e_invoice.api.models.documents.DocumentCreateFromPdfResponse;\nimport java.io.ByteArrayInputStream;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        DocumentCreateFromPdfParams params = DocumentCreateFromPdfParams.builder()\n            .file(new ByteArrayInputStream("Example data".getBytes()))\n            .build();\n        DocumentCreateFromPdfResponse response = client.documents().createFromPdf(params);\n    }\n}',
-      },
-      php: {
-        method: 'documents->createFromPdf',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$response = $client->documents->createFromPdf(\n  file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),\n  customerTaxID: 'customer_tax_id',\n  vendorTaxID: 'vendor_tax_id',\n);\n\nvar_dump($response);",
+          "import fs from 'fs';\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.documents.createFromPdf({\n  file: fs.createReadStream('path/to/file'),\n});\n\nconsole.log(response.customer_company_id);",
       },
       python: {
         method: 'documents.create_from_pdf',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.documents.create_from_pdf(\n    file=b"Example data",\n)\nprint(response.customer_company_id)',
       },
+      java: {
+        method: 'documents().createFromPdf',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.DocumentCreateFromPdfParams;\nimport com.e_invoice.api.models.documents.DocumentCreateFromPdfResponse;\nimport java.io.ByteArrayInputStream;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        DocumentCreateFromPdfParams params = DocumentCreateFromPdfParams.builder()\n            .file(new ByteArrayInputStream("Example data".getBytes()))\n            .build();\n        DocumentCreateFromPdfResponse response = client.documents().createFromPdf(params);\n    }\n}',
+      },
       ruby: {
         method: 'documents.create_from_pdf',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\nresponse = e_invoice.documents.create_from_pdf(file: StringIO.new("Example data"))\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.documents.createFromPdf',
+      php: {
+        method: 'documents->createFromPdf',
         example:
-          "import fs from 'fs';\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.documents.createFromPdf({\n  file: fs.createReadStream('path/to/file'),\n});\n\nconsole.log(response.customer_company_id);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$response = $client->documents->createFromPdf(\n  file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),\n  customerTaxID: 'customer_tax_id',\n  vendorTaxID: 'vendor_tax_id',\n);\n\nvar_dump($response);",
+      },
+      http: {
+        example:
+          "curl https://api.e-invoice.be/api/documents/pdf \\\n    -H 'Content-Type: multipart/form-data' \\\n    -H \"Authorization: Bearer $E_INVOICE_API_KEY\" \\\n    -F 'file=@/path/to/file'",
       },
     },
   },
@@ -344,34 +344,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## validate\n\n`client.documents.validate(document_id: string): { id: string; file_name: string; is_valid: boolean; issues: object[]; ubl_document?: string; }`\n\n**post** `/api/documents/{document_id}/validate`\n\nValidate a UBL document according to Peppol BIS Billing 3.0\n\n### Parameters\n\n- `document_id: string`\n\n### Returns\n\n- `{ id: string; file_name: string; is_valid: boolean; issues: { message: string; schematron: string; type: 'error' | 'warning'; flag?: string; location?: string; rule_id?: string; test?: string; }[]; ubl_document?: string; }`\n\n  - `id: string`\n  - `file_name: string`\n  - `is_valid: boolean`\n  - `issues: { message: string; schematron: string; type: 'error' | 'warning'; flag?: string; location?: string; rule_id?: string; test?: string; }[]`\n  - `ubl_document?: string`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst ublDocumentValidation = await client.documents.validate('document_id');\n\nconsole.log(ublDocumentValidation);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.documents.validate',
         example:
-          'curl https://api.e-invoice.be/api/documents/$DOCUMENT_ID/validate \\\n    -X POST \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
-      },
-      java: {
-        method: 'documents().validate',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.DocumentValidateParams;\nimport com.e_invoice.api.models.validate.UblDocumentValidation;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        UblDocumentValidation ublDocumentValidation = client.documents().validate("document_id");\n    }\n}',
-      },
-      php: {
-        method: 'documents->validate',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$ublDocumentValidation = $client->documents->validate('document_id');\n\nvar_dump($ublDocumentValidation);",
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst ublDocumentValidation = await client.documents.validate('document_id');\n\nconsole.log(ublDocumentValidation.id);",
       },
       python: {
         method: 'documents.validate',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\nubl_document_validation = client.documents.validate(\n    "document_id",\n)\nprint(ubl_document_validation.id)',
       },
+      java: {
+        method: 'documents().validate',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.DocumentValidateParams;\nimport com.e_invoice.api.models.validate.UblDocumentValidation;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        UblDocumentValidation ublDocumentValidation = client.documents().validate("document_id");\n    }\n}',
+      },
       ruby: {
         method: 'documents.validate',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\nubl_document_validation = e_invoice.documents.validate("document_id")\n\nputs(ubl_document_validation)',
       },
-      typescript: {
-        method: 'client.documents.validate',
+      php: {
+        method: 'documents->validate',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst ublDocumentValidation = await client.documents.validate('document_id');\n\nconsole.log(ublDocumentValidation.id);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$ublDocumentValidation = $client->documents->validate('document_id');\n\nvar_dump($ublDocumentValidation);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/documents/$DOCUMENT_ID/validate \\\n    -X POST \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
       },
     },
   },
@@ -389,34 +389,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## add\n\n`client.documents.attachments.add(document_id: string, file: string): { id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }`\n\n**post** `/api/documents/{document_id}/attachments`\n\nAdd one or more attachments to an invoice. Be careful: the attachments ARE NOT ADDED to the UBL! They are only stored in our database and can be downloaded later. To add attachments to the UBL, you need to add the attachment(s) via POST /api/documents\n\n### Parameters\n\n- `document_id: string`\n\n- `file: string`\n\n### Returns\n\n- `{ id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }`\n\n  - `id: string`\n  - `file_name: string`\n  - `file_size?: number`\n  - `file_type?: string`\n  - `file_url?: string`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst documentAttachment = await client.documents.attachments.add('document_id', { file: fs.createReadStream('path/to/file') });\n\nconsole.log(documentAttachment);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.documents.attachments.add',
         example:
-          "curl https://api.e-invoice.be/api/documents/$DOCUMENT_ID/attachments \\\n    -H 'Content-Type: multipart/form-data' \\\n    -H \"Authorization: Bearer $E_INVOICE_API_KEY\" \\\n    -F 'file=@/path/to/file'",
-      },
-      java: {
-        method: 'documents().attachments().add',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.attachments.AttachmentAddParams;\nimport com.e_invoice.api.models.documents.attachments.DocumentAttachment;\nimport java.io.ByteArrayInputStream;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        AttachmentAddParams params = AttachmentAddParams.builder()\n            .documentId("document_id")\n            .file(new ByteArrayInputStream("Example data".getBytes()))\n            .build();\n        DocumentAttachment documentAttachment = client.documents().attachments().add(params);\n    }\n}',
-      },
-      php: {
-        method: 'documents->attachments->add',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$documentAttachment = $client->documents->attachments->add(\n  'document_id',\n  file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),\n);\n\nvar_dump($documentAttachment);",
+          "import fs from 'fs';\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst documentAttachment = await client.documents.attachments.add('document_id', {\n  file: fs.createReadStream('path/to/file'),\n});\n\nconsole.log(documentAttachment.id);",
       },
       python: {
         method: 'documents.attachments.add',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\ndocument_attachment = client.documents.attachments.add(\n    document_id="document_id",\n    file=b"Example data",\n)\nprint(document_attachment.id)',
       },
+      java: {
+        method: 'documents().attachments().add',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.attachments.AttachmentAddParams;\nimport com.e_invoice.api.models.documents.attachments.DocumentAttachment;\nimport java.io.ByteArrayInputStream;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        AttachmentAddParams params = AttachmentAddParams.builder()\n            .documentId("document_id")\n            .file(new ByteArrayInputStream("Example data".getBytes()))\n            .build();\n        DocumentAttachment documentAttachment = client.documents().attachments().add(params);\n    }\n}',
+      },
       ruby: {
         method: 'documents.attachments.add',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\ndocument_attachment = e_invoice.documents.attachments.add("document_id", file: StringIO.new("Example data"))\n\nputs(document_attachment)',
       },
-      typescript: {
-        method: 'client.documents.attachments.add',
+      php: {
+        method: 'documents->attachments->add',
         example:
-          "import fs from 'fs';\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst documentAttachment = await client.documents.attachments.add('document_id', {\n  file: fs.createReadStream('path/to/file'),\n});\n\nconsole.log(documentAttachment.id);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$documentAttachment = $client->documents->attachments->add(\n  'document_id',\n  file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),\n);\n\nvar_dump($documentAttachment);",
+      },
+      http: {
+        example:
+          "curl https://api.e-invoice.be/api/documents/$DOCUMENT_ID/attachments \\\n    -H 'Content-Type: multipart/form-data' \\\n    -H \"Authorization: Bearer $E_INVOICE_API_KEY\" \\\n    -F 'file=@/path/to/file'",
       },
     },
   },
@@ -434,34 +434,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## list\n\n`client.documents.attachments.list(document_id: string): object[]`\n\n**get** `/api/documents/{document_id}/attachments`\n\nGet all attachments for an invoice or credit note\n\n### Parameters\n\n- `document_id: string`\n\n### Returns\n\n- `{ id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }[]`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst documentAttachments = await client.documents.attachments.list('document_id');\n\nconsole.log(documentAttachments);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.documents.attachments.list',
         example:
-          'curl https://api.e-invoice.be/api/documents/$DOCUMENT_ID/attachments \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
-      },
-      java: {
-        method: 'documents().attachments().list',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.attachments.AttachmentListParams;\nimport com.e_invoice.api.models.documents.attachments.DocumentAttachment;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        List<DocumentAttachment> documentAttachments = client.documents().attachments().list("document_id");\n    }\n}',
-      },
-      php: {
-        method: 'documents->attachments->list',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$documentAttachments = $client->documents->attachments->list('document_id');\n\nvar_dump($documentAttachments);",
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst documentAttachments = await client.documents.attachments.list('document_id');\n\nconsole.log(documentAttachments);",
       },
       python: {
         method: 'documents.attachments.list',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\ndocument_attachments = client.documents.attachments.list(\n    "document_id",\n)\nprint(document_attachments)',
       },
+      java: {
+        method: 'documents().attachments().list',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.attachments.AttachmentListParams;\nimport com.e_invoice.api.models.documents.attachments.DocumentAttachment;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        List<DocumentAttachment> documentAttachments = client.documents().attachments().list("document_id");\n    }\n}',
+      },
       ruby: {
         method: 'documents.attachments.list',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\ndocument_attachments = e_invoice.documents.attachments.list("document_id")\n\nputs(document_attachments)',
       },
-      typescript: {
-        method: 'client.documents.attachments.list',
+      php: {
+        method: 'documents->attachments->list',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst documentAttachments = await client.documents.attachments.list('document_id');\n\nconsole.log(documentAttachments);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$documentAttachments = $client->documents->attachments->list('document_id');\n\nvar_dump($documentAttachments);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/documents/$DOCUMENT_ID/attachments \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
       },
     },
   },
@@ -479,34 +479,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## retrieve\n\n`client.documents.attachments.retrieve(document_id: string, attachment_id: string): { id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }`\n\n**get** `/api/documents/{document_id}/attachments/{attachment_id}`\n\nGet attachment details with for an invoice or credit note with link to download file (signed URL, valid for 1 hour)\n\n### Parameters\n\n- `document_id: string`\n\n- `attachment_id: string`\n\n### Returns\n\n- `{ id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }`\n\n  - `id: string`\n  - `file_name: string`\n  - `file_size?: number`\n  - `file_type?: string`\n  - `file_url?: string`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst documentAttachment = await client.documents.attachments.retrieve('attachment_id', { document_id: 'document_id' });\n\nconsole.log(documentAttachment);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.documents.attachments.retrieve',
         example:
-          'curl https://api.e-invoice.be/api/documents/$DOCUMENT_ID/attachments/$ATTACHMENT_ID \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
-      },
-      java: {
-        method: 'documents().attachments().retrieve',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.attachments.AttachmentRetrieveParams;\nimport com.e_invoice.api.models.documents.attachments.DocumentAttachment;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        AttachmentRetrieveParams params = AttachmentRetrieveParams.builder()\n            .documentId("document_id")\n            .attachmentId("attachment_id")\n            .build();\n        DocumentAttachment documentAttachment = client.documents().attachments().retrieve(params);\n    }\n}',
-      },
-      php: {
-        method: 'documents->attachments->retrieve',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$documentAttachment = $client->documents->attachments->retrieve(\n  'attachment_id', documentID: 'document_id'\n);\n\nvar_dump($documentAttachment);",
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst documentAttachment = await client.documents.attachments.retrieve('attachment_id', {\n  document_id: 'document_id',\n});\n\nconsole.log(documentAttachment.id);",
       },
       python: {
         method: 'documents.attachments.retrieve',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\ndocument_attachment = client.documents.attachments.retrieve(\n    attachment_id="attachment_id",\n    document_id="document_id",\n)\nprint(document_attachment.id)',
       },
+      java: {
+        method: 'documents().attachments().retrieve',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.attachments.AttachmentRetrieveParams;\nimport com.e_invoice.api.models.documents.attachments.DocumentAttachment;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        AttachmentRetrieveParams params = AttachmentRetrieveParams.builder()\n            .documentId("document_id")\n            .attachmentId("attachment_id")\n            .build();\n        DocumentAttachment documentAttachment = client.documents().attachments().retrieve(params);\n    }\n}',
+      },
       ruby: {
         method: 'documents.attachments.retrieve',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\ndocument_attachment = e_invoice.documents.attachments.retrieve("attachment_id", document_id: "document_id")\n\nputs(document_attachment)',
       },
-      typescript: {
-        method: 'client.documents.attachments.retrieve',
+      php: {
+        method: 'documents->attachments->retrieve',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst documentAttachment = await client.documents.attachments.retrieve('attachment_id', {\n  document_id: 'document_id',\n});\n\nconsole.log(documentAttachment.id);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$documentAttachment = $client->documents->attachments->retrieve(\n  'attachment_id', documentID: 'document_id'\n);\n\nvar_dump($documentAttachment);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/documents/$DOCUMENT_ID/attachments/$ATTACHMENT_ID \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
       },
     },
   },
@@ -523,34 +523,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## delete\n\n`client.documents.attachments.delete(document_id: string, attachment_id: string): { is_deleted: boolean; }`\n\n**delete** `/api/documents/{document_id}/attachments/{attachment_id}`\n\nDelete an attachment from an invoice or credit note\n\n### Parameters\n\n- `document_id: string`\n\n- `attachment_id: string`\n\n### Returns\n\n- `{ is_deleted: boolean; }`\n\n  - `is_deleted: boolean`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst attachment = await client.documents.attachments.delete('attachment_id', { document_id: 'document_id' });\n\nconsole.log(attachment);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.documents.attachments.delete',
         example:
-          'curl https://api.e-invoice.be/api/documents/$DOCUMENT_ID/attachments/$ATTACHMENT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
-      },
-      java: {
-        method: 'documents().attachments().delete',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.attachments.AttachmentDeleteParams;\nimport com.e_invoice.api.models.documents.attachments.AttachmentDeleteResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        AttachmentDeleteParams params = AttachmentDeleteParams.builder()\n            .documentId("document_id")\n            .attachmentId("attachment_id")\n            .build();\n        AttachmentDeleteResponse attachment = client.documents().attachments().delete(params);\n    }\n}',
-      },
-      php: {
-        method: 'documents->attachments->delete',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$attachment = $client->documents->attachments->delete(\n  'attachment_id', documentID: 'document_id'\n);\n\nvar_dump($attachment);",
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst attachment = await client.documents.attachments.delete('attachment_id', {\n  document_id: 'document_id',\n});\n\nconsole.log(attachment.is_deleted);",
       },
       python: {
         method: 'documents.attachments.delete',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\nattachment = client.documents.attachments.delete(\n    attachment_id="attachment_id",\n    document_id="document_id",\n)\nprint(attachment.is_deleted)',
       },
+      java: {
+        method: 'documents().attachments().delete',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.attachments.AttachmentDeleteParams;\nimport com.e_invoice.api.models.documents.attachments.AttachmentDeleteResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        AttachmentDeleteParams params = AttachmentDeleteParams.builder()\n            .documentId("document_id")\n            .attachmentId("attachment_id")\n            .build();\n        AttachmentDeleteResponse attachment = client.documents().attachments().delete(params);\n    }\n}',
+      },
       ruby: {
         method: 'documents.attachments.delete',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\nattachment = e_invoice.documents.attachments.delete("attachment_id", document_id: "document_id")\n\nputs(attachment)',
       },
-      typescript: {
-        method: 'client.documents.attachments.delete',
+      php: {
+        method: 'documents->attachments->delete',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst attachment = await client.documents.attachments.delete('attachment_id', {\n  document_id: 'document_id',\n});\n\nconsole.log(attachment.is_deleted);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$attachment = $client->documents->attachments->delete(\n  'attachment_id', documentID: 'document_id'\n);\n\nvar_dump($attachment);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/documents/$DOCUMENT_ID/attachments/$ATTACHMENT_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
       },
     },
   },
@@ -568,34 +568,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get\n\n`client.documents.ubl.get(document_id: string): { id: string; file_name: string; file_hash?: string; file_size?: number; receiver_peppol_id?: string; receiver_peppol_scheme?: string; sender_peppol_id?: string; sender_peppol_scheme?: string; signed_url?: string; validated_at?: string; }`\n\n**get** `/api/documents/{document_id}/ubl`\n\nGet the UBL for an invoice or credit note\n\n### Parameters\n\n- `document_id: string`\n\n### Returns\n\n- `{ id: string; file_name: string; file_hash?: string; file_size?: number; receiver_peppol_id?: string; receiver_peppol_scheme?: string; sender_peppol_id?: string; sender_peppol_scheme?: string; signed_url?: string; validated_at?: string; }`\n\n  - `id: string`\n  - `file_name: string`\n  - `file_hash?: string`\n  - `file_size?: number`\n  - `receiver_peppol_id?: string`\n  - `receiver_peppol_scheme?: string`\n  - `sender_peppol_id?: string`\n  - `sender_peppol_scheme?: string`\n  - `signed_url?: string`\n  - `validated_at?: string`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst ubl = await client.documents.ubl.get('document_id');\n\nconsole.log(ubl);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.documents.ubl.get',
         example:
-          'curl https://api.e-invoice.be/api/documents/$DOCUMENT_ID/ubl \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
-      },
-      java: {
-        method: 'documents().ubl().get',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.ubl.UblGetParams;\nimport com.e_invoice.api.models.documents.ubl.UblGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        UblGetResponse ubl = client.documents().ubl().get("document_id");\n    }\n}',
-      },
-      php: {
-        method: 'documents->ubl->get',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$ubl = $client->documents->ubl->get('document_id');\n\nvar_dump($ubl);",
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst ubl = await client.documents.ubl.get('document_id');\n\nconsole.log(ubl.id);",
       },
       python: {
         method: 'documents.ubl.get',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\nubl = client.documents.ubl.get(\n    "document_id",\n)\nprint(ubl.id)',
       },
+      java: {
+        method: 'documents().ubl().get',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.ubl.UblGetParams;\nimport com.e_invoice.api.models.documents.ubl.UblGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        UblGetResponse ubl = client.documents().ubl().get("document_id");\n    }\n}',
+      },
       ruby: {
         method: 'documents.ubl.get',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\nubl = e_invoice.documents.ubl.get("document_id")\n\nputs(ubl)',
       },
-      typescript: {
-        method: 'client.documents.ubl.get',
+      php: {
+        method: 'documents->ubl->get',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst ubl = await client.documents.ubl.get('document_id');\n\nconsole.log(ubl.id);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$ubl = $client->documents->ubl->get('document_id');\n\nvar_dump($ubl);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/documents/$DOCUMENT_ID/ubl \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
       },
     },
   },
@@ -612,34 +612,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## create_from_ubl\n\n`client.documents.ubl.createFromUbl(file: string): { id: string; created_at: string; allowances?: object[]; amount_due?: string; attachments?: document_attachment[]; billing_address?: string; billing_address_recipient?: string; charges?: object[]; currency?: currency_code; customer_address?: string; customer_address_recipient?: string; customer_company_id?: string; customer_email?: string; customer_id?: string; customer_name?: string; customer_peppol_id?: string; customer_tax_id?: string; direction?: document_direction; document_type?: document_type; due_date?: string; invoice_date?: string; invoice_id?: string; invoice_total?: string; items?: object[]; note?: string; payment_details?: object[]; payment_term?: string; purchase_order?: string; remittance_address?: string; remittance_address_recipient?: string; service_address?: string; service_address_recipient?: string; service_end_date?: string; service_start_date?: string; shipping_address?: string; shipping_address_recipient?: string; state?: document_state; subtotal?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_details?: object[]; total_discount?: string; total_tax?: string; vatex?: string; vatex_note?: string; vendor_address?: string; vendor_address_recipient?: string; vendor_company_id?: string; vendor_email?: string; vendor_name?: string; vendor_tax_id?: string; }`\n\n**post** `/api/documents/ubl`\n\nCreate a new invoice or credit note from a UBL file\n\n### Parameters\n\n- `file: string`\n\n### Returns\n\n- `{ id: string; created_at: string; allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; amount_due?: string; attachments?: { id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }[]; billing_address?: string; billing_address_recipient?: string; charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; currency?: string; customer_address?: string; customer_address_recipient?: string; customer_company_id?: string; customer_email?: string; customer_id?: string; customer_name?: string; customer_peppol_id?: string; customer_tax_id?: string; direction?: 'INBOUND' | 'OUTBOUND'; document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'; due_date?: string; invoice_date?: string; invoice_id?: string; invoice_total?: string; items?: { allowances?: object[]; amount?: string; charges?: object[]; date?: null; description?: string; product_code?: string; quantity?: string; tax?: string; tax_rate?: string; unit?: string; unit_price?: string; }[]; note?: string; payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]; payment_term?: string; purchase_order?: string; remittance_address?: string; remittance_address_recipient?: string; service_address?: string; service_address_recipient?: string; service_end_date?: string; service_start_date?: string; shipping_address?: string; shipping_address_recipient?: string; state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'; subtotal?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_details?: { amount?: string; rate?: string; }[]; total_discount?: string; total_tax?: string; vatex?: string; vatex_note?: string; vendor_address?: string; vendor_address_recipient?: string; vendor_company_id?: string; vendor_email?: string; vendor_name?: string; vendor_tax_id?: string; }`\n\n  - `id: string`\n  - `created_at: string`\n  - `allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]`\n  - `amount_due?: string`\n  - `attachments?: { id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }[]`\n  - `billing_address?: string`\n  - `billing_address_recipient?: string`\n  - `charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]`\n  - `currency?: string`\n  - `customer_address?: string`\n  - `customer_address_recipient?: string`\n  - `customer_company_id?: string`\n  - `customer_email?: string`\n  - `customer_id?: string`\n  - `customer_name?: string`\n  - `customer_peppol_id?: string`\n  - `customer_tax_id?: string`\n  - `direction?: 'INBOUND' | 'OUTBOUND'`\n  - `document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'`\n  - `due_date?: string`\n  - `invoice_date?: string`\n  - `invoice_id?: string`\n  - `invoice_total?: string`\n  - `items?: { allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; amount?: string; charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; date?: null; description?: string; product_code?: string; quantity?: string; tax?: string; tax_rate?: string; unit?: string; unit_price?: string; }[]`\n  - `note?: string`\n  - `payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]`\n  - `payment_term?: string`\n  - `purchase_order?: string`\n  - `remittance_address?: string`\n  - `remittance_address_recipient?: string`\n  - `service_address?: string`\n  - `service_address_recipient?: string`\n  - `service_end_date?: string`\n  - `service_start_date?: string`\n  - `shipping_address?: string`\n  - `shipping_address_recipient?: string`\n  - `state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'`\n  - `subtotal?: string`\n  - `tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'`\n  - `tax_details?: { amount?: string; rate?: string; }[]`\n  - `total_discount?: string`\n  - `total_tax?: string`\n  - `vatex?: string`\n  - `vatex_note?: string`\n  - `vendor_address?: string`\n  - `vendor_address_recipient?: string`\n  - `vendor_company_id?: string`\n  - `vendor_email?: string`\n  - `vendor_name?: string`\n  - `vendor_tax_id?: string`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst documentResponse = await client.documents.ubl.createFromUbl({ file: fs.createReadStream('path/to/file') });\n\nconsole.log(documentResponse);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.documents.ubl.createFromUbl',
         example:
-          "curl https://api.e-invoice.be/api/documents/ubl \\\n    -H 'Content-Type: multipart/form-data' \\\n    -H \"Authorization: Bearer $E_INVOICE_API_KEY\" \\\n    -F 'file=@/path/to/file'",
-      },
-      java: {
-        method: 'documents().ubl().createFromUbl',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.DocumentResponse;\nimport com.e_invoice.api.models.documents.ubl.UblCreateFromUblParams;\nimport java.io.ByteArrayInputStream;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        UblCreateFromUblParams params = UblCreateFromUblParams.builder()\n            .file(new ByteArrayInputStream("Example data".getBytes()))\n            .build();\n        DocumentResponse documentResponse = client.documents().ubl().createFromUbl(params);\n    }\n}',
-      },
-      php: {
-        method: 'documents->ubl->createFromUbl',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$documentResponse = $client->documents->ubl->createFromUbl(\n  file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),\n);\n\nvar_dump($documentResponse);",
+          "import fs from 'fs';\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst documentResponse = await client.documents.ubl.createFromUbl({\n  file: fs.createReadStream('path/to/file'),\n});\n\nconsole.log(documentResponse.id);",
       },
       python: {
         method: 'documents.ubl.create_from_ubl',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\ndocument_response = client.documents.ubl.create_from_ubl(\n    file=b"Example data",\n)\nprint(document_response.id)',
       },
+      java: {
+        method: 'documents().ubl().createFromUbl',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.DocumentResponse;\nimport com.e_invoice.api.models.documents.ubl.UblCreateFromUblParams;\nimport java.io.ByteArrayInputStream;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        UblCreateFromUblParams params = UblCreateFromUblParams.builder()\n            .file(new ByteArrayInputStream("Example data".getBytes()))\n            .build();\n        DocumentResponse documentResponse = client.documents().ubl().createFromUbl(params);\n    }\n}',
+      },
       ruby: {
         method: 'documents.ubl.create_from_ubl',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\ndocument_response = e_invoice.documents.ubl.create_from_ubl(file: StringIO.new("Example data"))\n\nputs(document_response)',
       },
-      typescript: {
-        method: 'client.documents.ubl.createFromUbl',
+      php: {
+        method: 'documents->ubl->createFromUbl',
         example:
-          "import fs from 'fs';\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst documentResponse = await client.documents.ubl.createFromUbl({\n  file: fs.createReadStream('path/to/file'),\n});\n\nconsole.log(documentResponse.id);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$documentResponse = $client->documents->ubl->createFromUbl(\n  file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),\n);\n\nvar_dump($documentResponse);",
+      },
+      http: {
+        example:
+          "curl https://api.e-invoice.be/api/documents/ubl \\\n    -H 'Content-Type: multipart/form-data' \\\n    -H \"Authorization: Bearer $E_INVOICE_API_KEY\" \\\n    -F 'file=@/path/to/file'",
       },
     },
   },
@@ -667,34 +667,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## list\n\n`client.inbox.list(date_from?: string, date_to?: string, page?: number, page_size?: number, search?: string, sender?: string, sort_by?: string, sort_order?: 'asc' | 'desc', type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'): { id: string; created_at: string; allowances?: object[]; amount_due?: string; attachments?: document_attachment[]; billing_address?: string; billing_address_recipient?: string; charges?: object[]; currency?: currency_code; customer_address?: string; customer_address_recipient?: string; customer_company_id?: string; customer_email?: string; customer_id?: string; customer_name?: string; customer_peppol_id?: string; customer_tax_id?: string; direction?: document_direction; document_type?: document_type; due_date?: string; invoice_date?: string; invoice_id?: string; invoice_total?: string; items?: object[]; note?: string; payment_details?: object[]; payment_term?: string; purchase_order?: string; remittance_address?: string; remittance_address_recipient?: string; service_address?: string; service_address_recipient?: string; service_end_date?: string; service_start_date?: string; shipping_address?: string; shipping_address_recipient?: string; state?: document_state; subtotal?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_details?: object[]; total_discount?: string; total_tax?: string; vatex?: string; vatex_note?: string; vendor_address?: string; vendor_address_recipient?: string; vendor_company_id?: string; vendor_email?: string; vendor_name?: string; vendor_tax_id?: string; }`\n\n**get** `/api/inbox/`\n\nRetrieve a paginated list of received documents with filtering options including state, type, sender, date range, and text search.\n\n### Parameters\n\n- `date_from?: string`\n  Filter by issue date (from)\n\n- `date_to?: string`\n  Filter by issue date (to)\n\n- `page?: number`\n  Page number\n\n- `page_size?: number`\n  Number of items per page\n\n- `search?: string`\n  Search in invoice number, seller/buyer names\n\n- `sender?: string`\n  Filter by sender (vendor_name, vendor_email, vendor_tax_id, vendor_company_id)\n\n- `sort_by?: string`\n  Field to sort by\n\n- `sort_order?: 'asc' | 'desc'`\n  Sort direction (asc/desc)\n\n- `type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'`\n  Filter by document type. If not provided, returns all types.\n\n### Returns\n\n- `{ id: string; created_at: string; allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; amount_due?: string; attachments?: { id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }[]; billing_address?: string; billing_address_recipient?: string; charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; currency?: string; customer_address?: string; customer_address_recipient?: string; customer_company_id?: string; customer_email?: string; customer_id?: string; customer_name?: string; customer_peppol_id?: string; customer_tax_id?: string; direction?: 'INBOUND' | 'OUTBOUND'; document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'; due_date?: string; invoice_date?: string; invoice_id?: string; invoice_total?: string; items?: { allowances?: object[]; amount?: string; charges?: object[]; date?: null; description?: string; product_code?: string; quantity?: string; tax?: string; tax_rate?: string; unit?: string; unit_price?: string; }[]; note?: string; payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]; payment_term?: string; purchase_order?: string; remittance_address?: string; remittance_address_recipient?: string; service_address?: string; service_address_recipient?: string; service_end_date?: string; service_start_date?: string; shipping_address?: string; shipping_address_recipient?: string; state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'; subtotal?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_details?: { amount?: string; rate?: string; }[]; total_discount?: string; total_tax?: string; vatex?: string; vatex_note?: string; vendor_address?: string; vendor_address_recipient?: string; vendor_company_id?: string; vendor_email?: string; vendor_name?: string; vendor_tax_id?: string; }`\n\n  - `id: string`\n  - `created_at: string`\n  - `allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]`\n  - `amount_due?: string`\n  - `attachments?: { id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }[]`\n  - `billing_address?: string`\n  - `billing_address_recipient?: string`\n  - `charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]`\n  - `currency?: string`\n  - `customer_address?: string`\n  - `customer_address_recipient?: string`\n  - `customer_company_id?: string`\n  - `customer_email?: string`\n  - `customer_id?: string`\n  - `customer_name?: string`\n  - `customer_peppol_id?: string`\n  - `customer_tax_id?: string`\n  - `direction?: 'INBOUND' | 'OUTBOUND'`\n  - `document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'`\n  - `due_date?: string`\n  - `invoice_date?: string`\n  - `invoice_id?: string`\n  - `invoice_total?: string`\n  - `items?: { allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; amount?: string; charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; date?: null; description?: string; product_code?: string; quantity?: string; tax?: string; tax_rate?: string; unit?: string; unit_price?: string; }[]`\n  - `note?: string`\n  - `payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]`\n  - `payment_term?: string`\n  - `purchase_order?: string`\n  - `remittance_address?: string`\n  - `remittance_address_recipient?: string`\n  - `service_address?: string`\n  - `service_address_recipient?: string`\n  - `service_end_date?: string`\n  - `service_start_date?: string`\n  - `shipping_address?: string`\n  - `shipping_address_recipient?: string`\n  - `state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'`\n  - `subtotal?: string`\n  - `tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'`\n  - `tax_details?: { amount?: string; rate?: string; }[]`\n  - `total_discount?: string`\n  - `total_tax?: string`\n  - `vatex?: string`\n  - `vatex_note?: string`\n  - `vendor_address?: string`\n  - `vendor_address_recipient?: string`\n  - `vendor_company_id?: string`\n  - `vendor_email?: string`\n  - `vendor_name?: string`\n  - `vendor_tax_id?: string`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\n// Automatically fetches more pages as needed.\nfor await (const documentResponse of client.inbox.list()) {\n  console.log(documentResponse);\n}\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.inbox.list',
         example:
-          'curl https://api.e-invoice.be/api/inbox/ \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
-      },
-      java: {
-        method: 'inbox().list',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.inbox.InboxListPage;\nimport com.e_invoice.api.models.inbox.InboxListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        InboxListPage page = client.inbox().list();\n    }\n}',
-      },
-      php: {
-        method: 'inbox->list',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$page = $client->inbox->list(\n  dateFrom: new \\DateTimeImmutable('2019-12-27T18:11:19.117Z'),\n  dateTo: new \\DateTimeImmutable('2019-12-27T18:11:19.117Z'),\n  page: 1,\n  pageSize: 1,\n  search: 'search',\n  sender: 'sender',\n  sortBy: 'created_at',\n  sortOrder: 'asc',\n  type: DocumentType::INVOICE,\n);\n\nvar_dump($page);",
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const documentResponse of client.inbox.list()) {\n  console.log(documentResponse.id);\n}",
       },
       python: {
         method: 'inbox.list',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\npage = client.inbox.list()\npage = page.items[0]\nprint(page.id)',
       },
+      java: {
+        method: 'inbox().list',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.inbox.InboxListPage;\nimport com.e_invoice.api.models.inbox.InboxListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        InboxListPage page = client.inbox().list();\n    }\n}',
+      },
       ruby: {
         method: 'inbox.list',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\npage = e_invoice.inbox.list\n\nputs(page)',
       },
-      typescript: {
-        method: 'client.inbox.list',
+      php: {
+        method: 'inbox->list',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const documentResponse of client.inbox.list()) {\n  console.log(documentResponse.id);\n}",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$page = $client->inbox->list(\n  dateFrom: new \\DateTimeImmutable('2019-12-27T18:11:19.117Z'),\n  dateTo: new \\DateTimeImmutable('2019-12-27T18:11:19.117Z'),\n  page: 1,\n  pageSize: 1,\n  search: 'search',\n  sender: 'sender',\n  sortBy: 'created_at',\n  sortOrder: 'asc',\n  type: DocumentType::INVOICE,\n);\n\nvar_dump($page);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/inbox/ \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
       },
     },
   },
@@ -711,34 +711,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## list_invoices\n\n`client.inbox.listInvoices(page?: number, page_size?: number, sort_by?: string, sort_order?: 'asc' | 'desc'): { id: string; created_at: string; allowances?: object[]; amount_due?: string; attachments?: document_attachment[]; billing_address?: string; billing_address_recipient?: string; charges?: object[]; currency?: currency_code; customer_address?: string; customer_address_recipient?: string; customer_company_id?: string; customer_email?: string; customer_id?: string; customer_name?: string; customer_peppol_id?: string; customer_tax_id?: string; direction?: document_direction; document_type?: document_type; due_date?: string; invoice_date?: string; invoice_id?: string; invoice_total?: string; items?: object[]; note?: string; payment_details?: object[]; payment_term?: string; purchase_order?: string; remittance_address?: string; remittance_address_recipient?: string; service_address?: string; service_address_recipient?: string; service_end_date?: string; service_start_date?: string; shipping_address?: string; shipping_address_recipient?: string; state?: document_state; subtotal?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_details?: object[]; total_discount?: string; total_tax?: string; vatex?: string; vatex_note?: string; vendor_address?: string; vendor_address_recipient?: string; vendor_company_id?: string; vendor_email?: string; vendor_name?: string; vendor_tax_id?: string; }`\n\n**get** `/api/inbox/invoices`\n\nRetrieve a paginated list of received invoices with filtering options.\n\n### Parameters\n\n- `page?: number`\n  Page number\n\n- `page_size?: number`\n  Number of items per page\n\n- `sort_by?: string`\n  Field to sort by\n\n- `sort_order?: 'asc' | 'desc'`\n  Sort direction (asc/desc)\n\n### Returns\n\n- `{ id: string; created_at: string; allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; amount_due?: string; attachments?: { id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }[]; billing_address?: string; billing_address_recipient?: string; charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; currency?: string; customer_address?: string; customer_address_recipient?: string; customer_company_id?: string; customer_email?: string; customer_id?: string; customer_name?: string; customer_peppol_id?: string; customer_tax_id?: string; direction?: 'INBOUND' | 'OUTBOUND'; document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'; due_date?: string; invoice_date?: string; invoice_id?: string; invoice_total?: string; items?: { allowances?: object[]; amount?: string; charges?: object[]; date?: null; description?: string; product_code?: string; quantity?: string; tax?: string; tax_rate?: string; unit?: string; unit_price?: string; }[]; note?: string; payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]; payment_term?: string; purchase_order?: string; remittance_address?: string; remittance_address_recipient?: string; service_address?: string; service_address_recipient?: string; service_end_date?: string; service_start_date?: string; shipping_address?: string; shipping_address_recipient?: string; state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'; subtotal?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_details?: { amount?: string; rate?: string; }[]; total_discount?: string; total_tax?: string; vatex?: string; vatex_note?: string; vendor_address?: string; vendor_address_recipient?: string; vendor_company_id?: string; vendor_email?: string; vendor_name?: string; vendor_tax_id?: string; }`\n\n  - `id: string`\n  - `created_at: string`\n  - `allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]`\n  - `amount_due?: string`\n  - `attachments?: { id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }[]`\n  - `billing_address?: string`\n  - `billing_address_recipient?: string`\n  - `charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]`\n  - `currency?: string`\n  - `customer_address?: string`\n  - `customer_address_recipient?: string`\n  - `customer_company_id?: string`\n  - `customer_email?: string`\n  - `customer_id?: string`\n  - `customer_name?: string`\n  - `customer_peppol_id?: string`\n  - `customer_tax_id?: string`\n  - `direction?: 'INBOUND' | 'OUTBOUND'`\n  - `document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'`\n  - `due_date?: string`\n  - `invoice_date?: string`\n  - `invoice_id?: string`\n  - `invoice_total?: string`\n  - `items?: { allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; amount?: string; charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; date?: null; description?: string; product_code?: string; quantity?: string; tax?: string; tax_rate?: string; unit?: string; unit_price?: string; }[]`\n  - `note?: string`\n  - `payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]`\n  - `payment_term?: string`\n  - `purchase_order?: string`\n  - `remittance_address?: string`\n  - `remittance_address_recipient?: string`\n  - `service_address?: string`\n  - `service_address_recipient?: string`\n  - `service_end_date?: string`\n  - `service_start_date?: string`\n  - `shipping_address?: string`\n  - `shipping_address_recipient?: string`\n  - `state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'`\n  - `subtotal?: string`\n  - `tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'`\n  - `tax_details?: { amount?: string; rate?: string; }[]`\n  - `total_discount?: string`\n  - `total_tax?: string`\n  - `vatex?: string`\n  - `vatex_note?: string`\n  - `vendor_address?: string`\n  - `vendor_address_recipient?: string`\n  - `vendor_company_id?: string`\n  - `vendor_email?: string`\n  - `vendor_name?: string`\n  - `vendor_tax_id?: string`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\n// Automatically fetches more pages as needed.\nfor await (const documentResponse of client.inbox.listInvoices()) {\n  console.log(documentResponse);\n}\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.inbox.listInvoices',
         example:
-          'curl https://api.e-invoice.be/api/inbox/invoices \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
-      },
-      java: {
-        method: 'inbox().listInvoices',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.inbox.InboxListInvoicesPage;\nimport com.e_invoice.api.models.inbox.InboxListInvoicesParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        InboxListInvoicesPage page = client.inbox().listInvoices();\n    }\n}',
-      },
-      php: {
-        method: 'inbox->listInvoices',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$page = $client->inbox->listInvoices(\n  page: 1, pageSize: 1, sortBy: 'created_at', sortOrder: 'asc'\n);\n\nvar_dump($page);",
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const documentResponse of client.inbox.listInvoices()) {\n  console.log(documentResponse.id);\n}",
       },
       python: {
         method: 'inbox.list_invoices',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\npage = client.inbox.list_invoices()\npage = page.items[0]\nprint(page.id)',
       },
+      java: {
+        method: 'inbox().listInvoices',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.inbox.InboxListInvoicesPage;\nimport com.e_invoice.api.models.inbox.InboxListInvoicesParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        InboxListInvoicesPage page = client.inbox().listInvoices();\n    }\n}',
+      },
       ruby: {
         method: 'inbox.list_invoices',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\npage = e_invoice.inbox.list_invoices\n\nputs(page)',
       },
-      typescript: {
-        method: 'client.inbox.listInvoices',
+      php: {
+        method: 'inbox->listInvoices',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const documentResponse of client.inbox.listInvoices()) {\n  console.log(documentResponse.id);\n}",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$page = $client->inbox->listInvoices(\n  page: 1, pageSize: 1, sortBy: 'created_at', sortOrder: 'asc'\n);\n\nvar_dump($page);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/inbox/invoices \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
       },
     },
   },
@@ -755,34 +755,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## list_credit_notes\n\n`client.inbox.listCreditNotes(page?: number, page_size?: number, sort_by?: string, sort_order?: 'asc' | 'desc'): { id: string; created_at: string; allowances?: object[]; amount_due?: string; attachments?: document_attachment[]; billing_address?: string; billing_address_recipient?: string; charges?: object[]; currency?: currency_code; customer_address?: string; customer_address_recipient?: string; customer_company_id?: string; customer_email?: string; customer_id?: string; customer_name?: string; customer_peppol_id?: string; customer_tax_id?: string; direction?: document_direction; document_type?: document_type; due_date?: string; invoice_date?: string; invoice_id?: string; invoice_total?: string; items?: object[]; note?: string; payment_details?: object[]; payment_term?: string; purchase_order?: string; remittance_address?: string; remittance_address_recipient?: string; service_address?: string; service_address_recipient?: string; service_end_date?: string; service_start_date?: string; shipping_address?: string; shipping_address_recipient?: string; state?: document_state; subtotal?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_details?: object[]; total_discount?: string; total_tax?: string; vatex?: string; vatex_note?: string; vendor_address?: string; vendor_address_recipient?: string; vendor_company_id?: string; vendor_email?: string; vendor_name?: string; vendor_tax_id?: string; }`\n\n**get** `/api/inbox/credit-notes`\n\nRetrieve a paginated list of received credit notes with filtering options.\n\n### Parameters\n\n- `page?: number`\n  Page number\n\n- `page_size?: number`\n  Number of items per page\n\n- `sort_by?: string`\n  Field to sort by\n\n- `sort_order?: 'asc' | 'desc'`\n  Sort direction (asc/desc)\n\n### Returns\n\n- `{ id: string; created_at: string; allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; amount_due?: string; attachments?: { id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }[]; billing_address?: string; billing_address_recipient?: string; charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; currency?: string; customer_address?: string; customer_address_recipient?: string; customer_company_id?: string; customer_email?: string; customer_id?: string; customer_name?: string; customer_peppol_id?: string; customer_tax_id?: string; direction?: 'INBOUND' | 'OUTBOUND'; document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'; due_date?: string; invoice_date?: string; invoice_id?: string; invoice_total?: string; items?: { allowances?: object[]; amount?: string; charges?: object[]; date?: null; description?: string; product_code?: string; quantity?: string; tax?: string; tax_rate?: string; unit?: string; unit_price?: string; }[]; note?: string; payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]; payment_term?: string; purchase_order?: string; remittance_address?: string; remittance_address_recipient?: string; service_address?: string; service_address_recipient?: string; service_end_date?: string; service_start_date?: string; shipping_address?: string; shipping_address_recipient?: string; state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'; subtotal?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_details?: { amount?: string; rate?: string; }[]; total_discount?: string; total_tax?: string; vatex?: string; vatex_note?: string; vendor_address?: string; vendor_address_recipient?: string; vendor_company_id?: string; vendor_email?: string; vendor_name?: string; vendor_tax_id?: string; }`\n\n  - `id: string`\n  - `created_at: string`\n  - `allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]`\n  - `amount_due?: string`\n  - `attachments?: { id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }[]`\n  - `billing_address?: string`\n  - `billing_address_recipient?: string`\n  - `charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]`\n  - `currency?: string`\n  - `customer_address?: string`\n  - `customer_address_recipient?: string`\n  - `customer_company_id?: string`\n  - `customer_email?: string`\n  - `customer_id?: string`\n  - `customer_name?: string`\n  - `customer_peppol_id?: string`\n  - `customer_tax_id?: string`\n  - `direction?: 'INBOUND' | 'OUTBOUND'`\n  - `document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'`\n  - `due_date?: string`\n  - `invoice_date?: string`\n  - `invoice_id?: string`\n  - `invoice_total?: string`\n  - `items?: { allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; amount?: string; charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; date?: null; description?: string; product_code?: string; quantity?: string; tax?: string; tax_rate?: string; unit?: string; unit_price?: string; }[]`\n  - `note?: string`\n  - `payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]`\n  - `payment_term?: string`\n  - `purchase_order?: string`\n  - `remittance_address?: string`\n  - `remittance_address_recipient?: string`\n  - `service_address?: string`\n  - `service_address_recipient?: string`\n  - `service_end_date?: string`\n  - `service_start_date?: string`\n  - `shipping_address?: string`\n  - `shipping_address_recipient?: string`\n  - `state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'`\n  - `subtotal?: string`\n  - `tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'`\n  - `tax_details?: { amount?: string; rate?: string; }[]`\n  - `total_discount?: string`\n  - `total_tax?: string`\n  - `vatex?: string`\n  - `vatex_note?: string`\n  - `vendor_address?: string`\n  - `vendor_address_recipient?: string`\n  - `vendor_company_id?: string`\n  - `vendor_email?: string`\n  - `vendor_name?: string`\n  - `vendor_tax_id?: string`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\n// Automatically fetches more pages as needed.\nfor await (const documentResponse of client.inbox.listCreditNotes()) {\n  console.log(documentResponse);\n}\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.inbox.listCreditNotes',
         example:
-          'curl https://api.e-invoice.be/api/inbox/credit-notes \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
-      },
-      java: {
-        method: 'inbox().listCreditNotes',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.inbox.InboxListCreditNotesPage;\nimport com.e_invoice.api.models.inbox.InboxListCreditNotesParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        InboxListCreditNotesPage page = client.inbox().listCreditNotes();\n    }\n}',
-      },
-      php: {
-        method: 'inbox->listCreditNotes',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$page = $client->inbox->listCreditNotes(\n  page: 1, pageSize: 1, sortBy: 'created_at', sortOrder: 'asc'\n);\n\nvar_dump($page);",
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const documentResponse of client.inbox.listCreditNotes()) {\n  console.log(documentResponse.id);\n}",
       },
       python: {
         method: 'inbox.list_credit_notes',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\npage = client.inbox.list_credit_notes()\npage = page.items[0]\nprint(page.id)',
       },
+      java: {
+        method: 'inbox().listCreditNotes',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.inbox.InboxListCreditNotesPage;\nimport com.e_invoice.api.models.inbox.InboxListCreditNotesParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        InboxListCreditNotesPage page = client.inbox().listCreditNotes();\n    }\n}',
+      },
       ruby: {
         method: 'inbox.list_credit_notes',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\npage = e_invoice.inbox.list_credit_notes\n\nputs(page)',
       },
-      typescript: {
-        method: 'client.inbox.listCreditNotes',
+      php: {
+        method: 'inbox->listCreditNotes',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const documentResponse of client.inbox.listCreditNotes()) {\n  console.log(documentResponse.id);\n}",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$page = $client->inbox->listCreditNotes(\n  page: 1, pageSize: 1, sortBy: 'created_at', sortOrder: 'asc'\n);\n\nvar_dump($page);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/inbox/credit-notes \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
       },
     },
   },
@@ -811,34 +811,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## list_received_documents\n\n`client.outbox.listReceivedDocuments(date_from?: string, date_to?: string, page?: number, page_size?: number, receiver?: string, search?: string, sender?: string, sort_by?: string, sort_order?: 'asc' | 'desc', type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'): { id: string; created_at: string; allowances?: object[]; amount_due?: string; attachments?: document_attachment[]; billing_address?: string; billing_address_recipient?: string; charges?: object[]; currency?: currency_code; customer_address?: string; customer_address_recipient?: string; customer_company_id?: string; customer_email?: string; customer_id?: string; customer_name?: string; customer_peppol_id?: string; customer_tax_id?: string; direction?: document_direction; document_type?: document_type; due_date?: string; invoice_date?: string; invoice_id?: string; invoice_total?: string; items?: object[]; note?: string; payment_details?: object[]; payment_term?: string; purchase_order?: string; remittance_address?: string; remittance_address_recipient?: string; service_address?: string; service_address_recipient?: string; service_end_date?: string; service_start_date?: string; shipping_address?: string; shipping_address_recipient?: string; state?: document_state; subtotal?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_details?: object[]; total_discount?: string; total_tax?: string; vatex?: string; vatex_note?: string; vendor_address?: string; vendor_address_recipient?: string; vendor_company_id?: string; vendor_email?: string; vendor_name?: string; vendor_tax_id?: string; }`\n\n**get** `/api/outbox/`\n\nRetrieve a paginated list of sent documents with filtering options including state, type, sender, date range, and text search.\n\n### Parameters\n\n- `date_from?: string`\n  Filter by issue date (from)\n\n- `date_to?: string`\n  Filter by issue date (to)\n\n- `page?: number`\n  Page number\n\n- `page_size?: number`\n  Number of items per page\n\n- `receiver?: string`\n  Filter by receiver (customer_name, customer_email, customer_tax_id, customer_company_id, customer_id)\n\n- `search?: string`\n  Search in invoice number, seller/buyer names\n\n- `sender?: string`\n  (Deprecated) Filter by sender ID\n\n- `sort_by?: string`\n  Field to sort by\n\n- `sort_order?: 'asc' | 'desc'`\n  Sort direction (asc/desc)\n\n- `type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'`\n  Filter by document type. If not provided, returns all types.\n\n### Returns\n\n- `{ id: string; created_at: string; allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; amount_due?: string; attachments?: { id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }[]; billing_address?: string; billing_address_recipient?: string; charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; currency?: string; customer_address?: string; customer_address_recipient?: string; customer_company_id?: string; customer_email?: string; customer_id?: string; customer_name?: string; customer_peppol_id?: string; customer_tax_id?: string; direction?: 'INBOUND' | 'OUTBOUND'; document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'; due_date?: string; invoice_date?: string; invoice_id?: string; invoice_total?: string; items?: { allowances?: object[]; amount?: string; charges?: object[]; date?: null; description?: string; product_code?: string; quantity?: string; tax?: string; tax_rate?: string; unit?: string; unit_price?: string; }[]; note?: string; payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]; payment_term?: string; purchase_order?: string; remittance_address?: string; remittance_address_recipient?: string; service_address?: string; service_address_recipient?: string; service_end_date?: string; service_start_date?: string; shipping_address?: string; shipping_address_recipient?: string; state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'; subtotal?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_details?: { amount?: string; rate?: string; }[]; total_discount?: string; total_tax?: string; vatex?: string; vatex_note?: string; vendor_address?: string; vendor_address_recipient?: string; vendor_company_id?: string; vendor_email?: string; vendor_name?: string; vendor_tax_id?: string; }`\n\n  - `id: string`\n  - `created_at: string`\n  - `allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]`\n  - `amount_due?: string`\n  - `attachments?: { id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }[]`\n  - `billing_address?: string`\n  - `billing_address_recipient?: string`\n  - `charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]`\n  - `currency?: string`\n  - `customer_address?: string`\n  - `customer_address_recipient?: string`\n  - `customer_company_id?: string`\n  - `customer_email?: string`\n  - `customer_id?: string`\n  - `customer_name?: string`\n  - `customer_peppol_id?: string`\n  - `customer_tax_id?: string`\n  - `direction?: 'INBOUND' | 'OUTBOUND'`\n  - `document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'`\n  - `due_date?: string`\n  - `invoice_date?: string`\n  - `invoice_id?: string`\n  - `invoice_total?: string`\n  - `items?: { allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; amount?: string; charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; date?: null; description?: string; product_code?: string; quantity?: string; tax?: string; tax_rate?: string; unit?: string; unit_price?: string; }[]`\n  - `note?: string`\n  - `payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]`\n  - `payment_term?: string`\n  - `purchase_order?: string`\n  - `remittance_address?: string`\n  - `remittance_address_recipient?: string`\n  - `service_address?: string`\n  - `service_address_recipient?: string`\n  - `service_end_date?: string`\n  - `service_start_date?: string`\n  - `shipping_address?: string`\n  - `shipping_address_recipient?: string`\n  - `state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'`\n  - `subtotal?: string`\n  - `tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'`\n  - `tax_details?: { amount?: string; rate?: string; }[]`\n  - `total_discount?: string`\n  - `total_tax?: string`\n  - `vatex?: string`\n  - `vatex_note?: string`\n  - `vendor_address?: string`\n  - `vendor_address_recipient?: string`\n  - `vendor_company_id?: string`\n  - `vendor_email?: string`\n  - `vendor_name?: string`\n  - `vendor_tax_id?: string`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\n// Automatically fetches more pages as needed.\nfor await (const documentResponse of client.outbox.listReceivedDocuments()) {\n  console.log(documentResponse);\n}\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.outbox.listReceivedDocuments',
         example:
-          'curl https://api.e-invoice.be/api/outbox/ \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
-      },
-      java: {
-        method: 'outbox().listReceivedDocuments',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.outbox.OutboxListReceivedDocumentsPage;\nimport com.e_invoice.api.models.outbox.OutboxListReceivedDocumentsParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        OutboxListReceivedDocumentsPage page = client.outbox().listReceivedDocuments();\n    }\n}',
-      },
-      php: {
-        method: 'outbox->listReceivedDocuments',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$page = $client->outbox->listReceivedDocuments(\n  dateFrom: new \\DateTimeImmutable('2019-12-27T18:11:19.117Z'),\n  dateTo: new \\DateTimeImmutable('2019-12-27T18:11:19.117Z'),\n  page: 1,\n  pageSize: 1,\n  receiver: 'receiver',\n  search: 'search',\n  sender: 'sender',\n  sortBy: 'created_at',\n  sortOrder: 'asc',\n  type: DocumentType::INVOICE,\n);\n\nvar_dump($page);",
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const documentResponse of client.outbox.listReceivedDocuments()) {\n  console.log(documentResponse.id);\n}",
       },
       python: {
         method: 'outbox.list_received_documents',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\npage = client.outbox.list_received_documents()\npage = page.items[0]\nprint(page.id)',
       },
+      java: {
+        method: 'outbox().listReceivedDocuments',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.outbox.OutboxListReceivedDocumentsPage;\nimport com.e_invoice.api.models.outbox.OutboxListReceivedDocumentsParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        OutboxListReceivedDocumentsPage page = client.outbox().listReceivedDocuments();\n    }\n}',
+      },
       ruby: {
         method: 'outbox.list_received_documents',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\npage = e_invoice.outbox.list_received_documents\n\nputs(page)',
       },
-      typescript: {
-        method: 'client.outbox.listReceivedDocuments',
+      php: {
+        method: 'outbox->listReceivedDocuments',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const documentResponse of client.outbox.listReceivedDocuments()) {\n  console.log(documentResponse.id);\n}",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$page = $client->outbox->listReceivedDocuments(\n  dateFrom: new \\DateTimeImmutable('2019-12-27T18:11:19.117Z'),\n  dateTo: new \\DateTimeImmutable('2019-12-27T18:11:19.117Z'),\n  page: 1,\n  pageSize: 1,\n  receiver: 'receiver',\n  search: 'search',\n  sender: 'sender',\n  sortBy: 'created_at',\n  sortOrder: 'asc',\n  type: DocumentType::INVOICE,\n);\n\nvar_dump($page);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/outbox/ \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
       },
     },
   },
@@ -864,34 +864,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## list_draft_documents\n\n`client.outbox.listDraftDocuments(page?: number, page_size?: number, search?: string, sort_by?: string, sort_order?: 'asc' | 'desc', state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED', type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'): { id: string; created_at: string; allowances?: object[]; amount_due?: string; attachments?: document_attachment[]; billing_address?: string; billing_address_recipient?: string; charges?: object[]; currency?: currency_code; customer_address?: string; customer_address_recipient?: string; customer_company_id?: string; customer_email?: string; customer_id?: string; customer_name?: string; customer_peppol_id?: string; customer_tax_id?: string; direction?: document_direction; document_type?: document_type; due_date?: string; invoice_date?: string; invoice_id?: string; invoice_total?: string; items?: object[]; note?: string; payment_details?: object[]; payment_term?: string; purchase_order?: string; remittance_address?: string; remittance_address_recipient?: string; service_address?: string; service_address_recipient?: string; service_end_date?: string; service_start_date?: string; shipping_address?: string; shipping_address_recipient?: string; state?: document_state; subtotal?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_details?: object[]; total_discount?: string; total_tax?: string; vatex?: string; vatex_note?: string; vendor_address?: string; vendor_address_recipient?: string; vendor_company_id?: string; vendor_email?: string; vendor_name?: string; vendor_tax_id?: string; }`\n\n**get** `/api/outbox/drafts`\n\nRetrieve a paginated list of draft documents with filtering options including state and text search.\n\n### Parameters\n\n- `page?: number`\n  Page number\n\n- `page_size?: number`\n  Number of items per page\n\n- `search?: string`\n  Search in invoice number, seller/buyer names\n\n- `sort_by?: string`\n  Field to sort by\n\n- `sort_order?: 'asc' | 'desc'`\n  Sort direction (asc/desc)\n\n- `state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'`\n  Filter by document state\n\n- `type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'`\n  Filter by document type\n\n### Returns\n\n- `{ id: string; created_at: string; allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; amount_due?: string; attachments?: { id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }[]; billing_address?: string; billing_address_recipient?: string; charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; currency?: string; customer_address?: string; customer_address_recipient?: string; customer_company_id?: string; customer_email?: string; customer_id?: string; customer_name?: string; customer_peppol_id?: string; customer_tax_id?: string; direction?: 'INBOUND' | 'OUTBOUND'; document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'; due_date?: string; invoice_date?: string; invoice_id?: string; invoice_total?: string; items?: { allowances?: object[]; amount?: string; charges?: object[]; date?: null; description?: string; product_code?: string; quantity?: string; tax?: string; tax_rate?: string; unit?: string; unit_price?: string; }[]; note?: string; payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]; payment_term?: string; purchase_order?: string; remittance_address?: string; remittance_address_recipient?: string; service_address?: string; service_address_recipient?: string; service_end_date?: string; service_start_date?: string; shipping_address?: string; shipping_address_recipient?: string; state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'; subtotal?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_details?: { amount?: string; rate?: string; }[]; total_discount?: string; total_tax?: string; vatex?: string; vatex_note?: string; vendor_address?: string; vendor_address_recipient?: string; vendor_company_id?: string; vendor_email?: string; vendor_name?: string; vendor_tax_id?: string; }`\n\n  - `id: string`\n  - `created_at: string`\n  - `allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]`\n  - `amount_due?: string`\n  - `attachments?: { id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }[]`\n  - `billing_address?: string`\n  - `billing_address_recipient?: string`\n  - `charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]`\n  - `currency?: string`\n  - `customer_address?: string`\n  - `customer_address_recipient?: string`\n  - `customer_company_id?: string`\n  - `customer_email?: string`\n  - `customer_id?: string`\n  - `customer_name?: string`\n  - `customer_peppol_id?: string`\n  - `customer_tax_id?: string`\n  - `direction?: 'INBOUND' | 'OUTBOUND'`\n  - `document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'`\n  - `due_date?: string`\n  - `invoice_date?: string`\n  - `invoice_id?: string`\n  - `invoice_total?: string`\n  - `items?: { allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; amount?: string; charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; date?: null; description?: string; product_code?: string; quantity?: string; tax?: string; tax_rate?: string; unit?: string; unit_price?: string; }[]`\n  - `note?: string`\n  - `payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]`\n  - `payment_term?: string`\n  - `purchase_order?: string`\n  - `remittance_address?: string`\n  - `remittance_address_recipient?: string`\n  - `service_address?: string`\n  - `service_address_recipient?: string`\n  - `service_end_date?: string`\n  - `service_start_date?: string`\n  - `shipping_address?: string`\n  - `shipping_address_recipient?: string`\n  - `state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'`\n  - `subtotal?: string`\n  - `tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'`\n  - `tax_details?: { amount?: string; rate?: string; }[]`\n  - `total_discount?: string`\n  - `total_tax?: string`\n  - `vatex?: string`\n  - `vatex_note?: string`\n  - `vendor_address?: string`\n  - `vendor_address_recipient?: string`\n  - `vendor_company_id?: string`\n  - `vendor_email?: string`\n  - `vendor_name?: string`\n  - `vendor_tax_id?: string`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\n// Automatically fetches more pages as needed.\nfor await (const documentResponse of client.outbox.listDraftDocuments()) {\n  console.log(documentResponse);\n}\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.outbox.listDraftDocuments',
         example:
-          'curl https://api.e-invoice.be/api/outbox/drafts \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
-      },
-      java: {
-        method: 'outbox().listDraftDocuments',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.outbox.OutboxListDraftDocumentsPage;\nimport com.e_invoice.api.models.outbox.OutboxListDraftDocumentsParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        OutboxListDraftDocumentsPage page = client.outbox().listDraftDocuments();\n    }\n}',
-      },
-      php: {
-        method: 'outbox->listDraftDocuments',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$page = $client->outbox->listDraftDocuments(\n  page: 1,\n  pageSize: 1,\n  search: 'search',\n  sortBy: 'created_at',\n  sortOrder: 'asc',\n  state: DocumentState::DRAFT,\n  type: DocumentType::INVOICE,\n);\n\nvar_dump($page);",
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const documentResponse of client.outbox.listDraftDocuments()) {\n  console.log(documentResponse.id);\n}",
       },
       python: {
         method: 'outbox.list_draft_documents',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\npage = client.outbox.list_draft_documents()\npage = page.items[0]\nprint(page.id)',
       },
+      java: {
+        method: 'outbox().listDraftDocuments',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.outbox.OutboxListDraftDocumentsPage;\nimport com.e_invoice.api.models.outbox.OutboxListDraftDocumentsParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        OutboxListDraftDocumentsPage page = client.outbox().listDraftDocuments();\n    }\n}',
+      },
       ruby: {
         method: 'outbox.list_draft_documents',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\npage = e_invoice.outbox.list_draft_documents\n\nputs(page)',
       },
-      typescript: {
-        method: 'client.outbox.listDraftDocuments',
+      php: {
+        method: 'outbox->listDraftDocuments',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const documentResponse of client.outbox.listDraftDocuments()) {\n  console.log(documentResponse.id);\n}",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$page = $client->outbox->listDraftDocuments(\n  page: 1,\n  pageSize: 1,\n  search: 'search',\n  sortBy: 'created_at',\n  sortOrder: 'asc',\n  state: DocumentState::DRAFT,\n  type: DocumentType::INVOICE,\n);\n\nvar_dump($page);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/outbox/drafts \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
       },
     },
   },
@@ -909,34 +909,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## validate_ubl\n\n`client.validate.validateUbl(file: string): { id: string; file_name: string; is_valid: boolean; issues: object[]; ubl_document?: string; }`\n\n**post** `/api/validate/ubl`\n\nValidate the correctness of a UBL document\n\n### Parameters\n\n- `file: string`\n\n### Returns\n\n- `{ id: string; file_name: string; is_valid: boolean; issues: { message: string; schematron: string; type: 'error' | 'warning'; flag?: string; location?: string; rule_id?: string; test?: string; }[]; ubl_document?: string; }`\n\n  - `id: string`\n  - `file_name: string`\n  - `is_valid: boolean`\n  - `issues: { message: string; schematron: string; type: 'error' | 'warning'; flag?: string; location?: string; rule_id?: string; test?: string; }[]`\n  - `ubl_document?: string`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst ublDocumentValidation = await client.validate.validateUbl({ file: fs.createReadStream('path/to/file') });\n\nconsole.log(ublDocumentValidation);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.validate.validateUbl',
         example:
-          "curl https://api.e-invoice.be/api/validate/ubl \\\n    -H 'Content-Type: multipart/form-data' \\\n    -H \"Authorization: Bearer $E_INVOICE_API_KEY\" \\\n    -F 'file=@/path/to/file'",
-      },
-      java: {
-        method: 'validate().validateUbl',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.validate.UblDocumentValidation;\nimport com.e_invoice.api.models.validate.ValidateValidateUblParams;\nimport java.io.ByteArrayInputStream;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        ValidateValidateUblParams params = ValidateValidateUblParams.builder()\n            .file(new ByteArrayInputStream("Example data".getBytes()))\n            .build();\n        UblDocumentValidation ublDocumentValidation = client.validate().validateUbl(params);\n    }\n}',
-      },
-      php: {
-        method: 'validate->validateUbl',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$ublDocumentValidation = $client->validate->validateUbl(\n  file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),\n);\n\nvar_dump($ublDocumentValidation);",
+          "import fs from 'fs';\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst ublDocumentValidation = await client.validate.validateUbl({\n  file: fs.createReadStream('path/to/file'),\n});\n\nconsole.log(ublDocumentValidation.id);",
       },
       python: {
         method: 'validate.validate_ubl',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\nubl_document_validation = client.validate.validate_ubl(\n    file=b"Example data",\n)\nprint(ubl_document_validation.id)',
       },
+      java: {
+        method: 'validate().validateUbl',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.validate.UblDocumentValidation;\nimport com.e_invoice.api.models.validate.ValidateValidateUblParams;\nimport java.io.ByteArrayInputStream;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        ValidateValidateUblParams params = ValidateValidateUblParams.builder()\n            .file(new ByteArrayInputStream("Example data".getBytes()))\n            .build();\n        UblDocumentValidation ublDocumentValidation = client.validate().validateUbl(params);\n    }\n}',
+      },
       ruby: {
         method: 'validate.validate_ubl',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\nubl_document_validation = e_invoice.validate.validate_ubl(file: StringIO.new("Example data"))\n\nputs(ubl_document_validation)',
       },
-      typescript: {
-        method: 'client.validate.validateUbl',
+      php: {
+        method: 'validate->validateUbl',
         example:
-          "import fs from 'fs';\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst ublDocumentValidation = await client.validate.validateUbl({\n  file: fs.createReadStream('path/to/file'),\n});\n\nconsole.log(ublDocumentValidation.id);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$ublDocumentValidation = $client->validate->validateUbl(\n  file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),\n);\n\nvar_dump($ublDocumentValidation);",
+      },
+      http: {
+        example:
+          "curl https://api.e-invoice.be/api/validate/ubl \\\n    -H 'Content-Type: multipart/form-data' \\\n    -H \"Authorization: Bearer $E_INVOICE_API_KEY\" \\\n    -F 'file=@/path/to/file'",
       },
     },
   },
@@ -1004,34 +1004,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## validate_json\n\n`client.validate.validateJson(allowances?: { amount?: number | string; base_amount?: number | string; multiplier_factor?: number | string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: number | string; }[], amount_due?: number | string, attachments?: { file_name: string; file_data?: string; file_size?: number; file_type?: string; }[], billing_address?: string, billing_address_recipient?: string, charges?: { amount?: number | string; base_amount?: number | string; multiplier_factor?: number | string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: number | string; }[], currency?: string, customer_address?: string, customer_address_recipient?: string, customer_company_id?: string, customer_email?: string, customer_id?: string, customer_name?: string, customer_peppol_id?: string, customer_tax_id?: string, direction?: 'INBOUND' | 'OUTBOUND', document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE', due_date?: string, invoice_date?: string, invoice_id?: string, invoice_total?: number | string, items?: { allowances?: { amount?: number | string; base_amount?: number | string; multiplier_factor?: number | string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: number | string; }[]; amount?: number | string; charges?: { amount?: number | string; base_amount?: number | string; multiplier_factor?: number | string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: number | string; }[]; date?: null; description?: string; product_code?: string; quantity?: number | string; tax?: number | string; tax_rate?: number | string; unit?: string; unit_price?: number | string; }[], note?: string, payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[], payment_term?: string, previous_unpaid_balance?: number | string, purchase_order?: string, remittance_address?: string, remittance_address_recipient?: string, service_address?: string, service_address_recipient?: string, service_end_date?: string, service_start_date?: string, shipping_address?: string, shipping_address_recipient?: string, state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED', subtotal?: number | string, tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B', tax_details?: { amount?: number | string; rate?: string; }[], total_discount?: number | string, total_tax?: number | string, vatex?: string, vatex_note?: string, vendor_address?: string, vendor_address_recipient?: string, vendor_company_id?: string, vendor_email?: string, vendor_name?: string, vendor_tax_id?: string): { id: string; file_name: string; is_valid: boolean; issues: object[]; ubl_document?: string; }`\n\n**post** `/api/validate/json`\n\nValidate if the JSON document can be converted to a valid UBL document\n\n### Parameters\n\n- `allowances?: { amount?: number | string; base_amount?: number | string; multiplier_factor?: number | string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: number | string; }[]`\n\n- `amount_due?: number | string`\n  The amount due for payment. Must be positive and rounded to maximum 2 decimals\n\n- `attachments?: { file_name: string; file_data?: string; file_size?: number; file_type?: string; }[]`\n\n- `billing_address?: string`\n  The billing address (if different from customer address)\n\n- `billing_address_recipient?: string`\n  The recipient name at the billing address\n\n- `charges?: { amount?: number | string; base_amount?: number | string; multiplier_factor?: number | string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: number | string; }[]`\n\n- `currency?: string`\n  Currency of the invoice (ISO 4217 currency code)\n\n- `customer_address?: string`\n  The address of the customer/buyer\n\n- `customer_address_recipient?: string`\n  The recipient name at the customer address\n\n- `customer_company_id?: string`\n  Customer company ID. For Belgium this is the CBE number or their EUID (European Unique Identifier) number. In the Netherlands this is the KVK number.\n\n- `customer_email?: string`\n  The email address of the customer\n\n- `customer_id?: string`\n  The unique identifier for the customer in your system\n\n- `customer_name?: string`\n  The company name of the customer/buyer\n\n- `customer_peppol_id?: string`\n  Customer Peppol ID\n\n- `customer_tax_id?: string`\n  Customer tax ID. For Belgium this is the VAT number. Must include the country prefix\n\n- `direction?: 'INBOUND' | 'OUTBOUND'`\n  The direction of the document: INBOUND (purchases) or OUTBOUND (sales)\n\n- `document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'`\n  The type of document: INVOICE, CREDIT_NOTE, or DEBIT_NOTE\n\n- `due_date?: string`\n  The date when payment is due\n\n- `invoice_date?: string`\n  The date when the invoice was issued\n\n- `invoice_id?: string`\n  The unique invoice identifier/number\n\n- `invoice_total?: number | string`\n  The total amount of the invoice including tax (invoice_total = subtotal + total_tax + total_discount). Must be positive and rounded to maximum 2 decimals\n\n- `items?: { allowances?: { amount?: number | string; base_amount?: number | string; multiplier_factor?: number | string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: number | string; }[]; amount?: number | string; charges?: { amount?: number | string; base_amount?: number | string; multiplier_factor?: number | string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: number | string; }[]; date?: null; description?: string; product_code?: string; quantity?: number | string; tax?: number | string; tax_rate?: number | string; unit?: string; unit_price?: number | string; }[]`\n  At least one line item is required\n\n- `note?: string`\n  Additional notes or comments for the invoice\n\n- `payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]`\n\n- `payment_term?: string`\n  The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30')\n\n- `previous_unpaid_balance?: number | string`\n  The previous unpaid balance from prior invoices, if any. Must be positive and rounded to maximum 2 decimals\n\n- `purchase_order?: string`\n  The purchase order reference number\n\n- `remittance_address?: string`\n  The address where payment should be sent or remitted to\n\n- `remittance_address_recipient?: string`\n  The recipient name at the remittance address\n\n- `service_address?: string`\n  The address where services were performed or goods were delivered\n\n- `service_address_recipient?: string`\n  The recipient name at the service address\n\n- `service_end_date?: string`\n  The end date of the service period or delivery period\n\n- `service_start_date?: string`\n  The start date of the service period or delivery period\n\n- `shipping_address?: string`\n  The shipping/delivery address\n\n- `shipping_address_recipient?: string`\n  The recipient name at the shipping address\n\n- `state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'`\n  The current state of the document: DRAFT, TRANSIT, FAILED, SENT, or RECEIVED\n\n- `subtotal?: number | string`\n  The taxable base of the invoice. Should be the sum of all line items - allowances (for example commercial discounts) + charges with impact on VAT. Must be positive and rounded to maximum 2 decimals\n\n- `tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'`\n  Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E for exempt)\n\n- `tax_details?: { amount?: number | string; rate?: string; }[]`\n\n- `total_discount?: number | string`\n  The net financial discount/charge of the invoice (non-VAT charges minus non-VAT allowances). Can be positive (net charge), negative (net discount), or zero. Must be rounded to maximum 2 decimals\n\n- `total_tax?: number | string`\n  The total tax amount of the invoice. Must be positive and rounded to maximum 2 decimals\n\n- `vatex?: string`\n  VATEX code list for VAT exemption reasons\n\nAgency: CEF\nIdentifier: vatex\n\n- `vatex_note?: string`\n  Textual explanation for VAT exemption\n\n- `vendor_address?: string`\n  The address of the vendor/seller\n\n- `vendor_address_recipient?: string`\n  The recipient name at the vendor address\n\n- `vendor_company_id?: string`\n  Vendor company ID. For Belgium this is the CBE number or their EUID (European Unique Identifier) number. In the Netherlands this is the KVK number.\n\n- `vendor_email?: string`\n  The email address of the vendor\n\n- `vendor_name?: string`\n  The name of the vendor/seller/supplier\n\n- `vendor_tax_id?: string`\n  Vendor tax ID. For Belgium this is the VAT number. Must include the country prefix\n\n### Returns\n\n- `{ id: string; file_name: string; is_valid: boolean; issues: { message: string; schematron: string; type: 'error' | 'warning'; flag?: string; location?: string; rule_id?: string; test?: string; }[]; ubl_document?: string; }`\n\n  - `id: string`\n  - `file_name: string`\n  - `is_valid: boolean`\n  - `issues: { message: string; schematron: string; type: 'error' | 'warning'; flag?: string; location?: string; rule_id?: string; test?: string; }[]`\n  - `ubl_document?: string`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst ublDocumentValidation = await client.validate.validateJson();\n\nconsole.log(ublDocumentValidation);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.validate.validateJson',
         example:
-          "curl https://api.e-invoice.be/api/validate/json \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $E_INVOICE_API_KEY\" \\\n    -d '{}'",
-      },
-      java: {
-        method: 'validate().validateJson',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.DocumentCreate;\nimport com.e_invoice.api.models.validate.UblDocumentValidation;\nimport com.e_invoice.api.models.validate.ValidateValidateJsonParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        DocumentCreate params = DocumentCreate.builder().build();\n        UblDocumentValidation ublDocumentValidation = client.validate().validateJson(params);\n    }\n}',
-      },
-      php: {
-        method: 'validate->validateJson',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$ublDocumentValidation = $client->validate->validateJson(\n  allowances: [\n    [\n      'amount' => 0,\n      'baseAmount' => 0,\n      'multiplierFactor' => 0,\n      'reason' => 'reason',\n      'reasonCode' => '41',\n      'taxCode' => 'AE',\n      'taxRate' => 0,\n    ],\n  ],\n  amountDue: 0,\n  attachments: [\n    [\n      'fileName' => 'file_name',\n      'fileData' => 'file_data',\n      'fileSize' => 0,\n      'fileType' => 'file_type',\n    ],\n  ],\n  billingAddress: 'billing_address',\n  billingAddressRecipient: 'billing_address_recipient',\n  charges: [\n    [\n      'amount' => 0,\n      'baseAmount' => 0,\n      'multiplierFactor' => 0,\n      'reason' => 'reason',\n      'reasonCode' => 'AA',\n      'taxCode' => 'AE',\n      'taxRate' => '21.00',\n    ],\n  ],\n  currency: CurrencyCode::EUR,\n  customerAddress: 'customer_address',\n  customerAddressRecipient: 'customer_address_recipient',\n  customerCompanyID: '1018265814',\n  customerEmail: 'customer_email',\n  customerID: 'customer_id',\n  customerName: 'customer_name',\n  customerPeppolID: '0208:0123456789',\n  customerTaxID: 'BE1018265814',\n  direction: DocumentDirection::INBOUND,\n  documentType: DocumentType::INVOICE,\n  dueDate: '2019-12-27',\n  invoiceDate: '2019-12-27',\n  invoiceID: 'invoice_id',\n  invoiceTotal: 0,\n  items: [\n    [\n      'allowances' => [\n        [\n          'amount' => 0,\n          'baseAmount' => 0,\n          'multiplierFactor' => 0,\n          'reason' => 'reason',\n          'reasonCode' => '41',\n          'taxCode' => 'AE',\n          'taxRate' => 0,\n        ],\n      ],\n      'amount' => 0,\n      'charges' => [\n        [\n          'amount' => 0,\n          'baseAmount' => 0,\n          'multiplierFactor' => 0,\n          'reason' => 'reason',\n          'reasonCode' => 'AA',\n          'taxCode' => 'AE',\n          'taxRate' => '21.00',\n        ],\n      ],\n      'date' => null,\n      'description' => 'description',\n      'productCode' => 'product_code',\n      'quantity' => 0,\n      'tax' => 0,\n      'taxRate' => '21.00',\n      'unit' => UnitOfMeasureCode::_10,\n      'unitPrice' => 0,\n    ],\n  ],\n  note: 'note',\n  paymentDetails: [\n    [\n      'bankAccountNumber' => 'bank_account_number',\n      'iban' => 'iban',\n      'paymentReference' => 'payment_reference',\n      'swift' => 'swift',\n    ],\n  ],\n  paymentTerm: 'payment_term',\n  previousUnpaidBalance: 0,\n  purchaseOrder: 'purchase_order',\n  remittanceAddress: 'remittance_address',\n  remittanceAddressRecipient: 'remittance_address_recipient',\n  serviceAddress: 'service_address',\n  serviceAddressRecipient: 'service_address_recipient',\n  serviceEndDate: '2019-12-27',\n  serviceStartDate: '2019-12-27',\n  shippingAddress: 'shipping_address',\n  shippingAddressRecipient: 'shipping_address_recipient',\n  state: DocumentState::DRAFT,\n  subtotal: 0,\n  taxCode: 'AE',\n  taxDetails: [['amount' => 0, 'rate' => 'rate']],\n  totalDiscount: 0,\n  totalTax: 0,\n  vatex: 'VATEX-EU-79-C',\n  vatexNote: 'vatex_note',\n  vendorAddress: 'vendor_address',\n  vendorAddressRecipient: 'vendor_address_recipient',\n  vendorCompanyID: '1018265814',\n  vendorEmail: 'vendor_email',\n  vendorName: 'vendor_name',\n  vendorTaxID: 'BE1018265814',\n);\n\nvar_dump($ublDocumentValidation);",
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst ublDocumentValidation = await client.validate.validateJson();\n\nconsole.log(ublDocumentValidation.id);",
       },
       python: {
         method: 'validate.validate_json',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\nubl_document_validation = client.validate.validate_json()\nprint(ubl_document_validation.id)',
       },
+      java: {
+        method: 'validate().validateJson',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.documents.DocumentCreate;\nimport com.e_invoice.api.models.validate.UblDocumentValidation;\nimport com.e_invoice.api.models.validate.ValidateValidateJsonParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        DocumentCreate params = DocumentCreate.builder().build();\n        UblDocumentValidation ublDocumentValidation = client.validate().validateJson(params);\n    }\n}',
+      },
       ruby: {
         method: 'validate.validate_json',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\nubl_document_validation = e_invoice.validate.validate_json\n\nputs(ubl_document_validation)',
       },
-      typescript: {
-        method: 'client.validate.validateJson',
+      php: {
+        method: 'validate->validateJson',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst ublDocumentValidation = await client.validate.validateJson();\n\nconsole.log(ublDocumentValidation.id);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$ublDocumentValidation = $client->validate->validateJson(\n  allowances: [\n    [\n      'amount' => 0,\n      'baseAmount' => 0,\n      'multiplierFactor' => 0,\n      'reason' => 'reason',\n      'reasonCode' => '41',\n      'taxCode' => 'AE',\n      'taxRate' => 0,\n    ],\n  ],\n  amountDue: 0,\n  attachments: [\n    [\n      'fileName' => 'file_name',\n      'fileData' => 'file_data',\n      'fileSize' => 0,\n      'fileType' => 'file_type',\n    ],\n  ],\n  billingAddress: 'billing_address',\n  billingAddressRecipient: 'billing_address_recipient',\n  charges: [\n    [\n      'amount' => 0,\n      'baseAmount' => 0,\n      'multiplierFactor' => 0,\n      'reason' => 'reason',\n      'reasonCode' => 'AA',\n      'taxCode' => 'AE',\n      'taxRate' => '21.00',\n    ],\n  ],\n  currency: CurrencyCode::EUR,\n  customerAddress: 'customer_address',\n  customerAddressRecipient: 'customer_address_recipient',\n  customerCompanyID: '1018265814',\n  customerEmail: 'customer_email',\n  customerID: 'customer_id',\n  customerName: 'customer_name',\n  customerPeppolID: '0208:0123456789',\n  customerTaxID: 'BE1018265814',\n  direction: DocumentDirection::INBOUND,\n  documentType: DocumentType::INVOICE,\n  dueDate: '2019-12-27',\n  invoiceDate: '2019-12-27',\n  invoiceID: 'invoice_id',\n  invoiceTotal: 0,\n  items: [\n    [\n      'allowances' => [\n        [\n          'amount' => 0,\n          'baseAmount' => 0,\n          'multiplierFactor' => 0,\n          'reason' => 'reason',\n          'reasonCode' => '41',\n          'taxCode' => 'AE',\n          'taxRate' => 0,\n        ],\n      ],\n      'amount' => 0,\n      'charges' => [\n        [\n          'amount' => 0,\n          'baseAmount' => 0,\n          'multiplierFactor' => 0,\n          'reason' => 'reason',\n          'reasonCode' => 'AA',\n          'taxCode' => 'AE',\n          'taxRate' => '21.00',\n        ],\n      ],\n      'date' => null,\n      'description' => 'description',\n      'productCode' => 'product_code',\n      'quantity' => 0,\n      'tax' => 0,\n      'taxRate' => '21.00',\n      'unit' => UnitOfMeasureCode::_10,\n      'unitPrice' => 0,\n    ],\n  ],\n  note: 'note',\n  paymentDetails: [\n    [\n      'bankAccountNumber' => 'bank_account_number',\n      'iban' => 'iban',\n      'paymentReference' => 'payment_reference',\n      'swift' => 'swift',\n    ],\n  ],\n  paymentTerm: 'payment_term',\n  previousUnpaidBalance: 0,\n  purchaseOrder: 'purchase_order',\n  remittanceAddress: 'remittance_address',\n  remittanceAddressRecipient: 'remittance_address_recipient',\n  serviceAddress: 'service_address',\n  serviceAddressRecipient: 'service_address_recipient',\n  serviceEndDate: '2019-12-27',\n  serviceStartDate: '2019-12-27',\n  shippingAddress: 'shipping_address',\n  shippingAddressRecipient: 'shipping_address_recipient',\n  state: DocumentState::DRAFT,\n  subtotal: 0,\n  taxCode: 'AE',\n  taxDetails: [['amount' => 0, 'rate' => 'rate']],\n  totalDiscount: 0,\n  totalTax: 0,\n  vatex: 'VATEX-EU-79-C',\n  vatexNote: 'vatex_note',\n  vendorAddress: 'vendor_address',\n  vendorAddressRecipient: 'vendor_address_recipient',\n  vendorCompanyID: '1018265814',\n  vendorEmail: 'vendor_email',\n  vendorName: 'vendor_name',\n  vendorTaxID: 'BE1018265814',\n);\n\nvar_dump($ublDocumentValidation);",
+      },
+      http: {
+        example:
+          "curl https://api.e-invoice.be/api/validate/json \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $E_INVOICE_API_KEY\" \\\n    -d '{}'",
       },
     },
   },
@@ -1050,34 +1050,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## validate_peppol_id\n\n`client.validate.validatePeppolID(peppol_id: string): { business_card_valid: boolean; dns_valid: boolean; is_valid: boolean; business_card?: object; supported_document_types?: string[]; }`\n\n**get** `/api/validate/peppol-id`\n\nValidate if a Peppol ID exists in the Peppol network and retrieve supported document types. The peppol_id must be in the form of `<scheme>:<id>`. The scheme is a 4-digit code representing the identifier scheme, and the id is the actual identifier value. For example, for a Belgian company it is `0208:0123456789` (where 0208 is the scheme for Belgian enterprises, followed by the 10 digits of the official BTW / KBO number).\n\n### Parameters\n\n- `peppol_id: string`\n  Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgian company.\n\n### Returns\n\n- `{ business_card_valid: boolean; dns_valid: boolean; is_valid: boolean; business_card?: { country_code?: string; name?: string; registration_date?: string; }; supported_document_types?: string[]; }`\n  Response for a Peppol ID validation request.\n\nThis model represents the validation result of a Peppol ID in the Peppol network,\nincluding whether the ID is valid and what document types it supports.\n\n  - `business_card_valid: boolean`\n  - `dns_valid: boolean`\n  - `is_valid: boolean`\n  - `business_card?: { country_code?: string; name?: string; registration_date?: string; }`\n  - `supported_document_types?: string[]`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst response = await client.validate.validatePeppolID({ peppol_id: 'peppol_id' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.validate.validatePeppolID',
         example:
-          'curl https://api.e-invoice.be/api/validate/peppol-id \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
-      },
-      java: {
-        method: 'validate().validatePeppolId',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.validate.ValidateValidatePeppolIdParams;\nimport com.e_invoice.api.models.validate.ValidateValidatePeppolIdResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        ValidateValidatePeppolIdParams params = ValidateValidatePeppolIdParams.builder()\n            .peppolId("peppol_id")\n            .build();\n        ValidateValidatePeppolIdResponse response = client.validate().validatePeppolId(params);\n    }\n}',
-      },
-      php: {
-        method: 'validate->validatePeppolID',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$response = $client->validate->validatePeppolID(peppolID: 'peppol_id');\n\nvar_dump($response);",
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.validate.validatePeppolID({ peppol_id: 'peppol_id' });\n\nconsole.log(response.business_card_valid);",
       },
       python: {
         method: 'validate.validate_peppol_id',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.validate.validate_peppol_id(\n    peppol_id="peppol_id",\n)\nprint(response.business_card_valid)',
       },
+      java: {
+        method: 'validate().validatePeppolId',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.validate.ValidateValidatePeppolIdParams;\nimport com.e_invoice.api.models.validate.ValidateValidatePeppolIdResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        ValidateValidatePeppolIdParams params = ValidateValidatePeppolIdParams.builder()\n            .peppolId("peppol_id")\n            .build();\n        ValidateValidatePeppolIdResponse response = client.validate().validatePeppolId(params);\n    }\n}',
+      },
       ruby: {
         method: 'validate.validate_peppol_id',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\nresponse = e_invoice.validate.validate_peppol_id(peppol_id: "peppol_id")\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.validate.validatePeppolID',
+      php: {
+        method: 'validate->validatePeppolID',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.validate.validatePeppolID({ peppol_id: 'peppol_id' });\n\nconsole.log(response.business_card_valid);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$response = $client->validate->validatePeppolID(peppolID: 'peppol_id');\n\nvar_dump($response);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/validate/peppol-id \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
       },
     },
   },
@@ -1096,34 +1096,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## retrieve\n\n`client.lookup.retrieve(peppol_id: string): { businessCard: object; certificates: certificate[]; dnsInfo: object; errors: string[]; executionTimeMs: number; queryMetadata: object; serviceMetadata: object; status: string; }`\n\n**get** `/api/lookup`\n\nLookup Peppol ID. The peppol_id must be in the form of `<scheme>:<id>`. The scheme is a 4-digit code representing the identifier scheme, and the id is the actual identifier value. For example, for a Belgian company it is `0208:0123456789` (where 0208 is the scheme for Belgian enterprises, followed by the 10 digits of the official BTW / KBO number).\n\n### Parameters\n\n- `peppol_id: string`\n  Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgian company.\n\n### Returns\n\n- `{ businessCard: { entities: { additionalInformation?: string[]; countryCode?: string; name?: string; registrationDate?: string; }[]; queryTimeMs: number; status: string; error?: string; }; certificates: { status: string; details?: object; error?: string; }[]; dnsInfo: { dnsRecords: { ip: string; }[]; smlHostname: string; status: string; error?: string; lookupMethod?: string; smpHostname?: string; }; errors: string[]; executionTimeMs: number; queryMetadata: { identifierScheme: string; identifierValue: string; smlDomain: string; timestamp: string; version: string; }; serviceMetadata: { endpoints: { documentTypes: object[]; status: string; url: string; error?: string; processes?: object[]; }[]; queryTimeMs: number; status: string; error?: string; }; status: string; }`\n  Response from a Peppol ID lookup operation.\n\nThis model represents the complete result of validating and looking up a Peppol ID\nin the Peppol network, including DNS information, service metadata, business card\ndetails, and certificate information.\n\nExample:\n    A successful lookup for a Peppol ID \"0192:991825827\" would return DNS information,\n    service metadata with supported document types and processes, business card information\n    with organization details, and certificate data.\n\n  - `businessCard: { entities: { additionalInformation?: string[]; countryCode?: string; name?: string; registrationDate?: string; }[]; queryTimeMs: number; status: string; error?: string; }`\n  - `certificates: { status: string; details?: object; error?: string; }[]`\n  - `dnsInfo: { dnsRecords: { ip: string; }[]; smlHostname: string; status: string; error?: string; lookupMethod?: string; smpHostname?: string; }`\n  - `errors: string[]`\n  - `executionTimeMs: number`\n  - `queryMetadata: { identifierScheme: string; identifierValue: string; smlDomain: string; timestamp: string; version: string; }`\n  - `serviceMetadata: { endpoints: { documentTypes: { scheme: string; value: string; }[]; status: string; url: string; error?: string; processes?: { endpoints: { address: string; transportProfile: string; certificate?: certificate; serviceActivationDate?: string; serviceDescription?: string; serviceExpirationDate?: string; technicalContactUrl?: string; technicalInformationUrl?: string; }[]; processId: { scheme: string; value: string; }; }[]; }[]; queryTimeMs: number; status: string; error?: string; }`\n  - `status: string`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst lookup = await client.lookup.retrieve({ peppol_id: 'peppol_id' });\n\nconsole.log(lookup);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.lookup.retrieve',
         example:
-          'curl https://api.e-invoice.be/api/lookup \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
-      },
-      java: {
-        method: 'lookup().retrieve',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.lookup.LookupRetrieveParams;\nimport com.e_invoice.api.models.lookup.LookupRetrieveResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        LookupRetrieveParams params = LookupRetrieveParams.builder()\n            .peppolId("peppol_id")\n            .build();\n        LookupRetrieveResponse lookup = client.lookup().retrieve(params);\n    }\n}',
-      },
-      php: {
-        method: 'lookup->retrieve',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$lookup = $client->lookup->retrieve(peppolID: 'peppol_id');\n\nvar_dump($lookup);",
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst lookup = await client.lookup.retrieve({ peppol_id: 'peppol_id' });\n\nconsole.log(lookup.businessCard);",
       },
       python: {
         method: 'lookup.retrieve',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\nlookup = client.lookup.retrieve(\n    peppol_id="peppol_id",\n)\nprint(lookup.business_card)',
       },
+      java: {
+        method: 'lookup().retrieve',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.lookup.LookupRetrieveParams;\nimport com.e_invoice.api.models.lookup.LookupRetrieveResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        LookupRetrieveParams params = LookupRetrieveParams.builder()\n            .peppolId("peppol_id")\n            .build();\n        LookupRetrieveResponse lookup = client.lookup().retrieve(params);\n    }\n}',
+      },
       ruby: {
         method: 'lookup.retrieve',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\nlookup = e_invoice.lookup.retrieve(peppol_id: "peppol_id")\n\nputs(lookup)',
       },
-      typescript: {
-        method: 'client.lookup.retrieve',
+      php: {
+        method: 'lookup->retrieve',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst lookup = await client.lookup.retrieve({ peppol_id: 'peppol_id' });\n\nconsole.log(lookup.businessCard);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$lookup = $client->lookup->retrieve(peppolID: 'peppol_id');\n\nvar_dump($lookup);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/lookup \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
       },
     },
   },
@@ -1142,34 +1142,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## retrieve_participants\n\n`client.lookup.retrieveParticipants(query: string, country_code?: string): { query_terms: string; search_date: string; total_count: number; used_count: number; participants?: object[]; }`\n\n**get** `/api/lookup/participants`\n\nLookup Peppol participants by name or other identifiers. You can limit the search to a specific country by providing the country code.\n\n### Parameters\n\n- `query: string`\n  Query to lookup\n\n- `country_code?: string`\n  Country code of the company to lookup. If not provided, the search will be global.\n\n### Returns\n\n- `{ query_terms: string; search_date: string; total_count: number; used_count: number; participants?: { peppol_id: string; peppol_scheme: string; document_types?: { scheme: string; value: string; }[]; entities?: { additional_info?: string; country_code?: string; geo_info?: string; identifiers?: object[]; name?: string; registration_date?: string; website?: string; }[]; }[]; }`\n  Represents the result of a Peppol directory search\n\n  - `query_terms: string`\n  - `search_date: string`\n  - `total_count: number`\n  - `used_count: number`\n  - `participants?: { peppol_id: string; peppol_scheme: string; document_types?: { scheme: string; value: string; }[]; entities?: { additional_info?: string; country_code?: string; geo_info?: string; identifiers?: { scheme: string; value: string; }[]; name?: string; registration_date?: string; website?: string; }[]; }[]`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst response = await client.lookup.retrieveParticipants({ query: 'query' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.lookup.retrieveParticipants',
         example:
-          'curl https://api.e-invoice.be/api/lookup/participants \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
-      },
-      java: {
-        method: 'lookup().retrieveParticipants',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.lookup.LookupRetrieveParticipantsParams;\nimport com.e_invoice.api.models.lookup.LookupRetrieveParticipantsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        LookupRetrieveParticipantsParams params = LookupRetrieveParticipantsParams.builder()\n            .query("query")\n            .build();\n        LookupRetrieveParticipantsResponse response = client.lookup().retrieveParticipants(params);\n    }\n}',
-      },
-      php: {
-        method: 'lookup->retrieveParticipants',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$response = $client->lookup->retrieveParticipants(\n  query: 'query', countryCode: 'country_code'\n);\n\nvar_dump($response);",
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.lookup.retrieveParticipants({ query: 'query' });\n\nconsole.log(response.query_terms);",
       },
       python: {
         method: 'lookup.retrieve_participants',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.lookup.retrieve_participants(\n    query="query",\n)\nprint(response.query_terms)',
       },
+      java: {
+        method: 'lookup().retrieveParticipants',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.lookup.LookupRetrieveParticipantsParams;\nimport com.e_invoice.api.models.lookup.LookupRetrieveParticipantsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        LookupRetrieveParticipantsParams params = LookupRetrieveParticipantsParams.builder()\n            .query("query")\n            .build();\n        LookupRetrieveParticipantsResponse response = client.lookup().retrieveParticipants(params);\n    }\n}',
+      },
       ruby: {
         method: 'lookup.retrieve_participants',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\nresponse = e_invoice.lookup.retrieve_participants(query: "query")\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.lookup.retrieveParticipants',
+      php: {
+        method: 'lookup->retrieveParticipants',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.lookup.retrieveParticipants({ query: 'query' });\n\nconsole.log(response.query_terms);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$response = $client->lookup->retrieveParticipants(\n  query: 'query', countryCode: 'country_code'\n);\n\nvar_dump($response);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/lookup/participants \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
       },
     },
   },
@@ -1186,34 +1186,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## retrieve\n\n`client.me.retrieve(): { name: string; bcc_recipient_email?: string; company_address?: string; company_city?: string; company_country?: string; company_email?: string; company_name?: string; company_number?: string; company_tax_id?: string; company_zip?: string; credit_balance?: number; description?: string; ibans?: string[]; peppol_ids?: string[]; plan?: 'starter' | 'pro' | 'enterprise'; smp_registration?: boolean; smp_registration_date?: string; }`\n\n**get** `/api/me/`\n\nRetrieve information about your account.\n\n### Returns\n\n- `{ name: string; bcc_recipient_email?: string; company_address?: string; company_city?: string; company_country?: string; company_email?: string; company_name?: string; company_number?: string; company_tax_id?: string; company_zip?: string; credit_balance?: number; description?: string; ibans?: string[]; peppol_ids?: string[]; plan?: 'starter' | 'pro' | 'enterprise'; smp_registration?: boolean; smp_registration_date?: string; }`\n\n  - `name: string`\n  - `bcc_recipient_email?: string`\n  - `company_address?: string`\n  - `company_city?: string`\n  - `company_country?: string`\n  - `company_email?: string`\n  - `company_name?: string`\n  - `company_number?: string`\n  - `company_tax_id?: string`\n  - `company_zip?: string`\n  - `credit_balance?: number`\n  - `description?: string`\n  - `ibans?: string[]`\n  - `peppol_ids?: string[]`\n  - `plan?: 'starter' | 'pro' | 'enterprise'`\n  - `smp_registration?: boolean`\n  - `smp_registration_date?: string`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst me = await client.me.retrieve();\n\nconsole.log(me);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.me.retrieve',
         example:
-          'curl https://api.e-invoice.be/api/me/ \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
-      },
-      java: {
-        method: 'me().retrieve',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.me.MeRetrieveParams;\nimport com.e_invoice.api.models.me.MeRetrieveResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        MeRetrieveResponse me = client.me().retrieve();\n    }\n}',
-      },
-      php: {
-        method: 'me->retrieve',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$me = $client->me->retrieve();\n\nvar_dump($me);",
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst me = await client.me.retrieve();\n\nconsole.log(me.company_tax_id);",
       },
       python: {
         method: 'me.retrieve',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\nme = client.me.retrieve()\nprint(me.company_tax_id)',
       },
+      java: {
+        method: 'me().retrieve',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.me.MeRetrieveParams;\nimport com.e_invoice.api.models.me.MeRetrieveResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        MeRetrieveResponse me = client.me().retrieve();\n    }\n}',
+      },
       ruby: {
         method: 'me.retrieve',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\nme = e_invoice.me.retrieve\n\nputs(me)',
       },
-      typescript: {
-        method: 'client.me.retrieve',
+      php: {
+        method: 'me->retrieve',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst me = await client.me.retrieve();\n\nconsole.log(me.company_tax_id);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$me = $client->me->retrieve();\n\nvar_dump($me);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/me/ \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
       },
     },
   },
@@ -1229,34 +1229,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## list\n\n`client.webhooks.list(): object[]`\n\n**get** `/api/webhooks/`\n\nGet all webhooks for the current tenant\n\n### Returns\n\n- `{ id: string; events: string[]; secret: string; url: string; enabled?: boolean; }[]`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst webhookResponses = await client.webhooks.list();\n\nconsole.log(webhookResponses);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.webhooks.list',
         example:
-          'curl https://api.e-invoice.be/api/webhooks/ \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
-      },
-      java: {
-        method: 'webhooks().list',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.webhooks.WebhookListParams;\nimport com.e_invoice.api.models.webhooks.WebhookResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        List<WebhookResponse> webhookResponses = client.webhooks().list();\n    }\n}',
-      },
-      php: {
-        method: 'webhooks->list',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$webhookResponses = $client->webhooks->list();\n\nvar_dump($webhookResponses);",
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst webhookResponses = await client.webhooks.list();\n\nconsole.log(webhookResponses);",
       },
       python: {
         method: 'webhooks.list',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\nwebhook_responses = client.webhooks.list()\nprint(webhook_responses)',
       },
+      java: {
+        method: 'webhooks().list',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.webhooks.WebhookListParams;\nimport com.e_invoice.api.models.webhooks.WebhookResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        List<WebhookResponse> webhookResponses = client.webhooks().list();\n    }\n}',
+      },
       ruby: {
         method: 'webhooks.list',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\nwebhook_responses = e_invoice.webhooks.list\n\nputs(webhook_responses)',
       },
-      typescript: {
-        method: 'client.webhooks.list',
+      php: {
+        method: 'webhooks->list',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst webhookResponses = await client.webhooks.list();\n\nconsole.log(webhookResponses);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$webhookResponses = $client->webhooks->list();\n\nvar_dump($webhookResponses);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/webhooks/ \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
       },
     },
   },
@@ -1273,34 +1273,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## create\n\n`client.webhooks.create(events: string[], url: string, enabled?: boolean): { id: string; events: string[]; secret: string; url: string; enabled?: boolean; }`\n\n**post** `/api/webhooks/`\n\nCreate a new webhook\n\n### Parameters\n\n- `events: string[]`\n\n- `url: string`\n\n- `enabled?: boolean`\n\n### Returns\n\n- `{ id: string; events: string[]; secret: string; url: string; enabled?: boolean; }`\n  Response model for webhook API endpoints.\n\n  - `id: string`\n  - `events: string[]`\n  - `secret: string`\n  - `url: string`\n  - `enabled?: boolean`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst webhookResponse = await client.webhooks.create({ events: ['string'], url: 'https://example.com' });\n\nconsole.log(webhookResponse);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.webhooks.create',
         example:
-          'curl https://api.e-invoice.be/api/webhooks/ \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY" \\\n    -d \'{\n          "events": [\n            "string"\n          ],\n          "url": "https://example.com"\n        }\'',
-      },
-      java: {
-        method: 'webhooks().create',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.webhooks.WebhookCreateParams;\nimport com.e_invoice.api.models.webhooks.WebhookResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        WebhookCreateParams params = WebhookCreateParams.builder()\n            .addEvent("string")\n            .url("https://example.com")\n            .build();\n        WebhookResponse webhookResponse = client.webhooks().create(params);\n    }\n}',
-      },
-      php: {
-        method: 'webhooks->create',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$webhookResponse = $client->webhooks->create(\n  events: ['string'], url: 'https://example.com', enabled: true\n);\n\nvar_dump($webhookResponse);",
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst webhookResponse = await client.webhooks.create({\n  events: ['string'],\n  url: 'https://example.com',\n});\n\nconsole.log(webhookResponse.id);",
       },
       python: {
         method: 'webhooks.create',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\nwebhook_response = client.webhooks.create(\n    events=["string"],\n    url="https://example.com",\n)\nprint(webhook_response.id)',
       },
+      java: {
+        method: 'webhooks().create',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.webhooks.WebhookCreateParams;\nimport com.e_invoice.api.models.webhooks.WebhookResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        WebhookCreateParams params = WebhookCreateParams.builder()\n            .addEvent("string")\n            .url("https://example.com")\n            .build();\n        WebhookResponse webhookResponse = client.webhooks().create(params);\n    }\n}',
+      },
       ruby: {
         method: 'webhooks.create',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\nwebhook_response = e_invoice.webhooks.create(events: ["string"], url: "https://example.com")\n\nputs(webhook_response)',
       },
-      typescript: {
-        method: 'client.webhooks.create',
+      php: {
+        method: 'webhooks->create',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst webhookResponse = await client.webhooks.create({\n  events: ['string'],\n  url: 'https://example.com',\n});\n\nconsole.log(webhookResponse.id);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$webhookResponse = $client->webhooks->create(\n  events: ['string'], url: 'https://example.com', enabled: true\n);\n\nvar_dump($webhookResponse);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/webhooks/ \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY" \\\n    -d \'{\n          "events": [\n            "string"\n          ],\n          "url": "https://example.com"\n        }\'',
       },
     },
   },
@@ -1317,34 +1317,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## retrieve\n\n`client.webhooks.retrieve(webhook_id: string): { id: string; events: string[]; secret: string; url: string; enabled?: boolean; }`\n\n**get** `/api/webhooks/{webhook_id}`\n\nGet a webhook by ID\n\n### Parameters\n\n- `webhook_id: string`\n\n### Returns\n\n- `{ id: string; events: string[]; secret: string; url: string; enabled?: boolean; }`\n  Response model for webhook API endpoints.\n\n  - `id: string`\n  - `events: string[]`\n  - `secret: string`\n  - `url: string`\n  - `enabled?: boolean`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst webhookResponse = await client.webhooks.retrieve('webhook_id');\n\nconsole.log(webhookResponse);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.webhooks.retrieve',
         example:
-          'curl https://api.e-invoice.be/api/webhooks/$WEBHOOK_ID \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
-      },
-      java: {
-        method: 'webhooks().retrieve',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.webhooks.WebhookResponse;\nimport com.e_invoice.api.models.webhooks.WebhookRetrieveParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        WebhookResponse webhookResponse = client.webhooks().retrieve("webhook_id");\n    }\n}',
-      },
-      php: {
-        method: 'webhooks->retrieve',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$webhookResponse = $client->webhooks->retrieve('webhook_id');\n\nvar_dump($webhookResponse);",
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst webhookResponse = await client.webhooks.retrieve('webhook_id');\n\nconsole.log(webhookResponse.id);",
       },
       python: {
         method: 'webhooks.retrieve',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\nwebhook_response = client.webhooks.retrieve(\n    "webhook_id",\n)\nprint(webhook_response.id)',
       },
+      java: {
+        method: 'webhooks().retrieve',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.webhooks.WebhookResponse;\nimport com.e_invoice.api.models.webhooks.WebhookRetrieveParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        WebhookResponse webhookResponse = client.webhooks().retrieve("webhook_id");\n    }\n}',
+      },
       ruby: {
         method: 'webhooks.retrieve',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\nwebhook_response = e_invoice.webhooks.retrieve("webhook_id")\n\nputs(webhook_response)',
       },
-      typescript: {
-        method: 'client.webhooks.retrieve',
+      php: {
+        method: 'webhooks->retrieve',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst webhookResponse = await client.webhooks.retrieve('webhook_id');\n\nconsole.log(webhookResponse.id);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$webhookResponse = $client->webhooks->retrieve('webhook_id');\n\nvar_dump($webhookResponse);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/webhooks/$WEBHOOK_ID \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
       },
     },
   },
@@ -1361,34 +1361,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## update\n\n`client.webhooks.update(webhook_id: string, enabled?: boolean, events?: string[], url?: string): { id: string; events: string[]; secret: string; url: string; enabled?: boolean; }`\n\n**put** `/api/webhooks/{webhook_id}`\n\nUpdate a webhook by ID\n\n### Parameters\n\n- `webhook_id: string`\n\n- `enabled?: boolean`\n\n- `events?: string[]`\n\n- `url?: string`\n\n### Returns\n\n- `{ id: string; events: string[]; secret: string; url: string; enabled?: boolean; }`\n  Response model for webhook API endpoints.\n\n  - `id: string`\n  - `events: string[]`\n  - `secret: string`\n  - `url: string`\n  - `enabled?: boolean`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst webhookResponse = await client.webhooks.update('webhook_id');\n\nconsole.log(webhookResponse);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.webhooks.update',
         example:
-          "curl https://api.e-invoice.be/api/webhooks/$WEBHOOK_ID \\\n    -X PUT \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $E_INVOICE_API_KEY\" \\\n    -d '{}'",
-      },
-      java: {
-        method: 'webhooks().update',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.webhooks.WebhookResponse;\nimport com.e_invoice.api.models.webhooks.WebhookUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        WebhookResponse webhookResponse = client.webhooks().update("webhook_id");\n    }\n}',
-      },
-      php: {
-        method: 'webhooks->update',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$webhookResponse = $client->webhooks->update(\n  'webhook_id', enabled: true, events: ['string'], url: 'https://example.com'\n);\n\nvar_dump($webhookResponse);",
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst webhookResponse = await client.webhooks.update('webhook_id');\n\nconsole.log(webhookResponse.id);",
       },
       python: {
         method: 'webhooks.update',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\nwebhook_response = client.webhooks.update(\n    webhook_id="webhook_id",\n)\nprint(webhook_response.id)',
       },
+      java: {
+        method: 'webhooks().update',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.webhooks.WebhookResponse;\nimport com.e_invoice.api.models.webhooks.WebhookUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        WebhookResponse webhookResponse = client.webhooks().update("webhook_id");\n    }\n}',
+      },
       ruby: {
         method: 'webhooks.update',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\nwebhook_response = e_invoice.webhooks.update("webhook_id")\n\nputs(webhook_response)',
       },
-      typescript: {
-        method: 'client.webhooks.update',
+      php: {
+        method: 'webhooks->update',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst webhookResponse = await client.webhooks.update('webhook_id');\n\nconsole.log(webhookResponse.id);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$webhookResponse = $client->webhooks->update(\n  'webhook_id', enabled: true, events: ['string'], url: 'https://example.com'\n);\n\nvar_dump($webhookResponse);",
+      },
+      http: {
+        example:
+          "curl https://api.e-invoice.be/api/webhooks/$WEBHOOK_ID \\\n    -X PUT \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $E_INVOICE_API_KEY\" \\\n    -d '{}'",
       },
     },
   },
@@ -1405,34 +1405,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## delete\n\n`client.webhooks.delete(webhook_id: string): { is_deleted: boolean; }`\n\n**delete** `/api/webhooks/{webhook_id}`\n\nDelete a webhook\n\n### Parameters\n\n- `webhook_id: string`\n\n### Returns\n\n- `{ is_deleted: boolean; }`\n  Model for webhook deletion.\n\n  - `is_deleted: boolean`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst webhook = await client.webhooks.delete('webhook_id');\n\nconsole.log(webhook);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.webhooks.delete',
         example:
-          'curl https://api.e-invoice.be/api/webhooks/$WEBHOOK_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
-      },
-      java: {
-        method: 'webhooks().delete',
-        example:
-          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.webhooks.WebhookDeleteParams;\nimport com.e_invoice.api.models.webhooks.WebhookDeleteResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        WebhookDeleteResponse webhook = client.webhooks().delete("webhook_id");\n    }\n}',
-      },
-      php: {
-        method: 'webhooks->delete',
-        example:
-          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$webhook = $client->webhooks->delete('webhook_id');\n\nvar_dump($webhook);",
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst webhook = await client.webhooks.delete('webhook_id');\n\nconsole.log(webhook.is_deleted);",
       },
       python: {
         method: 'webhooks.delete',
         example:
           'import os\nfrom e_invoice_api import EInvoice\n\nclient = EInvoice(\n    api_key=os.environ.get("E_INVOICE_API_KEY"),  # This is the default and can be omitted\n)\nwebhook = client.webhooks.delete(\n    "webhook_id",\n)\nprint(webhook.is_deleted)',
       },
+      java: {
+        method: 'webhooks().delete',
+        example:
+          'package com.e_invoice.api.example;\n\nimport com.e_invoice.api.client.EInvoiceClient;\nimport com.e_invoice.api.client.okhttp.EInvoiceOkHttpClient;\nimport com.e_invoice.api.models.webhooks.WebhookDeleteParams;\nimport com.e_invoice.api.models.webhooks.WebhookDeleteResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        EInvoiceClient client = EInvoiceOkHttpClient.fromEnv();\n\n        WebhookDeleteResponse webhook = client.webhooks().delete("webhook_id");\n    }\n}',
+      },
       ruby: {
         method: 'webhooks.delete',
         example:
           'require "e_invoice_api"\n\ne_invoice = EInvoiceAPI::Client.new(api_key: "My API Key")\n\nwebhook = e_invoice.webhooks.delete("webhook_id")\n\nputs(webhook)',
       },
-      typescript: {
-        method: 'client.webhooks.delete',
+      php: {
+        method: 'webhooks->delete',
         example:
-          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst webhook = await client.webhooks.delete('webhook_id');\n\nconsole.log(webhook.is_deleted);",
+          "<?php\n\nrequire_once dirname(__DIR__) . '/vendor/autoload.php';\n\n$client = new Client(apiKey: 'My API Key');\n\n$webhook = $client->webhooks->delete('webhook_id');\n\nvar_dump($webhook);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/webhooks/$WEBHOOK_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
       },
     },
   },
