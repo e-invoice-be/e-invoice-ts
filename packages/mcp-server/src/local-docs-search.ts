@@ -141,7 +141,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          "curl https://api.e-invoice.be/api/documents/ \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $E_INVOICE_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.e-invoice.be/api/documents/ \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY" \\\n    -d \'{\n          "customer_company_id": "1018265814",\n          "customer_peppol_id": "0208:0123456789",\n          "customer_tax_id": "BE1018265814",\n          "vendor_company_id": "1018265814",\n          "vendor_tax_id": "BE1018265814"\n        }\'',
       },
     },
   },
@@ -1031,7 +1031,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          "curl https://api.e-invoice.be/api/validate/json \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $E_INVOICE_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.e-invoice.be/api/validate/json \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY" \\\n    -d \'{\n          "customer_company_id": "1018265814",\n          "customer_peppol_id": "0208:0123456789",\n          "customer_tax_id": "BE1018265814",\n          "vendor_company_id": "1018265814",\n          "vendor_tax_id": "BE1018265814"\n        }\'',
       },
     },
   },
