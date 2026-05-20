@@ -119,11 +119,14 @@ export interface ValidateValidatePeppolIDResponse {
   is_valid: boolean;
 
   /**
+   * List of document types that this Peppol ID supports
+   */
+  supported_document_types: Array<string>;
+
+  /**
    * Business card information for the Peppol ID
    */
   business_card?: ValidateValidatePeppolIDResponse.BusinessCard | null;
-
-  supported_document_types?: Array<string>;
 }
 
 export namespace ValidateValidatePeppolIDResponse {
