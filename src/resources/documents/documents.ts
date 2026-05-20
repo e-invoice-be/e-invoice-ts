@@ -4564,6 +4564,9 @@ export interface DocumentCreateFromPdfParams {
 }
 
 export interface DocumentSendParams {
+  /**
+   * @deprecated
+   */
   email?: string | null;
 
   receiver_peppol_id?: string | null;
