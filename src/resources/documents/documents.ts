@@ -3257,6 +3257,16 @@ export interface DocumentCreateFromPdfResponse {
   due_date?: string | null;
 
   /**
+   * Error message when success is False
+   */
+  error_message?: string | null;
+
+  /**
+   * Error type/category when success is False
+   */
+  error_type?: string | null;
+
+  /**
    * The date when the invoice was issued
    */
   invoice_date?: string | null;
@@ -3273,7 +3283,7 @@ export interface DocumentCreateFromPdfResponse {
   invoice_total?: string | null;
 
   /**
-   * At least one line item is required
+   * Line items (may be empty for failed conversions)
    */
   items?: Array<DocumentCreateFromPdfResponse.Item>;
 
