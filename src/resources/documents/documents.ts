@@ -1081,6 +1081,11 @@ export namespace DocumentCreate {
     description?: string | null;
 
     /**
+     * Item-level attributes (BG-32) from cac:AdditionalItemProperty.
+     */
+    item_attributes?: Array<Item.ItemAttribute> | null;
+
+    /**
      * The product code of the line item.
      */
     product_code?: string | null;
@@ -1401,6 +1406,22 @@ export namespace DocumentCreate {
        * The VAT rate, represented as percentage that applies to the charge
        */
       tax_rate?: number | string | null;
+    }
+
+    /**
+     * An item-level attribute (BG-32 / BT-160 + BT-161) from
+     * cac:AdditionalItemProperty.
+     */
+    export interface ItemAttribute {
+      /**
+       * Attribute name (BT-160).
+       */
+      name: string;
+
+      /**
+       * Attribute value (BT-161).
+       */
+      value?: string | null;
     }
   }
 
@@ -2032,6 +2053,11 @@ export namespace DocumentResponse {
     description?: string | null;
 
     /**
+     * Item-level attributes (BG-32) from cac:AdditionalItemProperty.
+     */
+    item_attributes?: Array<Item.ItemAttribute> | null;
+
+    /**
      * The product code of the line item.
      */
     product_code?: string | null;
@@ -2064,6 +2090,24 @@ export namespace DocumentResponse {
      * subtracting item price discount. Must be rounded to maximum 4 decimals
      */
     unit_price?: string | null;
+  }
+
+  export namespace Item {
+    /**
+     * An item-level attribute (BG-32 / BT-160 + BT-161) from
+     * cac:AdditionalItemProperty.
+     */
+    export interface ItemAttribute {
+      /**
+       * Attribute name (BT-160).
+       */
+      name: string;
+
+      /**
+       * Attribute value (BT-161).
+       */
+      value?: string | null;
+    }
   }
 
   export interface PaymentDetail {
@@ -3523,6 +3567,11 @@ export namespace DocumentCreateFromPdfResponse {
     description?: string | null;
 
     /**
+     * Item-level attributes (BG-32) from cac:AdditionalItemProperty.
+     */
+    item_attributes?: Array<Item.ItemAttribute> | null;
+
+    /**
      * The product code of the line item.
      */
     product_code?: string | null;
@@ -3555,6 +3604,24 @@ export namespace DocumentCreateFromPdfResponse {
      * subtracting item price discount. Must be rounded to maximum 4 decimals
      */
     unit_price?: string | null;
+  }
+
+  export namespace Item {
+    /**
+     * An item-level attribute (BG-32 / BT-160 + BT-161) from
+     * cac:AdditionalItemProperty.
+     */
+    export interface ItemAttribute {
+      /**
+       * Attribute name (BT-160).
+       */
+      name: string;
+
+      /**
+       * Attribute value (BT-161).
+       */
+      value?: string | null;
+    }
   }
 
   export interface TaxDetail {
@@ -4220,6 +4287,11 @@ export namespace DocumentCreateParams {
     description?: string | null;
 
     /**
+     * Item-level attributes (BG-32) from cac:AdditionalItemProperty.
+     */
+    item_attributes?: Array<Item.ItemAttribute> | null;
+
+    /**
      * The product code of the line item.
      */
     product_code?: string | null;
@@ -4540,6 +4612,22 @@ export namespace DocumentCreateParams {
        * The VAT rate, represented as percentage that applies to the charge
        */
       tax_rate?: number | string | null;
+    }
+
+    /**
+     * An item-level attribute (BG-32 / BT-160 + BT-161) from
+     * cac:AdditionalItemProperty.
+     */
+    export interface ItemAttribute {
+      /**
+       * Attribute name (BT-160).
+       */
+      name: string;
+
+      /**
+       * Attribute value (BT-161).
+       */
+      value?: string | null;
     }
   }
 
