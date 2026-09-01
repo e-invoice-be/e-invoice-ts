@@ -11,6 +11,12 @@ import { multipartFormRequestOptions } from '../internal/uploads';
 export class Validate extends APIResource {
   /**
    * Validate if the JSON document can be converted to a valid UBL document
+   *
+   * @example
+   * ```ts
+   * const ublDocumentValidation =
+   *   await client.validate.validateJson();
+   * ```
    */
   validateJson(
     body: ValidateValidateJsonParams,
@@ -26,6 +32,13 @@ export class Validate extends APIResource {
    * identifier value. For example, for a Belgian company it is `0208:0123456789`
    * (where 0208 is the scheme for Belgian enterprises, followed by the 10 digits of
    * the official BTW / KBO number).
+   *
+   * @example
+   * ```ts
+   * const response = await client.validate.validatePeppolID({
+   *   peppol_id: 'peppol_id',
+   * });
+   * ```
    */
   validatePeppolID(
     query: ValidateValidatePeppolIDParams,
@@ -36,6 +49,14 @@ export class Validate extends APIResource {
 
   /**
    * Validate the correctness of a UBL document
+   *
+   * @example
+   * ```ts
+   * const ublDocumentValidation =
+   *   await client.validate.validateUbl({
+   *     file: fs.createReadStream('path/to/file'),
+   *   });
+   * ```
    */
   validateUbl(body: ValidateValidateUblParams, options?: RequestOptions): APIPromise<UblDocumentValidation> {
     return this._client.post(
@@ -83,11 +104,6 @@ export namespace UblDocumentValidation {
  */
 export interface ValidateValidatePeppolIDResponse {
   /**
-   * Business card information for the Peppol ID
-   */
-  business_card: ValidateValidatePeppolIDResponse.BusinessCard | null;
-
-  /**
    * Whether a business card is set at the SMP
    */
   business_card_valid: boolean;
@@ -102,7 +118,15 @@ export interface ValidateValidatePeppolIDResponse {
    */
   is_valid: boolean;
 
-  supported_document_types?: Array<string>;
+  /**
+   * List of document types that this Peppol ID supports
+   */
+  supported_document_types: Array<string>;
+
+  /**
+   * Business card information for the Peppol ID
+   */
+  business_card?: ValidateValidatePeppolIDResponse.BusinessCard | null;
 }
 
 export namespace ValidateValidatePeppolIDResponse {
@@ -175,6 +199,11 @@ export interface ValidateValidateJsonParams {
    * The company name of the customer/buyer
    */
   customer_name?: string | null;
+
+  /**
+   * Customer Peppol ID
+   */
+  customer_peppol_id?: string | null;
 
   /**
    * Customer tax ID. For Belgium this is the VAT number. Must include the country
@@ -737,6 +766,11 @@ export namespace ValidateValidateJsonParams {
     description?: string | null;
 
     /**
+     * Item-level attributes (BG-32) from cac:AdditionalItemProperty.
+     */
+    item_attributes?: Array<Item.ItemAttribute> | null;
+
+    /**
      * The product code of the line item.
      */
     product_code?: string | null;
@@ -1057,6 +1091,22 @@ export namespace ValidateValidateJsonParams {
        * The VAT rate, represented as percentage that applies to the charge
        */
       tax_rate?: number | string | null;
+    }
+
+    /**
+     * An item-level attribute (BG-32 / BT-160 + BT-161) from
+     * cac:AdditionalItemProperty.
+     */
+    export interface ItemAttribute {
+      /**
+       * Attribute name (BT-160).
+       */
+      name: string;
+
+      /**
+       * Attribute value (BT-161).
+       */
+      value?: string | null;
     }
   }
 

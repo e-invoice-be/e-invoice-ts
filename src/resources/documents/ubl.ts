@@ -11,6 +11,14 @@ import { path } from '../../internal/utils/path';
 export class Ubl extends APIResource {
   /**
    * Create a new invoice or credit note from a UBL file
+   *
+   * @example
+   * ```ts
+   * const documentResponse =
+   *   await client.documents.ubl.createFromUbl({
+   *     file: fs.createReadStream('path/to/file'),
+   *   });
+   * ```
    */
   createFromUbl(
     body: UblCreateFromUblParams,
@@ -24,6 +32,11 @@ export class Ubl extends APIResource {
 
   /**
    * Get the UBL for an invoice or credit note
+   *
+   * @example
+   * ```ts
+   * const ubl = await client.documents.ubl.get('document_id');
+   * ```
    */
   get(documentID: string, options?: RequestOptions): APIPromise<UblGetResponse> {
     return this._client.get(path`/api/documents/${documentID}/ubl`, options);
