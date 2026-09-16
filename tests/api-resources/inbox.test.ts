@@ -8,7 +8,7 @@ const client = new EInvoice({
 });
 
 describe('resource inbox', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.inbox.list();
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource inbox', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -32,7 +32,8 @@ describe('resource inbox', () => {
           page_size: 1,
           search: 'search',
           sender: 'sender',
-          state: 'DRAFT',
+          sort_by: 'created_at',
+          sort_order: 'asc',
           type: 'INVOICE',
         },
         { path: '/_stainless_unknown_path' },
@@ -40,7 +41,7 @@ describe('resource inbox', () => {
     ).rejects.toThrow(EInvoice.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listCreditNotes', async () => {
     const responsePromise = client.inbox.listCreditNotes();
     const rawResponse = await responsePromise.asResponse();
@@ -52,15 +53,23 @@ describe('resource inbox', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listCreditNotes: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.inbox.listCreditNotes({ page: 1, page_size: 1 }, { path: '/_stainless_unknown_path' }),
+      client.inbox.listCreditNotes(
+        {
+          page: 1,
+          page_size: 1,
+          sort_by: 'created_at',
+          sort_order: 'asc',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
     ).rejects.toThrow(EInvoice.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listInvoices', async () => {
     const responsePromise = client.inbox.listInvoices();
     const rawResponse = await responsePromise.asResponse();
@@ -72,11 +81,19 @@ describe('resource inbox', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listInvoices: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.inbox.listInvoices({ page: 1, page_size: 1 }, { path: '/_stainless_unknown_path' }),
+      client.inbox.listInvoices(
+        {
+          page: 1,
+          page_size: 1,
+          sort_by: 'created_at',
+          sort_order: 'asc',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
     ).rejects.toThrow(EInvoice.NotFoundError);
   });
 });
