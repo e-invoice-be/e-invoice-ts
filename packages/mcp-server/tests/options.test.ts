@@ -37,7 +37,20 @@ describe('parseCLIOptions', () => {
 
     expect(result.codeExecutionMode).toBe('local');
     expect(result.docsSearchMode).toBe('local');
-    expect(result).not.toHaveProperty('stainlessApiKey');
+    expect(Object.keys(result).sort()).toEqual([
+      'codeAllowHttpGets',
+      'codeAllowedMethods',
+      'codeBlockedMethods',
+      'codeExecutionMode',
+      'customInstructionsPath',
+      'debug',
+      'docsDir',
+      'docsSearchMode',
+      'logFormat',
+      'port',
+      'socket',
+      'transport',
+    ]);
 
     cleanup();
   });
@@ -53,8 +66,8 @@ describe('parseCLIOptions', () => {
     cleanup();
   });
 
-  it.each(['--code-execution-mode=stainless-sandbox', '--docs-search-mode=stainless-api'])(
-    'rejects the removed mode %s',
+  it.each(['--code-execution-mode=remote', '--docs-search-mode=remote'])(
+    'rejects the non-local mode %s',
     (arg) => {
       const cleanup = mockArgv([arg]);
       const exit = jest.spyOn(process, 'exit').mockImplementation(() => {
