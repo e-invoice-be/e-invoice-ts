@@ -114,6 +114,8 @@ export interface DocumentsNumberPageResponse<Item> {
 
   page_size: number;
 
+  pages: number;
+
   total: number;
 
   has_next_page: boolean;
@@ -135,6 +137,8 @@ export class DocumentsNumberPage<Item>
 
   page_size: number;
 
+  pages: number;
+
   total: number;
 
   has_next_page: boolean;
@@ -150,6 +154,7 @@ export class DocumentsNumberPage<Item>
     this.items = body.items || [];
     this.page = body.page || 0;
     this.page_size = body.page_size || 0;
+    this.pages = body.pages || 0;
     this.total = body.total || 0;
     this.has_next_page = body.has_next_page || false;
   }

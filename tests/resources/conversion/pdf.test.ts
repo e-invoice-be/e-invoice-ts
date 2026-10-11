@@ -2,7 +2,7 @@ import { toFile } from 'e-invoice-api';
 import { jsonResponse, stubClient } from '../stub-client';
 
 describe('resource pdf', () => {
-  test('create: uploads the PDF as multipart form data to /api/conversion/pdf and returns the task', async () => {
+  test('create: requests the PDF as multipart form data to /api/conversion/pdf and returns the task', async () => {
     const { client, requests } = stubClient(() => jsonResponse({ task_id: 'task_1', status: 'pending' }));
 
     const task = await client.conversion.pdf.create({
@@ -11,12 +11,11 @@ describe('resource pdf', () => {
       }),
     });
 
-    const uploads = requests.filter((request) => request.url.protocol === 'http:');
-    expect(uploads).toHaveLength(1);
-    expect(uploads[0]!.method).toEqual('POST');
-    expect(uploads[0]!.url.pathname).toEqual('/api/conversion/pdf');
-    expect(uploads[0]!.url.search).toEqual('');
-    const body = uploads[0]!.body as FormData;
+    expect(requests).toHaveLength(1);
+    expect(requests[0]!.method).toEqual('POST');
+    expect(requests[0]!.url.pathname).toEqual('/api/conversion/pdf');
+    expect(requests[0]!.url.search).toEqual('');
+    const body = requests[0]!.body as FormData;
     expect(body).toBeInstanceOf(FormData);
     expect(Array.from(body.keys())).toEqual(['file']);
     const file = body.get('file') as File;

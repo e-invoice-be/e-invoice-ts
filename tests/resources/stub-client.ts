@@ -19,12 +19,16 @@ export const stubClient = (respond: () => Response) => {
   const client = new EInvoice({
     apiKey: 'My API Key',
     baseURL: 'http://localhost:5000/',
-    fetch: async (url, init) => {
-      requests.push({
-        method: init?.method,
-        url: new URL(String(url)),
-        body: typeof init?.body === 'string' ? JSON.parse(init.body) : init?.body,
-      });
+    fetch: async (input, init) => {
+      const url = new URL(String(input));
+      // The upload helpers probe `fetch('data:,')` for FormData support; that is not an API request.
+      if (url.protocol === 'http:') {
+        requests.push({
+          method: init?.method,
+          url,
+          body: typeof init?.body === 'string' ? JSON.parse(init.body) : init?.body,
+        });
+      }
       return respond();
     },
   });
