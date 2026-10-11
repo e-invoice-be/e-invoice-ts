@@ -1,3 +1,5 @@
+# Checks that the secrets for a release are available.
+# Runs on the release pull request and on demand.
 name: Release Doctor
 on:
   pull_request:
@@ -5,11 +7,14 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   release_doctor:
     name: release doctor
     runs-on: ubuntu-latest
-    if: github.repository == 'e-invoice-be/e-invoice-ts' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch' || startsWith(github.head_ref, 'release-please') || github.head_ref == 'next')
+    if: github.repository == 'e-invoice-be/e-invoice-ts' && (github.event_name == 'workflow_dispatch' || startsWith(github.head_ref, 'release-please--'))
 
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2

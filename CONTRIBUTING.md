@@ -14,13 +14,16 @@ This will install all the required dependencies and build output files to `dist/
 
 ## Modifying/Adding code
 
-Most of the SDK is generated code. Modifications to code will be persisted between generations, but may
-result in merge conflicts between manual patches and changes from the generator. The generator will never
-modify the contents of the `src/lib/` and `examples/` directories.
+All code in this repository is maintained by hand. There is no code generator: edit the files in `src/`,
+`tests/` and `packages/mcp-server/` directly and open a pull request.
+
+Use [Conventional Commits](https://www.conventionalcommits.org/) for commit messages and pull request titles
+(`feat: …`, `fix: …`, `docs: …`, `chore: …`; add `!` or a `BREAKING CHANGE:` footer for a breaking change).
+The release tooling reads these messages to calculate the next version and to write `CHANGELOG.md`.
 
 ## Adding and running examples
 
-All files in the `examples/` directory are not modified by the generator and can be freely edited or added to.
+You can freely edit or add files in the `examples/` directory.
 
 ```ts
 // add an example to examples/<your-example>.ts
@@ -88,14 +91,47 @@ $ yarn fix
 
 ## Publishing and releases
 
-Changes made to this repository via the automated release PR pipeline should publish to npm automatically. If
-the changes aren't made through the automated pipeline, you may want to make releases manually.
+Releases are automated with [release-please](https://github.com/googleapis/release-please). The configuration
+is in `release-please-config.json`, and `.release-please-manifest.json` holds the last released version.
 
-### Publish with a GitHub workflow
+### Release flow
 
-You can release to package managers by using [the `Publish NPM` GitHub action](https://www.github.com/e-invoice-be/e-invoice-ts/actions/workflows/publish-npm.yml). This requires a setup organization or repository secret to be set up.
+1. A push to `main` starts the [`Release Please` workflow](https://github.com/e-invoice-be/e-invoice-ts/actions/workflows/release-please.yml).
+2. The workflow opens or updates the release pull request (`release: <version>`). This pull request contains
+   the version bump (`package.json`, `src/version.ts`, `packages/mcp-server/`) and the new `CHANGELOG.md` entries.
+   A `fix` gives a patch version, a `feat` gives a minor version, and a breaking change gives a major version.
+3. A maintainer merges the release pull request.
+4. The subsequent run of the workflow creates the git tag `v<version>` and the GitHub release.
+5. The same run then calls the [`Publish NPM` workflow](https://github.com/e-invoice-be/e-invoice-ts/actions/workflows/publish-npm.yml).
+   That workflow publishes `e-invoice-api` and `e-invoice-api-mcp` to npm and attaches the MCP bundle
+   (`e_invoice_api_api.mcpb`) to the GitHub release.
+
+Do not create tags or GitHub releases by hand, and do not edit the version numbers by hand.
+
+### Required repository configuration
+
+- **npm token**: the secret `E_INVOICE_NPM_TOKEN` (or `NPM_TOKEN`) must hold an npm granular access token with
+  read and write access to the `e-invoice-api` and `e-invoice-api-mcp` packages. The token must be permitted to
+  publish without a one-time password. Granular tokens expire, so replace the secret before the expiry date.
+  The [`Release Doctor` workflow](https://github.com/e-invoice-be/e-invoice-ts/actions/workflows/release-doctor.yml)
+  checks that npm accepts the token; you can run it manually.
+- **Permission to open the release pull request**: use one of these two options.
+  1. Enable _Settings → Actions → General → Allow GitHub Actions to create and approve pull requests_. The
+     workflow then uses the default `GITHUB_TOKEN`. GitHub does not start other workflows for pull requests
+     that this token creates, so the release pull request gets no CI run. `main` is already tested, and the
+     release pull request changes only version numbers and the changelog.
+  2. Add the secret `RELEASE_PLEASE_TOKEN` with a fine-grained personal access token or a GitHub App token
+     (repository permissions: Contents, Pull requests and Issues, all read and write). The workflow prefers
+     this secret. CI and Release Doctor then also run on the release pull request.
+
+### Publish again with a GitHub workflow
+
+If the npm publish failed, run [the `Publish NPM` workflow](https://github.com/e-invoice-be/e-invoice-ts/actions/workflows/publish-npm.yml)
+manually. Set `tag` to the release tag (for example `v2.1.0`) to publish exactly that release and to upload the
+MCP bundle to it. Set `path` to `.` or `packages/mcp-server` to publish only one package; npm refuses a version
+that is already published.
 
 ### Publish manually
 
 If you need to manually release a package, you can run the `bin/publish-npm` script with an `NPM_TOKEN` set on
-the environment.
+the environment. Run it from the package directory (the repository root or `packages/mcp-server`).
