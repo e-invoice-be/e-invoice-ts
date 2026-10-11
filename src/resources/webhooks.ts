@@ -44,6 +44,24 @@ export class Webhooks extends APIResource {
   delete(webhookID: string, options?: RequestOptions): APIPromise<WebhookDeleteResponse> {
     return this._client.delete(path`/api/webhooks/${webhookID}`, options);
   }
+
+  /**
+   * Get the history of a webhook
+   */
+  retrieveHistory(webhookID: string, options?: RequestOptions): APIPromise<WebhookRetrieveHistoryResponse> {
+    return this._client.get(path`/api/webhooks/${webhookID}/history`, options);
+  }
+
+  /**
+   * Send a test event to a webhook for testing and debugging purposes
+   */
+  test(
+    webhookID: string,
+    body: WebhookTestParams,
+    options?: RequestOptions,
+  ): APIPromise<WebhookTestResponse> {
+    return this._client.post(path`/api/webhooks/${webhookID}/test`, { body, ...options });
+  }
 }
 
 /**
@@ -70,6 +88,30 @@ export interface WebhookDeleteResponse {
   is_deleted: boolean;
 }
 
+export interface WebhookRetrieveHistoryResponse {
+  history: Array<{ [key: string]: unknown }>;
+}
+
+/**
+ * Schema for webhook test response.
+ */
+export interface WebhookTestResponse {
+  /**
+   * Descriptive message about the test result
+   */
+  message: string;
+
+  /**
+   * Whether the test completed successfully
+   */
+  success: boolean;
+
+  /**
+   * Result from process_webhook_task
+   */
+  webhook_delivery_result: { [key: string]: unknown };
+}
+
 export interface WebhookCreateParams {
   events: Array<string>;
 
@@ -86,12 +128,27 @@ export interface WebhookUpdateParams {
   url?: string | null;
 }
 
+export interface WebhookTestParams {
+  /**
+   * Custom event data payload
+   */
+  data: { [key: string]: unknown };
+
+  /**
+   * Must be valid WebhookEventType
+   */
+  event_type: string;
+}
+
 export declare namespace Webhooks {
   export {
     type WebhookResponse as WebhookResponse,
     type WebhookListResponse as WebhookListResponse,
     type WebhookDeleteResponse as WebhookDeleteResponse,
+    type WebhookRetrieveHistoryResponse as WebhookRetrieveHistoryResponse,
+    type WebhookTestResponse as WebhookTestResponse,
     type WebhookCreateParams as WebhookCreateParams,
     type WebhookUpdateParams as WebhookUpdateParams,
+    type WebhookTestParams as WebhookTestParams,
   };
 }

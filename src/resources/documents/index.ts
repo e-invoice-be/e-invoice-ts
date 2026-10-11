@@ -18,6 +18,7 @@ export {
   type DocumentCreate,
   type DocumentDirection,
   type DocumentResponse,
+  type DocumentTimeline,
   type DocumentType,
   type PaymentDetailCreate,
   type UnitOfMeasureCode,

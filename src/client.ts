@@ -19,6 +19,7 @@ import { AbstractPage, type DocumentsNumberPageParams, DocumentsNumberPageRespon
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
+import { DraftListParams, Drafts } from './resources/drafts';
 import {
   DocumentState,
   Inbox,
@@ -35,12 +36,20 @@ import {
   LookupRetrieveParticipantsResponse,
   LookupRetrieveResponse,
 } from './resources/lookup';
+import {
+  InboundEmailResponse,
+  InboundEmailResponsesDocumentsNumberPage,
+  Mailbox,
+  MailboxDownloadAttachmentParams,
+  MailboxListParams,
+} from './resources/mailbox';
 import { Me, MeRetrieveResponse } from './resources/me';
 import {
   Outbox,
   OutboxListDraftDocumentsParams,
   OutboxListReceivedDocumentsParams,
 } from './resources/outbox';
+import { StatRetrieveParams, StatRetrieveResponse, Stats } from './resources/stats';
 import {
   UblDocumentValidation,
   Validate,
@@ -54,9 +63,13 @@ import {
   WebhookDeleteResponse,
   WebhookListResponse,
   WebhookResponse,
+  WebhookRetrieveHistoryResponse,
+  WebhookTestParams,
+  WebhookTestResponse,
   WebhookUpdateParams,
   Webhooks,
 } from './resources/webhooks';
+import { Conversion } from './resources/conversion/conversion';
 import {
   Allowance,
   Charge,
@@ -70,6 +83,7 @@ import {
   DocumentDirection,
   DocumentResponse,
   DocumentSendParams,
+  DocumentTimeline,
   DocumentType,
   Documents,
   PaymentDetailCreate,
@@ -822,19 +836,27 @@ export class EInvoice {
   documents: API.Documents = new API.Documents(this);
   inbox: API.Inbox = new API.Inbox(this);
   outbox: API.Outbox = new API.Outbox(this);
+  drafts: API.Drafts = new API.Drafts(this);
   validate: API.Validate = new API.Validate(this);
   lookup: API.Lookup = new API.Lookup(this);
   me: API.Me = new API.Me(this);
   webhooks: API.Webhooks = new API.Webhooks(this);
+  mailbox: API.Mailbox = new API.Mailbox(this);
+  stats: API.Stats = new API.Stats(this);
+  conversion: API.Conversion = new API.Conversion(this);
 }
 
 EInvoice.Documents = Documents;
 EInvoice.Inbox = Inbox;
 EInvoice.Outbox = Outbox;
+EInvoice.Drafts = Drafts;
 EInvoice.Validate = Validate;
 EInvoice.Lookup = Lookup;
 EInvoice.Me = Me;
 EInvoice.Webhooks = Webhooks;
+EInvoice.Mailbox = Mailbox;
+EInvoice.Stats = Stats;
+EInvoice.Conversion = Conversion;
 
 export declare namespace EInvoice {
   export type RequestOptions = Opts.RequestOptions;
@@ -854,6 +876,7 @@ export declare namespace EInvoice {
     type DocumentCreate as DocumentCreate,
     type DocumentDirection as DocumentDirection,
     type DocumentResponse as DocumentResponse,
+    type DocumentTimeline as DocumentTimeline,
     type DocumentType as DocumentType,
     type PaymentDetailCreate as PaymentDetailCreate,
     type UnitOfMeasureCode as UnitOfMeasureCode,
@@ -878,6 +901,8 @@ export declare namespace EInvoice {
     type OutboxListDraftDocumentsParams as OutboxListDraftDocumentsParams,
     type OutboxListReceivedDocumentsParams as OutboxListReceivedDocumentsParams,
   };
+
+  export { Drafts as Drafts, type DraftListParams as DraftListParams };
 
   export {
     Validate as Validate,
@@ -904,7 +929,26 @@ export declare namespace EInvoice {
     type WebhookResponse as WebhookResponse,
     type WebhookListResponse as WebhookListResponse,
     type WebhookDeleteResponse as WebhookDeleteResponse,
+    type WebhookRetrieveHistoryResponse as WebhookRetrieveHistoryResponse,
+    type WebhookTestResponse as WebhookTestResponse,
     type WebhookCreateParams as WebhookCreateParams,
     type WebhookUpdateParams as WebhookUpdateParams,
+    type WebhookTestParams as WebhookTestParams,
   };
+
+  export {
+    Mailbox as Mailbox,
+    type InboundEmailResponse as InboundEmailResponse,
+    type InboundEmailResponsesDocumentsNumberPage as InboundEmailResponsesDocumentsNumberPage,
+    type MailboxListParams as MailboxListParams,
+    type MailboxDownloadAttachmentParams as MailboxDownloadAttachmentParams,
+  };
+
+  export {
+    Stats as Stats,
+    type StatRetrieveResponse as StatRetrieveResponse,
+    type StatRetrieveParams as StatRetrieveParams,
+  };
+
+  export { Conversion as Conversion };
 }

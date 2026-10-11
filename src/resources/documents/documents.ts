@@ -97,6 +97,20 @@ export class Documents extends APIResource {
   }
 
   /**
+   * Get the timeline of events for an invoice or credit note, including creation,
+   * validation, transmission, and delivery events
+   *
+   * @example
+   * ```ts
+   * const documentTimeline =
+   *   await client.documents.retrieveTimeline('document_id');
+   * ```
+   */
+  retrieveTimeline(documentID: string, options?: RequestOptions): APIPromise<DocumentTimeline> {
+    return this._client.get(path`/api/documents/${documentID}/timeline`, options);
+  }
+
+  /**
    * Send an invoice or credit note via Peppol. By default, the sender and receiver
    * Peppol IDs are derived from the company (tax) IDs in the document, regardless of
    * whether the document was created from a UBL with a different endpoint ID. To
@@ -2143,6 +2157,33 @@ export namespace DocumentResponse {
      * The tax rate as a percentage (e.g., '21.00', '6.00', '0.00')
      */
     rate?: string | null;
+  }
+}
+
+export interface DocumentTimeline {
+  document_id: string;
+
+  events: Array<DocumentTimeline.Event>;
+}
+
+export namespace DocumentTimeline {
+  export interface Event {
+    event_type:
+      | 'email_received'
+      | 'email_processed'
+      | 'document_created'
+      | 'send_attempted'
+      | 'send_failed'
+      | 'send_success'
+      | 'receive_success'
+      | 'mlr_received'
+      | 'imr_received';
+
+    timestamp: string;
+
+    id?: string | null;
+
+    details?: { [key: string]: unknown } | null;
   }
 }
 
@@ -4688,6 +4729,7 @@ export declare namespace Documents {
     type DocumentCreate as DocumentCreate,
     type DocumentDirection as DocumentDirection,
     type DocumentResponse as DocumentResponse,
+    type DocumentTimeline as DocumentTimeline,
     type DocumentType as DocumentType,
     type PaymentDetailCreate as PaymentDetailCreate,
     type UnitOfMeasureCode as UnitOfMeasureCode,

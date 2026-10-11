@@ -35,6 +35,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/documents/pdf',
   },
   {
+    clientCallName: 'client.documents.retrieveTimeline',
+    fullyQualifiedName: 'documents.retrieveTimeline',
+    httpMethod: 'get',
+    httpPath: '/api/documents/{document_id}/timeline',
+  },
+  {
     clientCallName: 'client.documents.send',
     fullyQualifiedName: 'documents.send',
     httpMethod: 'post',
@@ -113,6 +119,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/outbox/',
   },
   {
+    clientCallName: 'client.drafts.list',
+    fullyQualifiedName: 'drafts.list',
+    httpMethod: 'get',
+    httpPath: '/api/drafts/',
+  },
+  {
     clientCallName: 'client.validate.validateJson',
     fullyQualifiedName: 'validate.validateJson',
     httpMethod: 'post',
@@ -177,6 +189,66 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'webhooks.delete',
     httpMethod: 'delete',
     httpPath: '/api/webhooks/{webhook_id}',
+  },
+  {
+    clientCallName: 'client.webhooks.retrieveHistory',
+    fullyQualifiedName: 'webhooks.retrieveHistory',
+    httpMethod: 'get',
+    httpPath: '/api/webhooks/{webhook_id}/history',
+  },
+  {
+    clientCallName: 'client.webhooks.test',
+    fullyQualifiedName: 'webhooks.test',
+    httpMethod: 'post',
+    httpPath: '/api/webhooks/{webhook_id}/test',
+  },
+  {
+    clientCallName: 'client.mailbox.retrieve',
+    fullyQualifiedName: 'mailbox.retrieve',
+    httpMethod: 'get',
+    httpPath: '/api/mailbox/{inbound_email_id}',
+  },
+  {
+    clientCallName: 'client.mailbox.list',
+    fullyQualifiedName: 'mailbox.list',
+    httpMethod: 'get',
+    httpPath: '/api/mailbox/',
+  },
+  {
+    clientCallName: 'client.mailbox.downloadAttachment',
+    fullyQualifiedName: 'mailbox.downloadAttachment',
+    httpMethod: 'get',
+    httpPath: '/api/mailbox/{inbound_email_id}/attachments/{filename}',
+  },
+  {
+    clientCallName: 'client.mailbox.reprocess',
+    fullyQualifiedName: 'mailbox.reprocess',
+    httpMethod: 'post',
+    httpPath: '/api/mailbox/{inbound_email_id}/reprocess',
+  },
+  {
+    clientCallName: 'client.stats.retrieve',
+    fullyQualifiedName: 'stats.retrieve',
+    httpMethod: 'get',
+    httpPath: '/api/stats',
+  },
+  {
+    clientCallName: 'client.conversion.pdf.create',
+    fullyQualifiedName: 'conversion.pdf.create',
+    httpMethod: 'post',
+    httpPath: '/api/conversion/pdf',
+  },
+  {
+    clientCallName: 'client.conversion.pdf.retrieve',
+    fullyQualifiedName: 'conversion.pdf.retrieve',
+    httpMethod: 'get',
+    httpPath: '/api/conversion/pdf/{task_id}',
+  },
+  {
+    clientCallName: 'client.conversion.pdf.retrieveResult',
+    fullyQualifiedName: 'conversion.pdf.retrieveResult',
+    httpMethod: 'get',
+    httpPath: '/api/conversion/pdf/{task_id}/result',
   },
 ];
 

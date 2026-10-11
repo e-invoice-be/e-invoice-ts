@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+export { Conversion } from './conversion/conversion';
 export {
   Documents,
   type Allowance,
@@ -9,6 +10,7 @@ export {
   type DocumentCreate,
   type DocumentDirection,
   type DocumentResponse,
+  type DocumentTimeline,
   type DocumentType,
   type PaymentDetailCreate,
   type UnitOfMeasureCode,
@@ -19,6 +21,7 @@ export {
   type DocumentSendParams,
   type DocumentResponsesDocumentsNumberPage,
 } from './documents/documents';
+export { Drafts, type DraftListParams } from './drafts';
 export {
   Inbox,
   type DocumentState,
@@ -35,12 +38,20 @@ export {
   type LookupRetrieveParams,
   type LookupRetrieveParticipantsParams,
 } from './lookup';
+export {
+  Mailbox,
+  type InboundEmailResponse,
+  type MailboxListParams,
+  type MailboxDownloadAttachmentParams,
+  type InboundEmailResponsesDocumentsNumberPage,
+} from './mailbox';
 export { Me, type MeRetrieveResponse } from './me';
 export {
   Outbox,
   type OutboxListDraftDocumentsParams,
   type OutboxListReceivedDocumentsParams,
 } from './outbox';
+export { Stats, type StatRetrieveResponse, type StatRetrieveParams } from './stats';
 export {
   Validate,
   type UblDocumentValidation,
@@ -54,6 +65,9 @@ export {
   type WebhookResponse,
   type WebhookListResponse,
   type WebhookDeleteResponse,
+  type WebhookRetrieveHistoryResponse,
+  type WebhookTestResponse,
   type WebhookCreateParams,
   type WebhookUpdateParams,
+  type WebhookTestParams,
 } from './webhooks';

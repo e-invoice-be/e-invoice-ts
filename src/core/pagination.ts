@@ -114,7 +114,11 @@ export interface DocumentsNumberPageResponse<Item> {
 
   page_size: number;
 
+  pages: number;
+
   total: number;
+
+  has_next_page: boolean;
 }
 
 export interface DocumentsNumberPageParams {
@@ -133,7 +137,11 @@ export class DocumentsNumberPage<Item>
 
   page_size: number;
 
+  pages: number;
+
   total: number;
+
+  has_next_page: boolean;
 
   constructor(
     client: EInvoice,
@@ -146,7 +154,9 @@ export class DocumentsNumberPage<Item>
     this.items = body.items || [];
     this.page = body.page || 0;
     this.page_size = body.page_size || 0;
+    this.pages = body.pages || 0;
     this.total = body.total || 0;
+    this.has_next_page = body.has_next_page || false;
   }
 
   getPaginatedItems(): Item[] {
@@ -156,7 +166,7 @@ export class DocumentsNumberPage<Item>
   nextPageRequestOptions(): PageRequestOptions | null {
     const currentPage = this.page;
 
-    if (currentPage >= this.total) {
+    if (!this.has_next_page) {
       return null;
     }
 

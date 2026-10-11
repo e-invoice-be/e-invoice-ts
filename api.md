@@ -9,6 +9,7 @@ Types:
 - <code><a href="./src/resources/documents/documents.ts">DocumentCreate</a></code>
 - <code><a href="./src/resources/documents/documents.ts">DocumentDirection</a></code>
 - <code><a href="./src/resources/documents/documents.ts">DocumentResponse</a></code>
+- <code><a href="./src/resources/documents/documents.ts">DocumentTimeline</a></code>
 - <code><a href="./src/resources/documents/documents.ts">DocumentType</a></code>
 - <code><a href="./src/resources/documents/documents.ts">PaymentDetailCreate</a></code>
 - <code><a href="./src/resources/documents/documents.ts">UnitOfMeasureCode</a></code>
@@ -21,6 +22,7 @@ Methods:
 - <code title="get /api/documents/{document_id}">client.documents.<a href="./src/resources/documents/documents.ts">retrieve</a>(documentID) -> DocumentResponse</code>
 - <code title="delete /api/documents/{document_id}">client.documents.<a href="./src/resources/documents/documents.ts">delete</a>(documentID) -> DocumentDeleteResponse</code>
 - <code title="post /api/documents/pdf">client.documents.<a href="./src/resources/documents/documents.ts">createFromPdf</a>({ ...params }) -> DocumentCreateFromPdfResponse</code>
+- <code title="get /api/documents/{document_id}/timeline">client.documents.<a href="./src/resources/documents/documents.ts">retrieveTimeline</a>(documentID) -> DocumentTimeline</code>
 - <code title="post /api/documents/{document_id}/send">client.documents.<a href="./src/resources/documents/documents.ts">send</a>(documentID, { ...params }) -> DocumentResponse</code>
 - <code title="post /api/documents/{document_id}/validate">client.documents.<a href="./src/resources/documents/documents.ts">validate</a>(documentID) -> UblDocumentValidation</code>
 
@@ -70,6 +72,12 @@ Methods:
 - <code title="get /api/outbox/drafts">client.outbox.<a href="./src/resources/outbox.ts">listDraftDocuments</a>({ ...params }) -> DocumentResponsesDocumentsNumberPage</code>
 - <code title="get /api/outbox/">client.outbox.<a href="./src/resources/outbox.ts">listReceivedDocuments</a>({ ...params }) -> DocumentResponsesDocumentsNumberPage</code>
 
+# Drafts
+
+Methods:
+
+- <code title="get /api/drafts/">client.drafts.<a href="./src/resources/drafts.ts">list</a>({ ...params }) -> DocumentResponsesDocumentsNumberPage</code>
+
 # Validate
 
 Types:
@@ -113,6 +121,8 @@ Types:
 - <code><a href="./src/resources/webhooks.ts">WebhookResponse</a></code>
 - <code><a href="./src/resources/webhooks.ts">WebhookListResponse</a></code>
 - <code><a href="./src/resources/webhooks.ts">WebhookDeleteResponse</a></code>
+- <code><a href="./src/resources/webhooks.ts">WebhookRetrieveHistoryResponse</a></code>
+- <code><a href="./src/resources/webhooks.ts">WebhookTestResponse</a></code>
 
 Methods:
 
@@ -121,3 +131,43 @@ Methods:
 - <code title="put /api/webhooks/{webhook_id}">client.webhooks.<a href="./src/resources/webhooks.ts">update</a>(webhookID, { ...params }) -> WebhookResponse</code>
 - <code title="get /api/webhooks/">client.webhooks.<a href="./src/resources/webhooks.ts">list</a>() -> WebhookListResponse</code>
 - <code title="delete /api/webhooks/{webhook_id}">client.webhooks.<a href="./src/resources/webhooks.ts">delete</a>(webhookID) -> WebhookDeleteResponse</code>
+- <code title="get /api/webhooks/{webhook_id}/history">client.webhooks.<a href="./src/resources/webhooks.ts">retrieveHistory</a>(webhookID) -> WebhookRetrieveHistoryResponse</code>
+- <code title="post /api/webhooks/{webhook_id}/test">client.webhooks.<a href="./src/resources/webhooks.ts">test</a>(webhookID, { ...params }) -> WebhookTestResponse</code>
+
+# Mailbox
+
+Types:
+
+- <code><a href="./src/resources/mailbox.ts">InboundEmailResponse</a></code>
+
+Methods:
+
+- <code title="get /api/mailbox/{inbound_email_id}">client.mailbox.<a href="./src/resources/mailbox.ts">retrieve</a>(inboundEmailID) -> InboundEmailResponse</code>
+- <code title="get /api/mailbox/">client.mailbox.<a href="./src/resources/mailbox.ts">list</a>({ ...params }) -> InboundEmailResponsesDocumentsNumberPage</code>
+- <code title="get /api/mailbox/{inbound_email_id}/attachments/{filename}">client.mailbox.<a href="./src/resources/mailbox.ts">downloadAttachment</a>(filename, { ...params }) -> Response</code>
+- <code title="post /api/mailbox/{inbound_email_id}/reprocess">client.mailbox.<a href="./src/resources/mailbox.ts">reprocess</a>(inboundEmailID) -> InboundEmailResponse</code>
+
+# Stats
+
+Types:
+
+- <code><a href="./src/resources/stats.ts">StatRetrieveResponse</a></code>
+
+Methods:
+
+- <code title="get /api/stats">client.stats.<a href="./src/resources/stats.ts">retrieve</a>({ ...params }) -> StatRetrieveResponse</code>
+
+# Conversion
+
+## Pdf
+
+Types:
+
+- <code><a href="./src/resources/conversion/pdf.ts">PdfCreateResponse</a></code>
+- <code><a href="./src/resources/conversion/pdf.ts">PdfRetrieveResponse</a></code>
+
+Methods:
+
+- <code title="post /api/conversion/pdf">client.conversion.pdf.<a href="./src/resources/conversion/pdf.ts">create</a>({ ...params }) -> PdfCreateResponse</code>
+- <code title="get /api/conversion/pdf/{task_id}">client.conversion.pdf.<a href="./src/resources/conversion/pdf.ts">retrieve</a>(taskID) -> PdfRetrieveResponse</code>
+- <code title="get /api/conversion/pdf/{task_id}/result">client.conversion.pdf.<a href="./src/resources/conversion/pdf.ts">retrieveResult</a>(taskID) -> DocumentCreateFromPdfResponse</code>
