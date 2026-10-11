@@ -331,6 +331,32 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'retrieve_timeline',
+    endpoint: '/api/documents/{document_id}/timeline',
+    httpMethod: 'get',
+    summary: 'Get Document Timeline',
+    description:
+      'Get the timeline of events for an invoice or credit note, including creation, validation, transmission, and delivery events',
+    stainlessPath: '(resource) documents > (method) retrieve_timeline',
+    qualified: 'client.documents.retrieveTimeline',
+    params: ['document_id: string;'],
+    response:
+      "{ document_id: string; events: { event_type: 'email_received' | 'email_processed' | 'document_created' | 'send_attempted' | 'send_failed' | 'send_success' | 'receive_success' | 'mlr_received' | 'imr_received'; timestamp: string; id?: string; details?: object; }[]; }",
+    markdown:
+      "## retrieve_timeline\n\n`client.documents.retrieveTimeline(document_id: string): { document_id: string; events: object[]; }`\n\n**get** `/api/documents/{document_id}/timeline`\n\nGet the timeline of events for an invoice or credit note, including creation, validation, transmission, and delivery events\n\n### Parameters\n\n- `document_id: string`\n\n### Returns\n\n- `{ document_id: string; events: { event_type: 'email_received' | 'email_processed' | 'document_created' | 'send_attempted' | 'send_failed' | 'send_success' | 'receive_success' | 'mlr_received' | 'imr_received'; timestamp: string; id?: string; details?: object; }[]; }`\n\n  - `document_id: string`\n  - `events: { event_type: 'email_received' | 'email_processed' | 'document_created' | 'send_attempted' | 'send_failed' | 'send_success' | 'receive_success' | 'mlr_received' | 'imr_received'; timestamp: string; id?: string; details?: object; }[]`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst documentTimeline = await client.documents.retrieveTimeline('document_id');\n\nconsole.log(documentTimeline);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.documents.retrieveTimeline',
+        example:
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst documentTimeline = await client.documents.retrieveTimeline('document_id');\n\nconsole.log(documentTimeline.document_id);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/documents/$DOCUMENT_ID/timeline \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
+      },
+    },
+  },
+  {
     name: 'validate',
     endpoint: '/api/documents/{document_id}/validate',
     httpMethod: 'post',
@@ -896,6 +922,41 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'list',
+    endpoint: '/api/drafts/',
+    httpMethod: 'get',
+    summary: 'List Draft Documents',
+    description:
+      'Retrieve a paginated list of draft documents with filtering options including state and text search.',
+    stainlessPath: '(resource) drafts > (method) list',
+    qualified: 'client.drafts.list',
+    params: [
+      'date_from?: string;',
+      'date_to?: string;',
+      'page?: number;',
+      'page_size?: number;',
+      'search?: string;',
+      'sort_by?: string;',
+      "sort_order?: 'asc' | 'desc';",
+      "state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED';",
+      "type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE';",
+    ],
+    response: 'object',
+    markdown:
+      "## list\n\n`client.drafts.list(date_from?: string, date_to?: string, page?: number, page_size?: number, search?: string, sort_by?: string, sort_order?: 'asc' | 'desc', state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED', type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'): { id: string; created_at: string; allowances?: object[]; amount_due?: string; attachments?: document_attachment[]; billing_address?: string; billing_address_recipient?: string; charges?: object[]; currency?: currency_code; customer_address?: string; customer_address_recipient?: string; customer_company_id?: string; customer_email?: string; customer_id?: string; customer_name?: string; customer_peppol_id?: string; customer_tax_id?: string; direction?: document_direction; document_type?: document_type; due_date?: string; invoice_date?: string; invoice_id?: string; invoice_total?: string; items?: object[]; note?: string; payment_details?: object[]; payment_term?: string; purchase_order?: string; remittance_address?: string; remittance_address_recipient?: string; service_address?: string; service_address_recipient?: string; service_end_date?: string; service_start_date?: string; shipping_address?: string; shipping_address_recipient?: string; state?: document_state; subtotal?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_details?: object[]; total_discount?: string; total_tax?: string; vatex?: string; vatex_note?: string; vendor_address?: string; vendor_address_recipient?: string; vendor_company_id?: string; vendor_email?: string; vendor_name?: string; vendor_tax_id?: string; }`\n\n**get** `/api/drafts/`\n\nRetrieve a paginated list of draft documents with filtering options including state and text search.\n\n### Parameters\n\n- `date_from?: string`\n  Filter by issue date (from)\n\n- `date_to?: string`\n  Filter by issue date (to)\n\n- `page?: number`\n  Page number\n\n- `page_size?: number`\n  Number of items per page\n\n- `search?: string`\n  Search in invoice number, seller/buyer names\n\n- `sort_by?: string`\n  Field to sort by\n\n- `sort_order?: 'asc' | 'desc'`\n  Sort direction (asc/desc)\n\n- `state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'`\n  Filter by document state. By default return all states (DRAFT, TRANSIT, FAILED).\n\n- `type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'`\n  Filter by document type\n\n### Returns\n\n- `{ id: string; created_at: string; allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; amount_due?: string; attachments?: { id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }[]; billing_address?: string; billing_address_recipient?: string; charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; currency?: string; customer_address?: string; customer_address_recipient?: string; customer_company_id?: string; customer_email?: string; customer_id?: string; customer_name?: string; customer_peppol_id?: string; customer_tax_id?: string; direction?: 'INBOUND' | 'OUTBOUND'; document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'; due_date?: string; invoice_date?: string; invoice_id?: string; invoice_total?: string; items?: { allowances?: object[]; amount?: string; charges?: object[]; date?: null; description?: string; item_attributes?: { name: string; value?: string; }[]; product_code?: string; quantity?: string; tax?: string; tax_rate?: string; unit?: string; unit_price?: string; }[]; note?: string; payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]; payment_term?: string; purchase_order?: string; remittance_address?: string; remittance_address_recipient?: string; service_address?: string; service_address_recipient?: string; service_end_date?: string; service_start_date?: string; shipping_address?: string; shipping_address_recipient?: string; state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'; subtotal?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_details?: { amount?: string; rate?: string; }[]; total_discount?: string; total_tax?: string; vatex?: string; vatex_note?: string; vendor_address?: string; vendor_address_recipient?: string; vendor_company_id?: string; vendor_email?: string; vendor_name?: string; vendor_tax_id?: string; }`\n\n  - `id: string`\n  - `created_at: string`\n  - `allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]`\n  - `amount_due?: string`\n  - `attachments?: { id: string; file_name: string; file_size?: number; file_type?: string; file_url?: string; }[]`\n  - `billing_address?: string`\n  - `billing_address_recipient?: string`\n  - `charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]`\n  - `currency?: string`\n  - `customer_address?: string`\n  - `customer_address_recipient?: string`\n  - `customer_company_id?: string`\n  - `customer_email?: string`\n  - `customer_id?: string`\n  - `customer_name?: string`\n  - `customer_peppol_id?: string`\n  - `customer_tax_id?: string`\n  - `direction?: 'INBOUND' | 'OUTBOUND'`\n  - `document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'`\n  - `due_date?: string`\n  - `invoice_date?: string`\n  - `invoice_id?: string`\n  - `invoice_total?: string`\n  - `items?: { allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; amount?: string; charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; date?: null; description?: string; item_attributes?: { name: string; value?: string; }[]; product_code?: string; quantity?: string; tax?: string; tax_rate?: string; unit?: string; unit_price?: string; }[]`\n  - `note?: string`\n  - `payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]`\n  - `payment_term?: string`\n  - `purchase_order?: string`\n  - `remittance_address?: string`\n  - `remittance_address_recipient?: string`\n  - `service_address?: string`\n  - `service_address_recipient?: string`\n  - `service_end_date?: string`\n  - `service_start_date?: string`\n  - `shipping_address?: string`\n  - `shipping_address_recipient?: string`\n  - `state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'`\n  - `subtotal?: string`\n  - `tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'`\n  - `tax_details?: { amount?: string; rate?: string; }[]`\n  - `total_discount?: string`\n  - `total_tax?: string`\n  - `vatex?: string`\n  - `vatex_note?: string`\n  - `vendor_address?: string`\n  - `vendor_address_recipient?: string`\n  - `vendor_company_id?: string`\n  - `vendor_email?: string`\n  - `vendor_name?: string`\n  - `vendor_tax_id?: string`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\n// Automatically fetches more pages as needed.\nfor await (const documentResponse of client.drafts.list()) {\n  console.log(documentResponse);\n}\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.drafts.list',
+        example:
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const documentResponse of client.drafts.list()) {\n  console.log(documentResponse.id);\n}",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/drafts/ \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
+      },
+    },
+  },
+  {
     name: 'validate_ubl',
     endpoint: '/api/validate/ubl',
     httpMethod: 'post',
@@ -1433,6 +1494,117 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.e-invoice.be/api/webhooks/$WEBHOOK_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'list',
+    endpoint: '/api/mailbox/',
+    httpMethod: 'get',
+    summary: 'List Inbound Emails',
+    description:
+      'Retrieve a paginated list of received inbound emails with filtering, search, and sorting options.',
+    stainlessPath: '(resource) mailbox > (method) list',
+    qualified: 'client.mailbox.list',
+    params: [
+      'page?: number;',
+      'page_size?: number;',
+      'processed?: boolean;',
+      'received_from?: string;',
+      'received_to?: string;',
+      'search?: string;',
+      "sort_by?: 'received_at' | 'created_at';",
+      "sort_order?: 'asc' | 'desc';",
+      "status?: 'pending' | 'success' | 'failed';",
+    ],
+    response:
+      '{ id: string; created_at: string; message_id: string; sender_email: string; attachment_count?: number; attachments?: { filename: string; content_type?: string; size?: number; }[]; bcc_addresses?: string; cc_addresses?: string; document_id?: string; error_message?: string; processed?: boolean; processed_at?: string; received_at?: string; sender_name?: string; subject?: string; to_addresses?: string; }',
+    markdown:
+      "## list\n\n`client.mailbox.list(page?: number, page_size?: number, processed?: boolean, received_from?: string, received_to?: string, search?: string, sort_by?: 'received_at' | 'created_at', sort_order?: 'asc' | 'desc', status?: 'pending' | 'success' | 'failed'): { id: string; created_at: string; message_id: string; sender_email: string; attachment_count?: number; attachments?: object[]; bcc_addresses?: string; cc_addresses?: string; document_id?: string; error_message?: string; processed?: boolean; processed_at?: string; received_at?: string; sender_name?: string; subject?: string; to_addresses?: string; }`\n\n**get** `/api/mailbox/`\n\nRetrieve a paginated list of received inbound emails with filtering, search, and sorting options.\n\n### Parameters\n\n- `page?: number`\n  Page number\n\n- `page_size?: number`\n  Number of items per page\n\n- `processed?: boolean`\n  Filter by processing status. If not provided, returns all. Ignored when `status` is set.\n\n- `received_from?: string`\n  Inclusive lower bound on received date (falls back to created_at when received_at is null)\n\n- `received_to?: string`\n  Inclusive upper bound on received date (falls back to created_at when received_at is null)\n\n- `search?: string`\n  Case-insensitive search across sender email, subject, message ID, and attachment filenames\n\n- `sort_by?: 'received_at' | 'created_at'`\n  Field to sort by\n\n- `sort_order?: 'asc' | 'desc'`\n  Sort direction (asc/desc)\n\n- `status?: 'pending' | 'success' | 'failed'`\n  Filter by status: pending, success, or failed. Takes precedence over `processed` if both are provided.\n\n### Returns\n\n- `{ id: string; created_at: string; message_id: string; sender_email: string; attachment_count?: number; attachments?: { filename: string; content_type?: string; size?: number; }[]; bcc_addresses?: string; cc_addresses?: string; document_id?: string; error_message?: string; processed?: boolean; processed_at?: string; received_at?: string; sender_name?: string; subject?: string; to_addresses?: string; }`\n\n  - `id: string`\n  - `created_at: string`\n  - `message_id: string`\n  - `sender_email: string`\n  - `attachment_count?: number`\n  - `attachments?: { filename: string; content_type?: string; size?: number; }[]`\n  - `bcc_addresses?: string`\n  - `cc_addresses?: string`\n  - `document_id?: string`\n  - `error_message?: string`\n  - `processed?: boolean`\n  - `processed_at?: string`\n  - `received_at?: string`\n  - `sender_name?: string`\n  - `subject?: string`\n  - `to_addresses?: string`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\n// Automatically fetches more pages as needed.\nfor await (const inboundEmailResponse of client.mailbox.list()) {\n  console.log(inboundEmailResponse);\n}\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.mailbox.list',
+        example:
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const inboundEmailResponse of client.mailbox.list()) {\n  console.log(inboundEmailResponse.id);\n}",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/mailbox/ \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'retrieve',
+    endpoint: '/api/mailbox/{inbound_email_id}',
+    httpMethod: 'get',
+    summary: 'Get Inbound Email Detail',
+    description: "Retrieve a single inbound email by ID, scoped to the caller's tenant.",
+    stainlessPath: '(resource) mailbox > (method) retrieve',
+    qualified: 'client.mailbox.retrieve',
+    params: ['inbound_email_id: string;'],
+    response:
+      '{ id: string; created_at: string; message_id: string; sender_email: string; attachment_count?: number; attachments?: { filename: string; content_type?: string; size?: number; }[]; bcc_addresses?: string; cc_addresses?: string; document_id?: string; error_message?: string; processed?: boolean; processed_at?: string; received_at?: string; sender_name?: string; subject?: string; to_addresses?: string; }',
+    markdown:
+      "## retrieve\n\n`client.mailbox.retrieve(inbound_email_id: string): { id: string; created_at: string; message_id: string; sender_email: string; attachment_count?: number; attachments?: object[]; bcc_addresses?: string; cc_addresses?: string; document_id?: string; error_message?: string; processed?: boolean; processed_at?: string; received_at?: string; sender_name?: string; subject?: string; to_addresses?: string; }`\n\n**get** `/api/mailbox/{inbound_email_id}`\n\nRetrieve a single inbound email by ID, scoped to the caller's tenant.\n\n### Parameters\n\n- `inbound_email_id: string`\n\n### Returns\n\n- `{ id: string; created_at: string; message_id: string; sender_email: string; attachment_count?: number; attachments?: { filename: string; content_type?: string; size?: number; }[]; bcc_addresses?: string; cc_addresses?: string; document_id?: string; error_message?: string; processed?: boolean; processed_at?: string; received_at?: string; sender_name?: string; subject?: string; to_addresses?: string; }`\n\n  - `id: string`\n  - `created_at: string`\n  - `message_id: string`\n  - `sender_email: string`\n  - `attachment_count?: number`\n  - `attachments?: { filename: string; content_type?: string; size?: number; }[]`\n  - `bcc_addresses?: string`\n  - `cc_addresses?: string`\n  - `document_id?: string`\n  - `error_message?: string`\n  - `processed?: boolean`\n  - `processed_at?: string`\n  - `received_at?: string`\n  - `sender_name?: string`\n  - `subject?: string`\n  - `to_addresses?: string`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst inboundEmailResponse = await client.mailbox.retrieve('inbound_email_id');\n\nconsole.log(inboundEmailResponse);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.mailbox.retrieve',
+        example:
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst inboundEmailResponse = await client.mailbox.retrieve('inbound_email_id');\n\nconsole.log(inboundEmailResponse.id);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/mailbox/$INBOUND_EMAIL_ID \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'download_attachment',
+    endpoint: '/api/mailbox/{inbound_email_id}/attachments/{filename}',
+    httpMethod: 'get',
+    summary: 'Download Inbound Email Attachment',
+    description:
+      'Download a specific attachment from an inbound email by filename. Returns the binary content with the correct Content-Type.',
+    stainlessPath: '(resource) mailbox > (method) download_attachment',
+    qualified: 'client.mailbox.downloadAttachment',
+    params: ['inbound_email_id: string;', 'filename: string;'],
+    markdown:
+      "## download_attachment\n\n`client.mailbox.downloadAttachment(inbound_email_id: string, filename: string): Response`\n\n**get** `/api/mailbox/{inbound_email_id}/attachments/{filename}`\n\nDownload a specific attachment from an inbound email by filename. Returns the binary content with the correct Content-Type.\n\n### Parameters\n\n- `inbound_email_id: string`\n\n- `filename: string`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst response = await client.mailbox.downloadAttachment('filename', { inbound_email_id: 'inbound_email_id' });\n\nconsole.log(response);\n\nconst content = await response.blob();\nconsole.log(content);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.mailbox.downloadAttachment',
+        example:
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.mailbox.downloadAttachment('filename', {\n  inbound_email_id: 'inbound_email_id',\n});\n\nconsole.log(response);\n\nconst content = await response.blob();\nconsole.log(content);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/mailbox/$INBOUND_EMAIL_ID/attachments/$FILENAME \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'reprocess',
+    endpoint: '/api/mailbox/{inbound_email_id}/reprocess',
+    httpMethod: 'post',
+    summary: 'Reprocess Failed Inbound Email',
+    description:
+      'Retry processing of a previously failed inbound email by replaying the original Postmark payload.',
+    stainlessPath: '(resource) mailbox > (method) reprocess',
+    qualified: 'client.mailbox.reprocess',
+    params: ['inbound_email_id: string;'],
+    response:
+      '{ id: string; created_at: string; message_id: string; sender_email: string; attachment_count?: number; attachments?: { filename: string; content_type?: string; size?: number; }[]; bcc_addresses?: string; cc_addresses?: string; document_id?: string; error_message?: string; processed?: boolean; processed_at?: string; received_at?: string; sender_name?: string; subject?: string; to_addresses?: string; }',
+    markdown:
+      "## reprocess\n\n`client.mailbox.reprocess(inbound_email_id: string): { id: string; created_at: string; message_id: string; sender_email: string; attachment_count?: number; attachments?: object[]; bcc_addresses?: string; cc_addresses?: string; document_id?: string; error_message?: string; processed?: boolean; processed_at?: string; received_at?: string; sender_name?: string; subject?: string; to_addresses?: string; }`\n\n**post** `/api/mailbox/{inbound_email_id}/reprocess`\n\nRetry processing of a previously failed inbound email by replaying the original Postmark payload.\n\n### Parameters\n\n- `inbound_email_id: string`\n\n### Returns\n\n- `{ id: string; created_at: string; message_id: string; sender_email: string; attachment_count?: number; attachments?: { filename: string; content_type?: string; size?: number; }[]; bcc_addresses?: string; cc_addresses?: string; document_id?: string; error_message?: string; processed?: boolean; processed_at?: string; received_at?: string; sender_name?: string; subject?: string; to_addresses?: string; }`\n\n  - `id: string`\n  - `created_at: string`\n  - `message_id: string`\n  - `sender_email: string`\n  - `attachment_count?: number`\n  - `attachments?: { filename: string; content_type?: string; size?: number; }[]`\n  - `bcc_addresses?: string`\n  - `cc_addresses?: string`\n  - `document_id?: string`\n  - `error_message?: string`\n  - `processed?: boolean`\n  - `processed_at?: string`\n  - `received_at?: string`\n  - `sender_name?: string`\n  - `subject?: string`\n  - `to_addresses?: string`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst inboundEmailResponse = await client.mailbox.reprocess('inbound_email_id');\n\nconsole.log(inboundEmailResponse);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.mailbox.reprocess',
+        example:
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst inboundEmailResponse = await client.mailbox.reprocess('inbound_email_id');\n\nconsole.log(inboundEmailResponse.id);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/mailbox/$INBOUND_EMAIL_ID/reprocess \\\n    -X POST \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
       },
     },
   },

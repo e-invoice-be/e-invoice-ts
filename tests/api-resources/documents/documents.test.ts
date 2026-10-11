@@ -68,6 +68,18 @@ describe('resource documents', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('retrieveTimeline', async () => {
+    const responsePromise = client.documents.retrieveTimeline('document_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
   test.skip('send', async () => {
     const responsePromise = client.documents.send('document_id');
     const rawResponse = await responsePromise.asResponse();

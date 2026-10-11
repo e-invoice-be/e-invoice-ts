@@ -35,6 +35,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/documents/pdf',
   },
   {
+    clientCallName: 'client.documents.retrieveTimeline',
+    fullyQualifiedName: 'documents.retrieveTimeline',
+    httpMethod: 'get',
+    httpPath: '/api/documents/{document_id}/timeline',
+  },
+  {
     clientCallName: 'client.documents.send',
     fullyQualifiedName: 'documents.send',
     httpMethod: 'post',
@@ -113,6 +119,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/outbox/',
   },
   {
+    clientCallName: 'client.drafts.list',
+    fullyQualifiedName: 'drafts.list',
+    httpMethod: 'get',
+    httpPath: '/api/drafts/',
+  },
+  {
     clientCallName: 'client.validate.validateJson',
     fullyQualifiedName: 'validate.validateJson',
     httpMethod: 'post',
@@ -177,6 +189,30 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'webhooks.delete',
     httpMethod: 'delete',
     httpPath: '/api/webhooks/{webhook_id}',
+  },
+  {
+    clientCallName: 'client.mailbox.retrieve',
+    fullyQualifiedName: 'mailbox.retrieve',
+    httpMethod: 'get',
+    httpPath: '/api/mailbox/{inbound_email_id}',
+  },
+  {
+    clientCallName: 'client.mailbox.list',
+    fullyQualifiedName: 'mailbox.list',
+    httpMethod: 'get',
+    httpPath: '/api/mailbox/',
+  },
+  {
+    clientCallName: 'client.mailbox.downloadAttachment',
+    fullyQualifiedName: 'mailbox.downloadAttachment',
+    httpMethod: 'get',
+    httpPath: '/api/mailbox/{inbound_email_id}/attachments/{filename}',
+  },
+  {
+    clientCallName: 'client.mailbox.reprocess',
+    fullyQualifiedName: 'mailbox.reprocess',
+    httpMethod: 'post',
+    httpPath: '/api/mailbox/{inbound_email_id}/reprocess',
   },
 ];
 

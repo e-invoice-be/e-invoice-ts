@@ -9,6 +9,7 @@ export {
   type DocumentCreate,
   type DocumentDirection,
   type DocumentResponse,
+  type DocumentTimeline,
   type DocumentType,
   type PaymentDetailCreate,
   type UnitOfMeasureCode,
@@ -19,6 +20,7 @@ export {
   type DocumentSendParams,
   type DocumentResponsesDocumentsNumberPage,
 } from './documents/documents';
+export { Drafts, type DraftListParams } from './drafts';
 export {
   Inbox,
   type DocumentState,
@@ -35,6 +37,13 @@ export {
   type LookupRetrieveParams,
   type LookupRetrieveParticipantsParams,
 } from './lookup';
+export {
+  Mailbox,
+  type InboundEmailResponse,
+  type MailboxListParams,
+  type MailboxDownloadAttachmentParams,
+  type InboundEmailResponsesDocumentsNumberPage,
+} from './mailbox';
 export { Me, type MeRetrieveResponse } from './me';
 export {
   Outbox,
