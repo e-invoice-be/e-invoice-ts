@@ -178,6 +178,16 @@ export namespace LookupRetrieveResponse {
      * Error message if the DNS lookup failed
      */
     error?: string | null;
+
+    /**
+     * DNS lookup method used: 'naptr' (new spec) or 'busdox' (legacy)
+     */
+    lookupMethod?: string | null;
+
+    /**
+     * Hostname of the SMP (Service Metadata Publisher) discovered via DNS
+     */
+    smpHostname?: string | null;
   }
 
   export namespace DNSInfo {

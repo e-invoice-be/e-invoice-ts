@@ -29,13 +29,26 @@ export class Documents extends APIResource {
 
   /**
    * Create a new invoice or credit note
+   *
+   * @example
+   * ```ts
+   * const documentResponse = await client.documents.create();
+   * ```
    */
-  create(body: DocumentCreateParams, options?: RequestOptions): APIPromise<DocumentResponse> {
-    return this._client.post('/api/documents/', { body, ...options });
+  create(params: DocumentCreateParams, options?: RequestOptions): APIPromise<DocumentResponse> {
+    const { construct_pdf, ...body } = params;
+    return this._client.post('/api/documents/', { query: { construct_pdf }, body, ...options });
   }
 
   /**
    * Get an invoice or credit note by ID
+   *
+   * @example
+   * ```ts
+   * const documentResponse = await client.documents.retrieve(
+   *   'document_id',
+   * );
+   * ```
    */
   retrieve(documentID: string, options?: RequestOptions): APIPromise<DocumentResponse> {
     return this._client.get(path`/api/documents/${documentID}`, options);
@@ -43,6 +56,13 @@ export class Documents extends APIResource {
 
   /**
    * Delete an invoice or credit note
+   *
+   * @example
+   * ```ts
+   * const document = await client.documents.delete(
+   *   'document_id',
+   * );
+   * ```
    */
   delete(documentID: string, options?: RequestOptions): APIPromise<DocumentDeleteResponse> {
     return this._client.delete(path`/api/documents/${documentID}`, options);
@@ -54,6 +74,13 @@ export class Documents extends APIResource {
    * the PDF to automatically generate a valid UBL document ready for sending. If
    * 'ubl_document' is not set, human intervention may be required to ensure
    * compliance.
+   *
+   * @example
+   * ```ts
+   * const response = await client.documents.createFromPdf({
+   *   file: fs.createReadStream('path/to/file'),
+   * });
+   * ```
    */
   createFromPdf(
     params: DocumentCreateFromPdfParams,
@@ -70,7 +97,19 @@ export class Documents extends APIResource {
   }
 
   /**
-   * Send an invoice or credit note via Peppol
+   * Send an invoice or credit note via Peppol. By default, the sender and receiver
+   * Peppol IDs are derived from the company (tax) IDs in the document, regardless of
+   * whether the document was created from a UBL with a different endpoint ID. To
+   * explicitly set the sender or receiver Peppol ID, provide them via the query
+   * parameters (sender_peppol_scheme, sender_peppol_id, receiver_peppol_scheme,
+   * receiver_peppol_id).
+   *
+   * @example
+   * ```ts
+   * const documentResponse = await client.documents.send(
+   *   'document_id',
+   * );
+   * ```
    */
   send(
     documentID: string,
@@ -87,6 +126,12 @@ export class Documents extends APIResource {
 
   /**
    * Validate a UBL document according to Peppol BIS Billing 3.0
+   *
+   * @example
+   * ```ts
+   * const ublDocumentValidation =
+   *   await client.documents.validate('document_id');
+   * ```
    */
   validate(documentID: string, options?: RequestOptions): APIPromise<ValidateAPI.UblDocumentValidation> {
     return this._client.post(path`/api/documents/${documentID}/validate`, options);
@@ -469,6 +514,11 @@ export interface DocumentCreate {
    * The company name of the customer/buyer
    */
   customer_name?: string | null;
+
+  /**
+   * Customer Peppol ID
+   */
+  customer_peppol_id?: string | null;
 
   /**
    * Customer tax ID. For Belgium this is the VAT number. Must include the country
@@ -1031,6 +1081,11 @@ export namespace DocumentCreate {
     description?: string | null;
 
     /**
+     * Item-level attributes (BG-32) from cac:AdditionalItemProperty.
+     */
+    item_attributes?: Array<Item.ItemAttribute> | null;
+
+    /**
      * The product code of the line item.
      */
     product_code?: string | null;
@@ -1352,6 +1407,22 @@ export namespace DocumentCreate {
        */
       tax_rate?: number | string | null;
     }
+
+    /**
+     * An item-level attribute (BG-32 / BT-160 + BT-161) from
+     * cac:AdditionalItemProperty.
+     */
+    export interface ItemAttribute {
+      /**
+       * Attribute name (BT-160).
+       */
+      name: string;
+
+      /**
+       * Attribute value (BT-161).
+       */
+      value?: string | null;
+    }
   }
 
   export interface TaxDetail {
@@ -1371,6 +1442,8 @@ export type DocumentDirection = 'INBOUND' | 'OUTBOUND';
 
 export interface DocumentResponse {
   id: string;
+
+  created_at: string;
 
   allowances?: Array<DocumentResponse.Allowance> | null;
 
@@ -1428,6 +1501,11 @@ export interface DocumentResponse {
    * The company name of the customer/buyer
    */
   customer_name?: string | null;
+
+  /**
+   * Customer Peppol ID
+   */
+  customer_peppol_id?: string | null;
 
   /**
    * Customer tax ID. For Belgium this is the VAT number. Must include the country
@@ -1975,6 +2053,11 @@ export namespace DocumentResponse {
     description?: string | null;
 
     /**
+     * Item-level attributes (BG-32) from cac:AdditionalItemProperty.
+     */
+    item_attributes?: Array<Item.ItemAttribute> | null;
+
+    /**
      * The product code of the line item.
      */
     product_code?: string | null;
@@ -2007,6 +2090,24 @@ export namespace DocumentResponse {
      * subtracting item price discount. Must be rounded to maximum 4 decimals
      */
     unit_price?: string | null;
+  }
+
+  export namespace Item {
+    /**
+     * An item-level attribute (BG-32 / BT-160 + BT-161) from
+     * cac:AdditionalItemProperty.
+     */
+    export interface ItemAttribute {
+      /**
+       * Attribute name (BT-160).
+       */
+      name: string;
+
+      /**
+       * Attribute value (BT-161).
+       */
+      value?: string | null;
+    }
   }
 
   export interface PaymentDetail {
@@ -2045,7 +2146,12 @@ export namespace DocumentResponse {
   }
 }
 
-export type DocumentType = 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE';
+export type DocumentType =
+  | 'INVOICE'
+  | 'CREDIT_NOTE'
+  | 'DEBIT_NOTE'
+  | 'SELFBILLING_INVOICE'
+  | 'SELFBILLING_CREDIT_NOTE';
 
 export interface PaymentDetailCreate {
   /**
@@ -3169,6 +3275,11 @@ export interface DocumentCreateFromPdfResponse {
   customer_name?: string | null;
 
   /**
+   * Customer Peppol ID
+   */
+  customer_peppol_id?: string | null;
+
+  /**
    * Customer tax ID. For Belgium this is the VAT number. Must include the country
    * prefix
    */
@@ -3190,6 +3301,16 @@ export interface DocumentCreateFromPdfResponse {
   due_date?: string | null;
 
   /**
+   * Error message when success is False
+   */
+  error_message?: string | null;
+
+  /**
+   * Error type/category when success is False
+   */
+  error_type?: string | null;
+
+  /**
    * The date when the invoice was issued
    */
   invoice_date?: string | null;
@@ -3206,7 +3327,7 @@ export interface DocumentCreateFromPdfResponse {
   invoice_total?: string | null;
 
   /**
-   * At least one line item is required
+   * Line items (may be empty for failed conversions)
    */
   items?: Array<DocumentCreateFromPdfResponse.Item>;
 
@@ -3446,6 +3567,11 @@ export namespace DocumentCreateFromPdfResponse {
     description?: string | null;
 
     /**
+     * Item-level attributes (BG-32) from cac:AdditionalItemProperty.
+     */
+    item_attributes?: Array<Item.ItemAttribute> | null;
+
+    /**
      * The product code of the line item.
      */
     product_code?: string | null;
@@ -3480,6 +3606,24 @@ export namespace DocumentCreateFromPdfResponse {
     unit_price?: string | null;
   }
 
+  export namespace Item {
+    /**
+     * An item-level attribute (BG-32 / BT-160 + BT-161) from
+     * cac:AdditionalItemProperty.
+     */
+    export interface ItemAttribute {
+      /**
+       * Attribute name (BT-160).
+       */
+      name: string;
+
+      /**
+       * Attribute value (BT-161).
+       */
+      value?: string | null;
+    }
+  }
+
   export interface TaxDetail {
     /**
      * The tax amount for this tax category. Must be rounded to maximum 2 decimals
@@ -3494,203 +3638,234 @@ export namespace DocumentCreateFromPdfResponse {
 }
 
 export interface DocumentCreateParams {
+  /**
+   * Query param: If true, generate a constructed PDF from the document and include
+   * it both as document attachment and embedded in the UBL.
+   */
+  construct_pdf?: boolean;
+
+  /**
+   * Body param
+   */
   allowances?: Array<DocumentCreateParams.Allowance> | null;
 
   /**
-   * The amount due for payment. Must be positive and rounded to maximum 2 decimals
+   * Body param: The amount due for payment. Must be positive and rounded to maximum
+   * 2 decimals
    */
   amount_due?: number | string | null;
 
+  /**
+   * Body param
+   */
   attachments?: Array<DocumentAttachmentCreate> | null;
 
   /**
-   * The billing address (if different from customer address)
+   * Body param: The billing address (if different from customer address)
    */
   billing_address?: string | null;
 
   /**
-   * The recipient name at the billing address
+   * Body param: The recipient name at the billing address
    */
   billing_address_recipient?: string | null;
 
+  /**
+   * Body param
+   */
   charges?: Array<DocumentCreateParams.Charge> | null;
 
   /**
-   * Currency of the invoice (ISO 4217 currency code)
+   * Body param: Currency of the invoice (ISO 4217 currency code)
    */
   currency?: CurrencyCode;
 
   /**
-   * The address of the customer/buyer
+   * Body param: The address of the customer/buyer
    */
   customer_address?: string | null;
 
   /**
-   * The recipient name at the customer address
+   * Body param: The recipient name at the customer address
    */
   customer_address_recipient?: string | null;
 
   /**
-   * Customer company ID. For Belgium this is the CBE number or their EUID (European
-   * Unique Identifier) number. In the Netherlands this is the KVK number.
+   * Body param: Customer company ID. For Belgium this is the CBE number or their
+   * EUID (European Unique Identifier) number. In the Netherlands this is the KVK
+   * number.
    */
   customer_company_id?: string | null;
 
   /**
-   * The email address of the customer
+   * Body param: The email address of the customer
    */
   customer_email?: string | null;
 
   /**
-   * The unique identifier for the customer in your system
+   * Body param: The unique identifier for the customer in your system
    */
   customer_id?: string | null;
 
   /**
-   * The company name of the customer/buyer
+   * Body param: The company name of the customer/buyer
    */
   customer_name?: string | null;
 
   /**
-   * Customer tax ID. For Belgium this is the VAT number. Must include the country
-   * prefix
+   * Body param: Customer Peppol ID
+   */
+  customer_peppol_id?: string | null;
+
+  /**
+   * Body param: Customer tax ID. For Belgium this is the VAT number. Must include
+   * the country prefix
    */
   customer_tax_id?: string | null;
 
   /**
-   * The direction of the document: INBOUND (purchases) or OUTBOUND (sales)
+   * Body param: The direction of the document: INBOUND (purchases) or OUTBOUND
+   * (sales)
    */
   direction?: DocumentDirection;
 
   /**
-   * The type of document: INVOICE, CREDIT_NOTE, or DEBIT_NOTE
+   * Body param: The type of document: INVOICE, CREDIT_NOTE, or DEBIT_NOTE
    */
   document_type?: DocumentType;
 
   /**
-   * The date when payment is due
+   * Body param: The date when payment is due
    */
   due_date?: string | null;
 
   /**
-   * The date when the invoice was issued
+   * Body param: The date when the invoice was issued
    */
   invoice_date?: string | null;
 
   /**
-   * The unique invoice identifier/number
+   * Body param: The unique invoice identifier/number
    */
   invoice_id?: string | null;
 
   /**
-   * The total amount of the invoice including tax (invoice_total = subtotal +
-   * total_tax + total_discount). Must be positive and rounded to maximum 2 decimals
+   * Body param: The total amount of the invoice including tax (invoice_total =
+   * subtotal + total_tax + total_discount). Must be positive and rounded to maximum
+   * 2 decimals
    */
   invoice_total?: number | string | null;
 
   /**
-   * At least one line item is required
+   * Body param: At least one line item is required
    */
   items?: Array<DocumentCreateParams.Item>;
 
   /**
-   * Additional notes or comments for the invoice
+   * Body param: Additional notes or comments for the invoice
    */
   note?: string | null;
 
+  /**
+   * Body param
+   */
   payment_details?: Array<PaymentDetailCreate> | null;
 
   /**
-   * The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30')
+   * Body param: The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30')
    */
   payment_term?: string | null;
 
   /**
-   * The previous unpaid balance from prior invoices, if any. Must be positive and
-   * rounded to maximum 2 decimals
+   * Body param: The previous unpaid balance from prior invoices, if any. Must be
+   * positive and rounded to maximum 2 decimals
    */
   previous_unpaid_balance?: number | string | null;
 
   /**
-   * The purchase order reference number
+   * Body param: The purchase order reference number
    */
   purchase_order?: string | null;
 
   /**
-   * The address where payment should be sent or remitted to
+   * Body param: The address where payment should be sent or remitted to
    */
   remittance_address?: string | null;
 
   /**
-   * The recipient name at the remittance address
+   * Body param: The recipient name at the remittance address
    */
   remittance_address_recipient?: string | null;
 
   /**
-   * The address where services were performed or goods were delivered
+   * Body param: The address where services were performed or goods were delivered
    */
   service_address?: string | null;
 
   /**
-   * The recipient name at the service address
+   * Body param: The recipient name at the service address
    */
   service_address_recipient?: string | null;
 
   /**
-   * The end date of the service period or delivery period
+   * Body param: The end date of the service period or delivery period
    */
   service_end_date?: string | null;
 
   /**
-   * The start date of the service period or delivery period
+   * Body param: The start date of the service period or delivery period
    */
   service_start_date?: string | null;
 
   /**
-   * The shipping/delivery address
+   * Body param: The shipping/delivery address
    */
   shipping_address?: string | null;
 
   /**
-   * The recipient name at the shipping address
+   * Body param: The recipient name at the shipping address
    */
   shipping_address_recipient?: string | null;
 
   /**
-   * The current state of the document: DRAFT, TRANSIT, FAILED, SENT, or RECEIVED
+   * Body param: The current state of the document: DRAFT, TRANSIT, FAILED, SENT, or
+   * RECEIVED
    */
   state?: InboxAPI.DocumentState;
 
   /**
-   * The taxable base of the invoice. Should be the sum of all line items -
-   * allowances (for example commercial discounts) + charges with impact on VAT. Must
-   * be positive and rounded to maximum 2 decimals
+   * Body param: The taxable base of the invoice. Should be the sum of all line
+   * items - allowances (for example commercial discounts) + charges with impact on
+   * VAT. Must be positive and rounded to maximum 2 decimals
    */
   subtotal?: number | string | null;
 
   /**
-   * Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E
-   * for exempt)
+   * Body param: Tax category code of the invoice (e.g., S for standard rate, Z for
+   * zero rate, E for exempt)
    */
   tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B';
 
+  /**
+   * Body param
+   */
   tax_details?: Array<DocumentCreateParams.TaxDetail> | null;
 
   /**
-   * The net financial discount/charge of the invoice (non-VAT charges minus non-VAT
-   * allowances). Can be positive (net charge), negative (net discount), or zero.
-   * Must be rounded to maximum 2 decimals
+   * Body param: The net financial discount/charge of the invoice (non-VAT charges
+   * minus non-VAT allowances). Can be positive (net charge), negative (net
+   * discount), or zero. Must be rounded to maximum 2 decimals
    */
   total_discount?: number | string | null;
 
   /**
-   * The total tax amount of the invoice. Must be positive and rounded to maximum 2
-   * decimals
+   * Body param: The total tax amount of the invoice. Must be positive and rounded to
+   * maximum 2 decimals
    */
   total_tax?: number | string | null;
 
   /**
-   * VATEX code list for VAT exemption reasons
+   * Body param: VATEX code list for VAT exemption reasons
    *
    * Agency: CEF Identifier: vatex
    */
@@ -3760,39 +3935,39 @@ export interface DocumentCreateParams {
     | null;
 
   /**
-   * Textual explanation for VAT exemption
+   * Body param: Textual explanation for VAT exemption
    */
   vatex_note?: string | null;
 
   /**
-   * The address of the vendor/seller
+   * Body param: The address of the vendor/seller
    */
   vendor_address?: string | null;
 
   /**
-   * The recipient name at the vendor address
+   * Body param: The recipient name at the vendor address
    */
   vendor_address_recipient?: string | null;
 
   /**
-   * Vendor company ID. For Belgium this is the CBE number or their EUID (European
-   * Unique Identifier) number. In the Netherlands this is the KVK number.
+   * Body param: Vendor company ID. For Belgium this is the CBE number or their EUID
+   * (European Unique Identifier) number. In the Netherlands this is the KVK number.
    */
   vendor_company_id?: string | null;
 
   /**
-   * The email address of the vendor
+   * Body param: The email address of the vendor
    */
   vendor_email?: string | null;
 
   /**
-   * The name of the vendor/seller/supplier
+   * Body param: The name of the vendor/seller/supplier
    */
   vendor_name?: string | null;
 
   /**
-   * Vendor tax ID. For Belgium this is the VAT number. Must include the country
-   * prefix
+   * Body param: Vendor tax ID. For Belgium this is the VAT number. Must include the
+   * country prefix
    */
   vendor_tax_id?: string | null;
 }
@@ -4110,6 +4285,11 @@ export namespace DocumentCreateParams {
      * The description of the line item.
      */
     description?: string | null;
+
+    /**
+     * Item-level attributes (BG-32) from cac:AdditionalItemProperty.
+     */
+    item_attributes?: Array<Item.ItemAttribute> | null;
 
     /**
      * The product code of the line item.
@@ -4433,6 +4613,22 @@ export namespace DocumentCreateParams {
        */
       tax_rate?: number | string | null;
     }
+
+    /**
+     * An item-level attribute (BG-32 / BT-160 + BT-161) from
+     * cac:AdditionalItemProperty.
+     */
+    export interface ItemAttribute {
+      /**
+       * Attribute name (BT-160).
+       */
+      name: string;
+
+      /**
+       * Attribute value (BT-161).
+       */
+      value?: string | null;
+    }
   }
 
   export interface TaxDetail {
@@ -4450,22 +4646,25 @@ export namespace DocumentCreateParams {
 
 export interface DocumentCreateFromPdfParams {
   /**
-   * Body param:
+   * Body param
    */
   file: Uploadable;
 
   /**
-   * Query param:
+   * Query param
    */
   customer_tax_id?: string | null;
 
   /**
-   * Query param:
+   * Query param
    */
   vendor_tax_id?: string | null;
 }
 
 export interface DocumentSendParams {
+  /**
+   * @deprecated
+   */
   email?: string | null;
 
   receiver_peppol_id?: string | null;
