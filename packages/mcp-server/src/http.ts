@@ -1,12 +1,10 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import { ClientOptions } from 'e-invoice-api';
 import express from 'express';
 import pino from 'pino';
 import pinoHttp from 'pino-http';
-import { getStainlessApiKey, parseClientAuthHeaders } from './auth';
+import { parseClientAuthHeaders } from './auth';
 import { getLogger } from './logger';
 import { McpOptions } from './options';
 import { initMcpServer, newMcpServer } from './server';
@@ -22,14 +20,13 @@ const newServer = async ({
   req: express.Request;
   res: express.Response;
 }): Promise<McpServer | null> => {
-  const stainlessApiKey = getStainlessApiKey(req, mcpOptions);
   const customInstructionsPath = mcpOptions.customInstructionsPath;
-  const server = await newMcpServer({ stainlessApiKey, customInstructionsPath });
+  const server = await newMcpServer({ customInstructionsPath });
 
   const authOptions = parseClientAuthHeaders(req, false);
 
   let upstreamClientEnvs: Record<string, string> | undefined;
-  const clientEnvsHeader = req.headers['x-stainless-mcp-client-envs'];
+  const clientEnvsHeader = req.headers['x-mcp-client-envs'];
   if (typeof clientEnvsHeader === 'string') {
     try {
       const parsed = JSON.parse(clientEnvsHeader);
@@ -41,14 +38,12 @@ const newServer = async ({
     }
   }
 
-  // Parse x-stainless-mcp-client-permissions header to override permission options
+  // Parse x-mcp-client-permissions header to override permission options
   //
   // Note: Permissions are best-effort and intended to prevent clients from doing unexpected things;
   // they're not a hard security boundary, so we allow arbitrary, client-driven overrides.
-  //
-  // See the Stainless MCP documentation for more details.
   let effectiveMcpOptions = mcpOptions;
-  const clientPermissionsHeader = req.headers['x-stainless-mcp-client-permissions'];
+  const clientPermissionsHeader = req.headers['x-mcp-client-permissions'];
   if (typeof clientPermissionsHeader === 'string') {
     try {
       const parsed = JSON.parse(clientPermissionsHeader);
@@ -61,11 +56,11 @@ const newServer = async ({
         };
         getLogger().info(
           { clientPermissions: parsed },
-          'Overriding code execution permissions from x-stainless-mcp-client-permissions header',
+          'Overriding code execution permissions from x-mcp-client-permissions header',
         );
       }
     } catch (error) {
-      getLogger().warn({ error }, 'Failed to parse x-stainless-mcp-client-permissions header');
+      getLogger().warn({ error }, 'Failed to parse x-mcp-client-permissions header');
     }
   }
 
@@ -81,7 +76,6 @@ const newServer = async ({
       ...clientOptions,
       ...authOptions,
     },
-    stainlessApiKey: stainlessApiKey,
     upstreamClientEnvs,
     mcpSessionId: (req as any).mcpSessionId,
     mcpClientInfo,
@@ -126,7 +120,7 @@ const del = async (req: express.Request, res: express.Response) => {
 };
 
 const redactHeaders = (headers: Record<string, any>) => {
-  const hiddenHeaders = /auth|cookie|key|token|x-stainless-mcp-client-envs/i;
+  const hiddenHeaders = /auth|cookie|key|token|x-mcp-client-envs/i;
   const filtered = { ...headers };
   Object.keys(filtered).forEach((key) => {
     if (hiddenHeaders.test(key)) {

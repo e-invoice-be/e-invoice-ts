@@ -1,20 +1,8 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
-import {
-  ContentBlock,
-  McpRequestContext,
-  McpTool,
-  Metadata,
-  ToolCallResult,
-  asErrorResult,
-  asTextContentResult,
-} from './types';
+import { ContentBlock, McpRequestContext, McpTool, Metadata, ToolCallResult, asErrorResult } from './types';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
-import { readEnv, requireValue } from './util';
-import { WorkerInput, WorkerOutput } from './code-tool-types';
+import { WorkerOutput } from './code-tool-types';
 import { getLogger } from './logger';
 import { SdkMethod } from './methods';
-import { McpCodeExecutionMode } from './options';
 import { ClientOptions } from 'e-invoice-api';
 
 const prompt = `Runs JavaScript code to interact with the E Invoice API.
@@ -34,7 +22,7 @@ async function run(client) {
 You will be returned anything that your function returns, plus the results of any console.log statements.
 Do not add try-catch blocks for single API calls. The tool will handle errors for you.
 Do not add comments unless necessary for generating better code.
-Code will run in a container, and cannot interact with the network outside of the given SDK client.
+Code will run in a local sandbox, and cannot interact with the network outside of the given SDK client.
 Variables will not persist between calls, so make sure to return or log any data you might need later.
 Remember that you are writing TypeScript code, so you need to be careful with your types.
 Always type dynamic key-value stores explicitly as Record<string, YourValueType> instead of {}.`;
@@ -49,16 +37,8 @@ Always type dynamic key-value stores explicitly as Record<string, YourValueType>
  * @param blockedMethods - The methods to block for code execution. Blocking is done by simple string
  * matching, so it is not secure against obfuscation. For stronger security, block in the downstream API
  * with limited API keys.
- * @param codeExecutionMode - Whether to execute code in a local Deno environment or in a remote
- * sandbox environment hosted by Stainless.
  */
-export function codeTool({
-  blockedMethods,
-  codeExecutionMode,
-}: {
-  blockedMethods: SdkMethod[] | undefined;
-  codeExecutionMode: McpCodeExecutionMode;
-}): McpTool {
+export function codeTool({ blockedMethods }: { blockedMethods: SdkMethod[] | undefined }): McpTool {
   const metadata: Metadata = { resource: 'all', operation: 'write', tags: [] };
   const tool: Tool = {
     name: 'execute',
@@ -69,10 +49,6 @@ export function codeTool({
         code: {
           type: 'string',
           description: 'Code to execute.',
-        },
-        intent: {
-          type: 'string',
-          description: 'Task you are trying to perform. Used for improving the service.',
         },
       },
       required: ['code'],
@@ -105,20 +81,13 @@ export function codeTool({
       }
     }
 
-    let result: ToolCallResult;
     const startTime = Date.now();
 
-    if (codeExecutionMode === 'local') {
-      logger.debug('Executing code in local Deno environment');
-      result = await localDenoHandler({ reqContext, args });
-    } else {
-      logger.debug('Executing code in remote Stainless environment');
-      result = await remoteStainlessHandler({ reqContext, args });
-    }
+    logger.debug('Executing code in local Deno environment');
+    const result = await localDenoHandler({ reqContext, args });
 
     logger.info(
       {
-        codeExecutionMode,
         durationMs: Date.now() - startTime,
         isError: result.isError,
         contentRows: result.content?.length ?? 0,
@@ -130,71 +99,6 @@ export function codeTool({
 
   return { metadata, tool, handler };
 }
-
-const remoteStainlessHandler = async ({
-  reqContext,
-  args,
-}: {
-  reqContext: McpRequestContext;
-  args: any;
-}): Promise<ToolCallResult> => {
-  const code = args.code as string;
-  const intent = args.intent as string | undefined;
-  const client = reqContext.client;
-
-  const codeModeEndpoint = readEnv('CODE_MODE_ENDPOINT_URL') ?? 'https://api.stainless.com/api/ai/code-tool';
-
-  const localClientEnvs = {
-    E_INVOICE_API_KEY: requireValue(
-      readEnv('E_INVOICE_API_KEY') ?? client.apiKey,
-      'set E_INVOICE_API_KEY environment variable or provide apiKey client option',
-    ),
-    E_INVOICE_BASE_URL: readEnv('E_INVOICE_BASE_URL') ?? client.baseURL ?? undefined,
-  };
-  // Merge any upstream client envs from the request header, with upstream values taking precedence.
-  const mergedClientEnvs = { ...localClientEnvs, ...reqContext.upstreamClientEnvs };
-
-  // Setting a Stainless API key authenticates requests to the code tool endpoint.
-  const res = await fetch(codeModeEndpoint, {
-    method: 'POST',
-    headers: {
-      ...(reqContext.stainlessApiKey && { Authorization: reqContext.stainlessApiKey }),
-      'Content-Type': 'application/json',
-      'x-stainless-mcp-client-envs': JSON.stringify(mergedClientEnvs),
-    },
-    body: JSON.stringify({
-      project_name: 'e-invoice-api',
-      code,
-      intent,
-      client_opts: {},
-    } satisfies WorkerInput),
-  });
-
-  if (!res.ok) {
-    if (res.status === 404 && !reqContext.stainlessApiKey) {
-      throw new Error(
-        'Could not access code tool for this project. You may need to provide a Stainless API key via the STAINLESS_API_KEY environment variable, the --stainless-api-key flag, or the x-stainless-api-key HTTP header.',
-      );
-    }
-    throw new Error(
-      `${res.status}: ${
-        res.statusText
-      } error when trying to contact Code Tool server. Details: ${await res.text()}`,
-    );
-  }
-
-  const { is_error, result, log_lines, err_lines } = (await res.json()) as WorkerOutput;
-  const hasLogs = log_lines.length > 0 || err_lines.length > 0;
-  const output = {
-    result,
-    ...(log_lines.length > 0 && { log_lines }),
-    ...(err_lines.length > 0 && { err_lines }),
-  };
-  if (is_error) {
-    return asErrorResult(typeof result === 'string' && !hasLogs ? result : JSON.stringify(output, null, 2));
-  }
-  return asTextContentResult(output);
-};
 
 const localDenoHandler = async ({
   reqContext,
@@ -214,7 +118,7 @@ const localDenoHandler = async ({
   const baseURLHostname = new URL(client.baseURL).hostname;
   const { code } = args as { code: string };
 
-  let denoPath: string;
+  let denoPath: string | undefined;
 
   const packageRoot = path.resolve(path.dirname(workerPath), '..');
   const packageNodeModulesPath = path.resolve(packageRoot, 'node_modules');
@@ -225,17 +129,26 @@ const localDenoHandler = async ({
     execSync('command -v deno', { stdio: 'ignore' });
     denoPath = 'deno';
   } catch {
-    try {
-      // Use deno binary in node_modules if it's found
-      const denoNodeModulesPath = path.resolve(packageNodeModulesPath, 'deno', 'bin.cjs');
-      await fs.promises.access(denoNodeModulesPath, fs.constants.X_OK);
-      denoPath = denoNodeModulesPath;
-    } catch {
-      return asErrorResult(
-        'Deno is required for code execution but was not found. ' +
-          'Install it from https://deno.land or run: npm install deno',
-      );
+    // Use the deno binary of the `deno` npm package if it's found in a node_modules
+    // directory at or above the worker (this covers both the repo and the published layout)
+    for (let dir = path.dirname(workerPath); ; dir = path.dirname(dir)) {
+      const denoNodeModulesPath = path.resolve(dir, 'node_modules', 'deno', 'bin.cjs');
+      try {
+        await fs.promises.access(denoNodeModulesPath, fs.constants.X_OK);
+        denoPath = denoNodeModulesPath;
+        break;
+      } catch {
+        if (dir === path.dirname(dir)) break;
+      }
     }
+  }
+
+  if (!denoPath) {
+    return asErrorResult(
+      'Deno is required for code execution but was not found. ' +
+        'Install it from https://deno.land and make sure `deno` is in the PATH of the MCP server, ' +
+        'or install the `deno` npm package next to this MCP server (npm install deno).',
+    );
   }
 
   const allowReadPaths = [
@@ -258,24 +171,32 @@ const localDenoHandler = async ({
 
   const allowRead = allowReadPaths.join(',');
 
-  const worker = await newDenoHTTPWorker(url.pathToFileURL(workerPath), {
-    denoExecutable: denoPath,
-    runFlags: [
-      `--node-modules-dir=manual`,
-      `--allow-read=${allowRead}`,
-      `--allow-net=${baseURLHostname}`,
-      // Allow environment variables because instantiating the client will try to read from them,
-      // even though they are not set.
-      '--allow-env',
-    ],
-    printOutput: true,
-    spawnOptions: {
-      cwd: path.dirname(workerPath),
-      // Merge any upstream client envs into the Deno subprocess environment,
-      // with the upstream env vars taking precedence.
-      env: { ...process.env, ...reqContext.upstreamClientEnvs },
-    },
-  });
+  let worker: Awaited<ReturnType<typeof newDenoHTTPWorker>>;
+  try {
+    worker = await newDenoHTTPWorker(url.pathToFileURL(workerPath), {
+      denoExecutable: denoPath,
+      runFlags: [
+        `--node-modules-dir=manual`,
+        `--allow-read=${allowRead}`,
+        `--allow-net=${baseURLHostname}`,
+        // Allow environment variables because instantiating the client will try to read from them,
+        // even though they are not set.
+        '--allow-env',
+      ],
+      printOutput: true,
+      spawnOptions: {
+        cwd: path.dirname(workerPath),
+        // Merge any upstream client envs into the Deno subprocess environment,
+        // with the upstream env vars taking precedence.
+        env: { ...process.env, ...reqContext.upstreamClientEnvs },
+      },
+    });
+  } catch (error) {
+    return asErrorResult(
+      `Could not start Deno for code execution: ${error instanceof Error ? error.message : String(error)}. ` +
+        'Make sure that Deno 2.9 or later is installed.',
+    );
+  }
 
   try {
     const resp = await new Promise<Response>((resolve, reject) => {
@@ -289,7 +210,7 @@ const localDenoHandler = async ({
         ...(client.baseURL != null ? { baseURL: client.baseURL } : undefined),
         ...(client.apiKey != null ? { apiKey: client.apiKey } : undefined),
         defaultHeaders: {
-          'X-Stainless-MCP': 'true',
+          'X-E-Invoice-MCP': 'true',
         },
       } satisfies Partial<ClientOptions> as ClientOptions;
 

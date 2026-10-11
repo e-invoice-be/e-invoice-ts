@@ -29,4 +29,44 @@ describe('parseCLIOptions', () => {
     expect(result.port).toBe(2222);
     cleanup();
   });
+
+  it('defaults to local code execution and local docs search', () => {
+    const cleanup = mockArgv([]);
+
+    const result = parseCLIOptions();
+
+    expect(result.codeExecutionMode).toBe('local');
+    expect(result.docsSearchMode).toBe('local');
+    expect(result).not.toHaveProperty('stainlessApiKey');
+
+    cleanup();
+  });
+
+  it('accepts the local modes when they are passed explicitly', () => {
+    const cleanup = mockArgv(['--code-execution-mode=local', '--docs-search-mode=local']);
+
+    const result = parseCLIOptions();
+
+    expect(result.codeExecutionMode).toBe('local');
+    expect(result.docsSearchMode).toBe('local');
+
+    cleanup();
+  });
+
+  it.each(['--code-execution-mode=stainless-sandbox', '--docs-search-mode=stainless-api'])(
+    'rejects the removed mode %s',
+    (arg) => {
+      const cleanup = mockArgv([arg]);
+      const exit = jest.spyOn(process, 'exit').mockImplementation(() => {
+        throw new Error('process.exit');
+      });
+      const error = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+      expect(() => parseCLIOptions()).toThrow();
+
+      exit.mockRestore();
+      error.mockRestore();
+      cleanup();
+    },
+  );
 });
