@@ -1,5 +1,28 @@
 # Changelog
 
+## [2.1.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v2.0.0...v2.1.0) (2026-10-11)
+
+
+### Features
+
+* **api:** add timeline, drafts and mailbox endpoints; paginate on has_next_page ([3f007ae](https://github.com/e-invoice-be/e-invoice-ts/commit/3f007ae7e9627fca5f5ace8f06dfa3869456817b))
+* **api:** add webhook history and test, stats and PDF conversion endpoints ([681d4ee](https://github.com/e-invoice-be/e-invoice-ts/commit/681d4ee5d255e9d6d55d1c55a76e3e1da7dc5e73))
+* **api:** cover all operations of the latest OpenAPI spec ([04759a6](https://github.com/e-invoice-be/e-invoice-ts/commit/04759a6a39a5c0df08ca666577131f4242415d69))
+* **mcp:** run code execution and docs search locally only ([7857444](https://github.com/e-invoice-be/e-invoice-ts/commit/7857444d1b3c30732eb12d3e7cb26226ef4a271d))
+
+
+### Bug Fixes
+
+* address code review findings ([00e29bc](https://github.com/e-invoice-be/e-invoice-ts/commit/00e29bce84e4abcf200b968b028ff6b83421dc42))
+
+
+### Chores
+
+* **client:** remove X-Stainless-* request headers ([d02c64d](https://github.com/e-invoice-be/e-invoice-ts/commit/d02c64d35fa70cbdbf6668dbc8cb955ee241dba9))
+* **client:** remove X-Stainless-* request headers ([d0701b6](https://github.com/e-invoice-be/e-invoice-ts/commit/d0701b6b624599a606d50b70c74a22f81da75978))
+* remove all dependencies on Stainless ([e67e307](https://github.com/e-invoice-be/e-invoice-ts/commit/e67e30717d702e4fbe696d4f1062e5bf85a7b47b))
+* remove Stainless references from the SDK source and docs ([54f857b](https://github.com/e-invoice-be/e-invoice-ts/commit/54f857b9c849b8bee31d44e379d97a8d8502f5ab))
+
 ## 2.0.0 (2026-09-16)
 
 Full Changelog: [v1.25.0...v2.0.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v1.25.0...v2.0.0)
