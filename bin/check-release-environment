@@ -3,7 +3,12 @@
 errors=()
 
 if [ -z "${NPM_TOKEN}" ]; then
-  errors+=("The NPM_TOKEN secret has not been set. Please set it in either this repository's secrets or your organization secrets")
+  errors+=("The NPM_TOKEN secret has not been set. Please set E_INVOICE_NPM_TOKEN or NPM_TOKEN in either this repository's secrets or your organization secrets")
+elif command -v npm > /dev/null 2>&1; then
+  # A token that npm does not accept (revoked or expired) fails the publish step. Find that here.
+  if ! npm whoami --registry https://registry.npmjs.org "--//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > /dev/null 2>&1; then
+    errors+=("npm does not accept the NPM_TOKEN secret (revoked or expired?). Create a new granular access token with read and write access to the e-invoice-api and e-invoice-api-mcp packages")
+  fi
 fi
 
 lenErrors=${#errors[@]}

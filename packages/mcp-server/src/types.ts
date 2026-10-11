@@ -1,5 +1,3 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
 import EInvoice from 'e-invoice-api';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 
@@ -44,7 +42,6 @@ export type ToolCallResult = {
 
 export type McpRequestContext = {
   client: EInvoice;
-  stainlessApiKey?: string | undefined;
   upstreamClientEnvs?: Record<string, string> | undefined;
   mcpSessionId?: string | undefined;
   mcpClientInfo?: { name: string; version: string } | undefined;

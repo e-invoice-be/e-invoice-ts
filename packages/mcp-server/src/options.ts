@@ -1,10 +1,7 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
 import qs from 'qs';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import z from 'zod';
-import { readEnv } from './util';
 
 export type CLIOptions = McpOptions & {
   debug: boolean;
@@ -17,17 +14,18 @@ export type CLIOptions = McpOptions & {
 export type McpOptions = {
   includeCodeTool?: boolean | undefined;
   includeDocsTools?: boolean | undefined;
-  stainlessApiKey?: string | undefined;
-  docsSearchMode?: 'stainless-api' | 'local' | undefined;
+  docsSearchMode?: McpDocsSearchMode | undefined;
   docsDir?: string | undefined;
   codeAllowHttpGets?: boolean | undefined;
   codeAllowedMethods?: string[] | undefined;
   codeBlockedMethods?: string[] | undefined;
-  codeExecutionMode: McpCodeExecutionMode;
+  codeExecutionMode?: McpCodeExecutionMode | undefined;
   customInstructionsPath?: string | undefined;
 };
 
-export type McpCodeExecutionMode = 'stainless-sandbox' | 'local';
+export type McpCodeExecutionMode = 'local';
+
+export type McpDocsSearchMode = 'local';
 
 export function parseCLIOptions(): CLIOptions {
   const opts = yargs(hideBin(process.argv))
@@ -50,10 +48,10 @@ export function parseCLIOptions(): CLIOptions {
     })
     .option('code-execution-mode', {
       type: 'string',
-      choices: ['stainless-sandbox', 'local'],
-      default: 'stainless-sandbox',
+      choices: ['local'],
+      default: 'local',
       description:
-        "Where to run code execution in code tool; 'stainless-sandbox' will execute code in Stainless-hosted sandboxes whereas 'local' will execute code locally on the MCP server machine.",
+        "Where to run code execution in code tool; 'local' (the only mode) will execute code locally on the MCP server machine in a Deno subprocess.",
     })
     .option('custom-instructions-path', {
       type: 'string',
@@ -67,10 +65,10 @@ export function parseCLIOptions(): CLIOptions {
     })
     .option('docs-search-mode', {
       type: 'string',
-      choices: ['stainless-api', 'local'],
-      default: 'stainless-api',
+      choices: ['local'],
+      default: 'local',
       description:
-        "Where to search documentation; 'stainless-api' uses the Stainless-hosted search API whereas 'local' uses an in-memory search index built from embedded SDK method data and optional local docs files.",
+        "Where to search documentation; 'local' (the only mode) uses an in-memory search index built from embedded SDK method data and optional local docs files.",
     })
     .option('log-format', {
       type: 'string',
@@ -89,12 +87,6 @@ export function parseCLIOptions(): CLIOptions {
       description: 'Port to serve on if using http transport',
     })
     .option('socket', { type: 'string', description: 'Unix socket to serve on if using http transport' })
-    .option('stainless-api-key', {
-      type: 'string',
-      default: readEnv('STAINLESS_API_KEY'),
-      description:
-        'API key for Stainless. Used to authenticate requests to Stainless-hosted tools endpoints.',
-    })
     .option('tools', {
       type: 'string',
       array: true,
@@ -131,8 +123,7 @@ export function parseCLIOptions(): CLIOptions {
     ...(includeCodeTool !== undefined && { includeCodeTool }),
     ...(includeDocsTools !== undefined && { includeDocsTools }),
     debug: !!argv.debug,
-    stainlessApiKey: argv.stainlessApiKey,
-    docsSearchMode: argv.docsSearchMode as 'stainless-api' | 'local' | undefined,
+    docsSearchMode: argv.docsSearchMode as McpDocsSearchMode,
     docsDir: argv.docsDir,
     codeAllowHttpGets: argv.codeAllowHttpGets,
     codeAllowedMethods: argv.codeAllowedMethods,

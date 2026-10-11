@@ -1,5 +1,3 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
 import EInvoice, { toFile } from 'e-invoice-api';
 
 const client = new EInvoice({
@@ -104,7 +102,7 @@ describe('resource documents', () => {
           sender_peppol_id: 'sender_peppol_id',
           sender_peppol_scheme: 'sender_peppol_scheme',
         },
-        { path: '/_stainless_unknown_path' },
+        { path: '/_unknown_path' },
       ),
     ).rejects.toThrow(EInvoice.NotFoundError);
   });

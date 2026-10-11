@@ -39,7 +39,7 @@ RUN yarn install --frozen-lockfile && \
     # Remove the symlink to the SDK so it doesn't interfere with the explicit COPY below
     rm -Rf packages/mcp-server/node_modules/e-invoice-api
 
-FROM denoland/deno:alpine-2.7.1
+FROM denoland/deno:alpine-2.9.6
 
 # Install node and npm
 RUN apk add --no-cache nodejs npm

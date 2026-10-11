@@ -1,5 +1,3 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
 import EInvoice, { toFile } from 'e-invoice-api';
 
 const client = new EInvoice({

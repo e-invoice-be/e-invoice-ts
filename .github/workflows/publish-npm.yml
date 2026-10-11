@@ -1,29 +1,68 @@
-# This workflow is triggered when a GitHub release is created.
-# It can also be run manually to re-publish to NPM in case it failed for some reason.
-# You can run this workflow by navigating to https://www.github.com/e-invoice-be/e-invoice-ts/actions/workflows/publish-npm.yml
+# Publishes `e-invoice-api` and `e-invoice-api-mcp` to npm.
+#
+# - Called by the `Release Please` workflow when it creates a GitHub release.
+# - Can be run manually to publish again after a failure:
+#   https://github.com/e-invoice-be/e-invoice-ts/actions/workflows/publish-npm.yml
+#
+# There is no `release: published` trigger on purpose: the release workflow calls
+# this workflow directly, and a second trigger could publish the same version twice.
 name: Publish NPM
 on:
+  workflow_call:
+    inputs:
+      tag:
+        description: The release tag to publish, e.g. 'v2.1.0'
+        type: string
+        required: true
+      path:
+        description: The package path to publish. Empty publishes all packages.
+        type: string
+        required: false
+        default: ''
+    secrets:
+      E_INVOICE_NPM_TOKEN:
+        required: false
+      NPM_TOKEN:
+        required: false
+
   workflow_dispatch:
     inputs:
+      tag:
+        description: >-
+          The release tag to check out and publish, e.g. 'v2.1.0'. The MCP bundle is uploaded to this
+          GitHub release. Empty publishes the selected branch and skips the upload.
+        type: string
+        required: false
+        default: ''
       path:
-        description: The path to run the release in, e.g. '.' or 'packages/mcp-server'
-        required: true
+        description: The package path to publish, '.' or 'packages/mcp-server'. Empty publishes both.
+        type: string
+        required: false
+        default: ''
 
-  release:
-    types: [published]
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-npm
+  cancel-in-progress: false
 
 jobs:
   publish:
     name: publish
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     permissions:
-      contents: write
+      contents: write # upload the MCP bundle to the GitHub release
 
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          # An empty ref checks out the commit that started the workflow.
+          ref: ${{ inputs.tag }}
 
       - name: Set up Node
-        uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # v3.9.1
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '24'
 
@@ -33,19 +72,18 @@ jobs:
 
       - name: Publish to NPM
         run: |
-          if [ -n "$INPUT_PATH" ]; then
-            PATHS_RELEASED="[\"$INPUT_PATH\"]"
-          else
-            PATHS_RELEASED='[\".\", \"packages/mcp-server\"]'
-          fi
-          yarn tsn scripts/publish-packages.ts "{ \"paths_released\": \"$PATHS_RELEASED\" }"
+          DATA="$(jq -cn --arg path "$INPUT_PATH" \
+            '{paths_released: ((if $path == "" then [".", "packages/mcp-server"] else [$path] end) | tojson)}')"
+          export DATA
+          yarn tsn scripts/publish-packages.ts
         env:
-          INPUT_PATH: ${{ github.event.inputs.path }}
+          INPUT_PATH: ${{ inputs.path }}
           NPM_TOKEN: ${{ secrets.E_INVOICE_NPM_TOKEN || secrets.NPM_TOKEN }}
 
-      - name: Upload MCP Server DXT GitHub release asset
+      - name: Upload MCP Server bundle GitHub release asset
+        if: inputs.tag != '' && (inputs.path == '' || inputs.path == 'packages/mcp-server')
         run: |
-          gh release upload ${{ github.event.release.tag_name }} \
-            packages/mcp-server/e_invoice_api_api.mcpb
+          gh release upload "$TAG" packages/mcp-server/e_invoice_api_api.mcpb --clobber
         env:
+          TAG: ${{ inputs.tag }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,51 @@
+# Keeps the release pull request up to date and, when that pull request is merged,
+# creates the git tag and the GitHub release and then publishes to npm.
+#
+# Configuration: release-please-config.json and .release-please-manifest.json
+# See CONTRIBUTING.md ("Publishing and releases") for the token options.
+name: Release Please
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: release-please
+  cancel-in-progress: false
+
+jobs:
+  release-please:
+    name: release please
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: github.repository == 'e-invoice-be/e-invoice-ts' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: write # release branch, tag and GitHub release
+      pull-requests: write # release pull request
+      issues: write # `autorelease: *` labels
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+    steps:
+      - uses: googleapis/release-please-action@5c625bfb5d1ff62eadeeb3772007f7f66fdcf071 # v4.4.1
+        id: release
+        with:
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN || secrets.GITHUB_TOKEN }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  publish:
+    name: publish
+    needs: release-please
+    if: needs.release-please.outputs.release_created == 'true'
+    permissions:
+      contents: write # upload the MCP bundle to the GitHub release
+    uses: ./.github/workflows/publish-npm.yml
+    with:
+      tag: ${{ needs.release-please.outputs.tag_name }}
+    secrets:
+      E_INVOICE_NPM_TOKEN: ${{ secrets.E_INVOICE_NPM_TOKEN }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

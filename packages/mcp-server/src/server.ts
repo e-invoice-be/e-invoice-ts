@@ -1,5 +1,3 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import {
@@ -18,20 +16,35 @@ import { McpOptions } from './options';
 import { blockedMethodsForCodeTool } from './methods';
 import { HandlerFunction, McpRequestContext, ToolCallResult, McpTool } from './types';
 
+const localSearches = new Map<string, Promise<LocalDocsSearch>>();
+
+/**
+ * Returns the local docs search index for the given docs directory. The index is built once
+ * and then shared, because the http transport initializes a server for each request.
+ */
+const getLocalSearch = (docsDir: string | undefined): Promise<LocalDocsSearch> => {
+  const key = docsDir ?? '';
+  let localSearch = localSearches.get(key);
+  if (!localSearch) {
+    localSearch = LocalDocsSearch.create(docsDir ? { docsDir } : undefined);
+    localSearch.catch(() => localSearches.delete(key));
+    localSearches.set(key, localSearch);
+  }
+  return localSearch;
+};
+
 export const newMcpServer = async ({
-  stainlessApiKey,
   customInstructionsPath,
 }: {
-  stainlessApiKey?: string | undefined;
   customInstructionsPath?: string | undefined;
-}) =>
+} = {}) =>
   new McpServer(
     {
       name: 'e_invoice_api_api',
-      version: '2.0.0',
+      version: '2.0.0', // x-release-please-version
     },
     {
-      instructions: await getInstructions({ stainlessApiKey, customInstructionsPath }),
+      instructions: await getInstructions({ customInstructionsPath }),
       capabilities: { tools: {}, logging: {} },
     },
   );
@@ -44,7 +57,6 @@ export async function initMcpServer(params: {
   server: Server | McpServer;
   clientOptions?: ClientOptions;
   mcpOptions?: McpOptions;
-  stainlessApiKey?: string | undefined;
   upstreamClientEnvs?: Record<string, string> | undefined;
   mcpSessionId?: string | undefined;
   mcpClientInfo?: { name: string; version: string } | undefined;
@@ -66,10 +78,8 @@ export async function initMcpServer(params: {
     error: logAtLevel('error'),
   };
 
-  if (params.mcpOptions?.docsSearchMode === 'local') {
-    const docsDir = params.mcpOptions?.docsDir;
-    const localSearch = await LocalDocsSearch.create(docsDir ? { docsDir } : undefined);
-    setLocalSearch(localSearch);
+  if (params.mcpOptions?.includeDocsTools ?? true) {
+    setLocalSearch(await getLocalSearch(params.mcpOptions?.docsDir));
   }
 
   let _client: EInvoice | undefined;
@@ -85,7 +95,7 @@ export async function initMcpServer(params: {
           ...params.clientOptions,
           defaultHeaders: {
             ...params.clientOptions?.defaultHeaders,
-            'X-Stainless-MCP': 'true',
+            'X-E-Invoice-MCP': 'true',
           },
         });
         if (_logLevel) {
@@ -134,7 +144,6 @@ export async function initMcpServer(params: {
       handler: mcpTool.handler,
       reqContext: {
         client,
-        stainlessApiKey: params.stainlessApiKey ?? params.mcpOptions?.stainlessApiKey,
         upstreamClientEnvs: params.upstreamClientEnvs,
         mcpSessionId: params.mcpSessionId,
         mcpClientInfo: params.mcpClientInfo,
@@ -179,12 +188,7 @@ export function selectTools(options?: McpOptions): McpTool[] {
   const includedTools = [];
 
   if (options?.includeCodeTool ?? true) {
-    includedTools.push(
-      codeTool({
-        blockedMethods: blockedMethodsForCodeTool(options),
-        codeExecutionMode: options?.codeExecutionMode ?? 'stainless-sandbox',
-      }),
-    );
+    includedTools.push(codeTool({ blockedMethods: blockedMethodsForCodeTool(options) }));
   }
   if (options?.includeDocsTools ?? true) {
     includedTools.push(docsSearchTool);
