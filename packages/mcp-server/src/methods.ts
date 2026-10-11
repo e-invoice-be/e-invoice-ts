@@ -191,6 +191,18 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/webhooks/{webhook_id}',
   },
   {
+    clientCallName: 'client.webhooks.retrieveHistory',
+    fullyQualifiedName: 'webhooks.retrieveHistory',
+    httpMethod: 'get',
+    httpPath: '/api/webhooks/{webhook_id}/history',
+  },
+  {
+    clientCallName: 'client.webhooks.test',
+    fullyQualifiedName: 'webhooks.test',
+    httpMethod: 'post',
+    httpPath: '/api/webhooks/{webhook_id}/test',
+  },
+  {
     clientCallName: 'client.mailbox.retrieve',
     fullyQualifiedName: 'mailbox.retrieve',
     httpMethod: 'get',
@@ -213,6 +225,30 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'mailbox.reprocess',
     httpMethod: 'post',
     httpPath: '/api/mailbox/{inbound_email_id}/reprocess',
+  },
+  {
+    clientCallName: 'client.stats.retrieve',
+    fullyQualifiedName: 'stats.retrieve',
+    httpMethod: 'get',
+    httpPath: '/api/stats',
+  },
+  {
+    clientCallName: 'client.conversion.pdf.create',
+    fullyQualifiedName: 'conversion.pdf.create',
+    httpMethod: 'post',
+    httpPath: '/api/conversion/pdf',
+  },
+  {
+    clientCallName: 'client.conversion.pdf.retrieve',
+    fullyQualifiedName: 'conversion.pdf.retrieve',
+    httpMethod: 'get',
+    httpPath: '/api/conversion/pdf/{task_id}',
+  },
+  {
+    clientCallName: 'client.conversion.pdf.retrieveResult',
+    fullyQualifiedName: 'conversion.pdf.retrieveResult',
+    httpMethod: 'get',
+    httpPath: '/api/conversion/pdf/{task_id}/result',
   },
 ];
 

@@ -1498,6 +1498,54 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'retrieve_history',
+    endpoint: '/api/webhooks/{webhook_id}/history',
+    httpMethod: 'get',
+    summary: 'Get Webhook History',
+    description: 'Get the history of a webhook',
+    stainlessPath: '(resource) webhooks > (method) retrieve_history',
+    qualified: 'client.webhooks.retrieveHistory',
+    params: ['webhook_id: string;'],
+    response: '{ history: object[]; }',
+    markdown:
+      "## retrieve_history\n\n`client.webhooks.retrieveHistory(webhook_id: string): { history: object[]; }`\n\n**get** `/api/webhooks/{webhook_id}/history`\n\nGet the history of a webhook\n\n### Parameters\n\n- `webhook_id: string`\n\n### Returns\n\n- `{ history: object[]; }`\n\n  - `history: object[]`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst response = await client.webhooks.retrieveHistory('webhook_id');\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.webhooks.retrieveHistory',
+        example:
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.webhooks.retrieveHistory('webhook_id');\n\nconsole.log(response.history);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/webhooks/$WEBHOOK_ID/history \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'test',
+    endpoint: '/api/webhooks/{webhook_id}/test',
+    httpMethod: 'post',
+    summary: 'Test Webhook',
+    description: 'Send a test event to a webhook for testing and debugging purposes',
+    stainlessPath: '(resource) webhooks > (method) test',
+    qualified: 'client.webhooks.test',
+    params: ['webhook_id: string;', 'data: object;', 'event_type: string;'],
+    response: '{ message: string; success: boolean; webhook_delivery_result: object; }',
+    markdown:
+      "## test\n\n`client.webhooks.test(webhook_id: string, data: object, event_type: string): { message: string; success: boolean; webhook_delivery_result: object; }`\n\n**post** `/api/webhooks/{webhook_id}/test`\n\nSend a test event to a webhook for testing and debugging purposes\n\n### Parameters\n\n- `webhook_id: string`\n\n- `data: object`\n  Custom event data payload\n\n- `event_type: string`\n  Must be valid WebhookEventType\n\n### Returns\n\n- `{ message: string; success: boolean; webhook_delivery_result: object; }`\n\n  - `message: string`\n  - `success: boolean`\n  - `webhook_delivery_result: object`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst response = await client.webhooks.test('webhook_id', { data: { foo: 'bar' }, event_type: 'event_type' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.webhooks.test',
+        example:
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.webhooks.test('webhook_id', {\n  data: { foo: 'bar' },\n  event_type: 'event_type',\n});\n\nconsole.log(response.message);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/webhooks/$WEBHOOK_ID/test \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY" \\\n    -d \'{\n          "data": {\n            "foo": "bar"\n          },\n          "event_type": "event_type"\n        }\'',
+      },
+    },
+  },
+  {
     name: 'list',
     endpoint: '/api/mailbox/',
     httpMethod: 'get',
@@ -1605,6 +1653,104 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.e-invoice.be/api/mailbox/$INBOUND_EMAIL_ID/reprocess \\\n    -X POST \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'retrieve',
+    endpoint: '/api/stats',
+    httpMethod: 'get',
+    summary: 'Get Usage Statistics',
+    description:
+      'Retrieve usage statistics for billing purposes. Returns statistics for document sent and document received actions, grouped by aggregation period (day/week/month). If no date parameters are provided, returns daily stats for all available data.',
+    stainlessPath: '(resource) stats > (method) retrieve',
+    qualified: 'client.stats.retrieve',
+    params: ["aggregation?: 'DAY' | 'WEEK' | 'MONTH';", 'end_date?: string;', 'start_date?: string;'],
+    response:
+      "{ actions: { action: 'DOCUMENT_SENT' | 'DOCUMENT_RECEIVED'; count: number; stat_date: string; }[]; aggregation: 'DAY' | 'WEEK' | 'MONTH'; average_daily_usage: number; period_end: string; period_start: string; tenant_id: string; total_days: number; budget_estimation_days?: number; }",
+    markdown:
+      "## retrieve\n\n`client.stats.retrieve(aggregation?: 'DAY' | 'WEEK' | 'MONTH', end_date?: string, start_date?: string): { actions: object[]; aggregation: 'DAY' | 'WEEK' | 'MONTH'; average_daily_usage: number; period_end: string; period_start: string; tenant_id: string; total_days: number; budget_estimation_days?: number; }`\n\n**get** `/api/stats`\n\nRetrieve usage statistics for billing purposes. Returns statistics for document sent and document received actions, grouped by aggregation period (day/week/month). If no date parameters are provided, returns daily stats for all available data.\n\n### Parameters\n\n- `aggregation?: 'DAY' | 'WEEK' | 'MONTH'`\n  Aggregation type: DAY, WEEK, or MONTH. Defaults to DAY.\n\n- `end_date?: string`\n  End date in yyyy-mm-dd format. If not provided, queries to latest available data.\n\n- `start_date?: string`\n  Start date in yyyy-mm-dd format. If not provided, queries from earliest available data.\n\n### Returns\n\n- `{ actions: { action: 'DOCUMENT_SENT' | 'DOCUMENT_RECEIVED'; count: number; stat_date: string; }[]; aggregation: 'DAY' | 'WEEK' | 'MONTH'; average_daily_usage: number; period_end: string; period_start: string; tenant_id: string; total_days: number; budget_estimation_days?: number; }`\n\n  - `actions: { action: 'DOCUMENT_SENT' | 'DOCUMENT_RECEIVED'; count: number; stat_date: string; }[]`\n  - `aggregation: 'DAY' | 'WEEK' | 'MONTH'`\n  - `average_daily_usage: number`\n  - `period_end: string`\n  - `period_start: string`\n  - `tenant_id: string`\n  - `total_days: number`\n  - `budget_estimation_days?: number`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst stat = await client.stats.retrieve();\n\nconsole.log(stat);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.stats.retrieve',
+        example:
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst stat = await client.stats.retrieve();\n\nconsole.log(stat.actions);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/stats \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'create',
+    endpoint: '/api/conversion/pdf',
+    httpMethod: 'post',
+    summary: 'Convert a PDF to a document',
+    description: 'Convert a PDF to a document',
+    stainlessPath: '(resource) conversion.pdf > (method) create',
+    qualified: 'client.conversion.pdf.create',
+    params: ['file: string;'],
+    response: "{ task_id: string; status?: 'pending' | 'completed' | 'failed'; }",
+    markdown:
+      "## create\n\n`client.conversion.pdf.create(file: string): { task_id: string; status?: 'pending' | 'completed' | 'failed'; }`\n\n**post** `/api/conversion/pdf`\n\nConvert a PDF to a document\n\n### Parameters\n\n- `file: string`\n\n### Returns\n\n- `{ task_id: string; status?: 'pending' | 'completed' | 'failed'; }`\n\n  - `task_id: string`\n  - `status?: 'pending' | 'completed' | 'failed'`\n\n### Example\n\n```typescript\nimport fs from 'fs';\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst pdf = await client.conversion.pdf.create({ file: fs.createReadStream('path/to/file') });\n\nconsole.log(pdf);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.conversion.pdf.create',
+        example:
+          "import fs from 'fs';\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst pdf = await client.conversion.pdf.create({\n  file: fs.createReadStream('path/to/file'),\n});\n\nconsole.log(pdf.task_id);",
+      },
+      http: {
+        example:
+          "curl https://api.e-invoice.be/api/conversion/pdf \\\n    -H 'Content-Type: multipart/form-data' \\\n    -H \"Authorization: Bearer $E_INVOICE_API_KEY\" \\\n    -F 'file=@/path/to/file'",
+      },
+    },
+  },
+  {
+    name: 'retrieve',
+    endpoint: '/api/conversion/pdf/{task_id}',
+    httpMethod: 'get',
+    summary: 'Get PDF conversion status',
+    description: 'Get the status of a PDF conversion task',
+    stainlessPath: '(resource) conversion.pdf > (method) retrieve',
+    qualified: 'client.conversion.pdf.retrieve',
+    params: ['task_id: string;'],
+    response: "{ task_id: string; status?: 'pending' | 'completed' | 'failed'; }",
+    markdown:
+      "## retrieve\n\n`client.conversion.pdf.retrieve(task_id: string): { task_id: string; status?: 'pending' | 'completed' | 'failed'; }`\n\n**get** `/api/conversion/pdf/{task_id}`\n\nGet the status of a PDF conversion task\n\n### Parameters\n\n- `task_id: string`\n\n### Returns\n\n- `{ task_id: string; status?: 'pending' | 'completed' | 'failed'; }`\n\n  - `task_id: string`\n  - `status?: 'pending' | 'completed' | 'failed'`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst pdf = await client.conversion.pdf.retrieve('task_id');\n\nconsole.log(pdf);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.conversion.pdf.retrieve',
+        example:
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst pdf = await client.conversion.pdf.retrieve('task_id');\n\nconsole.log(pdf.task_id);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/conversion/pdf/$TASK_ID \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'retrieve_result',
+    endpoint: '/api/conversion/pdf/{task_id}/result',
+    httpMethod: 'get',
+    summary: 'Get PDF conversion result',
+    description: 'Get the result of a PDF conversion task',
+    stainlessPath: '(resource) conversion.pdf > (method) retrieve_result',
+    qualified: 'client.conversion.pdf.retrieveResult',
+    params: ['task_id: string;'],
+    response: 'object',
+    markdown:
+      "## retrieve_result\n\n`client.conversion.pdf.retrieveResult(task_id: string): { allowances?: allowance[]; amount_due?: string; attachments?: document_attachment_create[]; billing_address?: string; billing_address_recipient?: string; charges?: charge[]; currency?: currency_code; customer_address?: string; customer_address_recipient?: string; customer_company_id?: string; customer_email?: string; customer_id?: string; customer_name?: string; customer_peppol_id?: string; customer_tax_id?: string; direction?: document_direction; document_type?: document_type; due_date?: string; error_message?: string; error_type?: string; invoice_date?: string; invoice_id?: string; invoice_total?: string; items?: object[]; note?: string; payment_details?: payment_detail_create[]; payment_term?: string; purchase_order?: string; remittance_address?: string; remittance_address_recipient?: string; service_address?: string; service_address_recipient?: string; service_end_date?: string; service_start_date?: string; shipping_address?: string; shipping_address_recipient?: string; state?: document_state; subtotal?: string; success?: boolean; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_details?: object[]; total_discount?: string; total_tax?: string; ubl_document?: string; vatex?: string; vatex_note?: string; vendor_address?: string; vendor_address_recipient?: string; vendor_company_id?: string; vendor_email?: string; vendor_name?: string; vendor_tax_id?: string; }`\n\n**get** `/api/conversion/pdf/{task_id}/result`\n\nGet the result of a PDF conversion task\n\n### Parameters\n\n- `task_id: string`\n\n### Returns\n\n- `{ allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; amount_due?: string; attachments?: { file_name: string; file_data?: string; file_size?: number; file_type?: string; }[]; billing_address?: string; billing_address_recipient?: string; charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; currency?: string; customer_address?: string; customer_address_recipient?: string; customer_company_id?: string; customer_email?: string; customer_id?: string; customer_name?: string; customer_peppol_id?: string; customer_tax_id?: string; direction?: 'INBOUND' | 'OUTBOUND'; document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'; due_date?: string; error_message?: string; error_type?: string; invoice_date?: string; invoice_id?: string; invoice_total?: string; items?: { allowances?: object[]; amount?: string; charges?: object[]; date?: null; description?: string; item_attributes?: { name: string; value?: string; }[]; product_code?: string; quantity?: string; tax?: string; tax_rate?: string; unit?: string; unit_price?: string; }[]; note?: string; payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]; payment_term?: string; purchase_order?: string; remittance_address?: string; remittance_address_recipient?: string; service_address?: string; service_address_recipient?: string; service_end_date?: string; service_start_date?: string; shipping_address?: string; shipping_address_recipient?: string; state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'; subtotal?: string; success?: boolean; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_details?: { amount?: string; rate?: string; }[]; total_discount?: string; total_tax?: string; ubl_document?: string; vatex?: string; vatex_note?: string; vendor_address?: string; vendor_address_recipient?: string; vendor_company_id?: string; vendor_email?: string; vendor_name?: string; vendor_tax_id?: string; }`\n\n  - `allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]`\n  - `amount_due?: string`\n  - `attachments?: { file_name: string; file_data?: string; file_size?: number; file_type?: string; }[]`\n  - `billing_address?: string`\n  - `billing_address_recipient?: string`\n  - `charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]`\n  - `currency?: string`\n  - `customer_address?: string`\n  - `customer_address_recipient?: string`\n  - `customer_company_id?: string`\n  - `customer_email?: string`\n  - `customer_id?: string`\n  - `customer_name?: string`\n  - `customer_peppol_id?: string`\n  - `customer_tax_id?: string`\n  - `direction?: 'INBOUND' | 'OUTBOUND'`\n  - `document_type?: 'INVOICE' | 'CREDIT_NOTE' | 'DEBIT_NOTE' | 'SELFBILLING_INVOICE' | 'SELFBILLING_CREDIT_NOTE'`\n  - `due_date?: string`\n  - `error_message?: string`\n  - `error_type?: string`\n  - `invoice_date?: string`\n  - `invoice_id?: string`\n  - `invoice_total?: string`\n  - `items?: { allowances?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; amount?: string; charges?: { amount?: string; base_amount?: string; multiplier_factor?: string; reason?: string; reason_code?: string; tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'; tax_rate?: string; }[]; date?: null; description?: string; item_attributes?: { name: string; value?: string; }[]; product_code?: string; quantity?: string; tax?: string; tax_rate?: string; unit?: string; unit_price?: string; }[]`\n  - `note?: string`\n  - `payment_details?: { bank_account_number?: string; iban?: string; payment_reference?: string; swift?: string; }[]`\n  - `payment_term?: string`\n  - `purchase_order?: string`\n  - `remittance_address?: string`\n  - `remittance_address_recipient?: string`\n  - `service_address?: string`\n  - `service_address_recipient?: string`\n  - `service_end_date?: string`\n  - `service_start_date?: string`\n  - `shipping_address?: string`\n  - `shipping_address_recipient?: string`\n  - `state?: 'DRAFT' | 'TRANSIT' | 'FAILED' | 'SENT' | 'RECEIVED'`\n  - `subtotal?: string`\n  - `success?: boolean`\n  - `tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B'`\n  - `tax_details?: { amount?: string; rate?: string; }[]`\n  - `total_discount?: string`\n  - `total_tax?: string`\n  - `ubl_document?: string`\n  - `vatex?: string`\n  - `vatex_note?: string`\n  - `vendor_address?: string`\n  - `vendor_address_recipient?: string`\n  - `vendor_company_id?: string`\n  - `vendor_email?: string`\n  - `vendor_name?: string`\n  - `vendor_tax_id?: string`\n\n### Example\n\n```typescript\nimport EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice();\n\nconst response = await client.conversion.pdf.retrieveResult('task_id');\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.conversion.pdf.retrieveResult',
+        example:
+          "import EInvoice from 'e-invoice-api';\n\nconst client = new EInvoice({\n  apiKey: process.env['E_INVOICE_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.conversion.pdf.retrieveResult('task_id');\n\nconsole.log(response.customer_company_id);",
+      },
+      http: {
+        example:
+          'curl https://api.e-invoice.be/api/conversion/pdf/$TASK_ID/result \\\n    -H "Authorization: Bearer $E_INVOICE_API_KEY"',
       },
     },
   },

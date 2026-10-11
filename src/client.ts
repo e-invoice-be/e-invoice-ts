@@ -49,6 +49,7 @@ import {
   OutboxListDraftDocumentsParams,
   OutboxListReceivedDocumentsParams,
 } from './resources/outbox';
+import { StatRetrieveParams, StatRetrieveResponse, Stats } from './resources/stats';
 import {
   UblDocumentValidation,
   Validate,
@@ -62,9 +63,13 @@ import {
   WebhookDeleteResponse,
   WebhookListResponse,
   WebhookResponse,
+  WebhookRetrieveHistoryResponse,
+  WebhookTestParams,
+  WebhookTestResponse,
   WebhookUpdateParams,
   Webhooks,
 } from './resources/webhooks';
+import { Conversion } from './resources/conversion/conversion';
 import {
   Allowance,
   Charge,
@@ -837,6 +842,8 @@ export class EInvoice {
   me: API.Me = new API.Me(this);
   webhooks: API.Webhooks = new API.Webhooks(this);
   mailbox: API.Mailbox = new API.Mailbox(this);
+  stats: API.Stats = new API.Stats(this);
+  conversion: API.Conversion = new API.Conversion(this);
 }
 
 EInvoice.Documents = Documents;
@@ -848,6 +855,8 @@ EInvoice.Lookup = Lookup;
 EInvoice.Me = Me;
 EInvoice.Webhooks = Webhooks;
 EInvoice.Mailbox = Mailbox;
+EInvoice.Stats = Stats;
+EInvoice.Conversion = Conversion;
 
 export declare namespace EInvoice {
   export type RequestOptions = Opts.RequestOptions;
@@ -920,8 +929,11 @@ export declare namespace EInvoice {
     type WebhookResponse as WebhookResponse,
     type WebhookListResponse as WebhookListResponse,
     type WebhookDeleteResponse as WebhookDeleteResponse,
+    type WebhookRetrieveHistoryResponse as WebhookRetrieveHistoryResponse,
+    type WebhookTestResponse as WebhookTestResponse,
     type WebhookCreateParams as WebhookCreateParams,
     type WebhookUpdateParams as WebhookUpdateParams,
+    type WebhookTestParams as WebhookTestParams,
   };
 
   export {
@@ -931,4 +943,12 @@ export declare namespace EInvoice {
     type MailboxListParams as MailboxListParams,
     type MailboxDownloadAttachmentParams as MailboxDownloadAttachmentParams,
   };
+
+  export {
+    Stats as Stats,
+    type StatRetrieveResponse as StatRetrieveResponse,
+    type StatRetrieveParams as StatRetrieveParams,
+  };
+
+  export { Conversion as Conversion };
 }

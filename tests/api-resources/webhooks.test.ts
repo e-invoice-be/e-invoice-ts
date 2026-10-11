@@ -76,4 +76,39 @@ describe('resource webhooks', () => {
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
   });
+
+  // Mock server tests are disabled
+  test.skip('retrieveHistory', async () => {
+    const responsePromise = client.webhooks.retrieveHistory('webhook_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('test: only required params', async () => {
+    const responsePromise = client.webhooks.test('webhook_id', {
+      data: { foo: 'bar' },
+      event_type: 'event_type',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('test: required and optional params', async () => {
+    const response = await client.webhooks.test('webhook_id', {
+      data: { foo: 'bar' },
+      event_type: 'event_type',
+    });
+  });
 });

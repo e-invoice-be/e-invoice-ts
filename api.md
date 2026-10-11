@@ -121,6 +121,8 @@ Types:
 - <code><a href="./src/resources/webhooks.ts">WebhookResponse</a></code>
 - <code><a href="./src/resources/webhooks.ts">WebhookListResponse</a></code>
 - <code><a href="./src/resources/webhooks.ts">WebhookDeleteResponse</a></code>
+- <code><a href="./src/resources/webhooks.ts">WebhookRetrieveHistoryResponse</a></code>
+- <code><a href="./src/resources/webhooks.ts">WebhookTestResponse</a></code>
 
 Methods:
 
@@ -129,6 +131,8 @@ Methods:
 - <code title="put /api/webhooks/{webhook_id}">client.webhooks.<a href="./src/resources/webhooks.ts">update</a>(webhookID, { ...params }) -> WebhookResponse</code>
 - <code title="get /api/webhooks/">client.webhooks.<a href="./src/resources/webhooks.ts">list</a>() -> WebhookListResponse</code>
 - <code title="delete /api/webhooks/{webhook_id}">client.webhooks.<a href="./src/resources/webhooks.ts">delete</a>(webhookID) -> WebhookDeleteResponse</code>
+- <code title="get /api/webhooks/{webhook_id}/history">client.webhooks.<a href="./src/resources/webhooks.ts">retrieveHistory</a>(webhookID) -> WebhookRetrieveHistoryResponse</code>
+- <code title="post /api/webhooks/{webhook_id}/test">client.webhooks.<a href="./src/resources/webhooks.ts">test</a>(webhookID, { ...params }) -> WebhookTestResponse</code>
 
 # Mailbox
 
@@ -142,3 +146,28 @@ Methods:
 - <code title="get /api/mailbox/">client.mailbox.<a href="./src/resources/mailbox.ts">list</a>({ ...params }) -> InboundEmailResponsesDocumentsNumberPage</code>
 - <code title="get /api/mailbox/{inbound_email_id}/attachments/{filename}">client.mailbox.<a href="./src/resources/mailbox.ts">downloadAttachment</a>(filename, { ...params }) -> Response</code>
 - <code title="post /api/mailbox/{inbound_email_id}/reprocess">client.mailbox.<a href="./src/resources/mailbox.ts">reprocess</a>(inboundEmailID) -> InboundEmailResponse</code>
+
+# Stats
+
+Types:
+
+- <code><a href="./src/resources/stats.ts">StatRetrieveResponse</a></code>
+
+Methods:
+
+- <code title="get /api/stats">client.stats.<a href="./src/resources/stats.ts">retrieve</a>({ ...params }) -> StatRetrieveResponse</code>
+
+# Conversion
+
+## Pdf
+
+Types:
+
+- <code><a href="./src/resources/conversion/pdf.ts">PdfCreateResponse</a></code>
+- <code><a href="./src/resources/conversion/pdf.ts">PdfRetrieveResponse</a></code>
+
+Methods:
+
+- <code title="post /api/conversion/pdf">client.conversion.pdf.<a href="./src/resources/conversion/pdf.ts">create</a>({ ...params }) -> PdfCreateResponse</code>
+- <code title="get /api/conversion/pdf/{task_id}">client.conversion.pdf.<a href="./src/resources/conversion/pdf.ts">retrieve</a>(taskID) -> PdfRetrieveResponse</code>
+- <code title="get /api/conversion/pdf/{task_id}/result">client.conversion.pdf.<a href="./src/resources/conversion/pdf.ts">retrieveResult</a>(taskID) -> DocumentCreateFromPdfResponse</code>
