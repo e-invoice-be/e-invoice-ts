@@ -33,7 +33,7 @@ const formatHost = {
 };
 
 /** @param {readonly import('typescript').Diagnostic[]} diagnostics */
-function report(diagnostics) {
+function reportAndCheckForErrors(diagnostics) {
   if (diagnostics.length) {
     process.stderr.write(ts.formatDiagnosticsWithColorAndContext(diagnostics, formatHost));
   }
@@ -117,17 +117,15 @@ function createTransformer({ extname, helpersPath, helpersNeeded }) {
   const { factory } = ts;
 
   /**
-   * @param {import('typescript').TransformationContext} ctx
    * @param {import('typescript').SourceFile} sourceFile
    * @param {import('typescript').Expression} node
    */
-  function updateModuleSpecifier(ctx, sourceFile, node) {
+  function updateModuleSpecifier(sourceFile, node) {
     if (!ts.isStringLiteral(node)) return node;
     if (!node.text.startsWith('./') && !node.text.startsWith('../')) return node;
 
     const ext = path.extname(node.text);
     if (ext === '.mjs' || ext === '.cjs') return node;
-    if (ext === '.json' && ctx.getCompilerOptions().resolveJsonModule) return node;
 
     const base = ext === '.js' ? trimSuffix(node.text, '.js') : node.text;
     const resolved = path.resolve(path.dirname(sourceFile.fileName), base);
@@ -153,7 +151,7 @@ function createTransformer({ extname, helpersPath, helpersNeeded }) {
         factory.createStringLiteral(
           relativeSpecifier(path.dirname(sourceFile.fileName), /** @type {string} */ (helpersPath)),
         )
-      : updateModuleSpecifier(ctx, sourceFile, node);
+      : updateModuleSpecifier(sourceFile, node);
 
     /** @type {import('typescript').Visitor} */
     const visitor = (node) => {
@@ -173,7 +171,7 @@ function createTransformer({ extname, helpersPath, helpersNeeded }) {
           node.modifiers,
           node.isTypeOnly,
           node.exportClause,
-          updateModuleSpecifier(ctx, sourceFile, node.moduleSpecifier),
+          updateModuleSpecifier(sourceFile, node.moduleSpecifier),
           node.attributes,
         );
       }
@@ -186,7 +184,7 @@ function createTransformer({ extname, helpersPath, helpersNeeded }) {
         if (!firstArg) return node;
         const isRequire = node.expression.kind !== ts.SyntaxKind.ImportKeyword;
         return factory.updateCallExpression(node, node.expression, node.typeArguments, [
-          isRequire ? rewrite(firstArg) : updateModuleSpecifier(ctx, sourceFile, firstArg),
+          isRequire ? rewrite(firstArg) : updateModuleSpecifier(sourceFile, firstArg),
           ...restArgs,
         ]);
       }
@@ -196,7 +194,6 @@ function createTransformer({ extname, helpersPath, helpersNeeded }) {
           factory.createLiteralTypeNode(
             /** @type {import('typescript').StringLiteral} */ (
               updateModuleSpecifier(
-                ctx,
                 sourceFile,
                 /** @type {import('typescript').Expression} */ (node.argument.literal),
               )
@@ -224,8 +221,7 @@ function createTransformer({ extname, helpersPath, helpersNeeded }) {
       return ts.visitNode(file, visitor);
     };
 
-    return (file) =>
-      ts.isBundle(file) ? factory.createBundle(file.sourceFiles.map(transformFile)) : transformFile(file);
+    return transformFile;
   };
 }
 
@@ -241,13 +237,14 @@ function buildTarget(target) {
     ...ts.sys,
     onUnRecoverableConfigFileDiagnostic: (diagnostic) => {
       configFailed = true;
-      report([diagnostic]);
+      reportAndCheckForErrors([diagnostic]);
     },
   });
   if (!config || configFailed) return false;
 
   const outDir = config.options.outDir;
   if (shareHelpers && !outDir) throw new Error('outDir must be set when --share-helpers is used');
+  // `getCommonSourceDirectoryOfConfig` is internal to TypeScript.
   const helpersPath =
     shareHelpers ?
       path.resolve(ts.getCommonSourceDirectoryOfConfig(config, false), shareHelpers + extname)
@@ -295,16 +292,16 @@ function buildTarget(target) {
     { after: [transformer], afterDeclarations: [transformer] },
   );
 
-  if (shareHelpers && outDir) {
+  if (shareHelpers) {
     const { outputText } = ts.transpileModule(getHelpersSource(helpersNeeded), {
       compilerOptions: { module: config.options.module },
       fileName: 'helpers.js',
       reportDiagnostics: false,
     });
-    ts.sys.writeFile(path.resolve(outDir, shareHelpers + extname), outputText, false);
+    ts.sys.writeFile(path.resolve(/** @type {string} */ (outDir), shareHelpers + extname), outputText, false);
   }
 
-  const failed = report(
+  const failed = reportAndCheckForErrors(
     ts.sortAndDeduplicateDiagnostics([...ts.getPreEmitDiagnostics(program), ...emitResult.diagnostics]),
   );
   return !failed;
@@ -314,4 +311,4 @@ let ok = true;
 for (const target of TARGETS) {
   if (!buildTarget(target)) ok = false;
 }
-process.exit(ok ? 0 : 1);
+if (!ok) process.exitCode = 1;

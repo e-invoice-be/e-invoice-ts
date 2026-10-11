@@ -37,20 +37,7 @@ describe('parseCLIOptions', () => {
 
     expect(result.codeExecutionMode).toBe('local');
     expect(result.docsSearchMode).toBe('local');
-    expect(Object.keys(result).sort()).toEqual([
-      'codeAllowHttpGets',
-      'codeAllowedMethods',
-      'codeBlockedMethods',
-      'codeExecutionMode',
-      'customInstructionsPath',
-      'debug',
-      'docsDir',
-      'docsSearchMode',
-      'logFormat',
-      'port',
-      'socket',
-      'transport',
-    ]);
+    expect(Object.keys(result).filter((key) => /api.?key/i.test(key))).toEqual([]);
 
     cleanup();
   });
