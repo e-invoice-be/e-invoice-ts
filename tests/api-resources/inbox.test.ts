@@ -1,5 +1,3 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
 import EInvoice from 'e-invoice-api';
 
 const client = new EInvoice({
@@ -36,7 +34,7 @@ describe('resource inbox', () => {
           sort_order: 'asc',
           type: 'INVOICE',
         },
-        { path: '/_stainless_unknown_path' },
+        { path: '/_unknown_path' },
       ),
     ).rejects.toThrow(EInvoice.NotFoundError);
   });
@@ -64,7 +62,7 @@ describe('resource inbox', () => {
           sort_by: 'created_at',
           sort_order: 'asc',
         },
-        { path: '/_stainless_unknown_path' },
+        { path: '/_unknown_path' },
       ),
     ).rejects.toThrow(EInvoice.NotFoundError);
   });
@@ -92,7 +90,7 @@ describe('resource inbox', () => {
           sort_by: 'created_at',
           sort_order: 'asc',
         },
-        { path: '/_stainless_unknown_path' },
+        { path: '/_unknown_path' },
       ),
     ).rejects.toThrow(EInvoice.NotFoundError);
   });

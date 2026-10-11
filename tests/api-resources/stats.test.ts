@@ -1,5 +1,3 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
 import EInvoice from 'e-invoice-api';
 
 const client = new EInvoice({
@@ -30,7 +28,7 @@ describe('resource stats', () => {
           end_date: '2019-12-27',
           start_date: '2019-12-27',
         },
-        { path: '/_stainless_unknown_path' },
+        { path: '/_unknown_path' },
       ),
     ).rejects.toThrow(EInvoice.NotFoundError);
   });
