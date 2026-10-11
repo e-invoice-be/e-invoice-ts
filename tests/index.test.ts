@@ -469,6 +469,32 @@ describe('request building', () => {
       expect(req.headers.get('x-baz')).toEqual(null);
     });
   });
+
+  describe('idempotency key', () => {
+    class IdempotentClient extends EInvoice {
+      protected override idempotencyHeader = 'Idempotency-Key';
+    }
+    const idempotentClient = new IdempotentClient({ apiKey: 'My API Key' });
+
+    test('is not sent by default', async () => {
+      const { req } = await client.buildRequest({ path: '/foo', method: 'post' });
+      expect(req.headers.get('idempotency-key')).toEqual(null);
+    });
+
+    test('default key uses the e-invoice prefix', async () => {
+      const { req } = await idempotentClient.buildRequest({ path: '/foo', method: 'post' });
+      expect(req.headers.get('idempotency-key')).toMatch(/^e-invoice-node-retry-[0-9a-f-]{36}$/);
+    });
+
+    test('an explicit key is sent unchanged', async () => {
+      const { req } = await idempotentClient.buildRequest({
+        path: '/foo',
+        method: 'post',
+        idempotencyKey: 'my-key',
+      });
+      expect(req.headers.get('idempotency-key')).toEqual('my-key');
+    });
+  });
 });
 
 describe('default encoder', () => {

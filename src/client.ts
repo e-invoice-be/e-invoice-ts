@@ -303,7 +303,7 @@ export class EInvoice {
   }
 
   protected defaultIdempotencyKey(): string {
-    return `stainless-node-retry-${uuid4()}`;
+    return `e-invoice-node-retry-${uuid4()}`;
   }
 
   protected makeStatusError(
