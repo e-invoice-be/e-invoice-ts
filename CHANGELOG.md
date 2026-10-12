@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.1.1](https://github.com/e-invoice-be/e-invoice-ts/compare/v2.1.0...v2.1.1) (2026-10-12)
+
+
+### Bug Fixes
+
+* **release:** publish to npm with trusted publishing ([cf39584](https://github.com/e-invoice-be/e-invoice-ts/commit/cf395847a53ad830a7977d9b7750f1fa885a86ff))
+* **release:** publish to npm with trusted publishing ([162b326](https://github.com/e-invoice-be/e-invoice-ts/commit/162b326c0554ce7d4d362bf75fa2ad92feccf700))
+
+
+### Chores
+
+* address code review findings ([8c6d514](https://github.com/e-invoice-be/e-invoice-ts/commit/8c6d514ea2b2b968f24031b0654fef24ccc8c2f6))
+* remove the remaining mentions of Stainless ([f760ea3](https://github.com/e-invoice-be/e-invoice-ts/commit/f760ea3c257f6c01655001ad316879934bc28d2c))
+* remove the remaining mentions of Stainless ([5c775af](https://github.com/e-invoice-be/e-invoice-ts/commit/5c775afd886c2198e2a219fb2371ccc34cf93778)), refs [#61](https://github.com/e-invoice-be/e-invoice-ts/issues/61)
+
 ## [2.1.0](https://github.com/e-invoice-be/e-invoice-ts/compare/v2.0.0...v2.1.0) (2026-10-11)
 
 
