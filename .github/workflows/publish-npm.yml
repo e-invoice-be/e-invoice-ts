@@ -68,8 +68,11 @@ jobs:
           DATA="$(jq -cn --arg path "$INPUT_PATH" \
             '{paths_released: ((if $path == "" then [".", "packages/mcp-server"] else [$path] end) | tojson)}')"
           export DATA
-          yarn tsn scripts/publish-packages.ts
+          # Not `yarn tsn`: yarn sets the registry to registry.yarnpkg.com for its child processes,
+          # and npm trusted publishing works only with registry.npmjs.org.
+          ./node_modules/.bin/ts-node -r tsconfig-paths/register scripts/publish-packages.ts
         env:
+          NPM_CONFIG_REGISTRY: https://registry.npmjs.org
           INPUT_PATH: ${{ inputs.path }}
 
       - name: Upload MCP Server bundle GitHub release asset
