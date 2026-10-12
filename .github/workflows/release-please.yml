@@ -1,5 +1,5 @@
 # Keeps the release pull request up to date and, when that pull request is merged,
-# creates the git tag and the GitHub release and then publishes to npm.
+# creates the git tag and the GitHub release and then starts the Publish NPM workflow.
 #
 # Configuration: release-please-config.json and .release-please-manifest.json
 # See CONTRIBUTING.md ("Publishing and releases") for the token options.
@@ -37,15 +37,19 @@ jobs:
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
 
+  # `gh workflow run` and not a reusable workflow call: npm trusted publishing accepts only the
+  # workflow that starts the run, and that must be `publish-npm.yml`.
   publish:
-    name: publish
+    name: start publish
     needs: release-please
     if: needs.release-please.outputs.release_created == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
     permissions:
-      contents: write # upload the MCP bundle to the GitHub release
-    uses: ./.github/workflows/publish-npm.yml
-    with:
-      tag: ${{ needs.release-please.outputs.tag_name }}
-    secrets:
-      E_INVOICE_NPM_TOKEN: ${{ secrets.E_INVOICE_NPM_TOKEN }}
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      actions: write # start the Publish NPM workflow
+    steps:
+      - name: Start the Publish NPM workflow
+        run: gh workflow run publish-npm.yml --repo "$GITHUB_REPOSITORY" --ref main -f tag="$TAG"
+        env:
+          TAG: ${{ needs.release-please.outputs.tag_name }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

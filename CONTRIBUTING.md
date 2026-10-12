@@ -102,7 +102,7 @@ is in `release-please-config.json`, and `.release-please-manifest.json` holds th
    A `fix` gives a patch version, a `feat` gives a minor version, and a breaking change gives a major version.
 3. A maintainer merges the release pull request.
 4. The subsequent run of the workflow creates the git tag `v<version>` and the GitHub release.
-5. The same run then calls the [`Publish NPM` workflow](https://github.com/e-invoice-be/e-invoice-ts/actions/workflows/publish-npm.yml).
+5. The same run then starts the [`Publish NPM` workflow](https://github.com/e-invoice-be/e-invoice-ts/actions/workflows/publish-npm.yml).
    That workflow publishes `e-invoice-api` and `e-invoice-api-mcp` to npm and attaches the MCP bundle
    (`e_invoice_api_api.mcpb`) to the GitHub release.
 
@@ -110,11 +110,10 @@ Do not create tags or GitHub releases by hand, and do not edit the version numbe
 
 ### Required repository configuration
 
-- **npm token**: the secret `E_INVOICE_NPM_TOKEN` (or `NPM_TOKEN`) must hold an npm granular access token with
-  read and write access to the `e-invoice-api` and `e-invoice-api-mcp` packages. The token must be permitted to
-  publish without a one-time password. Granular tokens expire, so replace the secret before the expiry date.
-  The [`Release Doctor` workflow](https://github.com/e-invoice-be/e-invoice-ts/actions/workflows/release-doctor.yml)
-  checks that npm accepts the token; you can run it manually.
+- **npm trusted publishing**: the publish uses no npm token. On npmjs.com, each of the packages `e-invoice-api`
+  and `e-invoice-api-mcp` must have a trusted publisher (_Settings → Trusted Publisher → GitHub Actions_) with
+  organization `e-invoice-be`, repository `e-invoice-ts` and workflow filename `publish-npm.yml`. Do not set
+  an environment name.
 - **Permission to open the release pull request**: use one of these two options.
   1. Enable _Settings → Actions → General → Allow GitHub Actions to create and approve pull requests_. The
      workflow then uses the default `GITHUB_TOKEN`. GitHub does not start other workflows for pull requests
@@ -122,7 +121,7 @@ Do not create tags or GitHub releases by hand, and do not edit the version numbe
      release pull request changes only version numbers and the changelog.
   2. Add the secret `RELEASE_PLEASE_TOKEN` with a fine-grained personal access token or a GitHub App token
      (repository permissions: Contents, Pull requests and Issues, all read and write). The workflow prefers
-     this secret. CI and Release Doctor then also run on the release pull request.
+     this secret. CI then also runs on the release pull request.
 
 ### Publish again with a GitHub workflow
 
@@ -134,4 +133,4 @@ that is already published.
 ### Publish manually
 
 If you need to manually release a package, you can run the `bin/publish-npm` script with an `NPM_TOKEN` set on
-the environment. Run it from the package directory (the repository root or `packages/mcp-server`).
+the environment (an npm token that can publish the package). Run it from the package directory (the repository root or `packages/mcp-server`).
