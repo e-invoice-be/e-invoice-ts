@@ -109,6 +109,23 @@ export class Documents extends APIResource {
   }
 
   /**
+   * Get the lifecycle events stated about an invoice or credit note after creation
+   * (Peppol Message Level and Invoice Responses, partner status events), oldest
+   * first. Each event carries a route-agnostic canonical status next to the
+   * untouched native code of its source; native codes without a canonical
+   * equivalent have canonical_status null.
+   *
+   * @example
+   * ```ts
+   * const documentLifecycle =
+   *   await client.documents.retrieveLifecycle('document_id');
+   * ```
+   */
+  retrieveLifecycle(documentID: string, options?: RequestOptions): APIPromise<DocumentLifecycle> {
+    return this._client.get(path`/api/documents/${documentID}/lifecycle`, options);
+  }
+
+  /**
    * Send an invoice or credit note via Peppol. By default, the sender and receiver
    * Peppol IDs are derived from the company (tax) IDs in the document, regardless of
    * whether the document was created from a UBL with a different endpoint ID. To
@@ -489,6 +506,12 @@ export interface DocumentCreate {
    */
   billing_address_recipient?: string | null;
 
+  /**
+   * The buyer reference (BT-10), e.g. a cost centre or accounting reference
+   * requested by the buyer
+   */
+  buyer_reference?: string | null;
+
   charges?: Array<DocumentCreate.Charge> | null;
 
   /**
@@ -531,6 +554,11 @@ export interface DocumentCreate {
    * Customer Peppol ID
    */
   customer_peppol_id?: string | null;
+
+  /**
+   * The telephone number of the customer contact (BT-57)
+   */
+  customer_phone?: string | null;
 
   /**
    * Customer tax ID. For Belgium this is the VAT number. Must include the country
@@ -587,6 +615,17 @@ export interface DocumentCreate {
   payment_term?: string | null;
 
   /**
+   * The preceding invoice issue date (BT-26)
+   */
+  preceding_invoice_date?: string | null;
+
+  /**
+   * The preceding invoice reference (BT-25): the number of the invoice this document
+   * corrects, for example the invoice a credit note credits
+   */
+  preceding_invoice_id?: string | null;
+
+  /**
    * The previous unpaid balance from prior invoices, if any. Must be positive and
    * rounded to maximum 2 decimals
    */
@@ -606,6 +645,19 @@ export interface DocumentCreate {
    * The recipient name at the remittance address
    */
   remittance_address_recipient?: string | null;
+
+  /**
+   * The amount added to the invoice total to round the amount for payment (BT-114),
+   * for example to whole kronor (amount_due = invoice_total + rounding_amount when
+   * nothing is prepaid). Can be negative. Between -5.00 and 5.00, rounded to maximum
+   * 2 decimals
+   */
+  rounding_amount?: number | string | null;
+
+  /**
+   * The sales order reference (BT-14) assigned by the seller
+   */
+  sales_order?: string | null;
 
   /**
    * The address where services were performed or goods were delivered
@@ -655,6 +707,13 @@ export interface DocumentCreate {
    */
   tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B';
 
+  /**
+   * The VAT accounting currency (BT-6, ISO 4217 currency code), when VAT is
+   * accounted in a currency other than the invoice currency. Must differ from
+   * currency and requires total_tax_in_tax_currency
+   */
+  tax_currency?: string | null;
+
   tax_details?: Array<DocumentCreate.TaxDetail> | null;
 
   /**
@@ -669,6 +728,12 @@ export interface DocumentCreate {
    * decimals
    */
   total_tax?: number | string | null;
+
+  /**
+   * The total VAT amount in the VAT accounting currency tax_currency (BT-111). Does
+   * not add to invoice_total. Requires tax_currency. Rounded to maximum 2 decimals
+   */
+  total_tax_in_tax_currency?: number | string | null;
 
   /**
    * VATEX code list for VAT exemption reasons
@@ -770,6 +835,13 @@ export interface DocumentCreate {
    * The name of the vendor/seller/supplier
    */
   vendor_name?: string | null;
+
+  /**
+   * The telephone number of the vendor contact (BT-42). Required when vendor and
+   * customer are both in Germany (DE-R-006); it must then hold at least 3 digits
+   * (DE-R-027, a warning).
+   */
+  vendor_phone?: string | null;
 
   /**
    * Vendor tax ID. For Belgium this is the VAT number. Must include the country
@@ -1085,10 +1157,14 @@ export namespace DocumentCreate {
      */
     charges?: Array<Item.Charge> | null;
 
-    date?: null;
+    date?: string | null;
 
     /**
-     * The description of the line item.
+     * The description of the line item (BT-154). Doubles as the item name when `name`
+     * is omitted, so a posted line item needs a `name` or a `description`. On a
+     * received document it holds the item description, or the item name (BT-153) when
+     * the document has no item description; CII documents with both combine them as
+     * `name: description`.
      */
     description?: string | null;
 
@@ -1096,6 +1172,21 @@ export namespace DocumentCreate {
      * Item-level attributes (BG-32) from cac:AdditionalItemProperty.
      */
     item_attributes?: Array<Item.ItemAttribute> | null;
+
+    /**
+     * The item name (BT-153), for example the product name. Written to
+     * cac:Item/cbc:Name. When omitted or blank, `description` (BT-154) is used as the
+     * item name. A posted line item needs a `name` or a `description`; a line item
+     * with neither is rejected with 422.
+     */
+    name?: string | null;
+
+    /**
+     * The item price base quantity (BT-149). The number of item units to which the
+     * unit price applies, for example 100 when the unit price is a price for each 100
+     * units. Must be greater than 0. Defaults to 1.
+     */
+    price_base_quantity?: number | string;
 
     /**
      * The product code of the line item.
@@ -1452,6 +1543,45 @@ export namespace DocumentCreate {
 
 export type DocumentDirection = 'INBOUND' | 'OUTBOUND';
 
+export interface DocumentLifecycle {
+  document_id: string;
+
+  events: Array<DocumentLifecycle.Event>;
+}
+
+export namespace DocumentLifecycle {
+  export interface Event {
+    canonical_status:
+      | 'deposited'
+      | 'emitted'
+      | 'delivered'
+      | 'rejected'
+      | 'acknowledged'
+      | 'approved'
+      | 'partially_approved'
+      | 'disputed'
+      | 'on_hold'
+      | 'refused'
+      | 'payment_sent'
+      | 'paid'
+      | null;
+
+    direction: 'in' | 'out';
+
+    level: 'transport' | 'business';
+
+    native_code: string | null;
+
+    occurred_at: string;
+
+    reason: string | null;
+
+    reason_code: string | null;
+
+    source: 'peppol:mlr' | 'peppol:mls' | 'peppol:imr' | 'fr:superpdp' | 'local';
+  }
+}
+
 export interface DocumentResponse {
   id: string;
 
@@ -1475,6 +1605,12 @@ export interface DocumentResponse {
    * The recipient name at the billing address
    */
   billing_address_recipient?: string | null;
+
+  /**
+   * The buyer reference (BT-10), e.g. a cost centre or accounting reference
+   * requested by the buyer
+   */
+  buyer_reference?: string | null;
 
   charges?: Array<DocumentResponse.Charge> | null;
 
@@ -1518,6 +1654,11 @@ export interface DocumentResponse {
    * Customer Peppol ID
    */
   customer_peppol_id?: string | null;
+
+  /**
+   * The telephone number of the customer contact (BT-57)
+   */
+  customer_phone?: string | null;
 
   /**
    * Customer tax ID. For Belgium this is the VAT number. Must include the country
@@ -1571,6 +1712,17 @@ export interface DocumentResponse {
   payment_term?: string | null;
 
   /**
+   * The preceding invoice issue date (BT-26)
+   */
+  preceding_invoice_date?: string | null;
+
+  /**
+   * The preceding invoice reference (BT-25): the number of the invoice this document
+   * corrects, for example the invoice a credit note credits
+   */
+  preceding_invoice_id?: string | null;
+
+  /**
    * The purchase order reference number
    */
   purchase_order?: string | null;
@@ -1584,6 +1736,19 @@ export interface DocumentResponse {
    * The recipient name at the remittance address
    */
   remittance_address_recipient?: string | null;
+
+  /**
+   * The amount added to the invoice total to round the amount for payment (BT-114),
+   * for example to whole kronor (amount_due = invoice_total + rounding_amount when
+   * nothing is prepaid). Can be negative. Between -5.00 and 5.00, rounded to maximum
+   * 2 decimals
+   */
+  rounding_amount?: string | null;
+
+  /**
+   * The sales order reference (BT-14) assigned by the seller
+   */
+  sales_order?: string | null;
 
   /**
    * The address where services were performed or goods were delivered
@@ -1633,6 +1798,13 @@ export interface DocumentResponse {
    */
   tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B';
 
+  /**
+   * The VAT accounting currency (BT-6, ISO 4217 currency code), when VAT is
+   * accounted in a currency other than the invoice currency. Must differ from
+   * currency and requires total_tax_in_tax_currency
+   */
+  tax_currency?: string | null;
+
   tax_details?: Array<DocumentResponse.TaxDetail> | null;
 
   /**
@@ -1647,6 +1819,12 @@ export interface DocumentResponse {
    * decimals
    */
   total_tax?: string | null;
+
+  /**
+   * The total VAT amount in the VAT accounting currency tax_currency (BT-111). Does
+   * not add to invoice_total. Requires tax_currency. Rounded to maximum 2 decimals
+   */
+  total_tax_in_tax_currency?: string | null;
 
   /**
    * VATEX code list for VAT exemption reasons
@@ -1748,6 +1926,13 @@ export interface DocumentResponse {
    * The name of the vendor/seller/supplier
    */
   vendor_name?: string | null;
+
+  /**
+   * The telephone number of the vendor contact (BT-42). Required when vendor and
+   * customer are both in Germany (DE-R-006); it must then hold at least 3 digits
+   * (DE-R-027, a warning).
+   */
+  vendor_phone?: string | null;
 
   /**
    * Vendor tax ID. For Belgium this is the VAT number. Must include the country
@@ -2057,10 +2242,14 @@ export namespace DocumentResponse {
      */
     charges?: Array<DocumentsAPI.Charge> | null;
 
-    date?: null;
+    date?: string | null;
 
     /**
-     * The description of the line item.
+     * The description of the line item (BT-154). Doubles as the item name when `name`
+     * is omitted, so a posted line item needs a `name` or a `description`. On a
+     * received document it holds the item description, or the item name (BT-153) when
+     * the document has no item description; CII documents with both combine them as
+     * `name: description`.
      */
     description?: string | null;
 
@@ -2068,6 +2257,21 @@ export namespace DocumentResponse {
      * Item-level attributes (BG-32) from cac:AdditionalItemProperty.
      */
     item_attributes?: Array<Item.ItemAttribute> | null;
+
+    /**
+     * The item name (BT-153), for example the product name. Written to
+     * cac:Item/cbc:Name. When omitted or blank, `description` (BT-154) is used as the
+     * item name. A posted line item needs a `name` or a `description`; a line item
+     * with neither is rejected with 422.
+     */
+    name?: string | null;
+
+    /**
+     * The item price base quantity (BT-149). The number of item units to which the
+     * unit price applies, for example 100 when the unit price is a price for each 100
+     * units. Must be greater than 0. Defaults to 1.
+     */
+    price_base_quantity?: string;
 
     /**
      * The product code of the line item.
@@ -3275,6 +3479,12 @@ export interface DocumentCreateFromPdfResponse {
    */
   billing_address_recipient?: string | null;
 
+  /**
+   * The buyer reference (BT-10), e.g. a cost centre or accounting reference
+   * requested by the buyer
+   */
+  buyer_reference?: string | null;
+
   charges?: Array<Charge> | null;
 
   /**
@@ -3317,6 +3527,11 @@ export interface DocumentCreateFromPdfResponse {
    * Customer Peppol ID
    */
   customer_peppol_id?: string | null;
+
+  /**
+   * The telephone number of the customer contact (BT-57)
+   */
+  customer_phone?: string | null;
 
   /**
    * Customer tax ID. For Belgium this is the VAT number. Must include the country
@@ -3383,6 +3598,17 @@ export interface DocumentCreateFromPdfResponse {
   payment_term?: string | null;
 
   /**
+   * The preceding invoice issue date (BT-26)
+   */
+  preceding_invoice_date?: string | null;
+
+  /**
+   * The preceding invoice reference (BT-25): the number of the invoice this document
+   * corrects, for example the invoice a credit note credits
+   */
+  preceding_invoice_id?: string | null;
+
+  /**
    * The purchase order reference number
    */
   purchase_order?: string | null;
@@ -3396,6 +3622,19 @@ export interface DocumentCreateFromPdfResponse {
    * The recipient name at the remittance address
    */
   remittance_address_recipient?: string | null;
+
+  /**
+   * The amount added to the invoice total to round the amount for payment (BT-114),
+   * for example to whole kronor (amount_due = invoice_total + rounding_amount when
+   * nothing is prepaid). Can be negative. Between -5.00 and 5.00, rounded to maximum
+   * 2 decimals
+   */
+  rounding_amount?: string | null;
+
+  /**
+   * The sales order reference (BT-14) assigned by the seller
+   */
+  sales_order?: string | null;
 
   /**
    * The address where services were performed or goods were delivered
@@ -3450,6 +3689,13 @@ export interface DocumentCreateFromPdfResponse {
    */
   tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B';
 
+  /**
+   * The VAT accounting currency (BT-6, ISO 4217 currency code), when VAT is
+   * accounted in a currency other than the invoice currency. Must differ from
+   * currency and requires total_tax_in_tax_currency
+   */
+  tax_currency?: string | null;
+
   tax_details?: Array<DocumentCreateFromPdfResponse.TaxDetail> | null;
 
   /**
@@ -3464,6 +3710,12 @@ export interface DocumentCreateFromPdfResponse {
    * decimals
    */
   total_tax?: string | null;
+
+  /**
+   * The total VAT amount in the VAT accounting currency tax_currency (BT-111). Does
+   * not add to invoice_total. Requires tax_currency. Rounded to maximum 2 decimals
+   */
+  total_tax_in_tax_currency?: string | null;
 
   /**
    * The UBL document as an XML string
@@ -3572,6 +3824,13 @@ export interface DocumentCreateFromPdfResponse {
   vendor_name?: string | null;
 
   /**
+   * The telephone number of the vendor contact (BT-42). Required when vendor and
+   * customer are both in Germany (DE-R-006); it must then hold at least 3 digits
+   * (DE-R-027, a warning).
+   */
+  vendor_phone?: string | null;
+
+  /**
    * Vendor tax ID. For Belgium this is the VAT number. Must include the country
    * prefix
    */
@@ -3598,10 +3857,14 @@ export namespace DocumentCreateFromPdfResponse {
      */
     charges?: Array<DocumentsAPI.Charge> | null;
 
-    date?: null;
+    date?: string | null;
 
     /**
-     * The description of the line item.
+     * The description of the line item (BT-154). Doubles as the item name when `name`
+     * is omitted, so a posted line item needs a `name` or a `description`. On a
+     * received document it holds the item description, or the item name (BT-153) when
+     * the document has no item description; CII documents with both combine them as
+     * `name: description`.
      */
     description?: string | null;
 
@@ -3609,6 +3872,21 @@ export namespace DocumentCreateFromPdfResponse {
      * Item-level attributes (BG-32) from cac:AdditionalItemProperty.
      */
     item_attributes?: Array<Item.ItemAttribute> | null;
+
+    /**
+     * The item name (BT-153), for example the product name. Written to
+     * cac:Item/cbc:Name. When omitted or blank, `description` (BT-154) is used as the
+     * item name. A posted line item needs a `name` or a `description`; a line item
+     * with neither is rejected with 422.
+     */
+    name?: string | null;
+
+    /**
+     * The item price base quantity (BT-149). The number of item units to which the
+     * unit price applies, for example 100 when the unit price is a price for each 100
+     * units. Must be greater than 0. Defaults to 1.
+     */
+    price_base_quantity?: string;
 
     /**
      * The product code of the line item.
@@ -3677,6 +3955,12 @@ export namespace DocumentCreateFromPdfResponse {
 }
 
 export interface DocumentCreateParams {
+  /**
+   * The buyer reference (BT-10), e.g. a cost centre or accounting reference
+   * requested by the buyer
+   */
+  buyer_reference?: string | null;
+
   /**
    * Query param: If true, generate a constructed PDF from the document and include
    * it both as document attachment and embedded in the UBL.
@@ -3757,6 +4041,11 @@ export interface DocumentCreateParams {
   customer_peppol_id?: string | null;
 
   /**
+   * The telephone number of the customer contact (BT-57)
+   */
+  customer_phone?: string | null;
+
+  /**
    * Body param: Customer tax ID. For Belgium this is the VAT number. Must include
    * the country prefix
    */
@@ -3816,6 +4105,17 @@ export interface DocumentCreateParams {
   payment_term?: string | null;
 
   /**
+   * The preceding invoice issue date (BT-26)
+   */
+  preceding_invoice_date?: string | null;
+
+  /**
+   * The preceding invoice reference (BT-25): the number of the invoice this document
+   * corrects, for example the invoice a credit note credits
+   */
+  preceding_invoice_id?: string | null;
+
+  /**
    * Body param: The previous unpaid balance from prior invoices, if any. Must be
    * positive and rounded to maximum 2 decimals
    */
@@ -3835,6 +4135,19 @@ export interface DocumentCreateParams {
    * Body param: The recipient name at the remittance address
    */
   remittance_address_recipient?: string | null;
+
+  /**
+   * The amount added to the invoice total to round the amount for payment (BT-114),
+   * for example to whole kronor (amount_due = invoice_total + rounding_amount when
+   * nothing is prepaid). Can be negative. Between -5.00 and 5.00, rounded to maximum
+   * 2 decimals
+   */
+  rounding_amount?: number | string | null;
+
+  /**
+   * The sales order reference (BT-14) assigned by the seller
+   */
+  sales_order?: string | null;
 
   /**
    * Body param: The address where services were performed or goods were delivered
@@ -3886,6 +4199,13 @@ export interface DocumentCreateParams {
   tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B';
 
   /**
+   * The VAT accounting currency (BT-6, ISO 4217 currency code), when VAT is
+   * accounted in a currency other than the invoice currency. Must differ from
+   * currency and requires total_tax_in_tax_currency
+   */
+  tax_currency?: string | null;
+
+  /**
    * Body param
    */
   tax_details?: Array<DocumentCreateParams.TaxDetail> | null;
@@ -3902,6 +4222,12 @@ export interface DocumentCreateParams {
    * maximum 2 decimals
    */
   total_tax?: number | string | null;
+
+  /**
+   * The total VAT amount in the VAT accounting currency tax_currency (BT-111). Does
+   * not add to invoice_total. Requires tax_currency. Rounded to maximum 2 decimals
+   */
+  total_tax_in_tax_currency?: number | string | null;
 
   /**
    * Body param: VATEX code list for VAT exemption reasons
@@ -4003,6 +4329,13 @@ export interface DocumentCreateParams {
    * Body param: The name of the vendor/seller/supplier
    */
   vendor_name?: string | null;
+
+  /**
+   * The telephone number of the vendor contact (BT-42). Required when vendor and
+   * customer are both in Germany (DE-R-006); it must then hold at least 3 digits
+   * (DE-R-027, a warning).
+   */
+  vendor_phone?: string | null;
 
   /**
    * Body param: Vendor tax ID. For Belgium this is the VAT number. Must include the
@@ -4318,10 +4651,14 @@ export namespace DocumentCreateParams {
      */
     charges?: Array<Item.Charge> | null;
 
-    date?: null;
+    date?: string | null;
 
     /**
-     * The description of the line item.
+     * The description of the line item (BT-154). Doubles as the item name when `name`
+     * is omitted, so a posted line item needs a `name` or a `description`. On a
+     * received document it holds the item description, or the item name (BT-153) when
+     * the document has no item description; CII documents with both combine them as
+     * `name: description`.
      */
     description?: string | null;
 
@@ -4329,6 +4666,21 @@ export namespace DocumentCreateParams {
      * Item-level attributes (BG-32) from cac:AdditionalItemProperty.
      */
     item_attributes?: Array<Item.ItemAttribute> | null;
+
+    /**
+     * The item name (BT-153), for example the product name. Written to
+     * cac:Item/cbc:Name. When omitted or blank, `description` (BT-154) is used as the
+     * item name. A posted line item needs a `name` or a `description`; a line item
+     * with neither is rejected with 422.
+     */
+    name?: string | null;
+
+    /**
+     * The item price base quantity (BT-149). The number of item units to which the
+     * unit price applies, for example 100 when the unit price is a price for each 100
+     * units. Must be greater than 0. Defaults to 1.
+     */
+    price_base_quantity?: number | string;
 
     /**
      * The product code of the line item.
@@ -4726,6 +5078,7 @@ export declare namespace Documents {
     type DocumentAttachmentCreate as DocumentAttachmentCreate,
     type DocumentCreate as DocumentCreate,
     type DocumentDirection as DocumentDirection,
+    type DocumentLifecycle as DocumentLifecycle,
     type DocumentResponse as DocumentResponse,
     type DocumentTimeline as DocumentTimeline,
     type DocumentType as DocumentType,

@@ -110,6 +110,7 @@ const fuse = new Fuse(
     'client.documents.createFromPdf',
     'client.documents.delete',
     'client.documents.retrieve',
+    'client.documents.retrieveLifecycle',
     'client.documents.retrieveTimeline',
     'client.documents.send',
     'client.documents.validate',

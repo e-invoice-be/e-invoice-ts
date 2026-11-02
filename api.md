@@ -8,6 +8,7 @@ Types:
 - <code><a href="./src/resources/documents/documents.ts">DocumentAttachmentCreate</a></code>
 - <code><a href="./src/resources/documents/documents.ts">DocumentCreate</a></code>
 - <code><a href="./src/resources/documents/documents.ts">DocumentDirection</a></code>
+- <code><a href="./src/resources/documents/documents.ts">DocumentLifecycle</a></code>
 - <code><a href="./src/resources/documents/documents.ts">DocumentResponse</a></code>
 - <code><a href="./src/resources/documents/documents.ts">DocumentTimeline</a></code>
 - <code><a href="./src/resources/documents/documents.ts">DocumentType</a></code>
@@ -23,6 +24,7 @@ Methods:
 - <code title="delete /api/documents/{document_id}">client.documents.<a href="./src/resources/documents/documents.ts">delete</a>(documentID) -> DocumentDeleteResponse</code>
 - <code title="post /api/documents/pdf">client.documents.<a href="./src/resources/documents/documents.ts">createFromPdf</a>({ ...params }) -> DocumentCreateFromPdfResponse</code>
 - <code title="get /api/documents/{document_id}/timeline">client.documents.<a href="./src/resources/documents/documents.ts">retrieveTimeline</a>(documentID) -> DocumentTimeline</code>
+- <code title="get /api/documents/{document_id}/lifecycle">client.documents.<a href="./src/resources/documents/documents.ts">retrieveLifecycle</a>(documentID) -> DocumentLifecycle</code>
 - <code title="post /api/documents/{document_id}/send">client.documents.<a href="./src/resources/documents/documents.ts">send</a>(documentID, { ...params }) -> DocumentResponse</code>
 - <code title="post /api/documents/{document_id}/validate">client.documents.<a href="./src/resources/documents/documents.ts">validate</a>(documentID) -> UblDocumentValidation</code>
 

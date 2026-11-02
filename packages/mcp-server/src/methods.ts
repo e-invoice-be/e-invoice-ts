@@ -39,6 +39,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/documents/{document_id}/timeline',
   },
   {
+    clientCallName: 'client.documents.retrieveLifecycle',
+    fullyQualifiedName: 'documents.retrieveLifecycle',
+    httpMethod: 'get',
+    httpPath: '/api/documents/{document_id}/lifecycle',
+  },
+  {
     clientCallName: 'client.documents.send',
     fullyQualifiedName: 'documents.send',
     httpMethod: 'post',
