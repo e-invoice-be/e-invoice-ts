@@ -15,6 +15,7 @@ export {
   type DocumentAttachmentCreate,
   type DocumentCreate,
   type DocumentDirection,
+  type DocumentLifecycle,
   type DocumentResponse,
   type DocumentTimeline,
   type DocumentType,

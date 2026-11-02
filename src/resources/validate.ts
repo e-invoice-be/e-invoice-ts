@@ -160,6 +160,12 @@ export interface ValidateValidateJsonParams {
    */
   billing_address_recipient?: string | null;
 
+  /**
+   * The buyer reference (BT-10), e.g. a cost centre or accounting reference
+   * requested by the buyer
+   */
+  buyer_reference?: string | null;
+
   charges?: Array<ValidateValidateJsonParams.Charge> | null;
 
   /**
@@ -202,6 +208,11 @@ export interface ValidateValidateJsonParams {
    * Customer Peppol ID
    */
   customer_peppol_id?: string | null;
+
+  /**
+   * The telephone number of the customer contact (BT-57)
+   */
+  customer_phone?: string | null;
 
   /**
    * Customer tax ID. For Belgium this is the VAT number. Must include the country
@@ -258,6 +269,17 @@ export interface ValidateValidateJsonParams {
   payment_term?: string | null;
 
   /**
+   * The preceding invoice issue date (BT-26)
+   */
+  preceding_invoice_date?: string | null;
+
+  /**
+   * The preceding invoice reference (BT-25): the number of the invoice this document
+   * corrects, for example the invoice a credit note credits
+   */
+  preceding_invoice_id?: string | null;
+
+  /**
    * The previous unpaid balance from prior invoices, if any. Must be positive and
    * rounded to maximum 2 decimals
    */
@@ -277,6 +299,19 @@ export interface ValidateValidateJsonParams {
    * The recipient name at the remittance address
    */
   remittance_address_recipient?: string | null;
+
+  /**
+   * The amount added to the invoice total to round the amount for payment (BT-114),
+   * for example to whole kronor (amount_due = invoice_total + rounding_amount when
+   * nothing is prepaid). Can be negative. Between -5.00 and 5.00, rounded to maximum
+   * 2 decimals
+   */
+  rounding_amount?: number | string | null;
+
+  /**
+   * The sales order reference (BT-14) assigned by the seller
+   */
+  sales_order?: string | null;
 
   /**
    * The address where services were performed or goods were delivered
@@ -326,6 +361,13 @@ export interface ValidateValidateJsonParams {
    */
   tax_code?: 'AE' | 'E' | 'S' | 'Z' | 'G' | 'O' | 'K' | 'L' | 'M' | 'B';
 
+  /**
+   * The VAT accounting currency (BT-6, ISO 4217 currency code), when VAT is
+   * accounted in a currency other than the invoice currency. Must differ from
+   * currency and requires total_tax_in_tax_currency
+   */
+  tax_currency?: string | null;
+
   tax_details?: Array<ValidateValidateJsonParams.TaxDetail> | null;
 
   /**
@@ -340,6 +382,12 @@ export interface ValidateValidateJsonParams {
    * decimals
    */
   total_tax?: number | string | null;
+
+  /**
+   * The total VAT amount in the VAT accounting currency tax_currency (BT-111). Does
+   * not add to invoice_total. Requires tax_currency. Rounded to maximum 2 decimals
+   */
+  total_tax_in_tax_currency?: number | string | null;
 
   /**
    * VATEX code list for VAT exemption reasons
@@ -441,6 +489,13 @@ export interface ValidateValidateJsonParams {
    * The name of the vendor/seller/supplier
    */
   vendor_name?: string | null;
+
+  /**
+   * The telephone number of the vendor contact (BT-42). Required when vendor and
+   * customer are both in Germany (DE-R-006); it must then hold at least 3 digits
+   * (DE-R-027, a warning).
+   */
+  vendor_phone?: string | null;
 
   /**
    * Vendor tax ID. For Belgium this is the VAT number. Must include the country
@@ -756,10 +811,14 @@ export namespace ValidateValidateJsonParams {
      */
     charges?: Array<Item.Charge> | null;
 
-    date?: null;
+    date?: string | null;
 
     /**
-     * The description of the line item.
+     * The description of the line item (BT-154). Doubles as the item name when `name`
+     * is omitted, so a posted line item needs a `name` or a `description`. On a
+     * received document it holds the item description, or the item name (BT-153) when
+     * the document has no item description; CII documents with both combine them as
+     * `name: description`.
      */
     description?: string | null;
 
@@ -767,6 +826,21 @@ export namespace ValidateValidateJsonParams {
      * Item-level attributes (BG-32) from cac:AdditionalItemProperty.
      */
     item_attributes?: Array<Item.ItemAttribute> | null;
+
+    /**
+     * The item name (BT-153), for example the product name. Written to
+     * cac:Item/cbc:Name. When omitted or blank, `description` (BT-154) is used as the
+     * item name. A posted line item needs a `name` or a `description`; a line item
+     * with neither is rejected with 422.
+     */
+    name?: string | null;
+
+    /**
+     * The item price base quantity (BT-149). The number of item units to which the
+     * unit price applies, for example 100 when the unit price is a price for each 100
+     * units. Must be greater than 0. Defaults to 1.
+     */
+    price_base_quantity?: number | string;
 
     /**
      * The product code of the line item.
