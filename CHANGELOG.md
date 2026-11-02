@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.2](https://github.com/e-invoice-be/e-invoice-ts/compare/v2.1.1...v2.1.2) (2026-11-02)
+
+
+### Features
+
+* **api:** sync SDK with live OpenAPI spec ([fdc82a5](https://github.com/e-invoice-be/e-invoice-ts/commit/fdc82a571c7cf620f74926fbea587c0078c2b6f7))
+
 ## [2.1.1](https://github.com/e-invoice-be/e-invoice-ts/compare/v2.1.0...v2.1.1) (2026-10-12)
 
 
