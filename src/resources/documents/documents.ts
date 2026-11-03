@@ -525,7 +525,8 @@ export interface DocumentCreate {
   customer_address?: string | null;
 
   /**
-   * The recipient name at the customer address
+   * The recipient name at the customer address. Also the customer contact name
+   * (BT-56) in the UBL.
    */
   customer_address_recipient?: string | null;
 
@@ -632,7 +633,7 @@ export interface DocumentCreate {
   previous_unpaid_balance?: number | string | null;
 
   /**
-   * The purchase order reference number
+   * The purchase order reference number (BT-13)
    */
   purchase_order?: string | null;
 
@@ -816,7 +817,8 @@ export interface DocumentCreate {
   vendor_address?: string | null;
 
   /**
-   * The recipient name at the vendor address
+   * The recipient name at the vendor address. Also the vendor contact name (BT-41)
+   * in the UBL, required when vendor and customer are both in Germany (DE-R-005).
    */
   vendor_address_recipient?: string | null;
 
@@ -1625,7 +1627,8 @@ export interface DocumentResponse {
   customer_address?: string | null;
 
   /**
-   * The recipient name at the customer address
+   * The recipient name at the customer address. Also the customer contact name
+   * (BT-56) in the UBL.
    */
   customer_address_recipient?: string | null;
 
@@ -1723,7 +1726,7 @@ export interface DocumentResponse {
   preceding_invoice_id?: string | null;
 
   /**
-   * The purchase order reference number
+   * The purchase order reference number (BT-13)
    */
   purchase_order?: string | null;
 
@@ -1907,7 +1910,8 @@ export interface DocumentResponse {
   vendor_address?: string | null;
 
   /**
-   * The recipient name at the vendor address
+   * The recipient name at the vendor address. Also the vendor contact name (BT-41)
+   * in the UBL, required when vendor and customer are both in Germany (DE-R-005).
    */
   vendor_address_recipient?: string | null;
 
@@ -2328,7 +2332,9 @@ export namespace DocumentResponse {
 
   export interface PaymentDetail {
     /**
-     * Bank account number (for non-IBAN accounts)
+     * Bank account number (for non-IBAN accounts). With `swift` `SE:BANKGIRO` or
+     * `SE:PLUSGIRO`, the bankgiro or plusgiro number, with `iban` left empty; spaces
+     * and hyphens are removed.
      */
     bank_account_number?: string | null;
 
@@ -2344,7 +2350,9 @@ export namespace DocumentResponse {
     payment_reference?: string | null;
 
     /**
-     * SWIFT/BIC code of the bank
+     * The payment service provider identifier (BT-86): the BIC of the payee's bank, or
+     * `SE:BANKGIRO` / `SE:PLUSGIRO` when `bank_account_number` is a Swedish bankgiro
+     * or plusgiro number.
      */
     swift?: string | null;
   }
@@ -2398,7 +2406,9 @@ export type DocumentType =
 
 export interface PaymentDetailCreate {
   /**
-   * Bank account number (for non-IBAN accounts)
+   * Bank account number (for non-IBAN accounts). With `swift` `SE:BANKGIRO` or
+   * `SE:PLUSGIRO`, the bankgiro or plusgiro number, with `iban` left empty; spaces
+   * and hyphens are removed.
    */
   bank_account_number?: string | null;
 
@@ -2414,7 +2424,9 @@ export interface PaymentDetailCreate {
   payment_reference?: string | null;
 
   /**
-   * SWIFT/BIC code of the bank
+   * The payment service provider identifier (BT-86): the BIC of the payee's bank, or
+   * `SE:BANKGIRO` / `SE:PLUSGIRO` when `bank_account_number` is a Swedish bankgiro
+   * or plusgiro number.
    */
   swift?: string | null;
 }
@@ -3498,7 +3510,8 @@ export interface DocumentCreateFromPdfResponse {
   customer_address?: string | null;
 
   /**
-   * The recipient name at the customer address
+   * The recipient name at the customer address. Also the customer contact name
+   * (BT-56) in the UBL.
    */
   customer_address_recipient?: string | null;
 
@@ -3609,7 +3622,7 @@ export interface DocumentCreateFromPdfResponse {
   preceding_invoice_id?: string | null;
 
   /**
-   * The purchase order reference number
+   * The purchase order reference number (BT-13)
    */
   purchase_order?: string | null;
 
@@ -3803,7 +3816,8 @@ export interface DocumentCreateFromPdfResponse {
   vendor_address?: string | null;
 
   /**
-   * The recipient name at the vendor address
+   * The recipient name at the vendor address. Also the vendor contact name (BT-41)
+   * in the UBL, required when vendor and customer are both in Germany (DE-R-005).
    */
   vendor_address_recipient?: string | null;
 
@@ -4009,7 +4023,8 @@ export interface DocumentCreateParams {
   customer_address?: string | null;
 
   /**
-   * Body param: The recipient name at the customer address
+   * Body param: The recipient name at the customer address. Also the customer
+   * contact name (BT-56) in the UBL.
    */
   customer_address_recipient?: string | null;
 
@@ -4122,7 +4137,7 @@ export interface DocumentCreateParams {
   previous_unpaid_balance?: number | string | null;
 
   /**
-   * Body param: The purchase order reference number
+   * Body param: The purchase order reference number (BT-13)
    */
   purchase_order?: string | null;
 
@@ -4310,7 +4325,9 @@ export interface DocumentCreateParams {
   vendor_address?: string | null;
 
   /**
-   * Body param: The recipient name at the vendor address
+   * Body param: The recipient name at the vendor address. Also the vendor contact
+   * name (BT-41) in the UBL, required when vendor and customer are both in Germany
+   * (DE-R-005).
    */
   vendor_address_recipient?: string | null;
 

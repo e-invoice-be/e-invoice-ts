@@ -73,6 +73,10 @@ export interface UblDocumentValidation {
 
   issues: Array<UblDocumentValidation.Issue>;
 
+  /**
+   * The UBL document as an XML string, returned whenever it could be generated, also
+   * when the document is not valid. Only is_valid tells whether it is valid.
+   */
   ubl_document?: string | null;
 }
 
@@ -179,7 +183,8 @@ export interface ValidateValidateJsonParams {
   customer_address?: string | null;
 
   /**
-   * The recipient name at the customer address
+   * The recipient name at the customer address. Also the customer contact name
+   * (BT-56) in the UBL.
    */
   customer_address_recipient?: string | null;
 
@@ -286,7 +291,7 @@ export interface ValidateValidateJsonParams {
   previous_unpaid_balance?: number | string | null;
 
   /**
-   * The purchase order reference number
+   * The purchase order reference number (BT-13)
    */
   purchase_order?: string | null;
 
@@ -470,7 +475,8 @@ export interface ValidateValidateJsonParams {
   vendor_address?: string | null;
 
   /**
-   * The recipient name at the vendor address
+   * The recipient name at the vendor address. Also the vendor contact name (BT-41)
+   * in the UBL, required when vendor and customer are both in Germany (DE-R-005).
    */
   vendor_address_recipient?: string | null;
 
