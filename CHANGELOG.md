@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.3](https://github.com/e-invoice-be/e-invoice-ts/compare/v2.1.2...v2.1.3) (2026-11-03)
+
+
+### Bug Fixes
+
+* **api:** sync field descriptions with live OpenAPI spec ([762d9b8](https://github.com/e-invoice-be/e-invoice-ts/commit/762d9b8b8552052086303328ffbf07726878b1cf))
+
 ## [2.1.2](https://github.com/e-invoice-be/e-invoice-ts/compare/v2.1.1...v2.1.2) (2026-11-02)
 
 
