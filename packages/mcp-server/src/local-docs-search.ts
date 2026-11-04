@@ -1970,7 +1970,7 @@ export class LocalDocsSearch {
       description: m.description,
       qualified: m.qualified,
       resourcePath: m.resourcePath,
-      _original: m as unknown as Record<string, unknown>,
+      _original: m,
     }));
     if (docs.length > 0) {
       this.methodIndex.addAll(docs);
@@ -2030,7 +2030,7 @@ export class LocalDocsSearch {
       kind: 'prose' as const,
       content: chunk.content,
       ...(chunk.sectionContext != null ? { sectionContext: chunk.sectionContext } : {}),
-      _original: { ...chunk, source } as unknown as Record<string, unknown>,
+      _original: { ...chunk, source },
     }));
 
     if (docs.length > 0) {

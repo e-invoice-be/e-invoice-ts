@@ -291,7 +291,7 @@ const fetch = async (req: Request): Promise<Response> => {
     },
   };
   try {
-    let run_ = async (client: any) => {};
+    let run_ = async (_client: any) => {};
     run_ = (await tseval(`${code}\nexport default run;`)).default;
     const result = await run_(makeSdkProxy(client, { path: ['client'] }));
     return Response.json({

@@ -72,15 +72,33 @@ $ pnpm link --global e-invoice-api
 $ yarn run test
 ```
 
+To also collect coverage and enforce the coverage thresholds (as CI does):
+
+```sh
+$ yarn test:coverage
+$ (cd packages/mcp-server && yarn test:coverage)
+```
+
+The thresholds in `jest.config.ts` and `packages/mcp-server/jest.config.ts` are a ratchet set just below
+the measured coverage. New code needs tests to keep the run green; raise the thresholds when coverage improves.
+
 ## Linting and formatting
 
-This repository uses [prettier](https://www.npmjs.com/package/prettier) and
-[eslint](https://www.npmjs.com/package/eslint) to format the code in the repository.
+This repository uses [prettier](https://www.npmjs.com/package/prettier) for formatting,
+[eslint](https://www.npmjs.com/package/eslint) (with type-aware [typescript-eslint](https://typescript-eslint.io) rules)
+and `tsc` for type checking, plus [Are The Types Wrong?](https://arethetypeswrong.github.io) and
+[publint](https://publint.dev) on the built package.
 
-To lint:
+To run all of them (this builds first, because the MCP server is linted and type-checked against the built SDK):
 
 ```sh
 $ yarn lint
+```
+
+To only run the type checks (after `yarn build`):
+
+```sh
+$ ./scripts/typecheck
 ```
 
 To format and fix all lint issues automatically:

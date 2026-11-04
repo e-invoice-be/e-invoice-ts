@@ -58,7 +58,7 @@ describe('resource documents', () => {
 
   // Mock server tests are disabled
   test.skip('createFromPdf: required and optional params', async () => {
-    const response = await client.documents.createFromPdf({
+    await client.documents.createFromPdf({
       file: await toFile(Buffer.from('Example data'), 'README.md'),
       customer_tax_id: 'customer_tax_id',
       vendor_tax_id: 'vendor_tax_id',

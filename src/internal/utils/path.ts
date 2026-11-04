@@ -26,6 +26,9 @@ export const createPathTagFunction = (pathEncoder = encodeURIPath) =>
         postPath = true;
       }
       const value = params[index];
+      // `'' + value` (not `String(value)`) keeps the primitive-coercion semantics callers rely on;
+      // non-primitive values are rejected below.
+      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
       let encoded = (postPath ? encodeURIComponent : pathEncoder)('' + value);
       if (
         index !== params.length &&
@@ -36,6 +39,8 @@ export const createPathTagFunction = (pathEncoder = encodeURIPath) =>
               Object.getPrototypeOf(Object.getPrototypeOf((value as any).hasOwnProperty ?? EMPTY) ?? EMPTY)
                 ?.toString))
       ) {
+        // Only reached for nullish or plain objects, to report the offending segment's length.
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         encoded = value + '';
         invalidSegments.push({
           start: previousValue.length + currentValue.length,
@@ -57,7 +62,7 @@ export const createPathTagFunction = (pathEncoder = encodeURIPath) =>
       invalidSegments.push({
         start: match.index,
         length: match[0].length,
-        error: `Value "${match[0]}" can\'t be safely passed as a path parameter`,
+        error: `Value "${match[0]}" can't be safely passed as a path parameter`,
       });
     }
 

@@ -72,19 +72,19 @@ export class APIPromise<T> extends Promise<T> {
   }
 
   override then<TResult1 = T, TResult2 = never>(
-    onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null,
-    onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null,
+    onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | null,
+    onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null,
   ): Promise<TResult1 | TResult2> {
     return this.parse().then(onfulfilled, onrejected);
   }
 
   override catch<TResult = never>(
-    onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null,
+    onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | null,
   ): Promise<T | TResult> {
     return this.parse().catch(onrejected);
   }
 
-  override finally(onfinally?: (() => void) | undefined | null): Promise<T> {
+  override finally(onfinally?: (() => void) | null): Promise<T> {
     return this.parse().finally(onfinally);
   }
 }

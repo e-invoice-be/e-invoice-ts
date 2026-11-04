@@ -153,7 +153,7 @@ const localDenoHandler = async ({
 
   const allowReadPaths = [
     'code-tool-worker.mjs',
-    `${workerPath.replace(/([\/\\]node_modules)[\/\\].+$/, '$1')}/`,
+    `${workerPath.replace(/([/\\]node_modules)[/\\].+$/, '$1')}/`,
     packageRoot,
   ];
 

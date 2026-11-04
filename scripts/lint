@@ -7,14 +7,16 @@ cd "$(dirname "$0")/.."
 echo "==> Running prettier --check"
 ./node_modules/.bin/prettier --check .
 
-echo "==> Running eslint"
-./node_modules/.bin/eslint .
-
+# Build first: type-aware linting and type checking of packages/mcp-server resolve
+# `e-invoice-api` through `link:../../dist/` and need the package's dependencies,
+# which ./scripts/build installs.
 echo "==> Building"
 ./scripts/build
 
-echo "==> Checking types"
-./node_modules/typescript/bin/tsc
+echo "==> Running eslint"
+./node_modules/.bin/eslint .
+
+./scripts/typecheck
 
 echo "==> Running Are The Types Wrong?"
 ./node_modules/.bin/attw --pack dist -f json >.attw.json || true

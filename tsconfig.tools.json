@@ -1,0 +1,24 @@
+{
+  // type-checks the repo tooling (build/release scripts and config files);
+  // JS files are only checked when they opt in with a `// @ts-check` comment
+  "extends": "./tsconfig.json",
+  "include": [
+    "scripts/**/*.ts",
+    "scripts/**/*.cjs",
+    "jest.config.ts",
+    "eslint.config.mjs",
+    "packages/mcp-server/jest.config.ts"
+  ],
+  "exclude": [],
+  "compilerOptions": {
+    // these files run directly under Node: .mjs is ESM, .cjs/.ts follow package.json "type"
+    "module": "node16",
+    "moduleResolution": "node16",
+    "allowJs": true,
+    "checkJs": false,
+    // the TypeScript compiler API used by the build scripts is not declared
+    // with `exactOptionalPropertyTypes` in mind
+    "exactOptionalPropertyTypes": false,
+    "paths": {}
+  }
+}

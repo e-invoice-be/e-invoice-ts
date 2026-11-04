@@ -265,7 +265,7 @@ function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[]
 
   if (options.codeAllowHttpGets || options.codeAllowedMethods) {
     // Start with nothing allowed and then add into it from options
-    let allowedMethodsSet = new Set<SdkMethod>();
+    const allowedMethodsSet = new Set<SdkMethod>();
 
     if (options.codeAllowHttpGets) {
       // Add all methods that map to an HTTP GET
@@ -281,7 +281,9 @@ function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[]
           return new RegExp(pattern);
         } catch (e) {
           throw new Error(
-            `Invalid regex pattern for allowed method: "${pattern}": ${e instanceof Error ? e.message : e}`,
+            `Invalid regex pattern for allowed method: "${pattern}": ${
+              e instanceof Error ? e.message : String(e)
+            }`,
           );
         }
       });
@@ -304,7 +306,9 @@ function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[]
         return new RegExp(pattern);
       } catch (e) {
         throw new Error(
-          `Invalid regex pattern for blocked method: "${pattern}": ${e instanceof Error ? e.message : e}`,
+          `Invalid regex pattern for blocked method: "${pattern}": ${
+            e instanceof Error ? e.message : String(e)
+          }`,
         );
       }
     });

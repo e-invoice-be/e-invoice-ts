@@ -34,7 +34,7 @@ describe('toFile', () => {
     // @ts-expect-error we intentionally do not type support for `string`
     // to help people avoid passing a file path
     const file = await toFile('contents');
-    expect(file.text()).resolves.toEqual('contents');
+    await expect(file.text()).resolves.toEqual('contents');
   });
 
   it('extracts a file name from a Response', async () => {
@@ -68,7 +68,8 @@ describe('toFile', () => {
     const result = await toFile(input);
     const file: File = result;
     const blob: Blob = result;
-    void file, blob;
+    void file;
+    void blob;
   });
 });
 
@@ -80,16 +81,16 @@ describe('missing File error message', () => {
     // Reset modules before each test so we can test the error thrown when it's undefined.
     jest.resetModules();
     const buffer = require('node:buffer');
-    // @ts-ignore
+    // @ts-ignore - `File` may not be declared on globalThis in this lib target
     prevGlobalFile = globalThis.File;
     prevNodeFile = buffer.File;
-    // @ts-ignore
+    // @ts-ignore - deliberately removing `File` to simulate an environment without it
     globalThis.File = undefined;
     buffer.File = undefined;
   });
   afterEach(() => {
     // Clean up
-    // @ts-ignore
+    // @ts-ignore - restoring the `File` global removed above
     globalThis.File = prevGlobalFile;
     require('node:buffer').File = prevNodeFile;
     jest.resetModules();

@@ -56,7 +56,7 @@ const noopLogger = {
   debug: noop,
 };
 
-let cachedLoggers = /* @__PURE__ */ new WeakMap<Logger, [LogLevel, Logger]>();
+const cachedLoggers = /* @__PURE__ */ new WeakMap<Logger, [LogLevel, Logger]>();
 
 export function loggerFor(client: EInvoice): Logger {
   const logger = client.logger;

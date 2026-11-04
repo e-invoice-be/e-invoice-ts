@@ -53,7 +53,7 @@ describe('resource mailbox', () => {
 
   // Mock server tests are disabled
   test.skip('downloadAttachment: required and optional params', async () => {
-    const response = await client.mailbox.downloadAttachment('filename', {
+    await client.mailbox.downloadAttachment('filename', {
       inbound_email_id: 'inbound_email_id',
     });
   });

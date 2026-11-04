@@ -7,6 +7,10 @@ const distDir =
     path.resolve(process.env['DIST_PATH'])
   : path.resolve(__dirname, '..', '..', 'dist');
 
+/**
+ * @param {string} dir
+ * @returns {AsyncGenerator<string>}
+ */
 async function* walk(dir) {
   for await (const d of await fs.promises.opendir(dir)) {
     const entry = path.join(dir, d.name);
@@ -42,6 +46,7 @@ async function postprocess() {
     }
   }
 
+  /** @type {Record<string, any>} */
   const newExports = {
     '.': {
       require: {

@@ -79,7 +79,7 @@ export type RequestOptions = {
 export type EncodedContent = { bodyHeaders: HeadersLike; body: BodyInit };
 export type RequestEncoder = (request: { headers: NullableHeaders; body: unknown }) => EncodedContent;
 
-export const FallbackEncoder: RequestEncoder = ({ headers, body }) => {
+export const FallbackEncoder: RequestEncoder = ({ body }) => {
   return {
     bodyHeaders: {
       'content-type': 'application/json',

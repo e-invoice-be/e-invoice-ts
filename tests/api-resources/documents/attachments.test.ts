@@ -22,7 +22,7 @@ describe('resource attachments', () => {
 
   // Mock server tests are disabled
   test.skip('retrieve: required and optional params', async () => {
-    const response = await client.documents.attachments.retrieve('attachment_id', {
+    await client.documents.attachments.retrieve('attachment_id', {
       document_id: 'document_id',
     });
   });
@@ -55,7 +55,7 @@ describe('resource attachments', () => {
 
   // Mock server tests are disabled
   test.skip('delete: required and optional params', async () => {
-    const response = await client.documents.attachments.delete('attachment_id', {
+    await client.documents.attachments.delete('attachment_id', {
       document_id: 'document_id',
     });
   });
@@ -76,7 +76,7 @@ describe('resource attachments', () => {
 
   // Mock server tests are disabled
   test.skip('add: required and optional params', async () => {
-    const response = await client.documents.attachments.add('document_id', {
+    await client.documents.attachments.add('document_id', {
       file: await toFile(Buffer.from('Example data'), 'README.md'),
     });
   });
