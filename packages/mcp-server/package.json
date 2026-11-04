@@ -20,6 +20,7 @@
   },
   "scripts": {
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "build": "bash ./build",
     "prepack": "echo 'to pack, run yarn build && (cd dist; yarn pack)' && exit 1",
     "prepublishOnly": "echo 'to publish, run yarn build && (cd dist; yarn publish)' && exit 1",

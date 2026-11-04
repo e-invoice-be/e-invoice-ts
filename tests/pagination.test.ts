@@ -1,3 +1,4 @@
+import { EInvoiceError } from 'e-invoice-api';
 import { jsonResponse, stubClient } from './resources/stub-client';
 
 describe('DocumentsNumberPage auto-pagination', () => {
@@ -23,6 +24,18 @@ describe('DocumentsNumberPage auto-pagination', () => {
       ids.push(document.id);
     }
     expect(ids).toEqual(['doc_1', 'doc_2']);
+    expect(requests).toHaveLength(1);
+  });
+
+  test('getNextPage() on the last page throws instead of requesting', async () => {
+    const { client, requests } = stubPages([
+      { items: [{ id: 'doc_1' }], page: 1, page_size: 2, pages: 1, total: 1, has_next_page: false },
+    ]);
+
+    const page = await client.inbox.list();
+
+    await expect(page.getNextPage()).rejects.toThrow(EInvoiceError);
+    await expect(page.getNextPage()).rejects.toThrow(/check `.hasNextPage\(\)`/);
     expect(requests).toHaveLength(1);
   });
 

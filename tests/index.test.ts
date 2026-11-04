@@ -2,7 +2,21 @@ import { APIPromise } from 'e-invoice-api/core/api-promise';
 
 import util from 'node:util';
 import EInvoice from 'e-invoice-api';
-import { APIUserAbortError } from 'e-invoice-api';
+import {
+  APIConnectionError,
+  APIConnectionTimeoutError,
+  APIError,
+  APIUserAbortError,
+  AuthenticationError,
+  BadRequestError,
+  ConflictError,
+  EInvoiceError,
+  InternalServerError,
+  NotFoundError,
+  PermissionDeniedError,
+  RateLimitError,
+  UnprocessableEntityError,
+} from 'e-invoice-api';
 const defaultFetch = fetch;
 
 describe('instantiate client', () => {
@@ -450,6 +464,31 @@ describe('instantiate client', () => {
     const client = new EInvoice({ apiKey: 'My API Key' });
     expect(client.apiKey).toBe('My API Key');
   });
+
+  test('throws when no api key is given', () => {
+    delete process.env['E_INVOICE_API_KEY'];
+    expect(() => new EInvoice()).toThrow(EInvoiceError);
+    expect(() => new EInvoice()).toThrow(/E_INVOICE_API_KEY environment variable is missing/);
+  });
+
+  describe('E_INVOICE_CUSTOM_HEADERS env var', () => {
+    test('is parsed as newline-separated `name: value` headers', async () => {
+      process.env['E_INVOICE_CUSTOM_HEADERS'] = 'X-Foo: bar\nX-Url: https://example.com:8080\nmalformed line';
+      const client = new EInvoice({ apiKey: 'My API Key' });
+      const { req } = await client.buildRequest({ path: '/foo', method: 'get' });
+      expect(req.headers.get('x-foo')).toEqual('bar');
+      // only the first colon separates the name from the value
+      expect(req.headers.get('x-url')).toEqual('https://example.com:8080');
+      expect([...req.headers.keys()].filter((name) => String(name).includes('malformed'))).toEqual([]);
+    });
+
+    test('is overridden by defaultHeaders', async () => {
+      process.env['E_INVOICE_CUSTOM_HEADERS'] = 'X-Foo: from-env';
+      const client = new EInvoice({ apiKey: 'My API Key', defaultHeaders: { 'X-Foo': 'from-option' } });
+      const { req } = await client.buildRequest({ path: '/foo', method: 'get' });
+      expect(req.headers.get('x-foo')).toEqual('from-option');
+    });
+  });
 });
 
 describe('request building', () => {
@@ -652,5 +691,183 @@ describe('retries', () => {
         .then((r) => r.text()),
     ).toEqual(JSON.stringify({ a: 1 }));
     expect(count).toEqual(3);
+  });
+});
+
+describe('error responses', () => {
+  const jsonResponse = (status: number, body: unknown, headers: Record<string, string> = {}) =>
+    new Response(JSON.stringify(body), {
+      status,
+      headers: { 'Content-Type': 'application/json', ...headers },
+    });
+
+  test.each([
+    [400, BadRequestError],
+    [401, AuthenticationError],
+    [403, PermissionDeniedError],
+    [404, NotFoundError],
+    [409, ConflictError],
+    [422, UnprocessableEntityError],
+    [429, RateLimitError],
+    [500, InternalServerError],
+    [503, InternalServerError],
+    [418, APIError],
+  ])('status %i is raised as %p', async (status, ErrorClass) => {
+    const client = new EInvoice({
+      apiKey: 'My API Key',
+      maxRetries: 0,
+      fetch: async () => jsonResponse(status, { detail: 'nope' }, { 'X-Request-Id': 'req_123' }),
+    });
+
+    const err: any = await client.get('/foo').catch((e) => e);
+    expect(err).toBeInstanceOf(ErrorClass);
+    expect(err).toBeInstanceOf(APIError);
+    expect(err.status).toEqual(status);
+    expect(err.error).toEqual({ detail: 'nope' });
+    expect(err.headers.get('x-request-id')).toEqual('req_123');
+    expect(err.message).toEqual(`${status} {"detail":"nope"}`);
+  });
+
+  test('uses `message` from the JSON body', async () => {
+    const client = new EInvoice({
+      apiKey: 'My API Key',
+      fetch: async () => jsonResponse(400, { message: 'Invalid VAT number' }),
+    });
+    await expect(client.get('/foo')).rejects.toThrow('400 Invalid VAT number');
+  });
+
+  test('uses the raw text for non-JSON bodies', async () => {
+    const client = new EInvoice({
+      apiKey: 'My API Key',
+      fetch: async () => new Response('Bad Gateway from proxy', { status: 400 }),
+    });
+    const err: any = await client.get('/foo').catch((e) => e);
+    expect(err).toBeInstanceOf(BadRequestError);
+    expect(err.error).toBeUndefined();
+    expect(err.message).toEqual('400 Bad Gateway from proxy');
+  });
+
+  test('handles an empty body', async () => {
+    const client = new EInvoice({
+      apiKey: 'My API Key',
+      fetch: async () => new Response(null, { status: 404 }),
+    });
+    await expect(client.get('/foo')).rejects.toThrow('404 status code (no body)');
+  });
+
+  test('non-retryable statuses are not retried', async () => {
+    let count = 0;
+    const client = new EInvoice({
+      apiKey: 'My API Key',
+      fetch: async () => {
+        count++;
+        return jsonResponse(400, { detail: 'bad' });
+      },
+    });
+    await expect(client.get('/foo')).rejects.toThrow(BadRequestError);
+    expect(count).toEqual(1);
+  });
+
+  test('a signal aborted before sending throws without calling fetch', async () => {
+    const fetch = jest.fn();
+    const client = new EInvoice({ apiKey: 'My API Key', fetch });
+    const controller = new AbortController();
+    controller.abort();
+    await expect(client.get('/foo', { signal: controller.signal })).rejects.toThrow(APIUserAbortError);
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
+  test('connection failure surfaces as APIConnectionError with the cause', async () => {
+    const cause = new TypeError('fetch failed');
+    const client = new EInvoice({
+      apiKey: 'My API Key',
+      maxRetries: 0,
+      fetch: async () => {
+        throw cause;
+      },
+    });
+    const err: any = await client.get('/foo').catch((e) => e);
+    expect(err).toBeInstanceOf(APIConnectionError);
+    expect(err).not.toBeInstanceOf(APIConnectionTimeoutError);
+    expect(err.message).toEqual('Connection error.');
+    expect(err.cause).toBe(cause);
+  });
+
+  test('timeout surfaces as APIConnectionTimeoutError once retries are exhausted', async () => {
+    let count = 0;
+    const client = new EInvoice({
+      apiKey: 'My API Key',
+      timeout: 10,
+      maxRetries: 0,
+      fetch: (url, { signal }: RequestInit = {}) => {
+        count++;
+        return new Promise(
+          (resolve, reject) => signal?.addEventListener('abort', () => reject(new Error('timed out'))),
+        );
+      },
+    });
+    await expect(client.get('/foo')).rejects.toThrow(APIConnectionTimeoutError);
+    expect(count).toEqual(1);
+  });
+});
+
+describe('retry decisions', () => {
+  const makeClient = (responses: Response[], maxRetries = 2) => {
+    const calls = { count: 0 };
+    const client = new EInvoice({
+      apiKey: 'My API Key',
+      maxRetries,
+      fetch: async () => responses[Math.min(calls.count++, responses.length - 1)]!.clone(),
+    });
+    return { client, calls };
+  };
+  // `retry-after-ms: 0` keeps the tests fast by skipping the default backoff
+  const noDelay = { 'retry-after-ms': '0' };
+  const ok = () =>
+    new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
+
+  test.each([408, 409, 429, 500, 502])('retries status %i', async (status) => {
+    const { client, calls } = makeClient([new Response(null, { status, headers: noDelay }), ok()]);
+    expect(await client.get('/foo')).toEqual({ a: 1 });
+    expect(calls.count).toEqual(2);
+  });
+
+  test('gives up after maxRetries and throws the last error', async () => {
+    const { client, calls } = makeClient([new Response(null, { status: 503, headers: noDelay })], 2);
+    await expect(client.get('/foo')).rejects.toThrow(InternalServerError);
+    expect(calls.count).toEqual(3);
+  });
+
+  test('per-request maxRetries overrides the client option', async () => {
+    const { client, calls } = makeClient([new Response(null, { status: 503, headers: noDelay })], 2);
+    await expect(client.get('/foo', { maxRetries: 0 })).rejects.toThrow(InternalServerError);
+    expect(calls.count).toEqual(1);
+  });
+
+  test('x-should-retry: false prevents retrying a retryable status', async () => {
+    const { client, calls } = makeClient([
+      new Response(null, { status: 503, headers: { ...noDelay, 'x-should-retry': 'false' } }),
+      ok(),
+    ]);
+    await expect(client.get('/foo')).rejects.toThrow(InternalServerError);
+    expect(calls.count).toEqual(1);
+  });
+
+  test('x-should-retry: true forces retrying a non-retryable status', async () => {
+    const { client, calls } = makeClient([
+      new Response(null, { status: 400, headers: { ...noDelay, 'x-should-retry': 'true' } }),
+      ok(),
+    ]);
+    expect(await client.get('/foo')).toEqual({ a: 1 });
+    expect(calls.count).toEqual(2);
+  });
+
+  test('retry-after as an HTTP date', async () => {
+    const { client, calls } = makeClient([
+      new Response(null, { status: 429, headers: { 'retry-after': new Date(Date.now()).toUTCString() } }),
+      ok(),
+    ]);
+    expect(await client.get('/foo')).toEqual({ a: 1 });
+    expect(calls.count).toEqual(2);
   });
 });
