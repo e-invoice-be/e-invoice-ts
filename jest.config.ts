@@ -36,10 +36,11 @@ const config: JestConfigWithTsJest = {
   // A ratchet, not an aspiration: set ~1-2 points below the measured numbers. Raise when coverage improves.
   coverageThreshold: {
     global: {
-      // Measured: 96.37 / 85.17 / 66.09 / 96.37. Functions is low because the generated resource
+      // Measured on CI (Node 24): 96.29 / 83.3 / 66.09 / 96.29. Node 26 reports more branches (85.17%),
+      // so base the ratchet on CI's numbers. Functions is low because the generated resource
       // methods are only exercised by the Prism-backed tests in tests/api-resources, which are skipped.
       statements: 95,
-      branches: 83,
+      branches: 81,
       functions: 64,
       lines: 95,
     },
