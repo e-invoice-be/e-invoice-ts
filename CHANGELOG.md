@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.1.4](https://github.com/e-invoice-be/e-invoice-ts/compare/v2.1.3...v2.1.4) (2026-11-04)
+
+
+### Chores
+
+* add type-aware linting, stricter type checks and enforced coverage ([5477063](https://github.com/e-invoice-be/e-invoice-ts/commit/5477063e97dc55f18379e5d2ea329a1dd2071021))
+* **lint:** adopt recommended + type-aware ESLint config and fix findings ([0a305ed](https://github.com/e-invoice-be/e-invoice-ts/commit/0a305edf3262cdca890a6f3ab600c4fb94f3c95d))
+* **test:** add v8 coverage reporting with ratchet thresholds ([eb40a3d](https://github.com/e-invoice-be/e-invoice-ts/commit/eb40a3d970edf1ef9209208605b94eac6674f0c8))
+* **types:** stricter tsc flags and type-check mcp-server and tooling ([44bb8b8](https://github.com/e-invoice-be/e-invoice-ts/commit/44bb8b8d8186f4807c17e4cc32c430e5bd3d3885))
+
+
+### Documentation
+
+* add CI, license and MCP server badges; base coverage ratchet on CI ([129be30](https://github.com/e-invoice-be/e-invoice-ts/commit/129be30dc9b64607828c9f8176c76585d1591e83))
+
 ## [2.1.3](https://github.com/e-invoice-be/e-invoice-ts/compare/v2.1.2...v2.1.3) (2026-11-03)
 
 
