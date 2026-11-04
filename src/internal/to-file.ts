@@ -82,8 +82,8 @@ export type ToFileInput =
  */
 export async function toFile(
   value: ToFileInput | PromiseLike<ToFileInput>,
-  name?: string | null | undefined,
-  options?: FilePropertyBag | undefined,
+  name?: string | null,
+  options?: FilePropertyBag,
 ): Promise<File> {
   checkFileSupport();
 
@@ -120,7 +120,7 @@ export async function toFile(
 }
 
 async function getBytes(value: BlobLikePart | AsyncIterable<BlobLikePart>): Promise<Array<BlobPart>> {
-  let parts: Array<BlobPart> = [];
+  const parts: Array<BlobPart> = [];
   if (
     typeof value === 'string' ||
     ArrayBuffer.isView(value) || // includes Uint8Array, Buffer, etc.
@@ -133,7 +133,7 @@ async function getBytes(value: BlobLikePart | AsyncIterable<BlobLikePart>): Prom
     isAsyncIterable(value) // includes Readable, ReadableStream, etc.
   ) {
     for await (const chunk of value) {
-      parts.push(...(await getBytes(chunk as BlobLikePart))); // TODO, consider validating?
+      parts.push(...(await getBytes(chunk))); // TODO, consider validating?
     }
   } else {
     const constructor = value?.constructor?.name;

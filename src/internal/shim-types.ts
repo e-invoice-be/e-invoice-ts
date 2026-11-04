@@ -7,10 +7,10 @@
 
 type NeverToAny<T> = T extends never ? any : T;
 
-/** @ts-ignore */
+/** @ts-ignore - only resolves when DOM lib typings are present */
 type _DOMReadableStream<R = any> = globalThis.ReadableStream<R>;
 
-/** @ts-ignore */
+/** @ts-ignore - only resolves when Node typings are present */
 type _NodeReadableStream<R = any> = import('stream/web').ReadableStream<R>;
 
 type _ConditionalNodeReadableStream<R = any> =

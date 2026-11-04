@@ -256,7 +256,7 @@ describe('instantiate client', () => {
         return new Promise((resolve, reject) =>
           setTimeout(
             () =>
-              defaultFetch(...args)
+              void defaultFetch(...args)
                 .then(resolve)
                 .catch(reject),
             300,

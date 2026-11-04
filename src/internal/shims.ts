@@ -10,6 +10,8 @@ import type { ReadableStream } from './shim-types';
 
 export function getDefaultFetch(): Fetch {
   if (typeof fetch !== 'undefined') {
+    // The global `fetch` type differs between environments' lib typings (DOM, Node, Deno, Bun).
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     return fetch as any;
   }
 
@@ -34,7 +36,7 @@ export function makeReadableStream(...args: ReadableStreamArgs): ReadableStream 
 }
 
 export function ReadableStreamFrom<T>(iterable: Iterable<T> | AsyncIterable<T>): ReadableStream<T> {
-  let iter: AsyncIterator<T> | Iterator<T> =
+  const iter: AsyncIterator<T> | Iterator<T> =
     Symbol.asyncIterator in iterable ? iterable[Symbol.asyncIterator]() : iterable[Symbol.iterator]();
 
   return makeReadableStream({

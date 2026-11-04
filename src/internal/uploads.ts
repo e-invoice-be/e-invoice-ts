@@ -109,6 +109,8 @@ function supportsFormData(fetchObject: EInvoice | Fetch): Promise<boolean> {
           fetch.Response
         : (await fetch('data:,')).constructor) as typeof Response;
       const data = new FormData();
+      // Feature detection: a fetch without FormData support serializes the body as "[object FormData]".
+      // eslint-disable-next-line @typescript-eslint/no-base-to-string
       if (data.toString() === (await new FetchResponse(data).text())) {
         return false;
       }
@@ -180,8 +182,11 @@ const addFormValue = async (form: FormData, key: string, value: unknown): Promis
       Object.entries(value).map(([name, prop]) => addFormValue(form, `${key}[${name}]`, prop)),
     );
   } else {
+    // Only functions, symbols and bigints reach here; `String()` (unlike a template literal) handles symbols.
+    // eslint-disable-next-line @typescript-eslint/no-base-to-string
+    const received = String(value);
     throw new TypeError(
-      `Invalid value given to form, expected a string, number, boolean, object, Array, File or Blob but got ${value} instead`,
+      `Invalid value given to form, expected a string, number, boolean, object, Array, File or Blob but got ${received} instead`,
     );
   }
 };
