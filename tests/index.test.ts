@@ -799,10 +799,10 @@ describe('error responses', () => {
       apiKey: 'My API Key',
       timeout: 10,
       maxRetries: 0,
-      fetch: (url, { signal }: RequestInit = {}) => {
+      fetch: (_url, { signal }: RequestInit = {}) => {
         count++;
         return new Promise(
-          (resolve, reject) => signal?.addEventListener('abort', () => reject(new Error('timed out'))),
+          (_resolve, reject) => signal?.addEventListener('abort', () => reject(new Error('timed out'))),
         );
       },
     });

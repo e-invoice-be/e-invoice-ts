@@ -12,6 +12,7 @@ export default tseslint.config(
       '**/dist-deno/',
       '**/dist-bundle/',
       '**/node_modules/',
+      '**/coverage/',
       'deno/',
       'ecosystem-tests/',
       'packages/mcp-server/manifest.json',

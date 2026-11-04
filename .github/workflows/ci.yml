@@ -25,7 +25,7 @@ jobs:
       - name: Bootstrap
         run: ./scripts/bootstrap
 
-      - name: Check types
+      - name: Lint and type check
         run: ./scripts/lint
 
   build:
@@ -66,5 +66,12 @@ jobs:
       - name: Build
         run: ./scripts/build
 
-      - name: Run tests
-        run: ./scripts/test
+      - name: Run tests with coverage
+        run: ./scripts/test --coverage
+
+      - name: Run MCP server tests with coverage
+        run: cd packages/mcp-server && yarn test:coverage
+
+      - name: Coverage summary
+        if: ${{ !cancelled() }}
+        run: node scripts/utils/coverage-summary.cjs coverage packages/mcp-server/coverage >> "$GITHUB_STEP_SUMMARY"

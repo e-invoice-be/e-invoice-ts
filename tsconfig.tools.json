@@ -11,6 +11,9 @@
   ],
   "exclude": [],
   "compilerOptions": {
+    // these files run directly under Node: .mjs is ESM, .cjs/.ts follow package.json "type"
+    "module": "node16",
+    "moduleResolution": "node16",
     "allowJs": true,
     "checkJs": false,
     // the TypeScript compiler API used by the build scripts is not declared
