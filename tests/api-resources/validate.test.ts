@@ -32,7 +32,7 @@ describe('resource validate', () => {
 
   // Mock server tests are disabled
   test.skip('validatePeppolID: required and optional params', async () => {
-    const response = await client.validate.validatePeppolID({ peppol_id: 'peppol_id' });
+    await client.validate.validatePeppolID({ peppol_id: 'peppol_id' });
   });
 
   // Mock server tests are disabled
@@ -51,7 +51,7 @@ describe('resource validate', () => {
 
   // Mock server tests are disabled
   test.skip('validateUbl: required and optional params', async () => {
-    const response = await client.validate.validateUbl({
+    await client.validate.validateUbl({
       file: await toFile(Buffer.from('Example data'), 'README.md'),
     });
   });

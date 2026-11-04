@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+echo "==> Checking types (src, tests, examples)"
+./node_modules/typescript/bin/tsc
+
+echo "==> Checking types (scripts and config files)"
+./node_modules/typescript/bin/tsc -p tsconfig.tools.json
+
+# the MCP server depends on the built SDK (`e-invoice-api: link:../../dist/`),
+# so this needs `./scripts/build` and an install in packages/mcp-server first
+for dir in packages/*; do
+  if [ -f "$dir/tsconfig.json" ]; then
+    echo "==> Checking types ($dir)"
+    if [ ! -e "$dir/node_modules/typescript/bin/tsc" ] || [ ! -e dist/package.json ]; then
+      echo "error: $dir is not set up; run ./scripts/build first" >&2
+      exit 1
+    fi
+    (cd "$dir" && ./node_modules/typescript/bin/tsc -p tsconfig.json)
+  fi
+done

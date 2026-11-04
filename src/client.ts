@@ -12,7 +12,7 @@ import { stringifyQuery } from './internal/utils/query';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Pagination from './core/pagination';
-import { AbstractPage, type DocumentsNumberPageParams, DocumentsNumberPageResponse } from './core/pagination';
+import { type DocumentsNumberPageParams, DocumentsNumberPageResponse } from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
@@ -284,11 +284,11 @@ export class EInvoice {
     return this._options.defaultQuery;
   }
 
-  protected validateHeaders({ values, nulls }: NullableHeaders) {
+  protected validateHeaders(_headers: NullableHeaders) {
     return;
   }
 
-  protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
+  protected async authHeaders(_opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
     return buildHeaders([{ Authorization: `Bearer ${this.apiKey}` }]);
   }
 
@@ -343,7 +343,7 @@ export class EInvoice {
   /**
    * Used as a callback for mutating the given `FinalRequestOptions` object.
    */
-  protected async prepareOptions(options: FinalRequestOptions): Promise<void> {}
+  protected async prepareOptions(_options: FinalRequestOptions): Promise<void> {}
 
   /**
    * Used as a callback for mutating the given `RequestInit` object.
@@ -352,8 +352,8 @@ export class EInvoice {
    * the request properties, e.g. `method` or `url`.
    */
   protected async prepareRequest(
-    request: RequestInit,
-    { url, options }: { url: string; options: FinalRequestOptions },
+    _request: RequestInit,
+    _context: { url: string; options: FinalRequestOptions },
   ): Promise<void> {}
 
   get<Rsp>(path: string, opts?: PromiseOrValue<RequestOptions>): APIPromise<Rsp> {

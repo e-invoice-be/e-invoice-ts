@@ -62,7 +62,6 @@ async function searchLocal(args: Record<string, unknown>): Promise<unknown> {
 }
 
 export const handler = async ({
-  reqContext,
   args,
 }: {
   reqContext: McpRequestContext;

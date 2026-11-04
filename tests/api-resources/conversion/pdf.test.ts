@@ -22,7 +22,7 @@ describe('resource pdf', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.conversion.pdf.create({
+    await client.conversion.pdf.create({
       file: await toFile(Buffer.from('Example data'), 'README.md'),
     });
   });

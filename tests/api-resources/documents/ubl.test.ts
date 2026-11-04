@@ -22,7 +22,7 @@ describe('resource ubl', () => {
 
   // Mock server tests are disabled
   test.skip('createFromUbl: required and optional params', async () => {
-    const response = await client.documents.ubl.createFromUbl({
+    await client.documents.ubl.createFromUbl({
       file: await toFile(Buffer.from('Example data'), 'README.md'),
     });
   });

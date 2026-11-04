@@ -20,7 +20,7 @@ describe('resource lookup', () => {
 
   // Mock server tests are disabled
   test.skip('retrieve: required and optional params', async () => {
-    const response = await client.lookup.retrieve({ peppol_id: 'peppol_id' });
+    await client.lookup.retrieve({ peppol_id: 'peppol_id' });
   });
 
   // Mock server tests are disabled
@@ -37,7 +37,7 @@ describe('resource lookup', () => {
 
   // Mock server tests are disabled
   test.skip('retrieveParticipants: required and optional params', async () => {
-    const response = await client.lookup.retrieveParticipants({
+    await client.lookup.retrieveParticipants({
       query: 'query',
       country_code: 'country_code',
     });

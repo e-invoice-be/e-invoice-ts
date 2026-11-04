@@ -241,7 +241,7 @@ describe('instantiate client', () => {
 
   test('explicit global fetch', async () => {
     // make sure the global fetch type is assignable to our Fetch type
-    const client = new EInvoice({
+    new EInvoice({
       baseURL: 'http://localhost:5000/',
       apiKey: 'My API Key',
       fetch: defaultFetch,
@@ -276,7 +276,7 @@ describe('instantiate client', () => {
 
   test('normalized method', async () => {
     let capturedRequest: RequestInit | undefined;
-    const testFetch = async (url: string | URL | Request, init: RequestInit = {}): Promise<Response> => {
+    const testFetch = async (_url: string | URL | Request, init: RequestInit = {}): Promise<Response> => {
       capturedRequest = init;
       return new Response(JSON.stringify({}), { headers: { 'Content-Type': 'application/json' } });
     };
@@ -572,12 +572,12 @@ describe('retries', () => {
   test('retry on timeout', async () => {
     let count = 0;
     const testFetch = async (
-      url: string | URL | Request,
+      _url: string | URL | Request,
       { signal }: RequestInit = {},
     ): Promise<Response> => {
       if (count++ === 0) {
         return new Promise(
-          (resolve, reject) => signal?.addEventListener('abort', () => reject(new Error('timed out'))),
+          (_resolve, reject) => signal?.addEventListener('abort', () => reject(new Error('timed out'))),
         );
       }
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
@@ -602,10 +602,7 @@ describe('retries', () => {
 
   test('retry on 429 with retry-after', async () => {
     let count = 0;
-    const testFetch = async (
-      url: string | URL | Request,
-      { signal }: RequestInit = {},
-    ): Promise<Response> => {
+    const testFetch = async (_url: string | URL | Request, _init: RequestInit = {}): Promise<Response> => {
       if (count++ === 0) {
         return new Response(undefined, {
           status: 429,
@@ -632,10 +629,7 @@ describe('retries', () => {
 
   test('retry on 429 with retry-after-ms', async () => {
     let count = 0;
-    const testFetch = async (
-      url: string | URL | Request,
-      { signal }: RequestInit = {},
-    ): Promise<Response> => {
+    const testFetch = async (_url: string | URL | Request, _init: RequestInit = {}): Promise<Response> => {
       if (count++ === 0) {
         return new Response(undefined, {
           status: 429,

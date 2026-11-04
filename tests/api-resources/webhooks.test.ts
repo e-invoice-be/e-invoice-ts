@@ -20,7 +20,7 @@ describe('resource webhooks', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.webhooks.create({
+    await client.webhooks.create({
       events: ['string'],
       url: 'https://example.com',
       enabled: true,
@@ -104,7 +104,7 @@ describe('resource webhooks', () => {
 
   // Mock server tests are disabled
   test.skip('test: required and optional params', async () => {
-    const response = await client.webhooks.test('webhook_id', {
+    await client.webhooks.test('webhook_id', {
       data: { foo: 'bar' },
       event_type: 'event_type',
     });

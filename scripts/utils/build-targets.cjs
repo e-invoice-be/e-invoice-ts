@@ -247,7 +247,10 @@ function buildTarget(target) {
   // `getCommonSourceDirectoryOfConfig` is internal to TypeScript.
   const helpersPath =
     shareHelpers ?
-      path.resolve(ts.getCommonSourceDirectoryOfConfig(config, false), shareHelpers + extname)
+      path.resolve(
+        /** @type {any} */ (ts).getCommonSourceDirectoryOfConfig(config, false),
+        shareHelpers + extname,
+      )
     : undefined;
   /** @type {Set<string>} */
   const helpersNeeded = new Set();
