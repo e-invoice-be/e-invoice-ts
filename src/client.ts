@@ -316,11 +316,7 @@ export class EInvoice {
     return Errors.APIError.generate(status, error, message, headers);
   }
 
-  buildURL(
-    path: string,
-    query: Record<string, unknown> | null | undefined,
-    defaultBaseURL?: string | undefined,
-  ): string {
+  buildURL(path: string, query: Record<string, unknown> | null | undefined, defaultBaseURL?: string): string {
     const baseURL = (!this.#baseURLOverridden() && defaultBaseURL) || this.baseURL;
     const url =
       isAbsoluteURL(path) ?
@@ -516,7 +512,7 @@ export class EInvoice {
       loggerFor(this).info(`${responseInfo} - ${retryMessage}`);
 
       const errText = await response.text().catch((err: any) => castToError(err).message);
-      const errJSON = safeJSON(errText) as any;
+      const errJSON = safeJSON(errText);
       const errMessage = errJSON ? undefined : errText;
 
       loggerFor(this).debug(
@@ -571,7 +567,7 @@ export class EInvoice {
     options: PromiseOrValue<FinalRequestOptions>,
   ): Pagination.PagePromise<PageClass, Item> {
     const request = this.makeRequest(options, null, undefined);
-    return new Pagination.PagePromise<PageClass, Item>(this as any as EInvoice, request, Page);
+    return new Pagination.PagePromise<PageClass, Item>(this, request, Page);
   }
 
   async fetchWithTimeout(
@@ -591,6 +587,8 @@ export class EInvoice {
       (typeof options.body === 'object' && options.body !== null && Symbol.asyncIterator in options.body);
 
     const fetchOptions: RequestInit = {
+      // AbortSignal types differ between fetch implementations (DOM, undici, node-fetch).
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
       signal: controller.signal as any,
       ...(isReadableBody ? { duplex: 'half' } : {}),
       method: 'GET',
@@ -637,7 +635,7 @@ export class EInvoice {
     options: FinalRequestOptions,
     retriesRemaining: number,
     requestLogID: string,
-    responseHeaders?: Headers | undefined,
+    responseHeaders?: Headers,
   ): Promise<APIResponseProps> {
     let timeoutMillis: number | undefined;
 
@@ -693,7 +691,7 @@ export class EInvoice {
     const options = { ...inputOptions };
     const { method, path, query, defaultBaseURL } = options;
 
-    const url = this.buildURL(path!, query as Record<string, unknown>, defaultBaseURL);
+    const url = this.buildURL(path, query as Record<string, unknown>, defaultBaseURL);
     if ('timeout' in options) validatePositiveInteger('timeout', options.timeout);
     options.timeout = options.timeout ?? this.timeout;
     const { bodyHeaders, body } = this.buildBody({ options });
@@ -722,7 +720,7 @@ export class EInvoice {
     method: HTTPMethod;
     bodyHeaders: HeadersLike;
   }): Promise<Headers> {
-    let idempotencyHeaders: HeadersLike = {};
+    const idempotencyHeaders: HeadersLike = {};
     if (this.idempotencyHeader && method !== 'get') {
       if (!options.idempotencyKey) options.idempotencyKey = this.defaultIdempotencyKey();
       idempotencyHeaders[this.idempotencyHeader] = options.idempotencyKey;

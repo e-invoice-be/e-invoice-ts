@@ -100,7 +100,7 @@ export class APIConnectionError extends APIError<undefined, undefined, undefined
   constructor({ message, cause }: { message?: string | undefined; cause?: Error | undefined }) {
     super(undefined, undefined, message || 'Connection error.', undefined);
     // in some environments the 'cause' property is already declared
-    // @ts-ignore
+    // @ts-ignore - `cause` may be declared readonly or not at all depending on the lib target
     if (cause) this.cause = cause;
   }
 }

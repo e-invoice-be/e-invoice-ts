@@ -20,7 +20,7 @@ export const stubClient = (respond: () => Response) => {
     apiKey: 'My API Key',
     baseURL: 'http://localhost:5000/',
     fetch: async (input, init) => {
-      const url = new URL(String(input));
+      const url = new URL(input instanceof Request ? input.url : input);
       // The upload helpers probe `fetch('data:,')` for FormData support; that is not an API request.
       if (url.protocol === 'http:') {
         requests.push({

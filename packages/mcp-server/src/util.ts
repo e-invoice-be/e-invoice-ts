@@ -8,7 +8,7 @@ export const readEnv = (env: string): string | undefined => {
 };
 
 export const readEnvOrError = (env: string): string => {
-  let envValue = readEnv(env);
+  const envValue = readEnv(env);
   if (envValue === undefined) {
     throw new Error(`Environment variable ${env} is not set`);
   }
