@@ -13,7 +13,6 @@ const newServer = async ({
   clientOptions,
   mcpOptions,
   req,
-  res,
 }: {
   clientOptions: ClientOptions;
   mcpOptions: McpOptions;
@@ -99,7 +98,7 @@ const post =
     await transport.handleRequest(req, res, req.body);
   };
 
-const get = async (req: express.Request, res: express.Response) => {
+const get = async (_req: express.Request, res: express.Response) => {
   res.status(405).json({
     jsonrpc: '2.0',
     error: {
@@ -109,7 +108,7 @@ const get = async (req: express.Request, res: express.Response) => {
   });
 };
 
-const del = async (req: express.Request, res: express.Response) => {
+const del = async (_req: express.Request, res: express.Response) => {
   res.status(405).json({
     jsonrpc: '2.0',
     error: {
@@ -157,7 +156,7 @@ export const streamableHTTPApp = ({
       customProps: (req) => ({
         mcpSessionId: (req as any).mcpSessionId,
       }),
-      customLogLevel: (req, res) => {
+      customLogLevel: (_req, res) => {
         if (res.statusCode >= 500) {
           return 'error';
         } else if (res.statusCode >= 400) {
@@ -168,7 +167,7 @@ export const streamableHTTPApp = ({
       customSuccessMessage: function (req, res) {
         return `Request ${req.method} to ${req.url} completed with status ${res.statusCode}`;
       },
-      customErrorMessage: function (req, res, err) {
+      customErrorMessage: function (req, res, _err) {
         return `Request ${req.method} to ${req.url} errored with status ${res.statusCode}`;
       },
       serializers: {
@@ -188,7 +187,7 @@ export const streamableHTTPApp = ({
     }),
   );
 
-  app.get('/health', async (req: express.Request, res: express.Response) => {
+  app.get('/health', async (_req: express.Request, res: express.Response) => {
     res.status(200).send('OK');
   });
   app.get('/', get);
