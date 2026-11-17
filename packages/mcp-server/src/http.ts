@@ -400,7 +400,7 @@ export const launchStreamableHTTPServer = async ({
     'request',
     streamableHTTPApp({
       mcpOptions,
-      // Host names and origins are case-insensitive, and clients send them in lower case.
+      // Operator-supplied allowlists are lowercased. The MCP SDK compares Host and Origin literally.
       allowedHosts: [...defaultAllowedHosts(listening), ...allowedHosts.map((value) => value.toLowerCase())],
       allowedOrigins: [
         ...defaultAllowedOrigins(listening),
