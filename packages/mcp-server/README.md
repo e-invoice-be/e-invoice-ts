@@ -65,8 +65,8 @@ sandbox. To accomplish this, the server will expose two tools to your agent:
   documentation about your API/SDK.
 
 - The second tool is a code tool, where the agent can write code against the TypeScript SDK.
-  The code is executed in a sandbox whose filesystem and network access are restricted to
-  what the SDK needs — see "Where code runs" below. Then, anything the code returns or
+  The code is executed in a sandbox without access to your API key or environment, and whose
+  filesystem and network access are restricted to what the SDK needs — see "Where code runs" below. Then, anything the code returns or
   prints will be returned to the agent as the result of the tool call.
 
 Using this scheme, agents are capable of performing very complex tasks deterministically
@@ -74,11 +74,35 @@ and repeatably.
 
 ### Where code runs
 
-The code tool runs each call in a Deno subprocess on the same machine as the MCP server,
-restricted to reading the server's own files and to making network requests to your API host.
+The code tool runs each call in a Deno subprocess on the same machine as the MCP server.
 No code is sent to a third-party service. Deno 2.9 or later must be installed for the code tool to work:
 install it from https://deno.land and make sure `deno` is in the `PATH` of the MCP server, or
 install the `deno` npm package next to the MCP server with `npm install deno`.
+
+The subprocess is restricted as follows:
+
+- **Files**: it can read the MCP server's own package files (including its `node_modules`). It cannot
+  write files or start other processes.
+- **Network**: its only network access is to a listener that the MCP server opens on `127.0.0.1`
+  for the duration of the call, on a random port and path. That listener forwards requests to your
+  API base URL, and follows redirects only within it. Other hosts cannot be reached, with the SDK
+  client, with `fetch` or by importing remote modules. Requests to the API are sent by the MCP
+  server process (Node.js), so proxy and certificate settings for reaching the API belong to
+  that process (for example `NODE_USE_ENV_PROXY=1` with `HTTPS_PROXY`, or `NODE_EXTRA_CA_CERTS`).
+- **Credentials**: the API key stays in the MCP server process. The SDK client in the code holds a
+  placeholder (`client.apiKey` is not your key, and `client.baseURL` is the local listener); the
+  server adds the `Authorization` header when it forwards a request. Headers from
+  `E_INVOICE_CUSTOM_HEADERS` are added in the same way.
+- **Environment**: the subprocess does not inherit the environment of the MCP server. It is started
+  with only what Deno needs to run (`PATH`, `HOME`, `DENO_DIR`, `XDG_CACHE_HOME`, the temporary
+  directory variables and, on Windows, `SystemRoot`, `USERPROFILE`, `LOCALAPPDATA` and `PATHEXT`)
+  plus `E_INVOICE_LOG`, and the code can read only `E_INVOICE_LOG`, `E_INVOICE_CUSTOM_HEADERS`
+  and a few names that the TypeScript compiler checks (such as `NODE_ENV`). With the HTTP transport,
+  the variables of an `x-mcp-client-envs` header are added to the environment of that request's subprocess.
+
+The code can still call any endpoint that the API key is allowed to use, including through
+`client.get` / `client.post` and by sending requests to the local listener itself. To limit what an
+agent can do, use an API key with limited permissions.
 
 The `--code-execution-mode` flag is kept for compatibility; `local` is its only value and the default.
 

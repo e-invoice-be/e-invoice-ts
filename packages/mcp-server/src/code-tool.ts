@@ -4,8 +4,9 @@ import { WorkerOutput } from './code-tool-types';
 import { getLogger } from './logger';
 import { SdkMethod } from './methods';
 import { ClientOptions } from 'e-invoice-api';
+import { PLACEHOLDER_API_KEY, parseCustomHeaders, startUpstreamProxy } from './code-tool-proxy';
 
-const prompt = `Runs JavaScript code to interact with the E Invoice API.
+export const codeToolDescription = `Runs JavaScript code to interact with the E Invoice API.
 
 You are a skilled TypeScript programmer writing code to interface with the service.
 Define an async function named "run" that takes a single parameter of an initialized SDK client and it will be run.
@@ -22,7 +23,9 @@ async function run(client) {
 You will be returned anything that your function returns, plus the results of any console.log statements.
 Do not add try-catch blocks for single API calls. The tool will handle errors for you.
 Do not add comments unless necessary for generating better code.
-Code will run in a local sandbox, and cannot interact with the network outside of the given SDK client.
+Code will run in a local Deno sandbox. Its only network access is to the E Invoice API: use the given SDK client, other hosts cannot be reached and remote modules cannot be imported.
+The client is already authenticated; the API credentials and the environment variables of the host are not available to the code.
+The filesystem cannot be written to, and no subprocesses can be started.
 Variables will not persist between calls, so make sure to return or log any data you might need later.
 Remember that you are writing TypeScript code, so you need to be careful with your types.
 Always type dynamic key-value stores explicitly as Record<string, YourValueType> instead of {}.`;
@@ -42,7 +45,7 @@ export function codeTool({ blockedMethods }: { blockedMethods: SdkMethod[] | und
   const metadata: Metadata = { resource: 'all', operation: 'write', tags: [] };
   const tool: Tool = {
     name: 'execute',
-    description: prompt,
+    description: codeToolDescription,
     inputSchema: {
       type: 'object',
       properties: {
@@ -100,6 +103,66 @@ export function codeTool({ blockedMethods }: { blockedMethods: SdkMethod[] | und
   return { metadata, tool, handler };
 }
 
+/**
+ * Variables of the MCP server's own environment that are passed on to the Deno subprocess.
+ * These are what is needed to find and run Deno, plus the SDK's log level.
+ */
+const PASSED_ENV_NAMES = [
+  'PATH',
+  'HOME',
+  'DENO_DIR',
+  'XDG_CACHE_HOME',
+  'TMPDIR',
+  'TMP',
+  'TEMP',
+  // Windows
+  'SYSTEMROOT',
+  'USERPROFILE',
+  'LOCALAPPDATA',
+  'PATHEXT',
+  'E_INVOICE_LOG',
+];
+
+/**
+ * Environment variables that code in the Deno subprocess is permitted to read. Reading any other
+ * variable fails, so this lists what the worker's own dependencies read while they load.
+ */
+export const READABLE_ENV_NAMES = [
+  // Read by the SDK client when it is constructed.
+  'E_INVOICE_LOG',
+  'E_INVOICE_CUSTOM_HEADERS',
+  // Read by the TypeScript compiler when it is imported.
+  'NODE_ENV',
+  'NODE_INSPECTOR_IPC',
+  'VSCODE_INSPECTOR_OPTIONS',
+  'TSC_NONPOLLING_WATCHER',
+  'TSC_WATCHDIRECTORY',
+  'TSC_WATCHFILE',
+  ...['POLLINGINTERVAL', 'POLLINGCHUNKSIZE', 'UNCHANGEDPOLLTHRESHOLDS'].flatMap((setting) =>
+    ['LOW', 'MEDIUM', 'HIGH'].map((level) => `TSC_WATCH_${setting}_${level}`),
+  ),
+];
+
+/**
+ * Builds the environment of the Deno subprocess: the passed-on variables of `parentEnv`, with any
+ * `upstreamClientEnvs` of the request merged over them.
+ */
+export function buildWorkerEnv(
+  parentEnv: Record<string, string | undefined>,
+  upstreamClientEnvs?: Record<string, string>,
+  platform: string = process.platform,
+): Record<string, string> {
+  const env: Record<string, string> = {};
+  for (const [name, value] of Object.entries(parentEnv)) {
+    // Windows environment variable names are case-insensitive (`Path`, `SystemRoot`).
+    const lookupName = platform === 'win32' ? name.toUpperCase() : name;
+    if (value !== undefined && PASSED_ENV_NAMES.includes(lookupName)) {
+      env[name] = value;
+    }
+  }
+  return { ...env, ...upstreamClientEnvs };
+}
+
 const localDenoHandler = async ({
   reqContext,
   args,
@@ -115,7 +178,6 @@ const localDenoHandler = async ({
   const workerPath = getWorkerPath();
 
   const client = reqContext.client;
-  const baseURLHostname = new URL(client.baseURL).hostname;
   const { code } = args as { code: string };
 
   let denoPath: string | undefined;
@@ -132,14 +194,21 @@ const localDenoHandler = async ({
     // Use the deno binary of the `deno` npm package if it's found in a node_modules
     // directory at or above the worker (this covers both the repo and the published layout)
     for (let dir = path.dirname(workerPath); ; dir = path.dirname(dir)) {
-      const denoNodeModulesPath = path.resolve(dir, 'node_modules', 'deno', 'bin.cjs');
-      try {
-        await fs.promises.access(denoNodeModulesPath, fs.constants.X_OK);
-        denoPath = denoNodeModulesPath;
-        break;
-      } catch {
-        if (dir === path.dirname(dir)) break;
+      const denoPackagePath = path.resolve(dir, 'node_modules', 'deno');
+      // Prefer the binary that the package installed over its `bin.cjs` launcher: the launcher
+      // runs the binary as a child of its own, which would outlive the launcher when the
+      // subprocess is terminated.
+      const candidates = [process.platform === 'win32' ? 'deno.exe' : 'deno', 'bin.cjs'];
+      for (const candidate of candidates) {
+        try {
+          await fs.promises.access(path.resolve(denoPackagePath, candidate), fs.constants.X_OK);
+          denoPath = path.resolve(denoPackagePath, candidate);
+          break;
+        } catch {
+          // Try the next candidate
+        }
       }
+      if (denoPath || dir === path.dirname(dir)) break;
     }
   }
 
@@ -171,6 +240,13 @@ const localDenoHandler = async ({
 
   const allowRead = allowReadPaths.join(',');
 
+  // The subprocess gets no credentials. Its SDK client sends requests to this listener, which
+  // forwards them to the API with the credentials of the client of this request.
+  const proxy = await startUpstreamProxy({
+    client,
+    defaultHeaders: parseCustomHeaders(process.env['E_INVOICE_CUSTOM_HEADERS']),
+  });
+
   let worker: Awaited<ReturnType<typeof newDenoHTTPWorker>>;
   try {
     worker = await newDenoHTTPWorker(url.pathToFileURL(workerPath), {
@@ -178,20 +254,20 @@ const localDenoHandler = async ({
       runFlags: [
         `--node-modules-dir=manual`,
         `--allow-read=${allowRead}`,
-        `--allow-net=${baseURLHostname}`,
-        // Allow environment variables because instantiating the client will try to read from them,
-        // even though they are not set.
-        '--allow-env',
+        `--allow-net=${proxy.host}`,
+        // Modules can only be loaded from the files above, not from remote hosts.
+        '--no-remote',
+        // Instantiating the client reads these, even when they are not set.
+        `--allow-env=${READABLE_ENV_NAMES.join(',')}`,
       ],
       printOutput: true,
       spawnOptions: {
         cwd: path.dirname(workerPath),
-        // Merge any upstream client envs into the Deno subprocess environment,
-        // with the upstream env vars taking precedence.
-        env: { ...process.env, ...reqContext.upstreamClientEnvs },
+        env: buildWorkerEnv(process.env, reqContext.upstreamClientEnvs),
       },
     });
   } catch (error) {
+    await proxy.close();
     return asErrorResult(
       `Could not start Deno for code execution: ${error instanceof Error ? error.message : String(error)}. ` +
         'Make sure that Deno 2.9 or later is installed.',
@@ -204,11 +280,9 @@ const localDenoHandler = async ({
         reject(new Error(`Worker exited with code ${exitCode}`));
       });
 
-      // Strip null/undefined values so that the worker SDK client can fall back to
-      // reading from environment variables (including any upstreamClientEnvs).
       const opts = {
-        ...(client.baseURL != null ? { baseURL: client.baseURL } : undefined),
-        ...(client.apiKey != null ? { apiKey: client.apiKey } : undefined),
+        baseURL: proxy.baseURL,
+        apiKey: PLACEHOLDER_API_KEY,
         defaultHeaders: {
           'X-E-Invoice-MCP': 'true',
         },
@@ -311,5 +385,6 @@ const localDenoHandler = async ({
     }
   } finally {
     worker.terminate();
+    await proxy.close();
   }
 };
