@@ -297,6 +297,36 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
+"@deno/darwin-arm64@2.9.6":
+  version "2.9.6"
+  resolved "https://registry.yarnpkg.com/@deno/darwin-arm64/-/darwin-arm64-2.9.6.tgz#cc6ee3905c6cf546b0518e65c55b747b122e5bfb"
+  integrity sha512-V8uO1Aolrl/yvdMb5lOtgtigs8YuZBjrOrgviVMiYkQ0swymFfzkae1wZak4Xi24t7vf7d/eiMb/7ryjjVm+tg==
+
+"@deno/darwin-x64@2.9.6":
+  version "2.9.6"
+  resolved "https://registry.yarnpkg.com/@deno/darwin-x64/-/darwin-x64-2.9.6.tgz#8b30b17a08748f6c3b4bced2dfda258ebb8019c9"
+  integrity sha512-tPi3CWPRdjW1MaWlvWjORE7Ass5SADdWdj1BF1Q1PEdzi+5u/mC5YhmZzniMiPr81PpaFeqjXaLAsfb8lFsZ0Q==
+
+"@deno/linux-arm64-glibc@2.9.6":
+  version "2.9.6"
+  resolved "https://registry.yarnpkg.com/@deno/linux-arm64-glibc/-/linux-arm64-glibc-2.9.6.tgz#d59c6797bc7f2f4e9d75790871f4c0bf7690cfe8"
+  integrity sha512-poqhoH9B3nYloigEMPT5t8HY+wBeiuea1An5Q7fqgJzP0SYmWsoS/oUnWO/pEiA4ofzIBy1Elt/in58xKtxEoQ==
+
+"@deno/linux-x64-glibc@2.9.6":
+  version "2.9.6"
+  resolved "https://registry.yarnpkg.com/@deno/linux-x64-glibc/-/linux-x64-glibc-2.9.6.tgz#ba7d14f2692d51cda7b71aaf8ddb7d88a5b47eb6"
+  integrity sha512-3md4TKLCuzsLDmfOoC5KN7NAZaxSVkMgm64vg6foD00JBADCpYS2/5QqXfzgnP5ZQz3iLP9vBQJtEgc116OAoQ==
+
+"@deno/win32-arm64@2.9.6":
+  version "2.9.6"
+  resolved "https://registry.yarnpkg.com/@deno/win32-arm64/-/win32-arm64-2.9.6.tgz#c01bcc1537d1e29dc6305ea2ef32c74897706e7f"
+  integrity sha512-iHSHs89g2Uy6k0bGHmXkgzTIW8WXImYPpvqRRO/zNsK1/N79PcjvAth1TuQatuIALcLdocstPs/PAYtndbfr0A==
+
+"@deno/win32-x64@2.9.6":
+  version "2.9.6"
+  resolved "https://registry.yarnpkg.com/@deno/win32-x64/-/win32-x64-2.9.6.tgz#ceb4af389766ade7c6310164d9093430ee04a66a"
+  integrity sha512-qRGnmVz/Ea6UWPht/S3xFRK17UZ/ls38DSVfgGB17fpASLxPkksqzWUI/BzL9YYoOknYzfc94mySGyInZu/JXw==
+
 "@eslint-community/eslint-utils@^4.8.0":
   version "4.9.1"
   resolved "https://registry.yarnpkg.com/@eslint-community/eslint-utils/-/eslint-utils-4.9.1.tgz#4e90af67bc51ddee6cdef5284edf572ec376b595"
@@ -1685,6 +1715,18 @@ deepmerge@^4.2.2:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-4.3.1.tgz#44b5f2147cd3b00d4b56137685966f26fd25dd4a"
   integrity sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==
+
+deno@^2.9.6:
+  version "2.9.6"
+  resolved "https://registry.yarnpkg.com/deno/-/deno-2.9.6.tgz#fcbd8f855eea799c95c815c4d7b1e9d65b7a4352"
+  integrity sha512-cr16GxYiUeH1juNvFTMOxt99V5QRVmANfy5UsZvE5hjC6P/o4Op/MBbRhLeBOL8WJpV6tr9hb+Kjb1MW0nEoVg==
+  optionalDependencies:
+    "@deno/darwin-arm64" "2.9.6"
+    "@deno/darwin-x64" "2.9.6"
+    "@deno/linux-arm64-glibc" "2.9.6"
+    "@deno/linux-x64-glibc" "2.9.6"
+    "@deno/win32-arm64" "2.9.6"
+    "@deno/win32-x64" "2.9.6"
 
 depd@^2.0.0, depd@~2.0.0:
   version "2.0.0"
