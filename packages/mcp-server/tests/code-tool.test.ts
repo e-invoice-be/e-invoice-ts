@@ -135,9 +135,9 @@ describe('buildWorkerEnv', () => {
       E_INVOICE_LOG: 'info',
       E_INVOICE_EXTRA: 'x',
     });
-    expect(buildWorkerEnv(parentEnv, { E_INVOICE_BASE_URL: 'https://other.example.test' }, 'linux')).not.toHaveProperty(
-      'E_INVOICE_BASE_URL',
-    );
+    expect(
+      buildWorkerEnv(parentEnv, { E_INVOICE_BASE_URL: 'https://other.example.test' }, 'linux'),
+    ).not.toHaveProperty('E_INVOICE_BASE_URL');
   });
 
   it('matches variable names case-insensitively on Windows only', () => {
