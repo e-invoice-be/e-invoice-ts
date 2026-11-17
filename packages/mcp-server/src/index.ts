@@ -29,6 +29,9 @@ async function main() {
       await launchStreamableHTTPServer({
         mcpOptions: options,
         port: options.socket ?? options.port,
+        host: options.host,
+        allowedHosts: options.allowedHosts,
+        allowedOrigins: options.allowedOrigins,
       });
       break;
   }

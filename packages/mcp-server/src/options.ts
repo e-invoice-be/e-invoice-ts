@@ -9,6 +9,9 @@ export type CLIOptions = McpOptions & {
   transport: 'stdio' | 'http';
   port: number | undefined;
   socket: string | undefined;
+  host: string;
+  allowedHosts: string[] | undefined;
+  allowedOrigins: string[] | undefined;
 };
 
 export type McpOptions = {
@@ -27,8 +30,30 @@ export type McpCodeExecutionMode = 'local';
 
 export type McpDocsSearchMode = 'local';
 
+// Lets a list option be given as repeated flags, or as one comma-separated value (for example from an
+// environment variable).
+const splitCommaSeparated = (values: string[]): string[] =>
+  values
+    .flatMap((value) => String(value).split(','))
+    .map((value) => value.trim())
+    .filter((value) => value.length > 0);
+
 export function parseCLIOptions(): CLIOptions {
   const opts = yargs(hideBin(process.argv))
+    .option('allowed-hosts', {
+      type: 'string',
+      array: true,
+      coerce: splitCommaSeparated,
+      description:
+        'Additional Host header values to accept if using http transport, such as mcp.example.com or mcp.example.com:8443. The loopback names for the listening port are always accepted; requests with any other Host header are rejected.',
+    })
+    .option('allowed-origins', {
+      type: 'string',
+      array: true,
+      coerce: splitCommaSeparated,
+      description:
+        'Additional Origin header values to accept if using http transport, such as https://app.example.com. The loopback origins for the listening port are always accepted; requests with any other Origin header are rejected.',
+    })
     .option('code-allow-http-gets', {
       type: 'boolean',
       description:
@@ -70,6 +95,12 @@ export function parseCLIOptions(): CLIOptions {
       description:
         "Where to search documentation; 'local' (the only mode) uses an in-memory search index built from embedded SDK method data and optional local docs files.",
     })
+    .option('host', {
+      type: 'string',
+      default: '127.0.0.1',
+      description:
+        'Address to listen on if using http transport. Defaults to the loopback interface; set it to 0.0.0.0 or a specific address to accept connections from other machines.',
+    })
     .option('log-format', {
       type: 'string',
       choices: ['json', 'pretty'],
@@ -97,7 +128,8 @@ export function parseCLIOptions(): CLIOptions {
       type: 'string',
       choices: ['stdio', 'http'],
       default: 'stdio',
-      description: 'What transport to use; stdio for local servers or http for remote servers',
+      description:
+        'What transport to use; stdio for local servers or http for remote servers. The http transport requires client credentials on every request.',
     })
     .env('MCP_SERVER')
     .version(true)
@@ -112,6 +144,9 @@ export function parseCLIOptions(): CLIOptions {
 
   const includeCodeTool = shouldIncludeToolType('code');
   const includeDocsTools = shouldIncludeToolType('docs');
+
+  // A repeated --host gives a list; the last value wins. An empty value falls back to the default.
+  const host = [argv.host].flat().pop() || '127.0.0.1';
 
   const transport = argv.transport as 'stdio' | 'http';
   const logFormat =
@@ -134,6 +169,9 @@ export function parseCLIOptions(): CLIOptions {
     logFormat,
     port: argv.port,
     socket: argv.socket,
+    host,
+    allowedHosts: argv.allowedHosts,
+    allowedOrigins: argv.allowedOrigins,
   };
 }
 

@@ -332,3 +332,171 @@ export function blockedMethodsForCodeTool(options: McpOptions | undefined): SdkM
   // Return any methods that are not explicitly allowed
   return sdkMethods.filter((method) => !allowedSet.has(method.fullyQualifiedName));
 }
+
+/**
+ * Method restrictions requested by a client for a single request. The fields have the same meaning as
+ * the `codeAllowHttpGets`, `codeAllowedMethods` and `codeBlockedMethods` options.
+ */
+export type ClientMethodPermissions = {
+  allowHttpGets?: boolean | undefined;
+  allowedMethods?: string[] | undefined;
+  blockedMethods?: string[] | undefined;
+};
+
+const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+const MAX_CLIENT_METHOD_PATTERN_LENGTH = 128;
+const MAX_CLIENT_METHOD_QUANTIFIERS = 8;
+const MAX_QUANTIFIER_BOUND = 100;
+
+type PatternAtom = { kind: 'group'; hasRepetition: boolean } | { kind: 'other' };
+
+/**
+ * Rejects client method patterns whose repetition is nested or unbounded in size.
+ * Matching then stays proportional to the pattern and the fixed list of method names.
+ */
+export function assertSafeClientMethodPattern(pattern: string): void {
+  if (pattern.length > MAX_CLIENT_METHOD_PATTERN_LENGTH) {
+    throw new Error(`method pattern is longer than ${MAX_CLIENT_METHOD_PATTERN_LENGTH} characters`);
+  }
+
+  let quantifiers = 0;
+  const groups: { hasRepetition: boolean }[] = [];
+  let lastAtom: PatternAtom | undefined;
+  let i = 0;
+
+  const markQuantifier = (repeating: boolean) => {
+    quantifiers += 1;
+    if (quantifiers > MAX_CLIENT_METHOD_QUANTIFIERS) {
+      throw new Error('method pattern has too many quantifiers');
+    }
+    if (repeating && lastAtom?.kind === 'group' && lastAtom.hasRepetition) {
+      throw new Error('method pattern contains nested repetition');
+    }
+    if (repeating) {
+      const current = groups[groups.length - 1];
+      if (current) current.hasRepetition = true;
+    }
+    lastAtom = { kind: 'other' };
+  };
+
+  while (i < pattern.length) {
+    const char = pattern[i]!;
+    if (char === '\\') {
+      if (i + 1 >= pattern.length) {
+        throw new Error('method pattern has a trailing escape');
+      }
+      i += 2;
+      lastAtom = { kind: 'other' };
+      continue;
+    }
+    if (char === '[') {
+      i += 1;
+      if (pattern[i] === '^') i += 1;
+      let closed = false;
+      while (i < pattern.length) {
+        if (pattern[i] === '\\') {
+          i += 2;
+          continue;
+        }
+        if (pattern[i] === ']') {
+          closed = true;
+          i += 1;
+          break;
+        }
+        i += 1;
+      }
+      if (!closed) {
+        throw new Error('method pattern has an unterminated character class');
+      }
+      lastAtom = { kind: 'other' };
+      continue;
+    }
+    if (char === '(') {
+      i += 1;
+      if (pattern[i] === '?') {
+        i += 1;
+        const next = pattern[i];
+        if (next === '<') {
+          i += 1;
+          if (pattern[i] === '=' || pattern[i] === '!') {
+            i += 1;
+          } else {
+            while (i < pattern.length && pattern[i] !== '>') i += 1;
+            i += 1;
+          }
+        } else if (next === '=' || next === '!' || next === ':') {
+          i += 1;
+        } else {
+          while (i < pattern.length && /[a-zA-Z-]/.test(pattern[i]!)) i += 1;
+          if (pattern[i] === ':') i += 1;
+        }
+      }
+      groups.push({ hasRepetition: false });
+      lastAtom = undefined;
+      continue;
+    }
+    if (char === ')') {
+      const group = groups.pop();
+      if (!group) {
+        throw new Error('method pattern has an unmatched )');
+      }
+      lastAtom = { kind: 'group', hasRepetition: group.hasRepetition };
+      i += 1;
+      continue;
+    }
+    if (char === '*' || char === '+' || char === '?') {
+      markQuantifier(char !== '?');
+      i += 1;
+      if (pattern[i] === '?') i += 1;
+      continue;
+    }
+    if (char === '{') {
+      const match = /^\{(\d+)(,(\d+)?)?\}/.exec(pattern.slice(i));
+      if (match) {
+        const min = Number(match[1]);
+        const max =
+          match[2] === undefined ? min
+          : match[3] === undefined ? undefined
+          : Number(match[3]);
+        if (min > MAX_QUANTIFIER_BOUND || (max !== undefined && (max > MAX_QUANTIFIER_BOUND || max < min))) {
+          throw new Error('method pattern quantifier is too large');
+        }
+        // An exact `{n}` does not branch. `{n,}` and `{n,m}` do.
+        markQuantifier(match[2] !== undefined && max !== min);
+        i += match[0].length;
+        if (pattern[i] === '?') i += 1;
+        continue;
+      }
+    }
+    lastAtom = { kind: 'other' };
+    i += 1;
+  }
+
+  if (groups.length > 0) {
+    throw new Error('method pattern has an unmatched (');
+  }
+}
+
+/**
+ * Applies a client's method restrictions on top of the operator's options. The result allows a method
+ * only if both the operator's options and the client's permissions allow it, so a client can narrow the
+ * operator's configuration but never widen it.
+ */
+export function narrowCodeToolOptions(options: McpOptions, permissions: ClientMethodPermissions): McpOptions {
+  for (const pattern of [...(permissions.allowedMethods ?? []), ...(permissions.blockedMethods ?? [])]) {
+    assertSafeClientMethodPattern(pattern);
+  }
+
+  const blockedByClient =
+    blockedMethodsForCodeTool({
+      codeAllowHttpGets: permissions.allowHttpGets,
+      codeAllowedMethods: permissions.allowedMethods,
+      codeBlockedMethods: permissions.blockedMethods,
+    })?.map((method) => `^${escapeRegExp(method.fullyQualifiedName)}$`) ?? [];
+
+  if (blockedByClient.length === 0) {
+    return options;
+  }
+  return { ...options, codeBlockedMethods: [...(options.codeBlockedMethods ?? []), ...blockedByClient] };
+}
