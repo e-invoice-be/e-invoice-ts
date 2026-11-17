@@ -1,5 +1,5 @@
 import { IncomingMessage } from 'node:http';
-import { parseClientAuthHeaders } from '../src/auth';
+import { ClientAuthError, parseClientAuthHeaders } from '../src/auth';
 
 const request = (headers: IncomingMessage['headers']) => ({ headers }) as IncomingMessage;
 
@@ -37,7 +37,29 @@ describe('parseClientAuthHeaders', () => {
     expect(parseClientAuthHeaders(request({}), false)).toEqual({ apiKey: undefined });
   });
 
-  it('throws when no authorization header is sent and auth is required', () => {
+  it('throws when no credentials are sent and auth is required', () => {
+    expect(() => parseClientAuthHeaders(request({}), true)).toThrow(ClientAuthError);
     expect(() => parseClientAuthHeaders(request({}), true)).toThrow(/Missing required Authorization header/);
+  });
+
+  it('accepts the x-e-invoice-api-key header when auth is required', () => {
+    expect(parseClientAuthHeaders(request({ 'x-e-invoice-api-key': 'my-api-key' }), true)).toEqual({
+      apiKey: 'my-api-key',
+    });
+  });
+
+  it('throws when the credentials are empty and auth is required', () => {
+    expect(() => parseClientAuthHeaders(request({ authorization: 'Bearer ' }), true)).toThrow(
+      ClientAuthError,
+    );
+    expect(() => parseClientAuthHeaders(request({ 'x-e-invoice-api-key': ' ' }), true)).toThrow(
+      ClientAuthError,
+    );
+  });
+
+  it('matches the Bearer scheme case-insensitively', () => {
+    expect(parseClientAuthHeaders(request({ authorization: 'bearer my-api-key' }), true)).toEqual({
+      apiKey: 'my-api-key',
+    });
   });
 });

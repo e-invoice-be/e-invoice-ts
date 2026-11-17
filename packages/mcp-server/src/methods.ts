@@ -332,3 +332,39 @@ export function blockedMethodsForCodeTool(options: McpOptions | undefined): SdkM
   // Return any methods that are not explicitly allowed
   return sdkMethods.filter((method) => !allowedSet.has(method.fullyQualifiedName));
 }
+
+/**
+ * Method restrictions requested by a client for a single request. The fields have the same meaning as
+ * the `codeAllowHttpGets`, `codeAllowedMethods` and `codeBlockedMethods` options.
+ */
+export type ClientMethodPermissions = {
+  allowHttpGets?: boolean | undefined;
+  allowedMethods?: string[] | undefined;
+  blockedMethods?: string[] | undefined;
+};
+
+const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+/**
+ * Applies a client's method restrictions on top of the operator's options. The result allows a method
+ * only if both the operator's options and the client's permissions allow it, so a client can narrow the
+ * operator's configuration but never widen it.
+ */
+export function narrowCodeToolOptions(options: McpOptions, permissions: ClientMethodPermissions): McpOptions {
+  const allowedByClient = new Set(
+    allowedMethodsForCodeTool({
+      codeAllowHttpGets: permissions.allowHttpGets,
+      codeAllowedMethods: permissions.allowedMethods,
+      codeBlockedMethods: permissions.blockedMethods,
+    })!.map((method) => method.fullyQualifiedName),
+  );
+
+  const blockedByClient = sdkMethods
+    .filter((method) => !allowedByClient.has(method.fullyQualifiedName))
+    .map((method) => `^${escapeRegExp(method.fullyQualifiedName)}$`);
+
+  if (blockedByClient.length === 0) {
+    return options;
+  }
+  return { ...options, codeBlockedMethods: [...(options.codeBlockedMethods ?? []), ...blockedByClient] };
+}

@@ -1,25 +1,38 @@
 import { IncomingMessage } from 'node:http';
 import { ClientOptions } from 'e-invoice-api';
 
+/** The request carries no usable client credentials. */
+export class ClientAuthError extends Error {}
+
+const firstHeaderValue = (value: string | string[] | undefined): string | undefined =>
+  Array.isArray(value) ? value[0] : value;
+
+/**
+ * Reads the client's API key from the `Authorization` header (Bearer scheme) or, when that header is
+ * absent, from `x-e-invoice-api-key`.
+ *
+ * @param required - Throw a {@link ClientAuthError} when the request has no API key in either header.
+ */
 export const parseClientAuthHeaders = (req: IncomingMessage, required?: boolean): Partial<ClientOptions> => {
+  let apiKey: string | undefined;
+
   if (req.headers.authorization) {
     const scheme = req.headers.authorization.split(' ')[0]!;
-    const value = req.headers.authorization.slice(scheme.length + 1);
-    switch (scheme) {
-      case 'Bearer':
-        return { apiKey: value };
-      default:
-        throw new Error(
-          'Unsupported authorization scheme. Expected the "Authorization" header to be a supported scheme (Bearer).',
-        );
+    if (scheme.toLowerCase() !== 'bearer') {
+      throw new ClientAuthError(
+        'Unsupported authorization scheme. Expected the "Authorization" header to be a supported scheme (Bearer).',
+      );
     }
-  } else if (required) {
-    throw new Error('Missing required Authorization header; see WWW-Authenticate header for details.');
+    apiKey = req.headers.authorization.slice(scheme.length + 1).trim();
+  } else {
+    apiKey = firstHeaderValue(req.headers['x-e-invoice-api-key'])?.trim();
   }
 
-  const apiKey =
-    Array.isArray(req.headers['x-e-invoice-api-key']) ?
-      req.headers['x-e-invoice-api-key'][0]
-    : req.headers['x-e-invoice-api-key'];
+  if (required && !apiKey) {
+    throw new ClientAuthError(
+      'Missing required Authorization header; send "Authorization: Bearer <api key>" or an "x-e-invoice-api-key" header.',
+    );
+  }
+
   return { apiKey };
 };
