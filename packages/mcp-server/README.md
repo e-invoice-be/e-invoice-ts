@@ -96,20 +96,84 @@ to replace them with the contents of a file.
 
 ## Running remotely
 
-Launching the client with `--transport=http` launches the server as a remote server using Streamable HTTP transport. The `--port` setting can choose the port it will run on, and the `--socket` setting allows it to run on a Unix socket.
+Launching the server with `--transport=http` serves MCP over the Streamable HTTP transport instead of stdio.
 
-Authorization can be provided via the `Authorization` header using the Bearer scheme.
+### Deployment model
 
-Additionally, authorization can be provided via the following headers:
-| Header | Equivalent client option | Security scheme |
+In HTTP mode the server does not hold credentials of its own. Every client sends its own e-invoice.be API key
+with each request, and the server uses that key, and only that key, for the API calls made on behalf of that
+request. An `E_INVOICE_API_KEY` in the server's environment is not used by the HTTP transport.
+
+The server is meant to run next to the MCP client, on the same machine, and by default only accepts
+connections from that machine. To serve other machines, expose it deliberately:
+
+- set `--host` to the address to listen on,
+- list the host names (and, for browser-based clients, the origins) that clients use to reach it with
+  `--allowed-hosts` and `--allowed-origins`,
+- and put it behind a reverse proxy that terminates TLS, so API keys are not sent in clear text.
+
+The server passes the client's API key on to the e-invoice.be API and does not check it itself, so anyone who
+can reach the port can list the tools and run the code tool (see "Where code runs"). Limit who can reach the
+port with your network setup, and use `--no-tools=code` if the clients do not need the code tool.
+
+### Options
+
+| Option              | Environment variable         | Default     | Description                                                                           |
+| ------------------- | ---------------------------- | ----------- | ------------------------------------------------------------------------------------- |
+| `--port`            | `MCP_SERVER_PORT`            | `3000`      | Port to listen on.                                                                    |
+| `--host`            | `MCP_SERVER_HOST`            | `127.0.0.1` | Address to listen on. Use `0.0.0.0` (or a specific address) to accept other machines. |
+| `--socket`          | `MCP_SERVER_SOCKET`          |             | Unix socket to listen on, instead of a port.                                          |
+| `--allowed-hosts`   | `MCP_SERVER_ALLOWED_HOSTS`   |             | Additional `Host` header values to accept, such as `mcp.example.com`.                 |
+| `--allowed-origins` | `MCP_SERVER_ALLOWED_ORIGINS` |             | Additional `Origin` header values to accept, such as `https://app.example.com`.       |
+
+`--allowed-hosts` and `--allowed-origins` can be repeated or given as a comma-separated list.
+
+### Host and Origin validation
+
+MCP requests are only served when their `Host` header is one of the allowed values; other requests get a
+`403` response. The loopback names for the listening port (`localhost:<port>`, `127.0.0.1:<port>` and
+`[::1]:<port>`) are always allowed, as is the `--host` address when it is a specific address. Add the names
+clients use with `--allowed-hosts`, written exactly as the client sends them (`mcp.example.com`, or
+`mcp.example.com:8443` for a non-default port).
+
+A request with an `Origin` header (sent by browsers) is checked the same way against the loopback origins
+and `--allowed-origins`. Requests without an `Origin` header are not affected. The default origins use
+`http://`; add an `https://` origin, such as `https://mcp.example.com`, with `--allowed-origins` when
+browser-based clients reach the server over TLS.
+
+When the server listens on a Unix socket (`--socket`), the loopback names are accepted without a port.
+
+For example, to serve clients that reach the server as `https://mcp.example.com` through a reverse proxy:
+
+```sh
+npx -y e-invoice-api-mcp --transport=http --host=0.0.0.0 --port=3000 --allowed-hosts=mcp.example.com
+```
+
+If the reverse proxy runs on the same machine, the default `--host` is enough. The check applies to the
+`Host` header as the server receives it, so configure the proxy to pass the client's `Host` header on.
+
+In a container, the server has to listen on `0.0.0.0` for a published port to work; add the host name and
+port that clients use on the outside to `--allowed-hosts` if they are not `localhost:<port>` with the same
+port number.
+
+### Authorization
+
+Every request must carry the client's API key; requests without one get a `401` response. `GET /health` is
+the only exception: it needs no credentials and is not subject to `Host` validation, so it can be used for
+health checks.
+
+Send the key in the `Authorization` header using the Bearer scheme, or in the following header:
+
+| Header                | Equivalent client option | Security scheme |
 | --------------------- | ------------------------ | --------------- |
-| `x-e-invoice-api-key` | `apiKey` | HTTPBearer |
+| `x-e-invoice-api-key` | `apiKey`                 | HTTPBearer      |
 
 The following optional headers are also supported:
-| Header | Description |
-| --------------------- | ------------------------ |
-| `x-mcp-client-envs` | JSON object of environment variables to set for the code tool subprocess of this request |
-| `x-mcp-client-permissions` | JSON object (`allow_http_gets`, `allowed_methods`, `blocked_methods`) that overrides the `--code-allow-http-gets`, `--code-allowed-methods` and `--code-blocked-methods` options for this request |
+
+| Header                     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `x-mcp-client-envs`        | JSON object of environment variables to set for the code tool subprocess of this request. Only variables whose name starts with `E_INVOICE_` are accepted, and `E_INVOICE_BASE_URL` is not, so the operator's API address stays in effect. Other names are ignored.                                                                                                                                                                                                                |
+| `x-mcp-client-permissions` | JSON object (`allow_http_gets`, `allowed_methods`, `blocked_methods`) that further restricts the methods the code tool may use for this request. It is combined with the `--code-allow-http-gets`, `--code-allowed-methods` and `--code-blocked-methods` options: a method is available only if both allow it, so the header cannot allow a method that the server's options do not. A malformed header, including a method pattern with nested repetition, gets a `400` response. |
 
 A configuration JSON for this server might look like this, assuming the server is hosted at `http://localhost:3000`:
 
