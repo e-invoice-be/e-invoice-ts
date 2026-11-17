@@ -8,6 +8,7 @@ import { PLACEHOLDER_API_KEY } from '../src/code-tool-proxy';
 import { configureLogger } from '../src/logger';
 
 type WorkerStart = {
+  denoExecutable: string;
   runFlags: string[];
   env: Record<string, string>;
 };
@@ -24,7 +25,11 @@ let workerBehaviour: (request: WorkerRequest) => Promise<{ status: number; body:
 // Stand-in for the Deno subprocess: records how it would have been started and what it was sent.
 jest.mock('@valtown/deno-http-worker', () => ({
   newDenoHTTPWorker: async (_script: URL, options: any) => {
-    workerStarts.push({ runFlags: options.runFlags, env: options.spawnOptions.env });
+    workerStarts.push({
+      denoExecutable: options.denoExecutable,
+      runFlags: options.runFlags,
+      env: options.spawnOptions.env,
+    });
     return {
       addEventListener: () => {},
       terminate: () => {},
@@ -67,8 +72,9 @@ describe('codeToolDescription', () => {
     expect(codeTool({ blockedMethods: undefined }).tool.description).toBe(codeToolDescription);
     expect(codeToolDescription).toContain('local Deno sandbox');
     expect(codeToolDescription).toContain('Its only network access is to the E Invoice API');
+    expect(codeToolDescription).toContain('The API credentials are not available to the code');
     expect(codeToolDescription).toContain(
-      'the API credentials and the environment variables of the host are not available to the code',
+      'neither are the environment variables of the host process, apart from the SDK log level',
     );
     expect(codeToolDescription).toContain('The filesystem cannot be written to');
     expect(codeToolDescription).toContain('no subprocesses can be started');
@@ -102,14 +108,34 @@ describe('buildWorkerEnv', () => {
     });
   });
 
-  it('merges the client environment of the request over the passed-on variables', () => {
-    expect(buildWorkerEnv(parentEnv, { E_INVOICE_LOG: 'info', E_INVOICE_EXTRA: 'x' }, 'linux')).toEqual({
+  it('merges E_INVOICE_* settings from the request and ignores every other name', () => {
+    expect(
+      buildWorkerEnv(
+        parentEnv,
+        {
+          E_INVOICE_LOG: 'info',
+          E_INVOICE_EXTRA: 'x',
+          E_INVOICE_BASE_URL: 'https://api.example.test',
+          PATH: '/tmp/other-bin',
+          HOME: '/tmp/other-home',
+          LD_PRELOAD: '/tmp/lib.so',
+          LD_LIBRARY_PATH: '/tmp/lib',
+          NODE_OPTIONS: '--require /tmp/preload.js',
+          DENO_DIR: '/tmp/other-deno',
+          E_INVOICE_API_KEY: 'caller-key',
+          E_INVOICE_CUSTOM_HEADERS: 'Authorization: Bearer caller-key',
+          E_INVOICE_WEBHOOK_SECRET: 'caller-secret',
+        },
+        'linux',
+      ),
+    ).toEqual({
       PATH: '/usr/bin',
       HOME: '/home/someone',
       DENO_DIR: '/var/cache/deno',
       TMPDIR: '/tmp',
       E_INVOICE_LOG: 'info',
       E_INVOICE_EXTRA: 'x',
+      E_INVOICE_BASE_URL: 'https://api.example.test',
     });
   });
 
@@ -128,12 +154,14 @@ describe('code tool handler', () => {
   let upstream: http.Server;
   let upstreamURL: string;
   let upstreamAuthorizations: (string | undefined)[];
+  let upstreamHeaderSets: http.IncomingHttpHeaders[];
   const savedEnv = { ...process.env };
 
   beforeAll(async () => {
     configureLogger({ level: 'error', pretty: false });
     upstream = http.createServer((req, res) => {
       upstreamAuthorizations.push(req.headers.authorization);
+      upstreamHeaderSets.push(req.headers);
       res.writeHead(200, { 'content-type': 'application/json' });
       res.end(JSON.stringify({ tenant: 'acme' }));
     });
@@ -150,6 +178,7 @@ describe('code tool handler', () => {
     workerStarts.length = 0;
     workerRequests.length = 0;
     upstreamAuthorizations = [];
+    upstreamHeaderSets = [];
     workerBehaviour = async () => ({
       status: 200,
       body: { is_error: false, result: { done: true }, log_lines: ['a log line'], err_lines: [] },
@@ -195,6 +224,42 @@ describe('code tool handler', () => {
     expect(workerStarts[0]!.env).toMatchObject({ E_INVOICE_LOG: 'debug' });
     expect(workerStarts[0]!.env).not.toHaveProperty('UNRELATED_SERVICE_TOKEN');
     expect(workerStarts[0]!.env).not.toHaveProperty('E_INVOICE_API_KEY');
+    expect(path.isAbsolute(workerStarts[0]!.denoExecutable)).toBe(true);
+  });
+
+  it('keeps custom headers and caller process settings out of the subprocess', async () => {
+    process.env['E_INVOICE_CUSTOM_HEADERS'] = 'X-Tenant: acme\nAuthorization: Bearer from-server-header';
+    workerBehaviour = async ({ opts }) => {
+      const response = await fetch(`${opts.baseURL}/api/me/`);
+      return {
+        status: 200,
+        body: { is_error: false, result: await response.json(), log_lines: [], err_lines: [] },
+      };
+    };
+
+    await execute({
+      PATH: '/tmp/not-the-server-path',
+      LD_PRELOAD: '/tmp/lib.so',
+      E_INVOICE_API_KEY: 'caller-key',
+      E_INVOICE_CUSTOM_HEADERS: 'X-From-Client: from-client',
+      E_INVOICE_LOG: 'debug',
+    });
+
+    const env = workerStarts[0]!.env;
+    expect(env['PATH']).not.toBe('/tmp/not-the-server-path');
+    expect(env).not.toHaveProperty('LD_PRELOAD');
+    expect(env).not.toHaveProperty('E_INVOICE_API_KEY');
+    expect(env).not.toHaveProperty('E_INVOICE_CUSTOM_HEADERS');
+    expect(JSON.stringify(env)).not.toContain('acme');
+    expect(JSON.stringify(env)).not.toContain('from-client');
+    expect(JSON.stringify(env)).not.toContain('caller-key');
+    expect(JSON.stringify(env)).not.toContain('from-server-header');
+    expect(env['E_INVOICE_LOG']).toBe('debug');
+    expect(upstreamAuthorizations).toEqual([`Bearer ${API_KEY}`]);
+    expect(upstreamHeaderSets[0]).toMatchObject({ 'x-tenant': 'acme', 'x-from-client': 'from-client' });
+    expect(JSON.stringify(workerRequests[0])).not.toContain('acme');
+    expect(JSON.stringify(workerRequests[0])).not.toContain('from-client');
+    expect(JSON.stringify(workerRequests[0])).not.toContain(API_KEY);
   });
 
   it('permits the subprocess to read a named list of environment variables only', async () => {

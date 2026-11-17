@@ -2,6 +2,7 @@ import http from 'node:http';
 import { AddressInfo } from 'node:net';
 import EInvoice from 'e-invoice-api';
 import {
+  MAX_FORWARDED_BODY_BYTES,
   PLACEHOLDER_API_KEY,
   UpstreamProxy,
   parseCustomHeaders,
@@ -42,6 +43,20 @@ describe('startUpstreamProxy', () => {
         if (req.url === '/base/api/elsewhere') {
           res.writeHead(302, { location: 'http://other-host.test/landing' });
           res.end();
+          return;
+        }
+        if (req.url === '/base/api/encoded') {
+          res.writeHead(302, { location: `${upstreamURL}/..%2fsecret` });
+          res.end();
+          return;
+        }
+        if (req.url === '/base/api/reflect') {
+          res.writeHead(200, {
+            'content-type': 'application/json',
+            authorization: `Bearer ${API_KEY}`,
+            'x-note': `prefix ${API_KEY} suffix`,
+          });
+          res.end(JSON.stringify({ ok: true }));
           return;
         }
         if (req.url?.startsWith('/base/missing')) {
@@ -146,20 +161,119 @@ describe('startUpstreamProxy', () => {
     expect(requests).toHaveLength(1);
   });
 
-  it('rejects paths that resolve to outside the API base URL', async () => {
-    const { hostname, port, pathname } = new URL(proxy.baseURL);
-    // `fetch` would resolve the dot segments itself, so send the raw path.
-    const status = await new Promise<number | undefined>((resolve, reject) => {
+  const rawStatus = (path: string, method = 'GET') => {
+    const { hostname, port } = new URL(proxy.baseURL);
+    return new Promise<number | undefined>((resolve, reject) => {
       http
-        .request({ hostname, port, path: `${pathname}/../other`, method: 'GET' }, (res) => {
+        .request({ hostname, port, path, method }, (res) => {
           res.resume();
           resolve(res.statusCode);
         })
         .on('error', reject)
         .end();
     });
+  };
 
-    expect(status).toBe(400);
+  it('rejects paths that resolve to outside the API base URL', async () => {
+    const { pathname } = new URL(proxy.baseURL);
+    // `fetch` would resolve the dot segments itself, so send the raw path.
+    expect(await rawStatus(`${pathname}/../other`)).toBe(400);
+    expect(requests).toHaveLength(0);
+  });
+
+  it.each([
+    ['encoded slashes', '/..%2f..%2fsecret'],
+    ['an encoded parent segment', '/%2e%2e%2fsecret'],
+    ['a double-encoded slash', '/%252fsecret'],
+    ['backslashes', '/..\\..\\secret'],
+  ])('rejects a path with %s', async (_name, suffix) => {
+    const { pathname } = new URL(proxy.baseURL);
+    expect(await rawStatus(`${pathname}${suffix}`)).toBe(400);
+    expect(requests).toHaveLength(0);
+  });
+
+  it('rejects an absolute-form request target', async () => {
+    const url = new URL(proxy.baseURL);
+    const status = await new Promise<number | undefined>((resolve, reject) => {
+      const socket = http.request(
+        { hostname: url.hostname, port: url.port, path: `${url.href}/api/me/`, method: 'GET' },
+        (res) => {
+          res.resume();
+          resolve(res.statusCode);
+        },
+      );
+      socket.on('error', reject);
+      socket.end();
+    });
+
+    expect(status).toBe(404);
+    expect(requests).toHaveLength(0);
+  });
+
+  it('does not follow a redirect whose path contains an encoded slash', async () => {
+    const response = await fetch(`${proxy.baseURL}/api/encoded`, { redirect: 'manual' });
+
+    expect(response.status).toBe(302);
+    expect(requests).toHaveLength(1);
+  });
+
+  it('does not return the API key in response headers', async () => {
+    const response = await fetch(`${proxy.baseURL}/api/reflect`);
+
+    expect(response.status).toBe(200);
+    expect(response.headers.get('authorization')).toBeNull();
+    expect(response.headers.get('x-note')).toBe('prefix [redacted] suffix');
+    expect(JSON.stringify([...response.headers.entries()])).not.toContain(API_KEY);
+  });
+
+  it('refuses a request body larger than the limit', async () => {
+    const { hostname, port, pathname } = new URL(proxy.baseURL);
+    const status = await new Promise<number | undefined>((resolve, reject) => {
+      const req = http.request(
+        {
+          hostname,
+          port,
+          path: `${pathname}/api/me/`,
+          method: 'POST',
+          headers: { 'content-length': String(MAX_FORWARDED_BODY_BYTES + 1) },
+        },
+        (res) => {
+          res.resume();
+          resolve(res.statusCode);
+        },
+      );
+      req.on('error', reject);
+      req.end();
+    });
+
+    expect(status).toBe(413);
+    expect(requests).toHaveLength(0);
+  });
+
+  it('stops reading a chunked body once it passes the limit', async () => {
+    const { hostname, port, pathname } = new URL(proxy.baseURL);
+    const status = await new Promise<number | undefined>((resolve, reject) => {
+      let settled = false;
+      const finish = (value: number | undefined) => {
+        if (settled) return;
+        settled = true;
+        resolve(value);
+      };
+      const req = http.request({ hostname, port, path: `${pathname}/api/me/`, method: 'POST' }, (res) => {
+        res.resume();
+        res.on('end', () => finish(res.statusCode));
+      });
+      req.on('error', (error: NodeJS.ErrnoException) => {
+        // The listener closes the connection once the limit is passed.
+        if (error.code === 'ECONNRESET' || error.code === 'EPIPE') finish(413);
+        else reject(error);
+      });
+      // `write` without a Content-Length uses chunked encoding, so the listener counts bytes.
+      req.write(Buffer.alloc(MAX_FORWARDED_BODY_BYTES + 1));
+      req.end();
+    });
+
+    expect(status).toBe(413);
     expect(requests).toHaveLength(0);
   });
 

@@ -24,7 +24,7 @@ You will be returned anything that your function returns, plus the results of an
 Do not add try-catch blocks for single API calls. The tool will handle errors for you.
 Do not add comments unless necessary for generating better code.
 Code will run in a local Deno sandbox. Its only network access is to the E Invoice API: use the given SDK client, other hosts cannot be reached and remote modules cannot be imported.
-The client is already authenticated; the API credentials and the environment variables of the host are not available to the code.
+The client is already authenticated. The API credentials are not available to the code, and neither are the environment variables of the host process, apart from the SDK log level.
 The filesystem cannot be written to, and no subprocesses can be started.
 Variables will not persist between calls, so make sure to return or log any data you might need later.
 Remember that you are writing TypeScript code, so you need to be careful with your types.
@@ -105,7 +105,8 @@ export function codeTool({ blockedMethods }: { blockedMethods: SdkMethod[] | und
 
 /**
  * Variables of the MCP server's own environment that are passed on to the Deno subprocess.
- * These are what is needed to find and run Deno, plus the SDK's log level.
+ * These are what Deno needs in order to run, plus the SDK's log level. They come from the
+ * server process; a request cannot replace them.
  */
 const PASSED_ENV_NAMES = [
   'PATH',
@@ -143,9 +144,17 @@ export const READABLE_ENV_NAMES = [
   ),
 ];
 
+// Request settings the SDK understands. Only these names are copied from the request into the
+// subprocess environment; PATH, HOME and similar names from the request are not.
+const CLIENT_ENV_NAME = /^E_INVOICE_[A-Z0-9_]+$/;
+// The API key and custom headers stay in this process. The subprocess is allowed to read the custom
+// headers name, because the SDK looks it up, but the value is applied by the loopback listener instead.
+const WITHHELD_CLIENT_ENV_NAMES = new Set(['E_INVOICE_API_KEY', 'E_INVOICE_CUSTOM_HEADERS']);
+const CREDENTIAL_ENV_NAME = /KEY|SECRET|TOKEN|PASSWORD|CREDENTIAL|AUTHORIZATION/;
+
 /**
- * Builds the environment of the Deno subprocess: the passed-on variables of `parentEnv`, with any
- * `upstreamClientEnvs` of the request merged over them.
+ * Builds the environment of the Deno subprocess: the passed-on variables of `parentEnv`, with the
+ * `E_INVOICE_*` settings from `upstreamClientEnvs` merged over them.
  */
 export function buildWorkerEnv(
   parentEnv: Record<string, string | undefined>,
@@ -160,7 +169,12 @@ export function buildWorkerEnv(
       env[name] = value;
     }
   }
-  return { ...env, ...upstreamClientEnvs };
+  for (const [name, value] of Object.entries(upstreamClientEnvs ?? {})) {
+    if (typeof value !== 'string' || !CLIENT_ENV_NAME.test(name)) continue;
+    if (WITHHELD_CLIENT_ENV_NAMES.has(name) || CREDENTIAL_ENV_NAME.test(name)) continue;
+    env[name] = value;
+  }
+  return env;
 }
 
 const localDenoHandler = async ({
@@ -185,11 +199,15 @@ const localDenoHandler = async ({
   const packageRoot = path.resolve(path.dirname(workerPath), '..');
   const packageNodeModulesPath = path.resolve(packageRoot, 'node_modules');
 
-  // Check if deno is in PATH
+  // Resolve Deno from this process. The subprocess is started with that absolute path, so its
+  // own environment cannot select a different binary.
   const { execSync } = await import('node:child_process');
   try {
-    execSync('command -v deno', { stdio: 'ignore' });
-    denoPath = 'deno';
+    const found = execSync('command -v deno', {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim();
+    if (path.isAbsolute(found)) denoPath = found;
   } catch {
     // Use the deno binary of the `deno` npm package if it's found in a node_modules
     // directory at or above the worker (this covers both the repo and the published layout)
@@ -244,7 +262,11 @@ const localDenoHandler = async ({
   // forwards them to the API with the credentials of the client of this request.
   const proxy = await startUpstreamProxy({
     client,
-    defaultHeaders: parseCustomHeaders(process.env['E_INVOICE_CUSTOM_HEADERS']),
+    // Header values stay in this process. The subprocess environment does not receive them.
+    defaultHeaders: {
+      ...parseCustomHeaders(process.env['E_INVOICE_CUSTOM_HEADERS']),
+      ...parseCustomHeaders(reqContext.upstreamClientEnvs?.['E_INVOICE_CUSTOM_HEADERS']),
+    },
   });
 
   let worker: Awaited<ReturnType<typeof newDenoHTTPWorker>>;

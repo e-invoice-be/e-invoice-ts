@@ -85,20 +85,27 @@ The subprocess is restricted as follows:
   write files or start other processes.
 - **Network**: its only network access is to a listener that the MCP server opens on `127.0.0.1`
   for the duration of the call, on a random port and path. That listener forwards requests to your
-  API base URL, and follows redirects only within it. Other hosts cannot be reached, with the SDK
-  client, with `fetch` or by importing remote modules. Requests to the API are sent by the MCP
-  server process (Node.js), so proxy and certificate settings for reaching the API belong to
-  that process (for example `NODE_USE_ENV_PROXY=1` with `HTTPS_PROXY`, or `NODE_EXTRA_CA_CERTS`).
+  API base URL, and follows redirects only within it. Paths that leave the base URL are refused,
+  including encoded slashes and parent segments. Request bodies larger than 32 MiB are refused.
+  Other hosts cannot be reached, with the SDK client, with `fetch` or by importing remote modules.
+  Requests to the API are sent by the MCP server process (Node.js), so proxy and certificate
+  settings for reaching the API belong to that process (for example `NODE_USE_ENV_PROXY=1` with
+  `HTTPS_PROXY`, or `NODE_EXTRA_CA_CERTS`).
 - **Credentials**: the API key stays in the MCP server process. The SDK client in the code holds a
   placeholder (`client.apiKey` is not your key, and `client.baseURL` is the local listener); the
   server adds the `Authorization` header when it forwards a request. Headers from
-  `E_INVOICE_CUSTOM_HEADERS` are added in the same way.
+  `E_INVOICE_CUSTOM_HEADERS` are added in the same way, whether that variable is set on the server
+  or supplied for one request. The header text is not given to the code.
 - **Environment**: the subprocess does not inherit the environment of the MCP server. It is started
   with only what Deno needs to run (`PATH`, `HOME`, `DENO_DIR`, `XDG_CACHE_HOME`, the temporary
   directory variables and, on Windows, `SystemRoot`, `USERPROFILE`, `LOCALAPPDATA` and `PATHEXT`)
-  plus `E_INVOICE_LOG`, and the code can read only `E_INVOICE_LOG`, `E_INVOICE_CUSTOM_HEADERS`
-  and a few names that the TypeScript compiler checks (such as `NODE_ENV`). With the HTTP transport,
-  the variables of an `x-mcp-client-envs` header are added to the environment of that request's subprocess.
+  plus `E_INVOICE_LOG`. Deno is resolved from the server's own `PATH` before the subprocess starts.
+  The code can read `E_INVOICE_LOG` and a few names that the TypeScript compiler checks (such as
+  `NODE_ENV`). `E_INVOICE_CUSTOM_HEADERS` is on that read list because the SDK looks it up when the
+  client is constructed; the variable is left unset. With the HTTP transport, an `x-mcp-client-envs`
+  header can add `E_INVOICE_*` variables for that request. `E_INVOICE_API_KEY`,
+  `E_INVOICE_CUSTOM_HEADERS` and any other name, including `PATH` and `HOME`, are not taken from
+  that header.
 
 The code can still call any endpoint that the API key is allowed to use, including through
 `client.get` / `client.post` and by sending requests to the local listener itself. To limit what an
