@@ -323,18 +323,27 @@ describe('streamable HTTP transport', () => {
   });
 
   describe('x-mcp-client-envs', () => {
-    it('keeps only string values whose name starts with E_INVOICE_', () => {
+    it('keeps only string values whose name starts with E_INVOICE_, except the base URL', () => {
       expect(
         filterClientEnvs(
           JSON.stringify({
+            E_INVOICE_LOG: 'debug',
             E_INVOICE_BASE_URL: 'https://api.example.com',
+            E_INVOICE_CUSTOM_HEADERS: 'X-Request-Id: 1',
             PATH: '/tmp/bin',
             NODE_OPTIONS: '--require ./x.js',
             e_invoice_lowercase: 'x',
             E_INVOICE_NUMBER: 1,
           }),
         ),
-      ).toEqual({ E_INVOICE_BASE_URL: 'https://api.example.com' });
+      ).toEqual({
+        E_INVOICE_LOG: 'debug',
+        E_INVOICE_CUSTOM_HEADERS: 'X-Request-Id: 1',
+      });
+    });
+
+    it('drops a header that only sets E_INVOICE_BASE_URL', () => {
+      expect(filterClientEnvs(JSON.stringify({ E_INVOICE_BASE_URL: 'http://127.0.0.1:9' }))).toBeUndefined();
     });
 
     it('returns nothing when no name is on the allowlist', () => {
@@ -421,6 +430,7 @@ describe('streamable HTTP transport', () => {
       ['a non-array allowed_methods', { allowed_methods: 'documents' }],
       ['a non-string blocked_methods entry', { blocked_methods: [1] }],
       ['an invalid regular expression', { blocked_methods: ['('] }],
+      ['a method pattern with nested repetition', { blocked_methods: ['^((?:.)+)+x$'] }],
     ])('responds 400 to %s', async (_name, permissions) => {
       const port = await launch();
 

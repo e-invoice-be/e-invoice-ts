@@ -14,10 +14,14 @@ import { initMcpServer, newMcpServer } from './server';
 
 const CLIENT_ENV_PREFIX = 'E_INVOICE_';
 
+// An SDK client constructed without a base URL reads this name. The code tool keeps the
+// operator's API address, so a value from the request is not passed to the subprocess.
+const IGNORED_CLIENT_ENVS = new Set(['E_INVOICE_BASE_URL']);
+
 /**
  * Reads the `x-mcp-client-envs` header: a JSON object of environment variables for the code tool
- * subprocess of this request. Only string values whose name starts with `E_INVOICE_` are kept; every
- * other entry, and a malformed header, is dropped.
+ * subprocess of this request. Only string values whose name starts with `E_INVOICE_` are kept,
+ * except `E_INVOICE_BASE_URL`. Every other entry, and a malformed header, is dropped.
  */
 export const filterClientEnvs = (
   header: string | string[] | undefined,
@@ -34,7 +38,9 @@ export const filterClientEnvs = (
 
   const envs = Object.entries(parsed).filter(
     (entry): entry is [string, string] =>
-      entry[0].startsWith(CLIENT_ENV_PREFIX) && typeof entry[1] === 'string',
+      entry[0].startsWith(CLIENT_ENV_PREFIX) &&
+      !IGNORED_CLIENT_ENVS.has(entry[0]) &&
+      typeof entry[1] === 'string',
   );
   return envs.length > 0 ? Object.fromEntries(envs) : undefined;
 };
