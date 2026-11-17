@@ -104,8 +104,8 @@ The subprocess is restricted as follows:
   `NODE_ENV`). `E_INVOICE_CUSTOM_HEADERS` is on that read list because the SDK looks it up when the
   client is constructed; the variable is left unset. With the HTTP transport, an `x-mcp-client-envs`
   header can add `E_INVOICE_*` variables for that request. `E_INVOICE_API_KEY`,
-  `E_INVOICE_CUSTOM_HEADERS` and any other name, including `PATH` and `HOME`, are not taken from
-  that header.
+  `E_INVOICE_BASE_URL`, `E_INVOICE_CUSTOM_HEADERS` and any other name, including `PATH` and
+  `HOME`, are not taken from that header.
 
 The code can still call any endpoint that the API key is allowed to use, including through
 `client.get` / `client.post` and by sending requests to the local listener itself. To limit what an

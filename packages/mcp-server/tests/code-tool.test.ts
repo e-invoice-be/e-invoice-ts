@@ -71,11 +71,10 @@ describe('codeToolDescription', () => {
   it('describes what the sandbox permits', () => {
     expect(codeTool({ blockedMethods: undefined }).tool.description).toBe(codeToolDescription);
     expect(codeToolDescription).toContain('local Deno sandbox');
-    expect(codeToolDescription).toContain('Its only network access is to the E Invoice API');
+    expect(codeToolDescription).toContain('loopback listener that forwards to the E Invoice API');
     expect(codeToolDescription).toContain('The API credentials are not available to the code');
-    expect(codeToolDescription).toContain(
-      'neither are the environment variables of the host process, apart from the SDK log level',
-    );
+    expect(codeToolDescription).toContain('The subprocess does not inherit the host process environment');
+    expect(codeToolDescription).toContain('E_INVOICE_LOG');
     expect(codeToolDescription).toContain('The filesystem cannot be written to');
     expect(codeToolDescription).toContain('no subprocesses can be started');
   });
@@ -135,8 +134,10 @@ describe('buildWorkerEnv', () => {
       TMPDIR: '/tmp',
       E_INVOICE_LOG: 'info',
       E_INVOICE_EXTRA: 'x',
-      E_INVOICE_BASE_URL: 'https://api.example.test',
     });
+    expect(buildWorkerEnv(parentEnv, { E_INVOICE_BASE_URL: 'https://other.example.test' }, 'linux')).not.toHaveProperty(
+      'E_INVOICE_BASE_URL',
+    );
   });
 
   it('matches variable names case-insensitively on Windows only', () => {

@@ -23,8 +23,8 @@ async function run(client) {
 You will be returned anything that your function returns, plus the results of any console.log statements.
 Do not add try-catch blocks for single API calls. The tool will handle errors for you.
 Do not add comments unless necessary for generating better code.
-Code will run in a local Deno sandbox. Its only network access is to the E Invoice API: use the given SDK client, other hosts cannot be reached and remote modules cannot be imported.
-The client is already authenticated. The API credentials are not available to the code, and neither are the environment variables of the host process, apart from the SDK log level.
+Code will run in a local Deno sandbox. Its only network access is through the SDK client to a loopback listener that forwards to the E Invoice API; other hosts cannot be reached and remote modules cannot be imported.
+The client is already authenticated. The API credentials are not available to the code. The subprocess does not inherit the host process environment; the code may only read E_INVOICE_LOG and a few names the TypeScript compiler checks.
 The filesystem cannot be written to, and no subprocesses can be started.
 Variables will not persist between calls, so make sure to return or log any data you might need later.
 Remember that you are writing TypeScript code, so you need to be careful with your types.
@@ -149,7 +149,11 @@ export const READABLE_ENV_NAMES = [
 const CLIENT_ENV_NAME = /^E_INVOICE_[A-Z0-9_]+$/;
 // The API key and custom headers stay in this process. The subprocess is allowed to read the custom
 // headers name, because the SDK looks it up, but the value is applied by the loopback listener instead.
-const WITHHELD_CLIENT_ENV_NAMES = new Set(['E_INVOICE_API_KEY', 'E_INVOICE_CUSTOM_HEADERS']);
+const WITHHELD_CLIENT_ENV_NAMES = new Set([
+  'E_INVOICE_API_KEY',
+  'E_INVOICE_BASE_URL',
+  'E_INVOICE_CUSTOM_HEADERS',
+]);
 const CREDENTIAL_ENV_NAME = /KEY|SECRET|TOKEN|PASSWORD|CREDENTIAL|AUTHORIZATION/;
 
 /**
