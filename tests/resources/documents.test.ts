@@ -95,4 +95,24 @@ describe('resource documents', () => {
     expect(requests[0]!.body).toEqual(body);
     expect(document).toEqual({ id: 'doc_1', created_at: '2026-01-01T00:00:00Z' });
   });
+
+  test('create: sends a French VATEX exemption code and a newly supported unit code', async () => {
+    const { client, requests } = stubClient(() =>
+      jsonResponse({ id: 'doc_2', created_at: '2026-01-01T00:00:00Z' }),
+    );
+
+    const body = {
+      currency: 'EUR' as const,
+      items: [{ name: 'Used car', quantity: 1, tax_rate: '0.00', unit: 'XT1' as const, unit_price: 9500 }],
+      tax_code: 'E' as const,
+      vatex: 'VATEX-FR-CGI261-1' as const,
+      vatex_note: 'Exonération de TVA, article 261-1 du CGI',
+    };
+    await client.documents.create(body);
+
+    expect(requests).toHaveLength(1);
+    expect(requests[0]!.method).toEqual('POST');
+    expect(requests[0]!.url.pathname).toEqual('/api/documents/');
+    expect(requests[0]!.body).toEqual(body);
+  });
 });

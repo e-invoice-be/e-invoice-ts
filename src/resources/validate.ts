@@ -8,7 +8,9 @@ import { multipartFormRequestOptions } from '../internal/uploads';
 
 export class Validate extends APIResource {
   /**
-   * Validate if the JSON document can be converted to a valid UBL document
+   * Validate if the JSON document can be converted to a valid UBL document. The
+   * generated UBL is returned in ubl_document also when is_valid is false, so you
+   * can inspect it.
    *
    * @example
    * ```ts
@@ -344,7 +346,7 @@ export interface ValidateValidateJsonParams {
   shipping_address?: string | null;
 
   /**
-   * The recipient name at the shipping address
+   * The name of the deliver-to party (BT-70)
    */
   shipping_address_recipient?: string | null;
 
@@ -395,9 +397,9 @@ export interface ValidateValidateJsonParams {
   total_tax_in_tax_currency?: number | string | null;
 
   /**
-   * VATEX code list for VAT exemption reasons
-   *
-   * Agency: CEF Identifier: vatex
+   * VAT exemption reason code (BT-121), from the VATEX code list. An exemption
+   * reason (vatex or vatex_note) is required for tax_code E, AE, K, G and O, and not
+   * allowed for S, Z, L and M
    */
   vatex?:
     | 'VATEX-EU-79-C'
@@ -419,6 +421,7 @@ export interface ValidateValidateJsonParams {
     | 'VATEX-EU-132-1O'
     | 'VATEX-EU-132-1P'
     | 'VATEX-EU-132-1Q'
+    | 'VATEX-EU-135-1'
     | 'VATEX-EU-143'
     | 'VATEX-EU-143-1A'
     | 'VATEX-EU-143-1B'
@@ -450,6 +453,7 @@ export interface ValidateValidateJsonParams {
     | 'VATEX-EU-151-1C'
     | 'VATEX-EU-151-1D'
     | 'VATEX-EU-151-1E'
+    | 'VATEX-EU-153'
     | 'VATEX-EU-159'
     | 'VATEX-EU-309'
     | 'VATEX-EU-AE'
@@ -460,12 +464,37 @@ export interface ValidateValidateJsonParams {
     | 'VATEX-EU-IC'
     | 'VATEX-EU-O'
     | 'VATEX-EU-J'
+    | 'VATEX-FR-298SEXDECIESA'
+    | 'VATEX-FR-AE'
+    | 'VATEX-FR-CGI261-1'
+    | 'VATEX-FR-CGI261-2'
+    | 'VATEX-FR-CGI261-3'
+    | 'VATEX-FR-CGI261-4'
+    | 'VATEX-FR-CGI261-5'
+    | 'VATEX-FR-CGI261-7'
+    | 'VATEX-FR-CGI261-8'
+    | 'VATEX-FR-CGI261A'
+    | 'VATEX-FR-CGI261B'
+    | 'VATEX-FR-CGI261C-1'
+    | 'VATEX-FR-CGI261C-2'
+    | 'VATEX-FR-CGI261C-3'
+    | 'VATEX-FR-CGI261D-1'
+    | 'VATEX-FR-CGI261D-1BIS'
+    | 'VATEX-FR-CGI261D-2'
+    | 'VATEX-FR-CGI261D-3'
+    | 'VATEX-FR-CGI261D-4'
+    | 'VATEX-FR-CGI261E-1'
+    | 'VATEX-FR-CGI261E-2'
+    | 'VATEX-FR-CGI275'
+    | 'VATEX-FR-CGI277A'
+    | 'VATEX-FR-CGI295'
     | 'VATEX-FR-FRANCHISE'
     | 'VATEX-FR-CNWVAT'
     | null;
 
   /**
-   * Textual explanation for VAT exemption
+   * VAT exemption reason text (BT-120). An exemption reason (vatex or vatex_note) is
+   * required for tax_code E, AE, K, G and O, and not allowed for S, Z, L and M
    */
   vatex_note?: string | null;
 
