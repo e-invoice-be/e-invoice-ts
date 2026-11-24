@@ -52,8 +52,8 @@ export interface MeRetrieveResponse {
   company_number?: string | null;
 
   /**
-   * Company tax ID. For Belgium this is the VAT number. Must include the country
-   * prefix
+   * Company tax ID (VAT number), including the country prefix. Stored in compact
+   * form: uppercased with separators removed, e.g. `BE0123456789`.
    */
   company_tax_id?: string | null;
 
@@ -85,12 +85,13 @@ export interface MeRetrieveResponse {
   plan?: 'starter' | 'pro' | 'enterprise';
 
   /**
-   * Whether the tenant is registered on our SMP
+   * Legacy field. Does not show whether a Peppol ID is published: it is usually
+   * `false`, also for a tenant whose Peppol IDs are published.
    */
   smp_registration?: boolean | null;
 
   /**
-   * Date when the tenant was registered on SMP
+   * Legacy field. Does not show whether or when a Peppol ID was published.
    */
   smp_registration_date?: string | null;
 }
