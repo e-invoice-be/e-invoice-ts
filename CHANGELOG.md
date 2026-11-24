@@ -5,7 +5,6 @@
 
 ### Bug Fixes
 
-* **api:** sync VATEX and unit of measure enums and field descriptions with live OpenAPI spec ([2955e36](https://github.com/e-invoice-be/e-invoice-ts/commit/2955e3603caf335795b2c48e86ed28b21e99d1cd))
 * **api:** sync VATEX and unit of measure enums and field descriptions with live OpenAPI spec ([118971b](https://github.com/e-invoice-be/e-invoice-ts/commit/118971b17f438ad1851371b1979b7371044962c8))
 * **mcp:** require client credentials and validate hosts for the HTTP transport ([#73](https://github.com/e-invoice-be/e-invoice-ts/issues/73)) ([9a6a9ba](https://github.com/e-invoice-be/e-invoice-ts/commit/9a6a9ba19ceb2daef5cebd674e640428de694409)), closes [#71](https://github.com/e-invoice-be/e-invoice-ts/issues/71)
 * **mcp:** run the code tool subprocess with a minimal environment and without credentials ([#74](https://github.com/e-invoice-be/e-invoice-ts/issues/74)) ([5c21f7a](https://github.com/e-invoice-be/e-invoice-ts/commit/5c21f7a027e738ddc0b76d268d2d475e4b2d1df9)), closes [#72](https://github.com/e-invoice-be/e-invoice-ts/issues/72)
